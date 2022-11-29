@@ -1,0 +1,26 @@
+
+form.form-login {
+    min-width: 500px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+
+form.form-login .form-label{
+    float: left;
+}
+form.form-login  h1 {
+    font-size:1.5rem;
+    font-weight: 700 !important;
+}
+
+@media (max-width: 500px) {
+    form.form-login  {
+      min-width: 90%;
+    }
+}

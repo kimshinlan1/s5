@@ -1,0 +1,12 @@
+
+/* Users css */
+
+/* Custom word wrap content */
+.word-wrap{
+    word-break: break-word;
+}
+
+#pwdNote {
+    font-size: 10px;
+    color: #97999d;
+}

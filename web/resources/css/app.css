@@ -1,0 +1,207 @@
+@import 'signin.css';
+@import 'users.css';
+
+/* * {
+    font-family: 'Roboto, Helvetica, Arial, sans-serif';
+} */
+
+#scroll-table{
+    overflow: auto;
+}
+
+/* Adding styles to button ripple */
+.btn-ripple {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all ease-in-out .5s;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-ripple::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 25%;
+    height: 100%;
+    width: 50%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transition: all ease-in-out 1s;
+    transform: scale(5, 5);
+}
+
+.btn-ripple:active::after {
+    padding: 0;
+    margin: 0;
+    opacity: .2;
+    transition: 0s;
+    transform: scale(0, 0);
+}
+
+#side-bar-menu{
+    cursor: pointer;
+}
+
+.container-fluid{
+    padding: 1rem;
+}
+
+.btn-ripple:focus,.btn-ripple:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+ .btn-primary {
+    background: #0852C0;
+    color: rgb(255, 255, 255);
+    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 12%) !important;
+ }
+
+.btn-copy {
+    color:#fff;
+    background-color:#31d2f2;
+    border-color:#31d2f2;
+    border: 0;
+}
+
+.btn-copy:hover{
+    color:#fff;
+    background-color:#31d2f2;
+    border-color:#31d2f2;
+}
+
+.btn-check:focus+.btn-copy,.btn-copy:focus{
+    color:#fff;
+    background-color:#31d2f2;
+    border-color:#31d2f2;
+    box-shadow:0 0 0 .25rem #31d2f2;
+}
+
+.btn-check:active+.btn-copy,.btn-check:checked+.btn-copy,.btn-copy.active,.btn-copy:active,.show>.btn-copy.dropdown-toggle{
+    color:#fff;
+    background-color:#31d2f2;
+    border-color:#31d2f2;
+}
+
+.btn-check:active+.btn-copy:focus,.btn-check:checked+.btn-copy:focus,.btn-copy.active:focus,.btn-copy:active:focus,.show>.btn-copy.dropdown-toggle:focus{
+    box-shadow:0 0 0 .25rem rgb(247, 246, 245);
+}
+
+.btn-copy.disabled,.btn-copy:disabled{
+    color:#fff;
+    background-color:#31d2f2;
+    border-color:#31d2f2;
+}
+
+ #loading-inside-btn{
+    display: none;
+ }
+
+/* start css loading modal*/
+.md-loading .modal-dialog {
+    display: table;
+    position: relative;
+    margin: 0 auto;
+    top: calc(50% - 24px);
+}
+
+.md-loading {
+    pointer-events: none !important;
+}
+
+.md-loading .modal-dialog .modal-content {
+    border: none;
+    text-align: center !important;
+    padding: 10px;
+    border-radius: 7px;
+    background: #4e4e4e;
+}
+
+.md-loading .modal-dialog .modal-content .text-center .loading-messages {
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+/* start css loading pdf modal*/
+.md-loading-pdf .modal-dialog {
+    display: table;
+    position: relative;
+    margin: 0 auto;
+    top: calc(50% - 24px);
+}
+
+.md-loading-pdf {
+    pointer-events: none !important;
+}
+
+.md-loading-pdf .modal-dialog .modal-content {
+    border: none;
+    text-align: center !important;
+    padding: 10px;
+    border-radius: 7px;
+    background: #4e4e4e;
+}
+
+.md-loading-pdf .modal-dialog .modal-content .text-center .loading-messages {
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+/* end  css loading modal*/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Custom button tag <a> upload file */
+.button-upload {
+    border-radius: 3px !important;
+    text-decoration: none;
+    background-color: #efefef;
+    color: #000000;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+}
+
+/* File name upload file */
+.file-name {
+    padding: 2px;
+    padding-left: 10px;
+}
+
+/* Setting hover button upload file */
+a.button-upload:hover {
+    color: #000000 !important;
+    cursor: pointer;
+}
+
+/* Color Project title */
+.color-blue {
+    color: #0852C0;
+}
+
+/* end css hide arrows spin button type number */
+
+/* Disable eye icon default on Edge */
+::-ms-reveal {
+    display: none;
+}

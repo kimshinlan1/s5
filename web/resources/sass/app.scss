@@ -1,0 +1,188 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// color
+$color-primary: #01304B;
+$color-secondary: #01304B;
+.color-primary {
+    color: $color-primary !important;
+}
+.color-secondary {
+    color: $color-secondary !important;
+}
+
+// header
+.header {
+    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 12%) !important;
+    background: $color-primary;
+    color: #fff;
+    z-index: 1000;
+    position: relative;
+    .navbar {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
+            color: #fff;
+        }
+        .navbar-nav .nav-link.disabled {
+            color: #fff;
+        }
+        .navbar-nav .show > .nav-link,
+        .navbar-nav .nav-link.active {
+            color: #fff;
+        }
+        .dropdown-menu {
+            border: 1px solid $color-primary;
+            min-width: 280px;
+        }
+        .dropdown-item {
+            padding: 0.4rem 1rem;
+        }
+        .dropdown-item.active, .dropdown-item:active {
+            background-color: $color-primary;
+        }
+        .dropdown-item.logout:hover {
+            background-color: $danger;
+        }
+    }
+    .navbar-brand {
+        padding: 0;
+        margin: 0;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1;
+        color: #fff;
+    }
+    .navbar-brand .site-logo {
+        display: block;
+        background-image: url("/assets/img/KAIZEN BASE LOGO.png");
+        width: 200px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left center;
+        margin-right: 1rem;
+    }
+    .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
+        color: #fff;
+    }
+}
+
+.main {
+    display: flex;
+    gap: 20px;
+
+    // container
+    .container {
+        margin-top: 1.5rem;
+    }
+}
+
+.sidebar {
+    min-height: calc(100vh - 47px);
+    background-color: #FAFAFA;
+    border-right: 1px solid #ccc;
+
+    .list-group {
+        display: inline-block;
+        .list-group-item {
+            width: 170px;
+            background-color: transparent;
+        }
+        .list-group-item:hover {
+            background-color: #C4E7CC;
+        }
+        .list-group-item.active {
+            color: #000;
+            background-color: #C4E7CC;
+            border-color: rgba(0, 0, 0, 0.125);
+        }
+    }
+}
+
+// headline
+.h-title {
+    padding: 0.2em 1em;
+    color: $color-primary;
+    border-left: solid 5px $color-primary;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.h-subtitle {
+    padding: 0.2em 1em;
+    color: $color-primary;
+    // border-left: solid 5px $color-secondary;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+// h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+//     color: $color-primary;
+// }
+
+// table
+.table > :not(:first-child) {
+    border-top: 2px solid $color-primary;
+}
+
+// buttons
+.btn-yellowgreen {
+    color: #fff;
+    background-color: #8DC63E;
+    &:hover {
+        color: #fff;
+    }
+}
+.btn-green {
+	color: #fff;
+    background-color: #38B648;
+    &:hover {
+        color: #fff;
+        background-color: #309C3E;
+    }
+    &.active {
+        background-color: #1D5D26;
+    }
+}
+.btn-lightblue {
+	color: #fff;
+    background-color: #24AAE1;
+    &:hover {
+        color: #fff;
+        background-color: #1B95C5;
+    }
+    &.active {
+        background-color: #115F7E;
+    }
+}
+.btn-yellow {
+    background-color: #F6EE30;
+    &:hover {
+        background-color: #EBE40A;
+    }
+    &.active {
+        color: #fff;
+        background-color: #B0AB07;
+    }
+}
+.btn-magenta {
+	color: #fff;
+    background-color: #ED008C;
+    &:hover {
+        color: #fff;
+        background-color: #E00083;
+    }
+    &.active {
+        background-color: #B8006B;
+    }
+}

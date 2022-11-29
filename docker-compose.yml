@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+    # PHP + Apache
+    web:
+        container_name: techmap_web
+        build:
+            context: ./docker
+            dockerfile: Dockerfile
+        ports:
+            - 80:80
+        privileged: true
+        volumes:
+            - ./web:/var/www/html:delegated
+            - web_vendor:/var/www/html/vendor
+            - web_storage_app:/var/www/html/storage/app
+            - web_storage_framework:/var/www/html/storage/framework
+            - web_storage_debugbar:/var/www/html/storage/debugbar
+            - web_node_modules:/var/www/html/node_modules
+
+    db:
+        container_name: techmap_db
+        image: mariadb:10
+        ports:
+            - "3306:3306"
+        volumes:
+            - data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_DATABASE: techmap
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+
+    phpmyadmin:
+        container_name: techmap_phpmyadmin
+        image: phpmyadmin
+        ports:
+            - 8080:80
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=localhost
+            - PMA_PORT=3306
+
+volumes:
+    data:
+    web_node_modules:
+    web_storage_app:
+    web_storage_framework:
+    web_storage_debugbar:
+    web_vendor:

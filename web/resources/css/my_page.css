@@ -1,0 +1,12 @@
+.input-group-addon {
+    width: 40px;
+    padding-left: 10px;
+    padding-top: 1px;
+    background-color: #c5d3e0;
+    border-radius: 0.25rem;
+}
+
+#pwdNote {
+    font-size: 10px;
+    color: #97999d;
+}
