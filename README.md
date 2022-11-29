@@ -1,5 +1,4 @@
-# tech-map
-
+# 5S Level Management System
 
 
 ## Getting started
