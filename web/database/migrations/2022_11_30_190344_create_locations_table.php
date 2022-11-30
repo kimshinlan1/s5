@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "employees";
+    private $tableName = "locations";
 
     /**
      * Run the migrations.
@@ -17,14 +17,9 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no', 10);
             $table->string('name', 255);
-            $table->string('email', 255)->nullable();
-            $table->integer('employee_order');
-            $table->integer('department_id');
-            $table->integer('team_id');
+            $table->integer('area_id');
             $table->timestamps();
-            $table->unique(['id']);
         });
     }
 

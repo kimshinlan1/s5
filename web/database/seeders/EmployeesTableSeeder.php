@@ -29,6 +29,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 1,
+                'team_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -44,6 +45,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 2,
+                'team_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -59,6 +61,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 3,
+                'team_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -74,6 +77,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 4,
+                'team_id' => 4,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -89,6 +93,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 5,
+                'team_id' => 5,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -104,6 +109,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 6,
+                'team_id' => 6,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -119,6 +125,7 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 7,
+                'team_id' => 7,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];

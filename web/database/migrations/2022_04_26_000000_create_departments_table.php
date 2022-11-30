@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('company_id', 10)->constrained("companies")
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
+            $table->integer('pattern_id');
             $table->timestamps();
             $table->unique(['id']);
         });
