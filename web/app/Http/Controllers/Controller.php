@@ -2,12 +2,110 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\File;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * Response Data
+     *
+     * @param object|array|null $data
+     * @param int $code
+     * @param string|null $message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResponse($data, int $code = 200, string $message = '')
+    {
+        $response = [
+            'success' => true,
+            'code' => $code,
+            'message' => __($message),
+            'total' => $this->service->getCount(),
+            'data' => []
+        ];
+
+        if (!in_array($code, [200, 201, 202])) {
+            if (is_array($data)) {
+                $response['total'] = count($data);
+                $response['data'] = $data;
+            } elseif (is_object($data)) {
+                $response['total'] = $data->total();
+                $response['data'] = $data->getCollection();
+            }
+        } else {
+            $response['data'] = $data;
+        }
+
+
+        return response()->json($response, $code);
+    }
+
+    /**
+     * Response Exception
+     *
+     * @param string|null $message
+     * @param int $code
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function responseException(string $message = '', int $code = 500)
+    {
+        if (empty($message)) {
+            $message = __("Internal_Server_Error");
+        }
+
+        $response = [
+            'success' => false,
+            'message' => __($message),
+            'code' => $code
+        ];
+        return response()->json($response, $code);
+    }
+
+    /**
+     * Return Error page
+     *
+     * @param integer $code
+     * @param string $message
+     */
+    public function responseErrorPage($code = 404, $message = "")
+    {
+        if ($code == 404) {
+            return abort(Response::HTTP_NOT_FOUND, $message);
+        } elseif ($code == 500) {
+            return abort(Response::HTTP_INTERNAL_SERVER_ERROR, $message);
+        }
+    }
+
+    /**
+     * Display log
+     *
+     */
+    public function showLog()
+    {
+        $file = collect(File::allFiles(storage_path()))
+            ->filter(function ($file) {
+                return in_array($file->getExtension(), ['log']);
+            })
+            ->map(function ($file) {
+                return $file->getBaseName();
+            });
+
+        if ($file) {
+            $log = $file->last();
+
+            $numberLastLine = 100;
+            $file = escapeshellarg(storage_path("logs/$log"));
+            $line = `tail -n $numberLastLine $file`;
+            dd($line);
+        }
+        dd("NO LOG");
+    }
 }
