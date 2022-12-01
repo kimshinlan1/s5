@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StandardsTableSeeder extends Seeder
+class InspectionsTableSeeder extends Seeder
 {
-    private $tableName = "standards";
+    private $tableName = "inspection";
 
     /**
      * Run the database seeds.
@@ -18,37 +18,30 @@ class StandardsTableSeeder extends Seeder
     {
         $data = [
             [
-                'id' => 's1',
-                'name' => '整理',
-                'note' => '',
+                'id' => 1,
+                'team_id' => 1,
+                'inspection_date' => date('2022-1-11'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'id' => 's2',
-                'name' => '整頓',
-                'note' => '',
+                'id' => 2,
+                'team_id' => 1,
+                'inspection_date' => date('2023-10-1'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'id' => 's3',
-                'name' => '清掃',
-                'note' => '',
+                'id' => 3,
+                'team_id' => 1,
+                'inspection_date' => date('2023-3-30'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'id' => 's4',
-                'name' => '清潔',
-                'note' => '',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'id' => 's5',
-                'name' => '躾',
-                'note' => '',
+                'id' => 4,
+                'team_id' => 1,
+                'inspection_date' => date('2023-5-10'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]

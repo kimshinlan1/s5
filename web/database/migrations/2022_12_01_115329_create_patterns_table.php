@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "skills";
+    private $tableName = "patterns";
+
     /**
      * Run the migrations.
      *
@@ -14,9 +15,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table($this->tableName, function (Blueprint $table) {
-            $table->integer('difficult_level')->nullable()->change();
-            $table->integer('experienced_month')->nullable()->change();
+        Schema::create($this->tableName, function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->string('note', 255);
+            $table->string('5s', 50);
+            $table->boolean('is_dept_customized');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists($this->tableName);
     }
 };

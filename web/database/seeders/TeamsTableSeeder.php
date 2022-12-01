@@ -16,22 +16,15 @@ class TeamsTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = [];
-        $max = 10;
-        $count = 0;
-        for ($i = 0; $i < $max; $i++) {
-            ++$count;
-            $department_id = rand(1, 7);
-            $e = [
-                'no' => 'kei000' . (string)$count,
-                'name' => 'Team-' . (string)$count,
-                'department_id' =>  $department_id,
+        $data = [
+            [
+                'id' => 1,
+                'name' => '〇〇係',
+                'department_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ];
-            $data[] = $e;
-        }
-
+            ],
+        ];
         DB::table($this->tableName)->insert($data);
     }
 }

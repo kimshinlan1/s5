@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "employees";
-
+    private $tableName = "inspection_details";
     /**
      * Run the migrations.
      *
@@ -15,8 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table($this->tableName, function (Blueprint $table) {
-            $table->integer('employee_order')->change();
+        Schema::create($this->tableName, function (Blueprint $table) {
+            $table->integer('inspection_id');
+            $table->integer('location_id');
+            $table->string('point', 3);
+            $table->integer('point_value')->length(1);
+            $table->timestamps();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-
+        Schema::dropIfExists($this->tableName);
     }
 };

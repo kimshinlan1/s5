@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "areas";
+    private $tableName = "inspection_images";
 
     /**
      * Run the migrations.
@@ -17,8 +17,12 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 255);
-            $table->integer('patterns_id');
+            $table->integer('inspections_id');
+            $table->integer('block')->length(2);
+            $table->string('img_before_path', 255);
+            $table->string('img_after_path', 255);
+            $table->string('problem_before', 255);
+            $table->string('problem_after', 255);
             $table->timestamps();
         });
     }

@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AreasTableSeeder extends Seeder
+class InspectionImagesTableSeeder extends Seeder
 {
-    private $tableName = "areas";
+    private $tableName = "inspection_images";
 
     /**
      * Run the database seeds.
@@ -19,15 +19,23 @@ class AreasTableSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
-                'name' => '通路周辺',
-                'patterns_id' => 1,
+                'inspections_id' => 1,
+                'block' => 1,
+                'img_before_path' => '/img/path',
+                'img_after_path' => '/img/path',
+                'problem_before' => 'note',
+                'problem_after' => 'note',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id' => 2,
-                'name' => '物品置場周辺',
-                'patterns_id' => 1,
+                'inspections_id' => 1,
+                'block' => 2,
+                'img_before_path' => '/img/path',
+                'img_after_path' => '/img/path',
+                'problem_before' => 'note',
+                'problem_after' => 'note',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]

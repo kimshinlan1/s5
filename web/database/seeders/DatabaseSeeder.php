@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
         $this->call(TeamsTableSeeder::class);
         $this->call(StandardsTableSeeder::class);
         $this->call(AreasTableSeeder::class);
-        $this->call(LocationSTableSeeder::class);
+        $this->call(LocationsTableSeeder::class);
+        $this->call(PatternsTableSeeder::class);
+        $this->call(PatternDetailsTableSeeder::class);
+        $this->call(InspectionsTableSeeder::class);
+        $this->call(InspectionDetailsTableSeeder::class);
+        $this->call(InspectionImagesTableSeeder::class);
     }
 }

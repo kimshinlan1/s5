@@ -37,20 +37,6 @@ class LocationSTableSeeder extends Seeder
                 'area_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'id' => 4,
-                'name' => '在庫品置き場非常用在庫',
-                'area_id' => 2,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'id' => 5,
-                'name' => '作業場',
-                'area_id' => 3,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ]
         ];
         DB::table($this->tableName)->insert($data);
