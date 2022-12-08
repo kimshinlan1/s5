@@ -24,7 +24,7 @@ return new class extends Migration
                 ->onDelete('restrict');
             $table->integer('dept_pattern_id');
             $table->timestamps();
-            $table->unique(['id']);
+            $table->unique(['id', 'dept_pattern_id']);
         });
     }
 

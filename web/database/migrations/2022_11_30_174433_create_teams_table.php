@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->integer('department_id');
             $table->timestamps();
+            $table->unique(['id', 'department_id']);
         });
     }
 

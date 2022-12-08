@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('level_4', 255);
             $table->string('level_5', 255);
             $table->timestamps();
+            $table->unique(['id', 'pattern_id', 'location_id']);
         });
     }
 

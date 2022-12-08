@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('department_id');
             $table->integer('team_id');
             $table->timestamps();
-            $table->unique(['id']);
+            $table->unique(['id', 'team_id', 'department_id']);
         });
     }
 

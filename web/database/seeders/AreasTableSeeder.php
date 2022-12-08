@@ -20,14 +20,14 @@ class AreasTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => '通路周辺',
-                'patterns_id' => 1,
+                'pattern_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id' => 2,
                 'name' => '物品置場周辺',
-                'patterns_id' => 1,
+                'pattern_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]

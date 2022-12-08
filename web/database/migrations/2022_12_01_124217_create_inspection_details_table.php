@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('point', 3);
             $table->integer('point_value')->length(1);
             $table->timestamps();
+            $table->unique(['inspection_id', 'location_id', 'point']);
         });
     }
 
