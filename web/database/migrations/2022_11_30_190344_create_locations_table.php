@@ -18,7 +18,9 @@ return new class extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255);
-            $table->integer('area_id');
+            $table->integer('area_id')->constrained("areas")
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
             $table->timestamps();
         });
     }

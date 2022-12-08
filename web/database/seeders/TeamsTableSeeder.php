@@ -19,7 +19,21 @@ class TeamsTableSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
-                'name' => '〇〇係',
+                'name' => '係1',
+                'department_id' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'id' => 2,
+                'name' => '係2',
+                'department_id' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'id' => 3,
+                'name' => '係3',
                 'department_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

@@ -23,7 +23,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '3',
             ],
             [
                 'no' => 'DEPT00002',
@@ -31,7 +30,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '2',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '1',
             ],
             [
                 'no' => 'DEPT00003',
@@ -39,7 +37,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '2',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '1',
             ],
             [
                 'no' => 'DEPT00004',
@@ -47,7 +44,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '3',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '2',
             ],
             [
                 'no' => 'DEPT00005',
@@ -55,7 +51,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '3',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '2',
             ],
             [
                 'no' => 'DEPT00006',
@@ -63,7 +58,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '3',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '4',
             ],
             [
                 'no' => 'DEPT00007',
@@ -71,7 +65,6 @@ class DepartmentsTableSeeder extends Seeder
                 'company_id' => '3',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'dept_pattern_id' => '4',
             ]
         ];
         DB::table($this->tableName)->insert($data);
