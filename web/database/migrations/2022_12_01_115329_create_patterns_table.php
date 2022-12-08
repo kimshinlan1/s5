@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name', 255);
             $table->string('note', 255);
-            $table->string('5s', 50); // format: s1:1 | s2:0 | s3: 1 | s4:0 | s5:0
+            $table->string('5s', 50); // format sample: s1:1 | s2:0 | s3: 1 | s4:0 | s5:0 (1: true, 0:false)
             $table->timestamps();
         });
     }
