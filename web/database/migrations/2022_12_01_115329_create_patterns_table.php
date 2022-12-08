@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('note', 255);
             $table->string('5s', 50);
-            $table->boolean('is_dept_customized');
             $table->timestamps();
         });
     }

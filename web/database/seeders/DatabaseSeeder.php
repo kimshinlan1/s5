@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StandardsTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(LocationsTableSeeder::class);
-        $this->call(PatternsTableSeeder::class);
         $this->call(PatternDetailsTableSeeder::class);
         $this->call(InspectionsTableSeeder::class);
         $this->call(InspectionDetailsTableSeeder::class);
