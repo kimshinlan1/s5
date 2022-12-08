@@ -61,12 +61,26 @@ window.formatterDataMode = function (_value, row, _index) {
 }
 
 /** ------------------
+*    Show 5s mode
+--------------------- */
+window.formatter5sMode = function (_value, row, _index) {
+    let type = "管理者";
+    if (row.mode_5s == 1) {
+        type = "有償契約";
+    } else if (row.mode_5s == 2) {
+        type = "無償契約";
+    }
+    return type;
+}
+
+/** ------------------
 *    Clear dialog
 --------------------- */
 window.clearDialog = function () {
     $('#companyName').val('');
     $('#companyNo').val('');
     $('#companyMode').val('');
+    $('#5sMode').val('');
 }
 
 /** ------------------
@@ -80,15 +94,21 @@ window.saveData = function () {
     let name = $("#companyName").val();
     let no = $("#companyNo").val();
     let mode = 0;
+    let mode_5s = 0;
     let rowData = $("#companyTable").bootstrapTable("getRowByUniqueId", id);
     let isSetMode = false;
+    let isSetMode5s = false;
     let dialog = '#successAddDialog';
     if (rowData) {
         if (rowData.mode != 0) {
             isSetMode = true;
         }
+        if (rowData.mode_5s != 0) {
+            isSetMode5s = true;
+        }
     } else {
         isSetMode = true;
+        isSetMode5s = true;
     }
 
     if (isSetMode) {
@@ -98,10 +118,18 @@ window.saveData = function () {
             mode = 2;
         }
     }
+    if (isSetMode5s) {
+        if ($('#5sMode_isCharge').is(':checked')) {
+            mode_5s = 1;
+        } else {
+            mode_5s = 2;
+        }
+    }
     let data = {
         name: name,
         no: no,
         mode: mode,
+        mode_5s: mode_5s,
     };
     if (id) {
         dialog = '#successUpdateDialog';
@@ -180,6 +208,21 @@ $(function () {
                 $("#companyModeLabel").attr("hidden", true);
             }
 
+            if (rowData.mode_5s == 1) {
+                $('#5sMode_isCharge').prop("checked", true);
+                $('#5sMode_free').prop("checked", false);
+                $(".form-check").attr("hidden", false);
+                $("#5sModeLabel").attr("hidden", false);
+            } else if (rowData.mode_5s == 2) {
+                $('#5sMode_isCharge').prop("checked", false);
+                $('#5sMode_free').prop("checked", true);
+                $(".form-check").attr("hidden", false);
+                $("#5sModeLabel").attr("hidden", false);
+            } else if (rowData.mode_5s == 0) {
+                $(".form-check").attr("hidden", true);
+                $("#5sModeLabel").attr("hidden", true);
+            }
+
             $("#companyEditDialog .modal-title.add").hide();
             $("#companyEditDialog .modal-title.edit").show();
         } else {
@@ -188,9 +231,12 @@ $(function () {
             $("#companyEditDialog .modal-title.add").show();
 
             $('#companyMode_isCharge').prop("checked", false);
+            $('#5sMode_isCharge').prop("checked", false);
             $('#companyMode_free').prop("checked", true);
+            $('#5sMode_free').prop("checked", true);
             $(".form-check").attr("hidden", false);
             $("#companyModeLabel").attr("hidden", false);
+            $("#5sModeLabel").attr("hidden", false);
         }
     });
 

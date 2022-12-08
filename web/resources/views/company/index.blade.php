@@ -21,6 +21,7 @@
                 <th data-field="no" class="word-wrap">{{ __('Company_No') }}</th>
                 <th data-field="name" class="word-wrap">{{ __('Company_Name') }}</th>
                 <th data-field="mode" data-formatter="formatterDataMode">{{ __('Company_Mode') }}</th>
+                <th data-field="mode_5s" data-formatter="formatter5sMode">{{ __('5s_Mode') }}</th>
                 <th data-width="130" data-formatter="companyTableActions"></th>
             </tr>
         </thead>
@@ -84,13 +85,13 @@
                             id="5sModeLabel"><strong>{{ __('Company_5S_Mode') }}</strong></label>
                         <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="5sMode_free" id="5sMode_free" checked>
+                                <input class="form-check-input" type="radio" name="5sMode" id="5sMode_free" checked>
                                 <label class="form-check-label" for="5sMode_free">
                                     <strong>{{ __('Company_Free_Contract') }}</strong>
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="5sMode_isCharge" id="5sMode_isCharge">
+                                <input class="form-check-input" type="radio" name="5sMode" id="5sMode_isCharge">
                                 <label class="form-check-label" for="5sMode_isCharge">
                                     <strong>{{ __('Company_Paid_Contract') }}</strong>
                                 </label>
