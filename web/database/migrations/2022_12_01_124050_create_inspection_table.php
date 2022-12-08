@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "skillmaps";
+    private $tableName = "inspection";
+
     /**
      * Run the migrations.
      *
@@ -14,8 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table($this->tableName, function (Blueprint $table) {
-            $table->string('name', 255)->nullable()->change();
+        Schema::create($this->tableName, function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('team_id');
+            $table->timestamp('inspection_date')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists($this->tableName);
     }
 };
