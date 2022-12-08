@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private $tableName = "companies";
+
     /**
      * Run the migrations.
      *
@@ -13,11 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('no', 255);
             $table->string('name', 255);
             $table->tinyInteger('mode');
+            $table->tinyInteger('mode_5s');
             $table->string('address', 255)->nullable();
             $table->string('note', 255)->nullable();
             $table->timestamps();
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists($this->tableName);
     }
 };

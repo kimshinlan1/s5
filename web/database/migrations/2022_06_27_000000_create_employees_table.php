@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('email', 255)->nullable();
             $table->integer('employee_order');
             $table->integer('department_id');
+            $table->integer('team_id');
             $table->timestamps();
-            $table->unique(['id']);
+            $table->unique(['id', 'team_id', 'department_id']);
         });
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "departments";
+    private $tableName = "locations";
 
     /**
      * Run the migrations.
@@ -17,14 +17,9 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no', 10);
             $table->string('name', 255);
-            $table->string('company_id', 10)->constrained("companies")
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
-            $table->integer('dept_pattern_id');
+            $table->integer('area_id');
             $table->timestamps();
-            $table->unique(['id', 'dept_pattern_id']);
         });
     }
 
