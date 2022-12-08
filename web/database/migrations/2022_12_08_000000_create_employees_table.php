@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "departments";
+    private $tableName = "employees";
 
     /**
      * Run the migrations.
@@ -19,12 +19,14 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('no', 10);
             $table->string('name', 255);
-            $table->string('company_id', 10)->constrained("companies")
+            $table->string('email', 255)->nullable();
+            $table->integer('employee_order');
+            $table->integer('department_id');
+            $table->integer('team_id')->nullable()->constrained("teams")
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            $table->integer('dept_pattern_id');
             $table->timestamps();
-            $table->unique(['id', 'dept_pattern_id']);
+            $table->unique(['id', 'team_id', 'department_id']);
         });
     }
 

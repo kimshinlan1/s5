@@ -17,16 +17,16 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('pattern_id');
+            $table->integer('dept_pattern_id');
             $table->integer('location_id');
             $table->string('point', 3);
-            $table->string('level_1', 255);
-            $table->string('level_2', 255);
-            $table->string('level_3', 255);
-            $table->string('level_4', 255);
-            $table->string('level_5', 255);
+            $table->text('level_1')->nullable();
+            $table->text('level_2')->nullable();
+            $table->text('level_3')->nullable();
+            $table->text('level_4')->nullable();
+            $table->text('level_5')->nullable();
             $table->timestamps();
-            $table->unique(['id', 'pattern_id', 'location_id']);
+            $table->unique(['dept_pattern_id', 'location_id', 'point']);
         });
     }
 
