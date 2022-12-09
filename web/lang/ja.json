@@ -173,9 +173,8 @@
     "Company_No": "会社コード",
     "Company_Name": "会社名",
     "Company_Mode": "契約タイプ",
-    "Company_5s_Mode": "契約タイプ",
     "Company_Free_Contract": "無償契約",
-    "Company_Paid_Contract": "５Ｓ管理",
+    "Company_Paid_Contract": "有償契約",
     "Company_5S_Mode": "５Ｓ管理",
     "Please enter your company information": "会社名を入力してください",
     "=====  BLOCK_COMPANY_END =====": ""

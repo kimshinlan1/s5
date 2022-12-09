@@ -53,9 +53,9 @@ window.companyTableActions = function (_value, row, _index) {
 window.formatterDataMode = function (_value, row, _index) {
     let type = "管理者";
     if (row.mode == 1) {
-        type = "有償契約";
+        type = $('#messageCompanyPaidContract').val();
     } else if (row.mode == 2) {
-        type = "無償契約";
+        type = $('#messageCompanyFreeContract').val();
     }
     return type;
 }
@@ -66,9 +66,9 @@ window.formatterDataMode = function (_value, row, _index) {
 window.formatter5sMode = function (_value, row, _index) {
     let type = "管理者";
     if (row.mode_5s == 1) {
-        type = "有償契約";
+        type = $('#messageCompanyPaidContract').val();
     } else if (row.mode_5s == 2) {
-        type = "無償契約";
+        type = $('#messageCompanyFreeContract').val();
     }
     return type;
 }

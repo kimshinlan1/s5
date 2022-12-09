@@ -21,7 +21,7 @@
                 <th data-field="no" class="word-wrap">{{ __('Company_No') }}</th>
                 <th data-field="name" class="word-wrap">{{ __('Company_Name') }}</th>
                 <th data-field="mode" data-formatter="formatterDataMode">{{ __('Company_Mode') }}</th>
-                <th data-field="mode_5s" data-formatter="formatter5sMode">{{ __('5s_Mode') }}</th>
+                <th data-field="mode_5s" data-formatter="formatter5sMode">{{ __('Company_5S_Mode') }}</th>
                 <th data-width="130" data-formatter="companyTableActions"></th>
             </tr>
         </thead>
