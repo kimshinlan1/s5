@@ -12,3 +12,5 @@
 <input type="hidden" id="messageSkillMapRequired" name="messageSkillMapRequired" value="{{ __('SkillMap_Err_Required') }}"/>
 <input type="hidden" id="messageSkillMapFormatNumber" name="messageSkillMapFormatNumber" value="{{ __('SkillMap_Err_FormatNumber') }}"/>
 <input type="hidden" id="messageSkillMapMaxLength" name="messageSkillMapMaxLength" value="{{ __('SkillMap_MaxLength') }}"/>
+<input type="hidden" id="messageCompanyFreeContract" name="messageCompanyFreeContract" value="{{ __('Company_Free_Contract') }}"/>
+<input type="hidden" id="messageCompanyPaidContract" name="messageCompanyPaidContract" value="{{ __('Company_Paid_Contract') }}"/>
