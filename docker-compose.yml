@@ -3,7 +3,7 @@ version: "3"
 services:
     # PHP + Apache
     web:
-        container_name: techmap_web
+        container_name: 5s_web
         build:
             context: ./docker
             dockerfile: Dockerfile
@@ -19,7 +19,7 @@ services:
             - web_node_modules:/var/www/html/node_modules
 
     db:
-        container_name: techmap_db
+        container_name: 5s_db
         image: mariadb:10
         ports:
             - "3306:3306"
@@ -27,12 +27,12 @@ services:
             - data:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: rootpass
-            MYSQL_DATABASE: techmap
+            MYSQL_DATABASE: 5s
             MYSQL_USER: admin
             MYSQL_PASSWORD: admin
 
     phpmyadmin:
-        container_name: techmap_phpmyadmin
+        container_name: 5s_phpmyadmin
         image: phpmyadmin
         ports:
             - 8080:80

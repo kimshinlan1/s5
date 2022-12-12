@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "employees";
+    private $tableName = "areas";
 
     /**
      * Run the migrations.
@@ -15,8 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table($this->tableName, function (Blueprint $table) {
-            $table->integer('employee_order')->change();
+        Schema::create($this->tableName, function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->integer('pattern_id');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-
+        Schema::dropIfExists($this->tableName);
     }
 };

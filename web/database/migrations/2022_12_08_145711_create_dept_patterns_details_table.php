@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "companies";
+    private $tableName = "dept_patterns_details";
 
     /**
      * Run the migrations.
@@ -17,14 +17,16 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no', 255);
-            $table->string('name', 255);
-            $table->tinyInteger('mode');
-            $table->tinyInteger('mode_5s');
-            $table->string('address', 255)->nullable();
-            $table->string('note', 255)->nullable();
+            $table->integer('dept_pattern_id');
+            $table->integer('location_id');
+            $table->string('point', 3);
+            $table->text('level_1')->nullable();
+            $table->text('level_2')->nullable();
+            $table->text('level_3')->nullable();
+            $table->text('level_4')->nullable();
+            $table->text('level_5')->nullable();
             $table->timestamps();
-            $table->unique(['id']);
+            $table->unique(['dept_pattern_id', 'location_id', 'point']);
         });
     }
 

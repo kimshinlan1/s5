@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Throwable;
+use App\Common\LogUtil;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -34,7 +37,13 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Exception $e) {
+            if (Route::getCurrentRoute()) {
+                $class = (new \ReflectionClass(Route::getCurrentRoute()->getControllerClass()))->getShortName();
+                $function = Route::getCurrentRoute()->getActionMethod();
+                LogUtil::setClassName($class);
+                LogUtil::logError($function, $e->getMessage());
+            }
             abort(500, $e->getMessage());
         });
     }

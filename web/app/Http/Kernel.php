@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'role.admin' => \App\Http\Middleware\RoleAdminMiddleware::class,
         // transaction
         'transaction' => \App\Http\Middleware\TransactionMiddleware::class,
+        'access' => \App\Http\Middleware\AccessMiddleware::class
     ];
 }

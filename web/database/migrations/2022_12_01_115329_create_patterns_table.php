@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = "companies";
+    private $tableName = "patterns";
 
     /**
      * Run the migrations.
@@ -17,14 +17,10 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no', 255);
             $table->string('name', 255);
-            $table->tinyInteger('mode');
-            $table->tinyInteger('mode_5s');
-            $table->string('address', 255)->nullable();
-            $table->string('note', 255)->nullable();
+            $table->string('note', 255);
+            $table->string('5s', 50); // format sample: s1:1 | s2:0 | s3: 1 | s4:0 | s5:0 (1: true, 0:false)
             $table->timestamps();
-            $table->unique(['id']);
         });
     }
 
