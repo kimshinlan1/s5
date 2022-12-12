@@ -40,7 +40,7 @@ class DepartmentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => trans('validation.attributes.departments.name'),
+            'name' => trans('validation.attributes.common.name'),
         ];
     }
 }

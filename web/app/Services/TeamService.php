@@ -6,15 +6,18 @@ use App\Models\Team;
 use Illuminate\Http\Request;
 use App\Http\Requests\TeamRequest;
 use App\Common\Utility;
+use App\Models\Department;
 
 class TeamService extends BaseService
 {
     /* @var Model */
     private $model;
+    private $modelDepartment;
 
-    public function __construct(Team $model)
+    public function __construct(Team $model, Department $modelDepartment)
     {
         $this->model = $model;
+        $this->modelDepartment = $modelDepartment;
         parent::__construct($model);
     }
 
@@ -68,7 +71,25 @@ class TeamService extends BaseService
      *
      * @return object
      */
-    public function getDataByDepartmentId(Request $request)
+    public function getDepartmentByCompanyId(Request $request)
+    {
+        $companyId = (int)$request->input('company_id');
+        if ($companyId == -1) {
+            return $this->modelDepartment::orderBy('id')->get()->toArray();
+        } else {
+            return $this->modelDepartment::where('company_id', $companyId)
+            ->orderBy('id')->get()->toArray();
+        }
+    }
+
+    /**
+     * Get list by conditions
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function getDataTableTeamById(Request $request)
     {
         $departmentId = $request->input('department_id');
         if ($departmentId == -1) {

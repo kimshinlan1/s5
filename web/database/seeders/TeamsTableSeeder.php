@@ -20,7 +20,6 @@ class TeamsTableSeeder extends Seeder
             [
                 'id' => 1,
                 'no' => 'TE00001',
-                'name' => '〇〇係',
                 'name' => '係1',
                 'department_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),

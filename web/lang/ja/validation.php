@@ -142,7 +142,6 @@ return [
     'attributes' => [
         'users' => [
             'id' => 'コード',
-            'name' => '名前',
             'identifier' => 'アカウントID',
             'password' => 'パスワード',
             'role_id' => '権限',
@@ -152,18 +151,14 @@ return [
             'new_password' => '新しいパスワード',
             'new_confirm_password' => '新しいパスワード（確認）',
         ],
-        'departments' => [
-            'name' => '名前',
-        ],
         'employee' => [
-            'name' => '名前',
             'email' => 'Eメール',
         ],
         'companies' => [
             'name' => '会社名',
             'no'   => '会社コード',
         ],
-        'teams' => [
+        'common' => [
             'name' => '名前',
         ],
     ]

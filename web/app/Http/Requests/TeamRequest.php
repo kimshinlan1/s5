@@ -41,7 +41,7 @@ class TeamRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => trans('validation.attributes.teams.name'),
+            'name' => trans('validation.attributes.common.name'),
         ];
     }
 }

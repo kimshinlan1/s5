@@ -31,9 +31,9 @@ window.clearDialog = function () {
 /*-----------------
  * QUERY PARAMS
  ------------------*/
-window.queryParams = function (params) {
+ window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
-    params.department_id = $('#departmentSearchTable').val();
+    params.department_id = $('#departmentListID').val();
     return params;
 }
 
@@ -43,10 +43,10 @@ window.queryParams = function (params) {
 window.reloadSelectBox = function () {
     $.ajax({
         type: 'GET',
-        url: '/departments/list',
+        url: '/department/list',
         success: function (res) {
             listDepartment = res.rows;
-            $('#departmentSearchTable').change();
+            $('#departmentListID').change();
         }
     });
 }
@@ -105,6 +105,26 @@ window.saveData = function () {
  * JQUERY
  =============*/
 $(function () {
+    // GET NAME AND LIST OF COMPANY
+    $.ajax({
+        type: 'GET',
+        url: '/company/list',
+        success: function (res) {
+            let html = '';
+            if(res.currentCompany.mode == 0) {
+                for (let e of res.rows) {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+            }
+            else {
+                html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
+            }
+            $('#companyListID').html(html);
+
+            $('#companyListID').change();
+        }
+    });
+
     // GET NAME AND LIST OF DEPARTMENTS
     $.ajax({
         type: 'GET',
@@ -115,11 +135,11 @@ $(function () {
             for (let e of res.rows) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
-            $('#departmentSearchTable').html(html);
-            $('#departmentSearchTable').change();
+            $('#departmentListID').html(html);
+            $('#departmentListID').change();
         }
     });
-
+    
     // SHOW DATA TABLE
     $("#teamTable").bootstrapTable({
         uniqueId: "id",
@@ -136,7 +156,34 @@ $(function () {
         $("#errorDialog .modal-body .error-messages").html("");
     }
 
-    $('#departmentSearchTable').change(function () {
+    $('#companyListID').on('change',function () {
+        $.ajax({
+            type: 'GET',
+            url: '/teams/comp_list?company_id='+parseInt($(this).val()),
+            success: function (res) {
+                let html = '';
+                listDepartment = res;
+                for (let e of res) {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+    
+                $('#departmentListID').html(html);
+    
+                $('#departmentListID').change();
+            }
+        });
+    });
+
+    $('#departmentListID').on('change',function () {
+        $('#teamTable').bootstrapTable('refresh', {url:'/teams/dept_list'});
+        $('#teamTable').on('load-success.bs.table.bs.table', function (_e, _result, _status, _jqXHR) {
+            // HIDE LOADING MODAL
+            $('.md-loading').modal('hide');
+        });
+        $('#teamTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
+    });
+
+    $('#departmentListID').change(function () {
         // ADD DATA TO SELECT BOX DEPARTMENT ON DIALOG ADD/EDIT
         let html = '';
         for (let e of listDepartment) {
@@ -170,7 +217,7 @@ $(function () {
             clearDialog();
             $("#teamEditDialog .modal-title.edit").hide();
             $("#teamEditDialog .modal-title.add").show();
-            $("#teamDepartment").val($('#departmentSearchTable').val());
+            $("#teamDepartment").val($('#departmentListID').val());
         }
     });
 
