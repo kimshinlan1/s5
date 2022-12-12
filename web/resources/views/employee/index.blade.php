@@ -28,7 +28,7 @@
         <label for="companySearchTable" class="m-1">{{ __('Company') }}</label>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Company select" id="companySearchTable" >
             @foreach ($companyList as $comp)
-            <option value="">{{ $comp['name'] }}</option>
+            <option value="{{ $comp['id'] }}">{{ $comp['name'] }}</option>
             @endforeach
         </select>
     </div>
@@ -135,5 +135,6 @@
     </div>
 </div>
 
+<input type="hidden" id="totalEmployee" name="totalEmployee" value=""/>
 <input type="hidden" id="totalEmployee" name="totalEmployee" value=""/>
 @endsection

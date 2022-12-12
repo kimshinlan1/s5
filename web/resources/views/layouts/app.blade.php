@@ -48,5 +48,7 @@
         </div>
         @include('layouts.message')
     </div>
+    <input type="hidden" id="userMode" name="userMode" value="{{auth()->user()->isAdmin()}}"/>
+
 </body>
 </html>
