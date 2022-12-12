@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeRequest;
 use App\Common\Utility;
+use App\Models\Company;
 
 class EmployeeService extends BaseService
 {
@@ -88,7 +89,6 @@ class EmployeeService extends BaseService
             $data->fill($request->all());
             $data->save();
         }
-        
         return $result;
     }
 
@@ -151,5 +151,16 @@ class EmployeeService extends BaseService
     {
         $max = $this->model::where('department_id', $departmentId)->max('employee_order');
         return $max ? $max + 1 : 0;
+    }
+
+    /**
+     * Get company list for dropdown list
+     *
+     * @param null
+     * @return array
+     */
+    public function getCompanyList()
+    {
+        return Company::orderBy('id')->get()->toArray();
     }
 }

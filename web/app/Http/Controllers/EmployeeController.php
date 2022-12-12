@@ -24,7 +24,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee.index');
+        $companyList = $this->service->getCompanyList();
+        return view('employee.index', ['companyList' => $companyList]);
     }
 
     /**

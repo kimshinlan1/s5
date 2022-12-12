@@ -23,9 +23,26 @@
     @include('layouts.success')
 </div>
 <div class="d-flex justify-content-start">
-    <div class="col-1 mt-1 fs-5">{{ __('Department') }}</div>
-    <select style="text-align-last: center;" class="form-select form-select-arrow w-25" aria-label="Department select" id="departmentSearchTable" >
-    </select>
+    @if(auth()->user()->isAdmin())
+    <div class="col-4 d-flex flex-row fs-5 mt-1">
+        <label for="companySearchTable" class="m-1">{{ __('Company') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Company select" id="companySearchTable" >
+            @foreach ($companyList as $comp)
+            <option value="">{{ $comp['name'] }}</option>
+            @endforeach
+        </select>
+    </div>
+    @endif
+    <div class="col-4 d-flex flex-row fs-5 mt-1">
+        <label for="departmentSearchTable" class="m-1">{{ __('Department') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Department select" id="departmentSearchTable" >
+        </select>
+    </div>
+    <div class="col-4 d-flex flex-row fs-5 mt-1">
+        <label for="teamSearchTable" class="m-1">{{ __('Team') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Team select" id="teamSearchTable" >
+        </select>
+    </div>
 </div>
 <br>
 <table
@@ -46,7 +63,7 @@
 <br />
 
 {{-- Add/Edit Dialog --}}
-<label style="color: orange; font-size: 12px;" for="btnAdd" class="form-label">{{ __('Deparment_Count_Employee') }}</label>
+<label style="color: orange; font-size: 12px;" for="" class="form-label">{{ __('Deparment_Count_Employee') }}</label>
 <br />
 <button type="button" class="btn btn-primary" id="btnAdd">
     {{ __('Common_button_add') }}
