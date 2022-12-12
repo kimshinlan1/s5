@@ -1,5 +1,7 @@
 # 初期構築用スクリプト
 
+cp .env.example .env
+
 #log permission
 mkdir -p -m=775 storage/logs
 
