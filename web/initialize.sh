@@ -8,6 +8,7 @@ mkdir -p -m=777 storage/framework/cache/data
 mkdir -p -m=777 storage/framework/sessions
 mkdir -p -m=777 storage/framework/views
 mkdir -p -m=777 storage/fonts
+mkdir -p -m=777 bootstrap/cache
 
 # Permission
 chown -R 33:33 ./
