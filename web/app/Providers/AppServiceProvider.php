@@ -25,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (strpos(Request::root(), "cloud9-solutions.com")) {
+        // For server test, remove when release
+        if (strpos(Request::root(), "solutions.com")) {
             URL::forceScheme('https');
         }
     }
