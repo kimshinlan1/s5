@@ -25,6 +25,8 @@ class EmployeeRequest extends FormRequest
     {
         $rules = [
             'name' => ['required','string','max:255'],
+            'department_id' => ['required'],
+            'team_id' => ['nullable'],
             'email' => ['nullable','email','string','max:255'],
         ];
         return $rules;
@@ -40,6 +42,8 @@ class EmployeeRequest extends FormRequest
         return [
             'name' => trans('validation.attributes.common.name'),
             'email' => trans('validation.attributes.employee.email'),
+            'department_id' => trans('validation.attributes.employee.department_id'),
+            'team_id' => trans('validation.attributes.employee.team_id'),
         ];
     }
 }

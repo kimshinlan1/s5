@@ -90,5 +90,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/teams', TeamController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/teams/comp_list', [TeamController::class, 'getListCompanyId']);
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
+        Route::get('/teams/dept_list_array', [TeamController::class, 'getTeamArrayByDepartmentId']);
     });
 });

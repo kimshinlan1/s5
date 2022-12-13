@@ -153,6 +153,8 @@ return [
         ],
         'employee' => [
             'email' => 'Eメール',
+            'department_id' => '部門',
+            'team_id' => '係',
         ],
         'companies' => [
             'name' => '会社名',

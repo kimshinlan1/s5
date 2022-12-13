@@ -103,9 +103,9 @@ class EmployeeService extends BaseService
     {
         $teamId = $request->input('team_id');
         if ($teamId == -1) {
-            return $this->model::with('team:id,name')->orderBy('employee_order')->get()->toArray();
+            return $this->model::with('team:id,name')->with('department:id,name')->orderBy('employee_order')->get()->toArray();
         } else {
-            return $this->model::where('team_id', $teamId)->with('team:id,name')
+            return $this->model::where('team_id', $teamId)->with('team:id,name')->with('department:id,name')
             ->orderBy('employee_order')->get()->toArray();
         }
     }

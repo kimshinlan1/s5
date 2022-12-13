@@ -99,17 +99,19 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="employeeDepartment" class="form-label">{{ __('Department') }}</label>
+                            <label for="employeeDepartmentId" class="form-label">{{ __('Department') }}</label>
                             <div class="input-group has-validation">
-                                <select class="form-select form-select-arrow" aria-label="Department select" id="employeeDepartment" style="text-align-last: center;">
+                                <select class="form-select form-select-arrow form-control" aria-label="Department select" id="employeeDepartmentId" style="text-align-last: center;">
                                 </select>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="employeeTeam" class="form-label">{{ __('Team') }}</label>
+                            <label for="employeeTeamId" class="form-label">{{ __('Team') }}</label>
                             <div class="input-group has-validation">
-                                <select class="form-select form-select-arrow" aria-label="Team select" id="employeeTeam" style="text-align-last: center;">
+                                <select class="form-select form-select-arrow form-control" aria-label="Team select" id="employeeTeamId" style="text-align-last: center;">
                                 </select>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>

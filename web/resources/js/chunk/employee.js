@@ -27,12 +27,13 @@
  --------------------- */
  window.clearDialog = function () {
     $('#employeeName').val('');
-    $('#employeeDepartment').find('option').first().prop('selected', true);
+    $('#employeeDepartmentId').find('option').first().prop('selected', true);
 }
 
 window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
+    params.department_id = $('#departmentSearchTable').val();
 
     return params;
 }
@@ -70,8 +71,8 @@ window.saveData = function () {
     let id = $("#employeeId").val();
     let name = $("#employeeName").val();
     let email = $("#employeeEmail").val();
-    let department_id = $("#employeeDepartment").val();
-    let team_id = $("#employeeTeam").val();
+    let department_id = $("#employeeDepartmentId").val();
+    let team_id = $("#employeeTeamId").val();
     let data = null;
     let dialog = '#successAddDialog';
     if (id) {
@@ -132,7 +133,7 @@ window.loadDeptListByComp = function(id) {
             }
 
             $('#departmentSearchTable').html(html);
-            $('#employeeDepartment').html(html);
+            $('#employeeDepartmentId').html(html);
             let deptId = $("#departmentSearchTable").find(":selected").val();
             loadTeamListByDept(deptId);
         },
@@ -147,10 +148,10 @@ window.loadDeptListByComp = function(id) {
  --------------------- */
 
  window.loadTeamListByDept = function(id, ele = null) {
-    let data = {id:id};
+    let data = {department_id: id};
     $.ajax({
         type: 'GET',
-        url: '/teams/dept_list',
+        url: '/teams/dept_list_array',
         data: data,
         success: function (res) {
             let html = '';
@@ -160,12 +161,15 @@ window.loadDeptListByComp = function(id) {
 
             if (ele != null) {
                 $('#' + ele).html(html);
+                if(ele == 'teamSearchTable') {
+                    $('#teamSearchTable').change();
+                }
             }
             else {
                 $('#teamSearchTable').html(html);
-                $('#employeeTeam').html(html);
+                $('#employeeTeamId').html(html);
+                $('#teamSearchTable').change();
             }
-            $('#teamSearchTable').change();
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -253,9 +257,9 @@ window.loadDeptListByComp = function(id) {
         });
     });
 
-    $('#employeeDepartment').on('change', function () {
-        let id = $('#employeeDepartment').find(":selected").val();
-        loadTeamListByDept(id, 'employeeTeam');
+    $('#employeeDepartmentId').on('change', function () {
+        let id = $('#employeeDepartmentId').find(":selected").val();
+        loadTeamListByDept(id, 'employeeTeamId');
     });
 
      /** ------------------
@@ -264,6 +268,8 @@ window.loadDeptListByComp = function(id) {
      $("#employeeEditDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
+        let dept_id = $('#employeeDepartmentId').find(":selected").val();
+        loadTeamListByDept(dept_id, 'employeeTeamId');
         $('#employeeName').trigger('focus');
          if (id) {
             let rowData = $("#employeeTable").bootstrapTable(
@@ -272,8 +278,8 @@ window.loadDeptListByComp = function(id) {
              $('#employeeId').val(id);
              $("#employeeName").val(rowData.name);
              $("#employeeEmail").val(rowData.email);
-             $("#employeeDepartment").val(rowData.department_id);
-             $("#employeeTeam").val(rowData.team_id);
+             $("#employeeDepartmentId").val(rowData.department_id);
+             $("#employeeTeamId").val(rowData.team_id);
              $("#employeeEditDialog .modal-title.add").hide();
              $("#employeeEditDialog .modal-title.edit").show();
          } else {
