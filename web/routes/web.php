@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Department
         Route::resource('departments', DepartmentController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('departments/list', [DepartmentController::class, 'list']);
+        Route::get('departments/list/{id}', [DepartmentController::class, 'getByCompany']);
         Route::get('departments/emp_list', [DepartmentController::class, 'employeeList']);
         Route::get('/departments/comp_list', [DepartmentController::class, 'getDepartmentListByID']);
 

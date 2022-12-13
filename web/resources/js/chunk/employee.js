@@ -66,7 +66,7 @@ window.saveData = function () {
 	$('#employeeForm').removeClass('was-validated');
     $('#employeeForm .form-control').removeClass('is-invalid');
     $('#employeeForm .invalid-feedback').html('');
-    
+
     let id = $("#employeeId").val();
     let name = $("#employeeName").val();
     let email = $("#employeeEmail").val();
@@ -113,26 +113,52 @@ window.saveData = function () {
         });
 }
 
- /* ==============================
-     jQuery
- ==============================*/
- $(function () {
+/** ------------------
+ *  Load department list
+ --------------------- */
+
+window.loadDeptListByComp = function(id) {
     $.ajax({
         type: 'GET',
-        url: '/departments/list',
+        url: '/departments/list/' + id,
         success: function (res) {
             let html = '';
-            listDepartment = res.rows;
-            for (let e of res.rows) {
+            listDepartment = res;
+            for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
 
             $('#departmentSearchTable').html(html);
 
             $('#departmentSearchTable').change();
-        }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ': ' + errorThrown);
+        },
     });
+}
 
+ /* ==============================
+     jQuery
+ ==============================*/
+ $(function () {
+    // $.ajax({
+    //     type: 'GET',
+    //     url: '/departments/list',
+    //     success: function (res) {
+    //         let html = '';
+    //         listDepartment = res.rows;
+    //         for (let e of res.rows) {
+    //             html += '<option value="' + e.id + '">' + e.name + '</option>';
+    //         }
+
+    //         $('#departmentSearchTable').html(html);
+
+    //         $('#departmentSearchTable').change();
+    //     }
+    // });
+    let compID = $("#companySearchTable").find(":selected").val();
+    loadDeptListByComp(compID);
     $("#employeeTable").bootstrapTable({
         uniqueId: "id",
         escape: "true",
@@ -144,12 +170,26 @@ window.saveData = function () {
         },
     });
 
+    $("#companySearchTable").on('change', function() {
+        let compID = $("#companySearchTable").find(":selected").val();
+        $.ajax({
+            type: 'GET',
+            url: '/departments/list/{id}',
+            success: function (res) {
+                loadDeptListByComp(compID);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus + ': ' + errorThrown);
+            },
+        });
+    });
+
     if ($("#errorDialog .modal-body .error-messages").length) {
          $("#errorDialog .modal-body .error-messages").html("");
     }
 
     /** ------------------
-      *    Get on row reoder event
+      *    Get on row re-order event
     --------------------- */
     $("#employeeTable").on('reorder-row.bs.table', function(_data, row1, _row2) {
         for(let i=0; i<row1.length; i++) {
@@ -201,7 +241,7 @@ window.saveData = function () {
      $("#employeeEditDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
-        
+
          if (id) {
             let rowData = $("#employeeTable").bootstrapTable(
                  "getRowByUniqueId", id
@@ -236,7 +276,7 @@ window.saveData = function () {
             $("#errorDialog").modal('show');
         } else {
             $("#employeeEditDialog").modal('show');
-        }           
+        }
     });
 
     /** ------------------
