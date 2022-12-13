@@ -90,10 +90,10 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getDepartmentByCompanyId(Request $request)
+    public function getListCompanyId(Request $request)
     {
         try {
-            return $this->service->getDepartmentByCompanyId($request);
+            return $this->service->getListCompanyId($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
@@ -107,10 +107,10 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getDataTableTeamById(Request $request)
+    public function getTeamByDepartmentId(Request $request)
     {
         try {
-            return $this->service->getDataTableTeamById($request);
+            return $this->service->getTeamByDepartmentId($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])

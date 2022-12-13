@@ -104,24 +104,7 @@
 </div>
 
 {{-- Delete Dialog --}}
-<div id="teamDeleteDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{ __('Common_Delete') }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" name="deleteTeamId" class="form-control" id="deleteTeamId" value="">
-                <div class="message"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="deleteTeamBtn">{{ __('Common_button_ok') }}</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('layouts.delete_dialog')
 
 <input type="hidden" id="totalTeam" name="totalTeam" value=""/>
 @endsection

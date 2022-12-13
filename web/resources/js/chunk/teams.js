@@ -16,7 +16,7 @@ window.teamTableActions = function (_value, row, _index) {
         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog" >編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
-        row.id + '" data-bs-toggle="modal" data-bs-target="#teamDeleteDialog" >削除</button>'
+        row.id + '" data-bs-toggle="modal" data-bs-target="#deleteDialog" >削除</button>'
     );
 };
 
@@ -243,16 +243,16 @@ $(function () {
     /*------------------------
      * DELETE DIALOG SHOW
      -------------------------*/
-    $("#teamDeleteDialog").on("show.bs.modal", function (e) {
-        showDialogDelete('#teamTable', '#deleteTeamId', '#teamDeleteDialog', e);
+    $("#deleteDialog").on("show.bs.modal", function (e) {
+        showDialogDelete('#teamTable', '#deleteId', '#deleteDialog', e);
     });
 
     /*---------------------
      * DELETE DATA TEAM
      ----------------------*/
-    $("#deleteTeamBtn").on("click", function () {
+    $("#deleteBtn").on("click", function () {
         showLoading();
-        let id = $("#deleteTeamId").val();
+        let id = $("#deleteId").val();
         $.ajax({
             url: "/teams/" + id,
             type: "DELETE",
@@ -274,7 +274,7 @@ $(function () {
             // HIDE LOADING
             hideLoading();
             // HIDE DIALOG DELETE
-            $("#teamDeleteDialog").modal("hide");
+            $("#deleteDialog").modal("hide");
         });
     });
 

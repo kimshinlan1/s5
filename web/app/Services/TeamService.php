@@ -71,7 +71,7 @@ class TeamService extends BaseService
      *
      * @return object
      */
-    public function getDepartmentByCompanyId(Request $request)
+    public function getListCompanyId(Request $request)
     {
         $companyId = (int)$request->input('company_id');
         if ($companyId == -1) {
@@ -89,7 +89,7 @@ class TeamService extends BaseService
      *
      * @return object
      */
-    public function getDataTableTeamById(Request $request)
+    public function getTeamByDepartmentId(Request $request)
     {
         $departmentId = $request->input('department_id');
         if ($departmentId == -1) {
