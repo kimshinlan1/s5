@@ -91,7 +91,7 @@ class TeamService extends BaseService
      */
     public function getTeamByDepartmentId(Request $request)
     {
-        $departmentId = $request->input('department_id');
+        $departmentId = $request->input('id');
         if ($departmentId == -1) {
             return $this->model::with('department:id,name')->orderBy('id')->get()->toArray();
         } else {

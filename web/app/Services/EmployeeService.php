@@ -99,13 +99,13 @@ class EmployeeService extends BaseService
      *
      * @return object
      */
-    public function getDataByDepartmentId(Request $request)
+    public function getDataByTeamId(Request $request)
     {
-        $departmentId = $request->input('department_id');
-        if ($departmentId == -1) {
-            return $this->model::with('department:id,name')->orderBy('employee_order')->get()->toArray();
+        $teamId = $request->input('team_id');
+        if ($teamId == -1) {
+            return $this->model::with('team:id,name')->orderBy('employee_order')->get()->toArray();
         } else {
-            return $this->model::where('department_id', $departmentId)->with('department:id,name')
+            return $this->model::where('team_id', $teamId)->with('team:id,name')
             ->orderBy('employee_order')->get()->toArray();
         }
     }

@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Employee
         Route::resource('/employee', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('employee/depart_list', [EmployeeController::class, 'dataByDepartmentId']);
+        Route::get('employee/team_list', [EmployeeController::class, 'dataByTeamId']);
         Route::post('/employee/update_order', [EmployeeController::class, 'updateOrder']);
 
         // Team

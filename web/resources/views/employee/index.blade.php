@@ -56,6 +56,7 @@
             <th data-field="name" class="word-wrap" data-sortable="true">{{ __('Common_Name') }}</th>
             <th data-field="email" data-sortable="true" class="word-wrap">{{ __('Common_Email') }}</th>
             <th data-field="department.name" data-sortable="true" class="word-wrap">{{ __('Department') }}</th>
+            <th data-field="team.name" data-sortable="true" class="word-wrap">{{ __('Team') }}</th>
             <th data-width="130" data-sortable="true" data-formatter="employeeTableActions">　</th>
         </tr>
     </thead>
@@ -101,6 +102,13 @@
                             <label for="employeeDepartment" class="form-label">{{ __('Department') }}</label>
                             <div class="input-group has-validation">
                                 <select class="form-select form-select-arrow" aria-label="Department select" id="employeeDepartment" style="text-align-last: center;">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeTeam" class="form-label">{{ __('Team') }}</label>
+                            <div class="input-group has-validation">
+                                <select class="form-select form-select-arrow" aria-label="Team select" id="employeeTeam" style="text-align-last: center;">
                                 </select>
                             </div>
                         </div>

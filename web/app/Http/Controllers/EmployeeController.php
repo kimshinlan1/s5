@@ -99,10 +99,10 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function dataByDepartmentId(Request $request)
+    public function dataByTeamId(Request $request)
     {
         try {
-            return $this->service->getDataByDepartmentId($request);
+            return $this->service->getDataByTeamId($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
