@@ -25,7 +25,6 @@ window.teamTableActions = function (_value, row, _index) {
  ------------------*/
 window.clearDialog = function () {
     $('#teamName').val('');
-    $('#teamDepartment').find('option').first().prop('selected', true);
 }
 
 /*-----------------
@@ -35,20 +34,6 @@ window.clearDialog = function () {
     params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
     params.department_id = $('#departmentListID').val();
     return params;
-}
-
-/*--------------------------------
- * RELOAD SELECT BOX ON DIALOG
- ---------------------------------*/
-window.reloadSelectBox = function () {
-    $.ajax({
-        type: 'GET',
-        url: '/department/list',
-        success: function (res) {
-            listDepartment = res.rows;
-            $('#departmentListID').change();
-        }
-    });
 }
 
 /*--------------------
@@ -89,7 +74,6 @@ window.saveData = function () {
         $("#teamEditDialog").modal("hide");
         showToast($(dialog), 2000, true);
         $("#teamTable").bootstrapTable("refresh");
-        window.reloadSelectBox();
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
@@ -142,11 +126,12 @@ $(function () {
     
     // SHOW DATA TABLE
     $("#teamTable").bootstrapTable({
+        pagination: "true",
+        paginationParts: "['pageList']",
+        sidePagination: "server",
         uniqueId: "id",
         escape: "true",
         queryParams:"queryParams",
-        reorderableRows: "true",
-        useRowAttrFunc: "true",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $("#teamTable"));
         },
@@ -263,7 +248,6 @@ $(function () {
                 field: "id",
                 values: [team.id],
             }).bootstrapTable('refresh');
-            window.reloadSelectBox();
             showToast($('#toast1'), 3000, true);
         })
         .fail(function (jqXHR, _textStatus, _errorThrown) {
