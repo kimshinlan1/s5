@@ -17,6 +17,7 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('no', 10);
             $table->string('name', 255);
             $table->integer('department_id')->constrained("teams")
                 ->onUpdate('cascade')

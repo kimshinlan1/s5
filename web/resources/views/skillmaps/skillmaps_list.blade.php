@@ -24,7 +24,7 @@
         aria-atomic="true" id="toast2">
         <div class="d-flex">
             <div class="toast-body">
-                {{ __('SkillMap_List_Delete') }}
+                {{ __('Common_Delete_Successful') }}
             </div>
         </div>
     </div>

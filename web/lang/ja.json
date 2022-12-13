@@ -14,6 +14,7 @@
     "Common_Email": "Eメール",
     "Common_Edit": "編集",
     "Common_Delete": "削除",
+    "Common_Delete_Successful": "削除されました。",
     "Notification": "通知",
     "Logout": "ログアウト",
     "Common_Back": "戻る",
@@ -75,7 +76,6 @@
     "Deparment_Name": "部門名",
     "Deparment_Count_Employee": "※最大35名まで登録できます。",
     "Department_Save_Successfully_Employee": "登録しました。",
-    "Department_List_Delete": "削除されました。",
     "=====  BLOCK_DEPARTMENT_END =====": "",
 
     "=====  BLOCK_SKILLMAP_START =====": "",
@@ -142,7 +142,6 @@
     "SkillMap_TimeOut": "データ処理が多いため、タイムアウトのエラーが発生しました。",
     "SkillMap_MaxLength": "分類名は30文字以下で設定してください。",
     "SkillMap_List_Copy": "複製されました。",
-    "SkillMap_List_Delete": "削除されました。",
     "Add_Success" : "登録しました。",
     "Update_Success" : "保存しました。",
     "=====  BLOCK_SKILLMAP_END =====": "",
@@ -152,7 +151,6 @@
     "Employee_No": "メンバーID",
     "Employee_Input_Information_Label": "メンバー情報を入力してください",
     "Employee_Name": "氏名",
-    "Employee_List_Delete": "削除されました。",
     "=====  BLOCK_EMPLOYEE_END =====": "",
 
     "=====  BLOCK_MY_PAGE_START =====": "",
@@ -177,5 +175,13 @@
     "Company_Paid_Contract": "有償契約",
     "Company_5S_Mode": "５Ｓ管理",
     "Please enter your company information": "会社名を入力してください",
-    "=====  BLOCK_COMPANY_END =====": ""
+    "=====  BLOCK_COMPANY_END =====": "",
+
+    "=====  BLOCK_TEAM_START =====": "",
+    "Team": "係",
+    "Team_Name": "係名",
+    "Team_Management": "各係管理",
+    "Team_No": "係ID",
+    "Team_please_enter_your_team_information": "係名を入力してください。",
+    "=====  BLOCK_TEAM_END =====": ""
 }
