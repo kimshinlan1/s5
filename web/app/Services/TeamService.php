@@ -92,11 +92,12 @@ class TeamService extends BaseService
     public function getTeamByDepartmentId(Request $request)
     {
         $departmentId = $request->input('department_id');
+        $limit = $request->input('limit');
         if ($departmentId == -1) {
             return $this->model::with('department:id,name')->orderBy('id')->get()->toArray();
         } else {
             return $this->model::where('department_id', $departmentId)->with('department:id,name')
-            ->orderBy('id')->get()->toArray();
+            ->orderBy('id')->paginate($limit);
         }
     }
 }

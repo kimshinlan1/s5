@@ -49,11 +49,11 @@
     >
     <thead class="table-light">
         <tr style="text-align: center;">
-            <th data-field="id" data-visible="false" data-sortable="true">ID</th>
-            <th data-field="no" data-sortable="true">{{ __('Team_No') }}</th>
-            <th data-field="name" class="word-wrap" data-sortable="true">{{ __('Common_Name') }}</th>
-            <th data-field="department.name" data-sortable="true" class="word-wrap">{{ __('Department') }}</th>
-            <th data-width="130" data-sortable="true" data-formatter="teamTableActions">　</th>
+            <th data-field="id" data-visible="false">ID</th>
+            <th data-field="no">{{ __('Team_No') }}</th>
+            <th data-field="name" class="word-wrap">{{ __('Common_Name') }}</th>
+            <th data-field="department.name" class="word-wrap">{{ __('Department') }}</th>
+            <th data-width="130" data-formatter="teamTableActions"></th>
         </tr>
     </thead>
 </table>

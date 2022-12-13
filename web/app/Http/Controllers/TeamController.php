@@ -110,7 +110,11 @@ class TeamController extends Controller
     public function getTeamByDepartmentId(Request $request)
     {
         try {
-            return $this->service->getTeamByDepartmentId($request);
+            $data = $this->service->getTeamByDepartmentId($request);
+            return response()->json([
+                'total' => $data->total(),
+                'rows' => $data->getCollection(),
+            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
