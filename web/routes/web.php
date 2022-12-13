@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,5 +84,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/employee', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('employee/depart_list', [EmployeeController::class, 'dataByDepartmentId']);
         Route::post('/employee/update_order', [EmployeeController::class, 'updateOrder']);
+
+        // Team
+        Route::resource('/teams', TeamController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('/teams/comp_list', [TeamController::class, 'getListCompanyId']);
+        Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
     });
 });

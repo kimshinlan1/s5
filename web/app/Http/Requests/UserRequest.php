@@ -61,7 +61,7 @@ class UserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => trans('validation.attributes.users.name'),
+            'name' => trans('validation.attributes.common.name'),
             'identifier' => trans('validation.attributes.users.identifier'),
             'password' => trans('validation.attributes.users.password'),
         ];

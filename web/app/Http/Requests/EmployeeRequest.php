@@ -38,7 +38,7 @@ class EmployeeRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => trans('validation.attributes.employee.name'),
+            'name' => trans('validation.attributes.common.name'),
             'email' => trans('validation.attributes.employee.email'),
         ];
     }

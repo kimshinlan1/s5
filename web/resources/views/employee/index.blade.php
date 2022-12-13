@@ -16,7 +16,7 @@
         aria-atomic="true" id="toast1">
         <div class="d-flex">
             <div class="toast-body">
-                {{ __('Employee_List_Delete') }}
+                {{ __('Common_Delete_Successful') }}
             </div>
         </div>
     </div>

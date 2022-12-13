@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Request;
 
-class DepartmentRequest extends FormRequest
+class TeamRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +18,7 @@ class DepartmentRequest extends FormRequest
         return true;
     }
 
-    /**
+  /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -31,6 +31,7 @@ class DepartmentRequest extends FormRequest
 
         return $rules;
     }
+
 
     /**
      * Get custom attributes for validator errors.
