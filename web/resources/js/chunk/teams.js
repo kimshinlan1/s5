@@ -192,8 +192,11 @@ $(function () {
             clearDialog();
             $("#teamEditDialog .modal-title.edit").hide();
             $("#teamEditDialog .modal-title.add").show();
-            $("#teamDepartment").val($('#departmentListID').val());
+            $("#teamDepartment").val(listDepartment[0].id);
         }
+        setTimeout(function (){
+            $('#teamName').focus();
+        }, 100);
     });
 
     /*---------------------
