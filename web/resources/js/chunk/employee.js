@@ -34,6 +34,7 @@ window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
+    params.company_id = $('#companySearchTable').val();
 
     return params;
 }
@@ -126,7 +127,7 @@ window.loadDeptListByComp = function(id) {
         type: 'GET',
         url: '/departments/list/' + id,
         success: function (res) {
-            let html = '';
+            let html = '<option value="0"> </option>';
             listDepartment = res;
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
@@ -154,7 +155,7 @@ window.loadDeptListByComp = function(id) {
         url: '/teams/dept_list_array',
         data: data,
         success: function (res) {
-            let html = '';
+            let html = '<option value="0"> </option>';
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
@@ -270,7 +271,6 @@ window.loadDeptListByComp = function(id) {
         let id = $button.data("id");
         let dept_id = $('#employeeDepartmentId').find(":selected").val();
         loadTeamListByDept(dept_id, 'employeeTeamId');
-        $('#employeeName').trigger('focus');
          if (id) {
             let rowData = $("#employeeTable").bootstrapTable(
                  "getRowByUniqueId", id
@@ -286,8 +286,10 @@ window.loadDeptListByComp = function(id) {
             clearDialog();
             $("#employeeEditDialog .modal-title.edit").hide();
             $("#employeeEditDialog .modal-title.add").show();
-            // $("#employeeDepartment").val($('#departmentSearchTable').val());
          }
+        setTimeout(function (){
+            $('#employeeName').focus();
+        }, 1000);
      });
 
     /** ------------------

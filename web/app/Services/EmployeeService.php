@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeRequest;
 use App\Common\Utility;
 use App\Models\Company;
+use App\Models\Department;
 
 class EmployeeService extends BaseService
 {
@@ -102,12 +103,24 @@ class EmployeeService extends BaseService
     public function getDataByTeamId(Request $request)
     {
         $teamId = $request->input('team_id');
-        if ($teamId == -1) {
-            return $this->model::with('team:id,name')->with('department:id,name')->orderBy('employee_order')->get()->toArray();
-        } else {
-            return $this->model::where('team_id', $teamId)->with('team:id,name')->with('department:id,name')
+        $deptId = $request->input('department_id');
+        $compId = $request->input('company_id');
+        if ($deptId == "0") {
+            $arr = [];
+            $deptList = Department::where('company_id', $compId)->orderBy('id')->get()->toArray();
+            foreach ($deptList as $dept) {
+                $employeeList = $this->model::where('department_id', $dept['id'])->with('team:id,name')
+                ->with('department:id,name')->orderBy('employee_order')->get()->toArray();
+                $arr = array_merge($arr, $employeeList);
+            }
+            return $arr;
+        };
+        if ($teamId == "0") {
+            return $this->model::where('department_id', $deptId)->with('team:id,name')->with('department:id,name')
             ->orderBy('employee_order')->get()->toArray();
-        }
+        };
+        return $this->model::where('team_id', $teamId)->with('team:id,name')->with('department:id,name')
+        ->orderBy('employee_order')->get()->toArray();
     }
 
     /**
