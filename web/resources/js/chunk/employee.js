@@ -31,7 +31,7 @@
 }
 
 window.queryParams = function (params) {
-    params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
+    params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get('PAGING')) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
     params.company_id = $('#companySearchTable').val();
