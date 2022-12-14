@@ -127,7 +127,7 @@ window.loadDeptListByComp = function(id) {
         type: 'GET',
         url: '/departments/list/' + id,
         success: function (res) {
-            let html = '<option value="0"> </option>';
+            let html = '<option value=""> </option>';
             listDepartment = res;
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
@@ -155,7 +155,7 @@ window.loadDeptListByComp = function(id) {
         url: '/teams/dept_list_array',
         data: data,
         success: function (res) {
-            let html = '<option value="0"> </option>';
+            let html = '<option value=""> </option>';
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }

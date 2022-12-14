@@ -105,22 +105,20 @@ class EmployeeService extends BaseService
         $teamId = $request->input('team_id');
         $deptId = $request->input('department_id');
         $compId = $request->input('company_id');
-        if ($deptId == "0") {
-            $arr = [];
-            $deptList = Department::where('company_id', $compId)->orderBy('id')->get()->toArray();
-            foreach ($deptList as $dept) {
-                $employeeList = $this->model::where('department_id', $dept['id'])->with('team:id,name')
-                ->with('department:id,name')->orderBy('employee_order')->get()->toArray();
-                $arr = array_merge($arr, $employeeList);
+        $data = null;
+        if ($deptId === null) {
+            $deptIds = Department::select('id')->where('company_id', $compId)->orderBy('id')->get()->toArray();
+            $data = $this->model::whereIn('department_id', $deptIds)->with('team:id,name')
+                ->with('department:id,name');
+        } else {
+            if ($teamId === null) {
+                $data = $this->model::where('department_id', $deptId)->with('team:id,name')->with('department:id,name');
+
+            } else {
+                $data = $this->model::where('team_id', $teamId)->with('team:id,name')->with('department:id,name');
             }
-            return $arr;
-        };
-        if ($teamId == "0") {
-            return $this->model::where('department_id', $deptId)->with('team:id,name')->with('department:id,name')
-            ->orderBy('employee_order')->get()->toArray();
-        };
-        return $this->model::where('team_id', $teamId)->with('team:id,name')->with('department:id,name')
-        ->orderBy('employee_order')->get()->toArray();
+        }
+        return $data->orderBy('employee_order')->get()->toArray();
     }
 
     /**
