@@ -33,6 +33,14 @@ window.clearDialog = function () {
  window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
     params.department_id = $('#departmentListID').val();
+    let arrDeptIds = [];
+    if (params.department_id == "-1") {
+       
+        for (let item of listDepartment) {
+            arrDeptIds.push(item.id);
+        }
+    }
+    params.arrDeptIds = arrDeptIds;
     return params;
 }
 
@@ -104,26 +112,10 @@ $(function () {
                 html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
             }
             $('#companyListID').html(html);
-
             $('#companyListID').change();
         }
     });
 
-    // GET NAME AND LIST OF DEPARTMENTS
-    $.ajax({
-        type: 'GET',
-        url: '/departments/list',
-        success: function (res) {
-            let html = '';
-            listDepartment = res.rows;
-            for (let e of res.rows) {
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
-            }
-            $('#departmentListID').html(html);
-            $('#departmentListID').change();
-        }
-    });
-    
     // SHOW DATA TABLE
     $("#teamTable").bootstrapTable({
         pagination: "true",
@@ -148,12 +140,11 @@ $(function () {
             success: function (res) {
                 let html = '';
                 listDepartment = res;
+                html += '<option value=-1>選択する</option>';
                 for (let e of res) {
                     html += '<option value="' + e.id + '">' + e.name + '</option>';
                 }
-    
                 $('#departmentListID').html(html);
-    
                 $('#departmentListID').change();
             }
         });
@@ -166,21 +157,6 @@ $(function () {
             $('.md-loading').modal('hide');
         });
         $('#teamTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
-    });
-
-    $('#departmentListID').change(function () {
-        // ADD DATA TO SELECT BOX DEPARTMENT ON DIALOG ADD/EDIT
-        let html = '';
-        for (let e of listDepartment) {
-            html += '<option value="' + e.id + '">' + e.name + '</option>';
-        }
-        $('#teamDepartment').html(html);
-        $('#teamTable').bootstrapTable('refresh', {url:'/teams/dept_list'});
-        $('#teamTable').on('load-success.bs.table.bs.table', function (_e, result, _status, _jqXHR) {
-            // HIDE LOADING MODAL
-            $('.md-loading').modal('hide');
-            $('#totalTeam').val(result.total);
-        });
     });
 
     /*---------------------

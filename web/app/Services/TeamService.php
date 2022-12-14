@@ -94,7 +94,9 @@ class TeamService extends BaseService
         $departmentId = $request->input('department_id');
         $limit = $request->input('limit');
         if ($departmentId == -1) {
-            return $this->model::with('department:id,name')->orderBy('id')->get()->toArray();
+            $arrDeptIds = $request->input('arrDeptIds'); //get from company id
+            return $this->model::whereIn('department_id', $arrDeptIds)
+            ->with('department:id,name')->orderBy('id')->paginate($limit);
         } else {
             return $this->model::where('department_id', $departmentId)->with('department:id,name')
             ->orderBy('id')->paginate($limit);
