@@ -26,4 +26,12 @@ class Employee extends Model
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+
+    /**
+     * Get the product type associated with the product.
+     */
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
+    }
 }

@@ -148,4 +148,15 @@ class DepartmentService extends BaseService
         }
         return false;
     }
+    /**
+     * Returns department list.
+     *
+     * @param  id
+     * @return array
+     */
+    public function getDataByCompany($id)
+    {
+        $data = $this->model->where('company_id', $id)->orderBy('id')->get()->toArray();
+        return $data;
+    }
 }

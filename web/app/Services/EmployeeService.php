@@ -7,6 +7,8 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeRequest;
 use App\Common\Utility;
+use App\Models\Company;
+use App\Models\Department;
 
 class EmployeeService extends BaseService
 {
@@ -88,7 +90,6 @@ class EmployeeService extends BaseService
             $data->fill($request->all());
             $data->save();
         }
-        
         return $result;
     }
 
@@ -99,15 +100,23 @@ class EmployeeService extends BaseService
      *
      * @return object
      */
-    public function getDataByDepartmentId(Request $request)
+    public function getDataByTeamId(Request $request)
     {
-        $departmentId = $request->input('department_id');
-        if ($departmentId == -1) {
-            return $this->model::with('department:id,name')->orderBy('employee_order')->get()->toArray();
+        $teamId = $request->input('team_id');
+        $deptId = $request->input('department_id');
+        $compId = $request->input('company_id');
+        $sql = $this->model::orderBy('employee_order');
+        if ($deptId === null) {
+            $deptIds = Department::select('id')->where('company_id', $compId)->orderBy('id')->get()->toArray();
+            $sql = $this->model::whereIn('department_id', $deptIds)->with('team:id,name')
+                ->with('department:id,name');
         } else {
-            return $this->model::where('department_id', $departmentId)->with('department:id,name')
-            ->orderBy('employee_order')->get()->toArray();
+            $sql = $this->model::where('department_id', $deptId)->with('department:id,name')->with('team:id,name');
+            if ($teamId) {
+                $sql = $sql->where('team_id', $teamId);
+            }
         }
+        return $sql->get()->toArray();
     }
 
     /**
@@ -151,5 +160,16 @@ class EmployeeService extends BaseService
     {
         $max = $this->model::where('department_id', $departmentId)->max('employee_order');
         return $max ? $max + 1 : 0;
+    }
+
+    /**
+     * Get company list for dropdown list
+     *
+     * @param null
+     * @return array
+     */
+    public function getCompanyList()
+    {
+        return Company::orderBy('id')->get()->toArray();
     }
 }

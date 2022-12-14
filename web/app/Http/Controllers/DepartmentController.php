@@ -159,4 +159,16 @@ class DepartmentController extends Controller
         }
         return $arr;
     }
+
+    /**
+     * Returns department list.
+     *
+     * @param  id
+     * @return array
+     */
+    public function getByCompany($id)
+    {
+        $data = $this->service->getDataByCompany($id);
+        return $data;
+    }
 }

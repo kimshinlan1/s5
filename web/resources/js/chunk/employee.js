@@ -27,12 +27,14 @@
  --------------------- */
  window.clearDialog = function () {
     $('#employeeName').val('');
-    $('#employeeDepartment').find('option').first().prop('selected', true);
+    $('#employeeDepartmentId').find('option').first().prop('selected', true);
 }
 
 window.queryParams = function (params) {
-    params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
+    params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get('PAGING')) + 1 : 1;
+    params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
+    params.company_id = $('#companySearchTable').val();
 
     return params;
 }
@@ -66,11 +68,12 @@ window.saveData = function () {
 	$('#employeeForm').removeClass('was-validated');
     $('#employeeForm .form-control').removeClass('is-invalid');
     $('#employeeForm .invalid-feedback').html('');
-    
+
     let id = $("#employeeId").val();
     let name = $("#employeeName").val();
     let email = $("#employeeEmail").val();
-    let department_id = $("#employeeDepartment").val();
+    let department_id = $("#employeeDepartmentId").val();
+    let team_id = $("#employeeTeamId").val();
     let data = null;
     let dialog = '#successAddDialog';
     if (id) {
@@ -80,12 +83,14 @@ window.saveData = function () {
             name: name,
             email: email,
             department_id: department_id,
+            team_id: team_id,
         };
     } else {
         data = {
             name: name,
             email: email,
             department_id: department_id,
+            team_id: team_id,
         };
     }
 
@@ -113,26 +118,73 @@ window.saveData = function () {
         });
 }
 
- /* ==============================
-     jQuery
- ==============================*/
- $(function () {
+/** ------------------
+ *  Load department list
+ --------------------- */
+
+window.loadDeptListByComp = function(id) {
     $.ajax({
         type: 'GET',
-        url: '/departments/list',
+        url: '/departments/list/' + id,
         success: function (res) {
-            let html = '';
-            listDepartment = res.rows;
-            for (let e of res.rows) {
+            let html = '<option value=""> </option>';
+            listDepartment = res;
+            for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
 
             $('#departmentSearchTable').html(html);
-
-            $('#departmentSearchTable').change();
-        }
+            $('#employeeDepartmentId').html(html);
+            let deptId = $("#departmentSearchTable").find(":selected").val();
+            loadTeamListByDept(deptId);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ': ' + errorThrown);
+        },
     });
+}
 
+/** ------------------
+ *  Load team list
+ --------------------- */
+
+ window.loadTeamListByDept = function(id, ele = null) {
+    let data = {department_id: id};
+    $.ajax({
+        type: 'GET',
+        url: '/teams/dept_id',
+        data: data,
+        success: function (res) {
+            let html = '<option value=""> </option>';
+            for (let e of res) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+
+            if (ele != null) {
+                $('#' + ele).html(html);
+                if(ele == 'teamSearchTable') {
+                    $('#teamSearchTable').change();
+                }
+            }
+            else {
+                $('#teamSearchTable').html(html);
+                $('#employeeTeamId').html(html);
+                $('#teamSearchTable').change();
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ': ' + errorThrown);
+        },
+    });
+}
+
+ /* ==============================
+     jQuery
+ ==============================*/
+ $(function () {
+    let compID = $("#companySearchTable").find(":selected").val();
+    loadDeptListByComp(compID);
     $("#employeeTable").bootstrapTable({
         uniqueId: "id",
         escape: "true",
@@ -144,12 +196,26 @@ window.saveData = function () {
         },
     });
 
+    $("#companySearchTable").on('change', function() {
+        let compID = $("#companySearchTable").find(":selected").val();
+        $.ajax({
+            type: 'GET',
+            url: '/departments/list/{id}',
+            success: function (res) {
+                loadDeptListByComp(compID);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus + ': ' + errorThrown);
+            },
+        });
+    });
+
     if ($("#errorDialog .modal-body .error-messages").length) {
          $("#errorDialog .modal-body .error-messages").html("");
     }
 
     /** ------------------
-      *    Get on row reoder event
+      *    Get on row re-order event
     --------------------- */
     $("#employeeTable").on('reorder-row.bs.table', function(_data, row1, _row2) {
         for(let i=0; i<row1.length; i++) {
@@ -178,21 +244,23 @@ window.saveData = function () {
             });
     });
 
-    $('#departmentSearchTable').change(function () {
-        // add data to select box department on dialog add/edit
-        let html = '';
+    $('#departmentSearchTable').on('change', function () {
+        let id = $('#departmentSearchTable').find(":selected").val();
+        loadTeamListByDept(id, 'teamSearchTable');
+    });
 
-        for (let e of listDepartment) {
-            html += '<option value="' + e.id + '">' + e.name + '</option>';
-        }
-        $('#employeeDepartment').html(html);
-
-        $('#employeeTable').bootstrapTable('refresh', {url:'employee/depart_list'});
+    $('#teamSearchTable').on('change', function () {
+        $('#employeeTable').bootstrapTable('refresh', {url:'employee/team_id'});
         $('#employeeTable').on('load-success.bs.table.bs.table', function (_e, result, _status, _jqXHR) {
             // hide loading modal
             $('.md-loading').modal('hide');
             $('#totalEmployee').val(result.total);
         });
+    });
+
+    $('#employeeDepartmentId').on('change', function () {
+        let id = $('#employeeDepartmentId').find(":selected").val();
+        loadTeamListByDept(id, 'employeeTeamId');
     });
 
      /** ------------------
@@ -201,7 +269,8 @@ window.saveData = function () {
      $("#employeeEditDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
-        
+        let dept_id = $('#employeeDepartmentId').find(":selected").val();
+        loadTeamListByDept(dept_id, 'employeeTeamId');
          if (id) {
             let rowData = $("#employeeTable").bootstrapTable(
                  "getRowByUniqueId", id
@@ -209,15 +278,18 @@ window.saveData = function () {
              $('#employeeId').val(id);
              $("#employeeName").val(rowData.name);
              $("#employeeEmail").val(rowData.email);
-             $("#employeeDepartment").val(rowData.department_id);
+             $("#employeeDepartmentId").val(rowData.department_id);
+             $("#employeeTeamId").val(rowData.team_id);
              $("#employeeEditDialog .modal-title.add").hide();
              $("#employeeEditDialog .modal-title.edit").show();
          } else {
             clearDialog();
             $("#employeeEditDialog .modal-title.edit").hide();
             $("#employeeEditDialog .modal-title.add").show();
-            $("#employeeDepartment").val($('#departmentSearchTable').val());
          }
+        setTimeout(function (){
+            $('#employeeName').focus();
+        }, 1000);
      });
 
     /** ------------------
@@ -236,7 +308,7 @@ window.saveData = function () {
             $("#errorDialog").modal('show');
         } else {
             $("#employeeEditDialog").modal('show');
-        }           
+        }
     });
 
     /** ------------------

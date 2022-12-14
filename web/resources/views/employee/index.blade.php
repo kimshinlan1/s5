@@ -23,9 +23,26 @@
     @include('layouts.success')
 </div>
 <div class="d-flex justify-content-start">
-    <div class="col-1 mt-1 fs-5">{{ __('Department') }}</div>
-    <select style="text-align-last: center;" class="form-select form-select-arrow w-25" aria-label="Department select" id="departmentSearchTable" >
-    </select>
+    @if(auth()->user()->isAdmin())
+    <div class="d-flex flex-row fs-5 mt-1">
+        <label for="companySearchTable" class="m-1">{{ __('Company') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Company select" id="companySearchTable" >
+            @foreach ($companyList as $comp)
+            <option value="{{ $comp['id'] }}">{{ $comp['name'] }}</option>
+            @endforeach
+        </select>
+    </div>
+    @endif
+    <div class="d-flex flex-row fs-5 mt-1">
+        <label for="departmentSearchTable" class="m-1">{{ __('Department') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Department select" id="departmentSearchTable" >
+        </select>
+    </div>
+    <div class="d-flex flex-row fs-5 mt-1" style="width: 25%">
+        <label for="teamSearchTable" class="m-1">{{ __('Team') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Team select" id="teamSearchTable" >
+        </select>
+    </div>
 </div>
 <br>
 <table
@@ -39,6 +56,7 @@
             <th data-field="name" class="word-wrap" data-sortable="true">{{ __('Common_Name') }}</th>
             <th data-field="email" data-sortable="true" class="word-wrap">{{ __('Common_Email') }}</th>
             <th data-field="department.name" data-sortable="true" class="word-wrap">{{ __('Department') }}</th>
+            <th data-field="team.name" data-sortable="true" class="word-wrap">{{ __('Team') }}</th>
             <th data-width="130" data-sortable="true" data-formatter="employeeTableActions">　</th>
         </tr>
     </thead>
@@ -46,7 +64,7 @@
 <br />
 
 {{-- Add/Edit Dialog --}}
-<label style="color: orange; font-size: 12px;" for="btnAdd" class="form-label">{{ __('Deparment_Count_Employee') }}</label>
+<label style="color: orange; font-size: 12px;" for="" class="form-label">{{ __('Deparment_Count_Employee') }}</label>
 <br />
 <button type="button" class="btn btn-primary" id="btnAdd">
     {{ __('Common_button_add') }}
@@ -81,10 +99,19 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="employeeDepartment" class="form-label">{{ __('Department') }}</label>
+                            <label for="employeeDepartmentId" class="form-label">{{ __('Department') }}</label>
                             <div class="input-group has-validation">
-                                <select class="form-select form-select-arrow" aria-label="Department select" id="employeeDepartment" style="text-align-last: center;">
+                                <select class="form-select form-select-arrow form-control" aria-label="Department select" id="employeeDepartmentId" style="text-align-last: center;">
                                 </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeTeamId" class="form-label">{{ __('Team') }}</label>
+                            <div class="input-group has-validation">
+                                <select class="form-select form-select-arrow form-control" aria-label="Team select" id="employeeTeamId" style="text-align-last: center;">
+                                </select>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -118,5 +145,6 @@
     </div>
 </div>
 
+<input type="hidden" id="totalEmployee" name="totalEmployee" value=""/>
 <input type="hidden" id="totalEmployee" name="totalEmployee" value=""/>
 @endsection

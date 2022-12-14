@@ -86,9 +86,9 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="employeeDepartment" class="form-label">{{ __('Department') }}</label>
+                            <label for="employeeDepartmentId" class="form-label">{{ __('Department') }}</label>
                             <div class="input-group has-validation">
-                                <select class="form-select form-select-arrow" aria-label="Department select" id="employeeDepartment" style="text-align-last: center;">
+                                <select class="form-select form-select-arrow" aria-label="Department select" id="employeeDepartmentId" style="text-align-last: center;">
                                 </select>
                             </div>
                         </div>

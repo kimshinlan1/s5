@@ -60,7 +60,7 @@ window.reloadDataDepartment = function () {
             for (let e of res.rows) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
-            $('#employeeDepartment').html(html);
+            $('#employeeDepartmentId').html(html);
         }
     });
 }
@@ -136,11 +136,11 @@ window.saveDataEmployee = function () {
     $('#employeeForm').removeClass('was-validated');
     $('#employeeForm .form-control').removeClass('is-invalid');
     $('#employeeForm .invalid-feedback').html('');
-    
+
     let data = {
         name: $("#employeeName").val(),
         email: $("#employeeEmail").val(),
-        department_id:  $("#employeeDepartment").val(),
+        department_id:  $("#employeeDepartmentId").val(),
     };
 
     showLoading();
@@ -222,7 +222,7 @@ window.saveDataEmployee = function () {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
         let rowData = $("#departmentTable").bootstrapTable("getRowByUniqueId", id);
-        $("#employeeDepartment").val(rowData.id);
+        $("#employeeDepartmentId").val(rowData.id);
         $("#employeeName").val('');
         $("#employeeEmail").val('');
     });
