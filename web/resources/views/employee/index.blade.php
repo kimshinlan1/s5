@@ -24,7 +24,7 @@
 </div>
 <div class="d-flex justify-content-start">
     @if(auth()->user()->isAdmin())
-    <div class="col-4 d-flex flex-row fs-5 mt-1">
+    <div class="d-flex flex-row fs-5 mt-1">
         <label for="companySearchTable" class="m-1">{{ __('Company') }}</label>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Company select" id="companySearchTable" >
             @foreach ($companyList as $comp)
@@ -33,12 +33,12 @@
         </select>
     </div>
     @endif
-    <div class="col-4 d-flex flex-row fs-5 mt-1">
+    <div class="d-flex flex-row fs-5 mt-1">
         <label for="departmentSearchTable" class="m-1">{{ __('Department') }}</label>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Department select" id="departmentSearchTable" >
         </select>
     </div>
-    <div class="col-4 d-flex flex-row fs-5 mt-1">
+    <div class="d-flex flex-row fs-5 mt-1" style="width: 25%">
         <label for="teamSearchTable" class="m-1">{{ __('Team') }}</label>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Team select" id="teamSearchTable" >
         </select>
