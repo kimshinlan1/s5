@@ -31,16 +31,15 @@ window.clearDialog = function () {
  * QUERY PARAMS
  ------------------*/
  window.queryParams = function (params) {
-    params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
+    params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get("PAGING")) + 1 : 1;
     params.department_id = $('#departmentListID').val();
-    let arrDeptIds = [];
+    let department_ids = [];
     if (params.department_id == "-1") {
-       
         for (let item of listDepartment) {
-            arrDeptIds.push(item.id);
+            department_ids.push(item.id);
         }
     }
-    params.arrDeptIds = arrDeptIds;
+    params.department_ids = department_ids;
     return params;
 }
 
@@ -140,7 +139,7 @@ $(function () {
             success: function (res) {
                 let html = '';
                 listDepartment = res;
-                html += '<option value=-1>選択する</option>';
+                html += '<option value=-1></option>';
                 for (let e of res) {
                     html += '<option value="' + e.id + '">' + e.name + '</option>';
                 }
@@ -157,6 +156,21 @@ $(function () {
             $('.md-loading').modal('hide');
         });
         $('#teamTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
+    });
+
+    $('#departmentListID').change(function () {
+        // ADD DATA TO SELECT BOX DEPARTMENT ON DIALOG ADD/EDIT
+        let html = '';
+        for (let e of listDepartment) {
+            html += '<option value="' + e.id + '">' + e.name + '</option>';
+        }
+        $('#teamDepartment').html(html);
+        $('#teamTable').bootstrapTable('refresh', {url:'/teams/dept_list'});
+        $('#teamTable').on('load-success.bs.table.bs.table', function (_e, result, _status, _jqXHR) {
+            // HIDE LOADING MODAL
+            $('.md-loading').modal('hide');
+            $('#totalTeam').val(result.total);
+        });
     });
 
     /*---------------------
