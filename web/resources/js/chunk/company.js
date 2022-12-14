@@ -238,6 +238,9 @@ $(function () {
             $("#companyModeLabel").attr("hidden", false);
             $("#5sModeLabel").attr("hidden", false);
         }
+        setTimeout(function (){
+            $('#companyNo').focus();
+        }, 1000);
     });
 
     $("#companyEditDialog input").keypress(function (e) {
