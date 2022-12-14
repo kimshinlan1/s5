@@ -127,7 +127,7 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function getTeamArrayByDepartmentId(Request $request)
+    public function getTeamsByDepartmentId(Request $request)
     {
         try {
             $data = $this->service->getTeamArrayByDepartmentId($request);

@@ -83,13 +83,13 @@ Route::group(['middleware' => ['auth']], function () {
         // Employee
         Route::resource('/employee', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('employee/depart_list', [EmployeeController::class, 'dataByDepartmentId']);
-        Route::get('employee/team_list', [EmployeeController::class, 'dataByTeamId']);
+        Route::get('employee/team_id', [EmployeeController::class, 'getDataByTeamId']);
         Route::post('/employee/update_order', [EmployeeController::class, 'updateOrder']);
 
         // Team
         Route::resource('/teams', TeamController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/teams/comp_list', [TeamController::class, 'getListCompanyId']);
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
-        Route::get('/teams/dept_list_array', [TeamController::class, 'getTeamArrayByDepartmentId']);
+        Route::get('/teams/dept_id', [TeamController::class, 'getTeamsByDepartmentId']);
     });
 });

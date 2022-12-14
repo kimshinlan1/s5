@@ -152,7 +152,7 @@ window.loadDeptListByComp = function(id) {
     let data = {department_id: id};
     $.ajax({
         type: 'GET',
-        url: '/teams/dept_list_array',
+        url: '/teams/dept_id',
         data: data,
         success: function (res) {
             let html = '<option value=""> </option>';
@@ -250,7 +250,7 @@ window.loadDeptListByComp = function(id) {
     });
 
     $('#teamSearchTable').on('change', function () {
-        $('#employeeTable').bootstrapTable('refresh', {url:'employee/team_list'});
+        $('#employeeTable').bootstrapTable('refresh', {url:'employee/team_id'});
         $('#employeeTable').on('load-success.bs.table.bs.table', function (_e, result, _status, _jqXHR) {
             // hide loading modal
             $('.md-loading').modal('hide');

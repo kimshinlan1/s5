@@ -99,7 +99,7 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function dataByTeamId(Request $request)
+    public function getDataByTeamId(Request $request)
     {
         try {
             return $this->service->getDataByTeamId($request);
