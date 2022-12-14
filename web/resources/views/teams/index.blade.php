@@ -24,13 +24,13 @@
 </div>
 @if (Auth::user()->isAdmin())
 <div style="display:flex">
-    <div class="d-flex justify-content-start" style="width: 40%">
-        <div class="col-3 mt-1 fs-5">{{ __('Company_List') }}</div>
+    <div class="d-flex justify-content-start" style="width: 50%;">
+        <div class="mt-1 fs-5" style="padding-right: 15px;">{{ __('Company_List') }}</div>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Company select" id="companyListID" >
         </select>
     </div>
-    <div class="d-flex justify-content-start" style="width: 40%">
-        <div class="col-2 mt-1 fs-5">{{ __('Department') }}</div>
+    <div class="d-flex justify-content-start" style="width: 50%">
+        <div class="mt-1 fs-5" style="padding-right: 15px;">{{ __('Department') }}</div>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Department select" id="departmentListID" >
         </select>
     </div>
