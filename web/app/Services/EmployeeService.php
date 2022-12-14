@@ -105,20 +105,18 @@ class EmployeeService extends BaseService
         $teamId = $request->input('team_id');
         $deptId = $request->input('department_id');
         $compId = $request->input('company_id');
-        $data = null;
+        $sql = $this->model::orderBy('employee_order');
         if ($deptId === null) {
             $deptIds = Department::select('id')->where('company_id', $compId)->orderBy('id')->get()->toArray();
-            $data = $this->model::whereIn('department_id', $deptIds)->with('team:id,name')
+            $sql = $this->model::whereIn('department_id', $deptIds)->with('team:id,name')
                 ->with('department:id,name');
         } else {
-            if ($teamId === null) {
-                $data = $this->model::where('department_id', $deptId)->with('team:id,name')->with('department:id,name');
-
-            } else {
-                $data = $this->model::where('team_id', $teamId)->with('team:id,name')->with('department:id,name');
+            $sql = $this->model::where('department_id', $deptId)->with('department:id,name')->with('team:id,name');
+            if ($teamId) {
+                $sql = $sql->where('team_id', $teamId);
             }
         }
-        return $data->orderBy('employee_order')->get()->toArray();
+        return $sql->get()->toArray();
     }
 
     /**
