@@ -31,8 +31,15 @@ window.clearDialog = function () {
  * QUERY PARAMS
  ------------------*/
  window.queryParams = function (params) {
-    params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
+    params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get("PAGING")) + 1 : 1;
     params.department_id = $('#departmentListID').val();
+    let department_ids = [];
+    if (params.department_id == "-1") {
+        for (let item of listDepartment) {
+            department_ids.push(item.id);
+        }
+    }
+    params.department_ids = department_ids;
     return params;
 }
 
@@ -104,26 +111,10 @@ $(function () {
                 html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
             }
             $('#companyListID').html(html);
-
             $('#companyListID').change();
         }
     });
 
-    // GET NAME AND LIST OF DEPARTMENTS
-    $.ajax({
-        type: 'GET',
-        url: '/departments/list',
-        success: function (res) {
-            let html = '';
-            listDepartment = res.rows;
-            for (let e of res.rows) {
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
-            }
-            $('#departmentListID').html(html);
-            $('#departmentListID').change();
-        }
-    });
-    
     // SHOW DATA TABLE
     $("#teamTable").bootstrapTable({
         pagination: "true",
@@ -148,12 +139,11 @@ $(function () {
             success: function (res) {
                 let html = '';
                 listDepartment = res;
+                html += '<option value=-1></option>';
                 for (let e of res) {
                     html += '<option value="' + e.id + '">' + e.name + '</option>';
                 }
-    
                 $('#departmentListID').html(html);
-    
                 $('#departmentListID').change();
             }
         });
