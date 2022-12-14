@@ -103,18 +103,4 @@ class TeamService extends BaseService
             ->orderBy('id')->paginate($limit);
         }
     }
-
-    /**
-     * Get list by conditions
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return array
-     */
-    public function getTeamArrayByDepartmentId(Request $request)
-    {
-        $departmentId = $request->input('department_id');
-        return $this->model::where('department_id', $departmentId)->with('department:id,name')
-        ->orderBy('id')->get()->toArray();
-    }
 }
