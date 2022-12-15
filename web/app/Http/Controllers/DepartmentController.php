@@ -168,7 +168,6 @@ class DepartmentController extends Controller
      */
     public function getByCompany($id)
     {
-        $data = $this->service->getDataByCompany($id);
-        return $data;
+        return $this->service->getDataByCompany($id);
     }
 }
