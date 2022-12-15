@@ -4,6 +4,10 @@
 <script src="{{ mix('/js/employee.js')}}"></script>
 @endpush
 
+@push('css')
+    <link href="{{ mix('/css/employee.css')}}" rel="stylesheet"> </link>
+@endpush
+
 @section('sidebar')
     @include('layouts.manage_sidebar')
 @endsection
@@ -24,23 +28,23 @@
 </div>
 <div class="d-flex justify-content-start">
     @if(auth()->user()->isAdmin())
-    <div class="d-flex flex-row fs-5 mt-1">
-        <label for="companySearchTable" class="m-1">{{ __('Company') }}</label>
-        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Company select" id="companySearchTable" >
+    <div class="d-flex flex-row fs-5 mt-1 search-width" id="companySearchDiv">
+        <label for="companySearchTable" class="my-1" id="companyLabel">{{ __('Company') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow" aria-label="Company select" id="companySearchTable" >
             @foreach ($companyList as $comp)
             <option value="{{ $comp['id'] }}">{{ $comp['name'] }}</option>
             @endforeach
         </select>
     </div>
     @endif
-    <div class="d-flex flex-row fs-5 mt-1">
-        <label for="departmentSearchTable" class="m-1">{{ __('Department') }}</label>
-        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Department select" id="departmentSearchTable" >
+    <div class="d-flex flex-row fs-5 mt-1 search-width">
+        <label for="departmentSearchTable" class="my-1" id="departmentLabel">{{ __('Department') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow" aria-label="Department select" id="departmentSearchTable" >
         </select>
     </div>
-    <div class="d-flex flex-row fs-5 mt-1" style="width: 25%">
-        <label for="teamSearchTable" class="m-1">{{ __('Team') }}</label>
-        <select style="text-align-last: center;" class="form-select form-select-arrow w-50 mx-3" aria-label="Team select" id="teamSearchTable" >
+    <div class="d-flex flex-row fs-5 mt-1 search-width">
+        <label for="teamSearchTable" class="my-1" id="teamLabel">{{ __('Team') }}</label>
+        <select style="text-align-last: center;" class="form-select form-select-arrow" aria-label="Team select" id="teamSearchTable" >
         </select>
     </div>
 </div>

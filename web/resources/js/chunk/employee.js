@@ -180,7 +180,7 @@ window.loadDeptListByComp = function(id) {
 }
 
  /* ==============================
-     jQuery
+     Document Ready
  ==============================*/
  $(function () {
     let compID = $("#userCompany").val();
@@ -190,7 +190,6 @@ window.loadDeptListByComp = function(id) {
     }
     else {
         loadDeptListByComp(compID);
-        // loadTeamListByDept('', 'teamSearchTable');
     }
     $("#employeeTable").bootstrapTable({
         uniqueId: "id",
