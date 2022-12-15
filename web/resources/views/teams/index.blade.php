@@ -42,6 +42,8 @@
     </select>
 </div>
 @endif
+<input type="hidden" id="hidCompanyId" value="{{ auth()->user()->company_id }}"/>
+
 <br>
 <table
     id="teamTable"

@@ -44,7 +44,7 @@ window.clearDialog = function () {
 }
 
 /*--------------------
- * SAVE DATA TEAM 
+ * SAVE DATA TEAM
  ---------------------*/
 window.saveData = function () {
     $('#teamForm').removeClass('was-validated');
@@ -132,6 +132,23 @@ $(function () {
         $("#errorDialog .modal-body .error-messages").html("");
     }
 
+    // Init department list
+    $.ajax({
+        type: 'GET',
+        url: '/teams/comp_list?company_id='+parseInt($("#hidCompanyId").val()),
+        success: function (res) {
+            let html = '';
+            listDepartment = res;
+            html += '<option value=-1></option>';
+            for (let e of res) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#departmentListID').html(html);
+            $('#departmentListID').change();
+        }
+    });
+
+    // Onchange Company => update Department list
     $('#companyListID').on('change',function () {
         $.ajax({
             type: 'GET',
@@ -203,14 +220,14 @@ $(function () {
      * CLICK BUTTON ADD
      ----------------------*/
     $('#btnAdd').on('click', function() {
-        $("#teamEditDialog").modal('show');        
+        $("#teamEditDialog").modal('show');
     });
 
     /*--------------------------
      * USER EDIT DIALOG HIDE
      ---------------------------*/
     dialogModalHide("#teamEditDialog", "#teamForm");
-    
+
     /*----------------------------------------------
      * SAVE HANDLE EVENT WHEN CLICKING OK BUTTON
      -----------------------------------------------*/
