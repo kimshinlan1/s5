@@ -30,7 +30,7 @@
     @if(auth()->user()->isAdmin())
     <div class="d-flex flex-row fs-5 mt-1 search-width" id="companySearchDiv">
         <label for="companySearchTable" class="my-1" id="companyLabel">{{ __('Company') }}</label>
-        <select style="text-align-last: center;" class="form-select form-select-arrow" aria-label="Company select" id="companySearchTable" >
+        <select style="text-align-last: center;" class="form-select form-select-arrow search-box" aria-label="Company select" id="companySearchTable" >
             @foreach ($companyList as $comp)
             <option value="{{ $comp['id'] }}">{{ $comp['name'] }}</option>
             @endforeach
@@ -39,12 +39,12 @@
     @endif
     <div class="d-flex flex-row fs-5 mt-1 search-width">
         <label for="departmentSearchTable" class="my-1" id="departmentLabel">{{ __('Department') }}</label>
-        <select style="text-align-last: center;" class="form-select form-select-arrow" aria-label="Department select" id="departmentSearchTable" >
+        <select style="text-align-last: center;" class="form-select form-select-arrow search-box" aria-label="Department select" id="departmentSearchTable" >
         </select>
     </div>
     <div class="d-flex flex-row fs-5 mt-1 search-width">
         <label for="teamSearchTable" class="my-1" id="teamLabel">{{ __('Team') }}</label>
-        <select style="text-align-last: center;" class="form-select form-select-arrow" aria-label="Team select" id="teamSearchTable" >
+        <select style="text-align-last: center;" class="form-select form-select-arrow search-box" aria-label="Team select" id="teamSearchTable" >
         </select>
     </div>
 </div>
