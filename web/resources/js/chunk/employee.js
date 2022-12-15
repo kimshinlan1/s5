@@ -184,13 +184,8 @@ window.loadDeptListByComp = function(id) {
  ==============================*/
  $(function () {
     let compID = $("#userCompany").val();
-    let userMode = $('#userMode').val();
-    if(userMode == 1) {
-        loadDeptListByComp(compID);
-    }
-    else {
-        loadDeptListByComp(compID);
-    }
+    loadDeptListByComp(compID);
+
     $("#employeeTable").bootstrapTable({
         uniqueId: "id",
         escape: "true",
