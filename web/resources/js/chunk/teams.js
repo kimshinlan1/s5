@@ -8,9 +8,9 @@
  =========================*/
 let listDepartment = [];
 
-/*-----------------------------
+/*============================
  * ACTIONS EDIT AND DELETE
- ------------------------------*/
+ =============================*/
 window.teamTableActions = function (_value, row, _index) {
     return (
         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
@@ -20,17 +20,17 @@ window.teamTableActions = function (_value, row, _index) {
     );
 };
 
-/*-----------------
+/*=================
  * CLEAR DIALOG
- ------------------*/
+ ==================*/
 window.clearDialog = function () {
     $('#teamName').val('');
 }
 
-/*-----------------
+/*=================
  * QUERY PARAMS
- ------------------*/
- window.queryParams = function (params) {
+ ==================*/
+window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get("PAGING")) + 1 : 1;
     params.department_id = $('#departmentListID').val();
     let department_ids = [];
@@ -43,9 +43,9 @@ window.clearDialog = function () {
     return params;
 }
 
-/*--------------------
+/*==================
  * SAVE DATA TEAM
- ---------------------*/
+ ===================*/
 window.saveData = function () {
     $('#teamForm').removeClass('was-validated');
     $('#teamForm .form-control').removeClass('is-invalid');
@@ -92,30 +92,53 @@ window.saveData = function () {
     });
 }
 
-/*============
- * JQUERY
- =============*/
+/*==================
+ * DOCUMENT READY
+ ===================*/
 $(function () {
-    // GET NAME AND LIST OF COMPANY
-    $.ajax({
-        type: 'GET',
-        url: '/company/list',
-        success: function (res) {
-            let html = '';
-            if(res.currentCompany.mode == 0) {
-                for (let e of res.rows) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+    /*----------------------------------
+     * GET NAME AND LIST OF COMPANY
+     -----------------------------------*/
+    if ($('#companyListID')) {
+        // GET NAME AND LIST OF COMPANY
+        $.ajax({
+            type: 'GET',
+            url: '/company/list',
+            success: function (res) {
+                let html = '';
+                if (res.currentCompany.mode == 0) {
+                    for (let e of res.rows) {
+                        html += '<option value="' + e.id + '">' + e.name + '</option>';
+                    }
+                } else {
+                    html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
                 }
+                $('#companyListID').html(html);
             }
-            else {
-                html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
-            }
-            $('#companyListID').html(html);
-            $('#companyListID').change();
-        }
-    });
+        });
 
-    // SHOW DATA TABLE
+        // ONCHANGE COMPANY => UPDATE DEPARTMENT LIST
+        $('#companyListID').on('change',function () {
+            $.ajax({
+                type: 'GET',
+                url: '/teams/comp_list?company_id='+parseInt($(this).val()),
+                success: function (res) {
+                    let html = '';
+                    listDepartment = res;
+                    html += '<option value=-1></option>';
+                    for (let e of res) {
+                        html += '<option value="' + e.id + '">' + e.name + '</option>';
+                    }
+                    $('#departmentListID').html(html);
+                    $('#departmentListID').change();
+                }
+            });
+        });
+    }
+
+    /*---------------------
+     * SHOW DATA TABLE
+     -----------------------*/
     $("#teamTable").bootstrapTable({
         pagination: "true",
         paginationParts: "['pageList']",
@@ -132,7 +155,9 @@ $(function () {
         $("#errorDialog .modal-body .error-messages").html("");
     }
 
-    // Init department list
+    /*-------------------------
+     * INIT DEPARTMENT LIST
+     --------------------------*/
     $.ajax({
         type: 'GET',
         url: '/teams/comp_list?company_id='+parseInt($("#hidCompanyId").val()),
@@ -148,33 +173,9 @@ $(function () {
         }
     });
 
-    // Onchange Company => update Department list
-    $('#companyListID').on('change',function () {
-        $.ajax({
-            type: 'GET',
-            url: '/teams/comp_list?company_id='+parseInt($(this).val()),
-            success: function (res) {
-                let html = '';
-                listDepartment = res;
-                html += '<option value=-1></option>';
-                for (let e of res) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
-                }
-                $('#departmentListID').html(html);
-                $('#departmentListID').change();
-            }
-        });
-    });
-
-    $('#departmentListID').on('change',function () {
-        $('#teamTable').bootstrapTable('refresh', {url:'/teams/dept_list'});
-        $('#teamTable').on('load-success.bs.table.bs.table', function (_e, _result, _status, _jqXHR) {
-            // HIDE LOADING MODAL
-            $('.md-loading').modal('hide');
-        });
-        $('#teamTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
-    });
-
+    /*----------------------------------------------
+     * ONCHANGE DEPARTMENT => UPDATE TEAM TABLE
+     -----------------------------------------------*/
     $('#departmentListID').change(function () {
         // ADD DATA TO SELECT BOX DEPARTMENT ON DIALOG ADD/EDIT
         let html = '';
@@ -182,6 +183,7 @@ $(function () {
             html += '<option value="' + e.id + '">' + e.name + '</option>';
         }
         $('#teamDepartment').html(html);
+        //RELOAD AND UPDATE TEAM TABLE
         $('#teamTable').bootstrapTable('refresh', {url:'/teams/dept_list'});
         $('#teamTable').on('load-success.bs.table.bs.table', function (_e, result, _status, _jqXHR) {
             // HIDE LOADING MODAL
