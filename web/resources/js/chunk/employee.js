@@ -34,7 +34,7 @@ window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get('PAGING')) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
-    params.company_id = $("#userCompany").val();
+    params.company_id = $("#userCompanyId").val();
 
     return params;
 }
@@ -183,7 +183,7 @@ window.loadDeptListByComp = function(id) {
      Document Ready
  ==============================*/
  $(function () {
-    let compID = $("#userCompany").val();
+    let compID = $("#userCompanyId").val();
     loadDeptListByComp(compID);
 
     $("#employeeTable").bootstrapTable({
