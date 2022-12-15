@@ -121,4 +121,21 @@ class TeamController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Returns resource as a list.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function getTeamsByDepartmentId(Request $request)
+    {
+        try {
+            return $this->service->getTeamArrayByDepartmentId($request);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
+            ], 500);
+        }
+    }
 }

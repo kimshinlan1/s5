@@ -34,7 +34,7 @@ window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get('PAGING')) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
-    params.company_id = $('#companySearchTable').val();
+    params.company_id = $("#userCompanyId").val();
 
     return params;
 }
@@ -180,11 +180,12 @@ window.loadDeptListByComp = function(id) {
 }
 
  /* ==============================
-     jQuery
+     Document Ready
  ==============================*/
  $(function () {
-    let compID = $("#companySearchTable").find(":selected").val();
+    let compID = $("#userCompanyId").val();
     loadDeptListByComp(compID);
+
     $("#employeeTable").bootstrapTable({
         uniqueId: "id",
         escape: "true",
