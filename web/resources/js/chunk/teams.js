@@ -92,29 +92,49 @@ window.saveData = function () {
     });
 }
 
-/*============
- * JQUERY
- =============*/
+/*==================
+ * DOCUMENT READY
+ ===================*/
 $(function () {
     /*----------------------------------
      * GET NAME AND LIST OF COMPANY
      -----------------------------------*/
-    $.ajax({
-        type: 'GET',
-        url: '/company/list',
-        success: function (res) {
-            let html = '';
-            if (res.currentCompany.mode == 0) {
-                for (let e of res.rows) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+    if ($('#companyListID')) {
+        // GET NAME AND LIST OF COMPANY
+        $.ajax({
+            type: 'GET',
+            url: '/company/list',
+            success: function (res) {
+                let html = '';
+                if (res.currentCompany.mode == 0) {
+                    for (let e of res.rows) {
+                        html += '<option value="' + e.id + '">' + e.name + '</option>';
+                    }
+                } else {
+                    html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
                 }
-            } else {
-                html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
+                $('#companyListID').html(html);
             }
-            $('#companyListID').html(html);
-            $('#companyListID').change();
-        }
-    });
+        });
+
+        // ONCHANGE COMPANY => UPDATE DEPARTMENT LIST
+        $('#companyListID').on('change',function () {
+            $.ajax({
+                type: 'GET',
+                url: '/teams/comp_list?company_id='+parseInt($(this).val()),
+                success: function (res) {
+                    let html = '';
+                    listDepartment = res;
+                    html += '<option value=-1></option>';
+                    for (let e of res) {
+                        html += '<option value="' + e.id + '">' + e.name + '</option>';
+                    }
+                    $('#departmentListID').html(html);
+                    $('#departmentListID').change();
+                }
+            });
+        });
+    }
 
     /*---------------------
      * SHOW DATA TABLE
@@ -151,26 +171,6 @@ $(function () {
             $('#departmentListID').html(html);
             $('#departmentListID').change();
         }
-    });
-
-    /*-----------------------------------------------
-     * ONCHANGE COMPANY => UPDATE DEPARTMENT LIST
-     ------------------------------------------------*/
-    $('#companyListID').on('change',function () {
-        $.ajax({
-            type: 'GET',
-            url: '/teams/comp_list?company_id='+parseInt($(this).val()),
-            success: function (res) {
-                let html = '';
-                listDepartment = res;
-                html += '<option value=-1></option>';
-                for (let e of res) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
-                }
-                $('#departmentListID').html(html);
-                $('#departmentListID').change();
-            }
-        });
     });
 
     /*----------------------------------------------
