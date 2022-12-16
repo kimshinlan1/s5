@@ -14,7 +14,7 @@
 window.departmentTableActions = function (_value, row, _index) {
     return (
         '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
-        row.id + '" data-bs-toggle="modal" data-bs-target="#departmentAddDialog">メンバー追加</button> ' +
+        row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog">係追加</button> ' +
          '<button style="margin-right: 10px;" type="button" class="btn btn-primary btn-sm" data-id="' +
          row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> ' +
          '<button type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -32,6 +32,55 @@ window.queryParams = function (params) {
     return params;
 }
 
+/*==================
+ * Save team data
+ ===================*/
+ window.saveData = function () {
+    $('#teamForm').removeClass('was-validated');
+    $('#teamForm .form-control').removeClass('is-invalid');
+    $('#teamForm .invalid-feedback').html('');
+    let id = $("#teamId").val();
+    let name = $("#teamName").val();
+    let department_id = $("#teamDepartment").val();
+    let data = null;
+    let dialog = '#successAddDialog';
+    if (id) {
+        dialog = '#successUpdateDialog';
+        data = {
+            id: id,
+            name: name,
+            department_id: department_id,
+        };
+    } else {
+        data = {
+            name: name,
+            department_id: department_id,
+        };
+    }
+    showLoading();
+
+    // CALL DATABASE UPDATE DATA
+    $.ajax({
+        url: id ? "/teams/" + id : "/teams",
+        type: id ? "PUT" : "POST",
+        data: data,
+    })
+    .done(function (_data, _textStatus, _jqXHR) {
+        // SAVE SUCCESSFUL
+        $("#teamEditDialog").modal("hide");
+        showToast($(dialog), 2000, true);
+        $("#teamTable").bootstrapTable("refresh");
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        showError(jqXHR, 'team', 'teamEditDialog', 'errorDialog', 'teamForm');
+    })
+    .always(function () {
+        // HIDE LOADING
+        hideLoading();
+    });
+}
+
 /** ------------------
   *    indexNo
 --------------------- */
@@ -45,6 +94,7 @@ window.indexNo = function (_value, _row, index) {
  --------------------- */
 window.clearDialog = function () {
     $('#departmentName').val('');
+    $('#teamName').val('');
 }
 
 /** ------------------
@@ -165,6 +215,27 @@ window.saveDataEmployee = function () {
     });
 }
 
+/** ------------------
+ *  Load department list
+ --------------------- */
+ window.loadDeptListByComp = function(id) {
+    $.ajax({
+        type: 'GET',
+        url: '/departments/list/' + id,
+        success: function (res) {
+            let html = '<option value=""> </option>';
+            for (let e of res) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+
+            $('#teamDepartment').html(html);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ': ' + errorThrown);
+        },
+    });
+}
+
 /* ==============================
      jQuery
  ==============================*/
@@ -225,6 +296,32 @@ window.saveDataEmployee = function () {
         $("#employeeDepartmentId").val(rowData.id);
         $("#employeeName").val('');
         $("#employeeEmail").val('');
+    });
+
+    /*---------------------
+     * Show Registration Team Dialog
+     ---------------------- */
+     $("#teamEditDialog").on("show.bs.modal", function (e) {
+        clearDialog();
+        let id = $('#companyListID').val();
+        $("#teamEditDialog .modal-title.edit").hide();
+        $("#teamEditDialog .modal-title.add").show();
+        loadDeptListByComp(id)
+        setTimeout(function (){
+            $('#teamName').focus();
+        }, 100);
+    });
+
+    /*---------------------
+     * Hide Registration Team Dialog
+     ---------------------- */
+     dialogModalHide("#teamEditDialog", "#teamForm");
+
+    /*----------------------------------------------
+     * Save team data
+     -----------------------------------------------*/
+    $("#saveTeamBtn").on("click", function () {
+        window.saveData();
     });
 
     /** ------------------

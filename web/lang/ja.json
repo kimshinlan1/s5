@@ -171,9 +171,10 @@
     "Company_No": "会社コード",
     "Company_Name": "契約会社",
     "Company_Mode": "契約タイプ",
+    "Company_TechMap_Mode": "マルチスキルマップ",
     "Company_Free_Contract": "無償契約",
     "Company_Paid_Contract": "有償契約",
-    "Company_5S_Mode": "５Ｓ管理",
+    "Company_5S_Mode": "5S管理",
     "Please enter your company information": "契約会社を入力してください",
     "=====  BLOCK_COMPANY_END =====": "",
 

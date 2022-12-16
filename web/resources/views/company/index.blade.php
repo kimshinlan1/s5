@@ -17,12 +17,15 @@
     <table id="companyTable" class="table table-sm table-striped">
         <thead class="table-light">
             <tr style="text-align: center;">
-                <th data-field="id" data-visible="false"></th>
-                <th data-field="no" class="word-wrap">{{ __('Company_No') }}</th>
-                <th data-field="name" class="word-wrap">{{ __('Company_Name') }}</th>
+                <th data-field="id" data-visible="false" rowspan="2"></th>
+                <th data-field="no" class="word-wrap align-middle" rowspan="2">{{ __('Company_No') }}</th>
+                <th data-field="name" class="word-wrap align-middle" rowspan="2">{{ __('Company_Name') }}</th>
+                <th data-field="mode" data-formatter="formatterDataMode" colspan="2">{{ __('Company_Mode') }}</th>
+                <th data-width="130" data-formatter="companyTableActions" rowspan="2"></th>
+            </tr>
+            <tr style="text-align: center;">
                 <th data-field="mode" data-formatter="formatterDataMode">{{ __('Company_Mode') }}</th>
                 <th data-field="mode_5s" data-formatter="formatter5sMode">{{ __('Company_5S_Mode') }}</th>
-                <th data-width="130" data-formatter="companyTableActions"></th>
             </tr>
         </thead>
     </table>
@@ -63,40 +66,47 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- Techmap mode --}}
-                        <label for="companyMode" class="form-label"
-                            id="companyModeLabel"><strong>{{ __('Company_Mode') }}</strong></label>
-                        <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="companyMode_free" checked>
-                                <label class="form-check-label" for="companyMode_free">
-                                    <strong>{{ __('Company_Free_Contract') }}</strong>
-                                </label>
+
+                        {{-- Company Mode --}}
+                        <label for="companyMode" class="form-label"><strong>{{ __('Company_Mode') }}</strong></label>
+                        <div class="row mx-4">
+                            {{-- Techmap mode --}}
+                            <label for="companyMode" class="form-label"
+                                id="companyModeLabel"><strong>{{ __('Company_TechMap_Mode') }}</strong></label>
+                            <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="companyMode_free" checked>
+                                    <label class="form-check-label" for="companyMode_free">
+                                        <strong>{{ __('Company_Free_Contract') }}</strong>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="companyMode_isCharge">
+                                    <label class="form-check-label" for="companyMode_isCharge">
+                                        <strong>{{ __('Company_Paid_Contract') }}</strong>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="companyMode_isCharge">
-                                <label class="form-check-label" for="companyMode_isCharge">
-                                    <strong>{{ __('Company_Paid_Contract') }}</strong>
-                                </label>
+                            {{-- 5S mode --}}
+                            <label for="5sMode" class="form-label"
+                                id="5sModeLabel"><strong>{{ __('Company_5S_Mode') }}</strong></label>
+                            <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="5sMode" id="5sMode_free" checked>
+                                    <label class="form-check-label" for="5sMode_free">
+                                        <strong>{{ __('Company_Free_Contract') }}</strong>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="5sMode" id="5sMode_isCharge">
+                                    <label class="form-check-label" for="5sMode_isCharge">
+                                        <strong>{{ __('Company_Paid_Contract') }}</strong>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        {{-- 5S mode --}}
-                        <label for="5sMode" class="form-label"
-                            id="5sModeLabel"><strong>{{ __('Company_5S_Mode') }}</strong></label>
-                        <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="5sMode" id="5sMode_free" checked>
-                                <label class="form-check-label" for="5sMode_free">
-                                    <strong>{{ __('Company_Free_Contract') }}</strong>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="5sMode" id="5sMode_isCharge">
-                                <label class="form-check-label" for="5sMode_isCharge">
-                                    <strong>{{ __('Company_Paid_Contract') }}</strong>
-                                </label>
-                            </div>
-                        </div>
+
+
                     </form>
                 </div>
                 <div class="modal-footer">
