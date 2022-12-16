@@ -91,5 +91,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/teams/comp_list', [TeamController::class, 'getListCompanyId']);
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
         Route::get('/teams/dept_id', [TeamController::class, 'getTeamsByDepartmentId']);
+        Route::get('teams/list', [TeamController::class, 'list']);
     });
 });

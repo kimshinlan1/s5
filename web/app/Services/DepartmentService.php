@@ -156,7 +156,6 @@ class DepartmentService extends BaseService
      */
     public function getDataByCompany($id)
     {
-        $data = $this->model->where('company_id', $id)->orderBy('id')->get()->toArray();
-        return $data;
+        return $this->model->where('company_id', $id)->orderBy('id')->get()->toArray();
     }
 }

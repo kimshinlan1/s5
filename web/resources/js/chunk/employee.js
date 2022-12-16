@@ -34,7 +34,11 @@ window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get('PAGING')) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
-    params.company_id = $("#userCompanyId").val();
+    if($('#userMode').val() != CONFIG.get('ROLE_ADMIN_ID')) {
+        params.company_id = $('#userCompanyId').val();
+    } else {
+        params.company_id = $("#companySearchTable").find(":selected").val();
+    }
 
     return params;
 }
@@ -199,16 +203,7 @@ window.loadDeptListByComp = function(id) {
 
     $("#companySearchTable").on('change', function() {
         let compID = $("#companySearchTable").find(":selected").val();
-        $.ajax({
-            type: 'GET',
-            url: '/departments/list/{id}',
-            success: function (res) {
-                loadDeptListByComp(compID);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus + ': ' + errorThrown);
-            },
-        });
+        loadDeptListByComp(compID);
     });
 
     if ($("#errorDialog .modal-body .error-messages").length) {
@@ -270,8 +265,6 @@ window.loadDeptListByComp = function(id) {
      $("#employeeEditDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
-        let dept_id = $('#employeeDepartmentId').find(":selected").val();
-        loadTeamListByDept(dept_id, 'employeeTeamId');
          if (id) {
             let rowData = $("#employeeTable").bootstrapTable(
                  "getRowByUniqueId", id
@@ -280,7 +273,11 @@ window.loadDeptListByComp = function(id) {
              $("#employeeName").val(rowData.name);
              $("#employeeEmail").val(rowData.email);
              $("#employeeDepartmentId").val(rowData.department_id);
-             $("#employeeTeamId").val(rowData.team_id);
+             loadTeamListByDept(rowData.department_id, 'employeeTeamId');
+             setTimeout(function (){
+                $("#employeeTeamId").val(rowData.team_id);
+            }, 500);
+
              $("#employeeEditDialog .modal-title.add").hide();
              $("#employeeEditDialog .modal-title.edit").show();
          } else {
