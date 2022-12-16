@@ -13,6 +13,8 @@ let listDepartment = [];
  =============================*/
 window.teamTableActions = function (_value, row, _index) {
     return (
+        '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
+        row.id + '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog" >編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -41,6 +43,25 @@ window.queryParams = function (params) {
     }
     params.department_ids = department_ids;
     return params;
+}
+
+/*======================
+ * RELOAD DATA TEAM
+ =======================*/
+ window.reloadDataTeam = function (id) {
+    let data = {department_id: id};
+    $.ajax({
+        type: 'GET',
+        url: '/teams/dept_id',
+        data: data,
+        success: function (res) {
+            let html = '';
+            for (let e of res) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#employeeTeamId').html(html);
+        }
+    });
 }
 
 /*==================
@@ -78,6 +99,7 @@ window.saveData = function () {
     })
     .done(function (_data, _textStatus, _jqXHR) {
         // SAVE SUCCESSFUL
+        reloadDataTeam();
         $("#teamEditDialog").modal("hide");
         showToast($(dialog), 2000, true);
         $("#teamTable").bootstrapTable("refresh");
@@ -85,6 +107,43 @@ window.saveData = function () {
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
         showError(jqXHR, 'team', 'teamEditDialog', 'errorDialog', 'teamForm');
+    })
+    .always(function () {
+        // HIDE LOADING
+        hideLoading();
+    });
+}
+
+/*======================
+ * SAVE DATA EMPLOYEE
+ ========================*/
+window.saveDataEmployee = function () {
+    $('#employeeForm').removeClass('was-validated');
+    $('#employeeForm .form-control').removeClass('is-invalid');
+    $('#employeeForm .invalid-feedback').html('');
+
+    let data = {
+        name: $("#employeeName").val(),
+        email: $("#employeeEmail").val(),
+        team_id:  $("#employeeTeamId").val(),
+    };
+
+    showLoading();
+
+    // CALL DATABASE UPDATE DATA
+    $.ajax({
+        url: "/employee",
+        type: "POST",
+        data: data,
+    })
+    .done(function (_data, _textStatus, _jqXHR) {
+        // SAVE SUCCESSFUL
+        $("#employeeAddDialog").modal("hide");
+        showToast($('#successAddDialog'), 2000, true);
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        showError(jqXHR, 'employee', 'employeeAddDialog', 'errorDialog', 'employeeForm');
     })
     .always(function () {
         // HIDE LOADING
@@ -192,6 +251,27 @@ $(function () {
         });
     });
 
+    reloadDataTeam();
+
+    /*------------------------------
+     * SHOW DIALOG ADD EMPLOYEE
+     -------------------------------*/
+    $("#employeeAddDialog").on("show.bs.modal", function (e) {
+        let $button = $(e.relatedTarget);
+        let id = $button.data("id");
+        let rowData = $("#teamTable").bootstrapTable("getRowByUniqueId", id);
+        $("#employeeTeamId").val(rowData.id);
+        $("#employeeName").val('');
+        $("#employeeEmail").val('');
+    });
+
+    /*----------------------------------------------
+     * SAVE HANDLE EVENT WHEN CLICKING OK BUTTON
+     -----------------------------------------------*/
+    $("#saveEmployeeBtn").on("click", function () {
+        window.saveDataEmployee();
+    });
+
     /*---------------------
      * EDIT DIALOG SHOW
      ---------------------- */
@@ -256,6 +336,7 @@ $(function () {
         })
         .done(function (team, _textStatus, _jqXHR) {
             // DELETE SUCCESSFUL
+            reloadDataTeam();
             $("#teamTable").bootstrapTable("remove", {
                 field: "id",
                 values: [team.id],
@@ -280,6 +361,24 @@ $(function () {
     $("#teamName").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             window.saveData();
+        }
+    });
+
+    /*-------------------------------------------
+     * EVENT INPUT ENTER OF FIELD NAME EMPLOYEE
+     --------------------------------------------*/
+     $("#employeeName").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            window.saveDataEmployee();
+        }
+    });
+
+    /*-------------------------------------------
+     * EVENT INPUT ENTER OF FIELD EMAIL EMPLOYEE
+     --------------------------------------------*/
+    $("#employeeEmail").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            window.saveDataEmployee();
         }
     });
 });

@@ -55,13 +55,13 @@
             <th data-field="no">{{ __('Team_No') }}</th>
             <th data-field="name" class="word-wrap">{{ __('Common_Name') }}</th>
             <th data-field="department.name" class="word-wrap">{{ __('Department') }}</th>
-            <th data-width="130" data-formatter="teamTableActions"></th>
+            <th data-width="240" data-formatter="teamTableActions"></th>
         </tr>
     </thead>
 </table>
 <br />
 
-{{-- Add/Edit Dialog --}}
+{{-- Add/Edit Dialog Team --}}
 <button type="button" class="btn btn-primary" id="btnAdd">
     {{ __('Common_button_add') }}
 </button>
@@ -107,6 +107,52 @@
 
 {{-- Delete Dialog --}}
 @include('layouts.delete_dialog')
+
+{{-- Add Dialog Employee--}}
+<div id="employeeAddDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title add">{{ __('Common_button_add') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="form-label">{{ __('Employee_Input_Information_Label') }}</h6>
+                <br>
+                <form id="employeeForm">
+                    <input type="hidden" name="employeeId" class="form-control" id="employeeId" value="">
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="employeeName" class="form-label">{{ __('Employee_Name') }}</label>
+                            <div class="input-group has-validation">
+                                <input type="text" name="employeeName" class="form-control" id="employeeName" value="" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeEmail" class="form-label">{{ __('Common_Email') }}</label>
+                            <div class="input-group has-validation">
+                                <input type="text" name="employeeEmail" class="form-control" id="employeeEmail" value="" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeTeamId" class="form-label">{{ __('Team') }}</label>
+                            <div class="input-group has-validation">
+                                <select class="form-select form-select-arrow" aria-label="Team select" id="employeeTeamId" style="text-align-last: center;">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveEmployeeBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <input type="hidden" id="totalTeam" name="totalTeam" value=""/>
 @endsection
