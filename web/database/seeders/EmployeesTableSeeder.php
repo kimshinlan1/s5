@@ -30,6 +30,7 @@ class EmployeesTableSeeder extends Seeder
                 'employee_order' => $i,
                 'department_id' => 1,
                 'team_id' => 1,
+                'employee_order' => $count,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -45,23 +46,8 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 2,
-                'team_id' => 2,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
-            $data[] = $e;
-        }
-
-        $max = 10;
-        for ($i = 0; $i < $max; $i++) {
-            ++$count;
-            $e = [
-                'no' => 'EMPL000' . (string)$count,
-                'name' => $faker->name(),
-                'email' => $faker->safeEmail,
-                'employee_order' => $i,
-                'department_id' => 3,
-                'team_id' => 3,
+                'team_id' => 4,
+                'employee_order' => $count,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -77,55 +63,8 @@ class EmployeesTableSeeder extends Seeder
                 'email' => $faker->safeEmail,
                 'employee_order' => $i,
                 'department_id' => 4,
-                'team_id' => 4,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
-            $data[] = $e;
-        }
-
-        $max = 25;
-        for ($i = 0; $i < $max; $i++) {
-            ++$count;
-            $e = [
-                'no' => 'EMPL000' . (string)$count,
-                'name' => $faker->name(),
-                'email' => $faker->safeEmail,
-                'employee_order' => $i,
-                'department_id' => 5,
                 'team_id' => 5,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
-            $data[] = $e;
-        }
-
-        $max = 30;
-        for ($i = 0; $i < $max; $i++) {
-            ++$count;
-            $e = [
-                'no' => 'EMPL000' . (string)$count,
-                'name' => $faker->name(),
-                'email' => $faker->safeEmail,
-                'employee_order' => $i,
-                'department_id' => 6,
-                'team_id' => 6,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
-            $data[] = $e;
-        }
-
-        $max = 35;
-        for ($i = 0; $i < $max; $i++) {
-            ++$count;
-            $e = [
-                'no' => 'EMPL000' . (string)$count,
-                'name' => $faker->name(),
-                'email' => $faker->safeEmail,
-                'employee_order' => $i,
-                'department_id' => 7,
-                'team_id' => 7,
+                'employee_order' => $count,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -135,4 +74,3 @@ class EmployeesTableSeeder extends Seeder
         DB::table($this->tableName)->insert($data);
     }
 }
-
