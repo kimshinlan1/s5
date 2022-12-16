@@ -6,11 +6,15 @@ use App\Common\Constant;
 use Illuminate\Http\Request;
 use App\Services\TeamService;
 use App\Http\Requests\TeamRequest;
+use App\Services\EmployeeService;
 
 class TeamController extends Controller
 {
     /* @var team_service */
     private $service;
+
+    /* @var EmployeeService */
+    private $serviceEmployee;
 
     public function __construct(TeamService $service)
     {
@@ -25,6 +29,23 @@ class TeamController extends Controller
     public function index()
     {
         return view('teams.index');
+    }
+
+      /**
+     * Returns resource as a list.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        $data = $this->service->getList($request);
+        $arrTeam = $this->getFinalList($data->getCollection());
+        return response()->json([
+            'total' => $data->total(),
+            'rows' => $arrTeam,
+        ]);
     }
 
     /**
@@ -137,5 +158,20 @@ class TeamController extends Controller
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
             ], 500);
         }
+    }
+
+    /**
+     * Returns final list.
+     *
+     * @param  obj  $arr
+     * @return Array
+     */
+    public function getFinalList($arr)
+    {
+        foreach ($arr as $key=>$item) {
+            $cntEmployees = $this->serviceEmployee->getNumberEmployeeByTeam($item['id']);
+            $arr[$key]['employee_cnt'] = $cntEmployees;
+        }
+        return $arr;
     }
 }

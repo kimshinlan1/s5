@@ -43,7 +43,7 @@ class TeamService extends BaseService
     {
         $result = null;
         $team = new Team($request->all());
-        $team->no = Utility::generateUniqueId(new Team(), "no", "TE", 5);
+        $team->no = Utility::generateUniqueId(new Team(), "no", "TEAM", 5);
         $result['valid'] = true;
         $team->save();
         return $result;
