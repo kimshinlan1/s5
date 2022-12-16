@@ -168,7 +168,7 @@ class TeamController extends Controller
      */
     public function getFinalList($arr)
     {
-        foreach ($arr as $key=>$item) {
+        foreach ($arr as $key => $item) {
             $cntEmployees = $this->serviceEmployee->getNumberEmployeeByTeam($item['id']);
             $arr[$key]['employee_cnt'] = $cntEmployees;
         }

@@ -84,6 +84,7 @@
                 <br>
                 <form id="employeeForm">
                     <input type="hidden" name="employeeId" class="form-control" id="employeeId" value="">
+                    <input type="hidden" name="deptd" class="form-control" id="deptd" value="">
                     <div class="row">
                         <div class="mb-3">
                             <label for="employeeName" class="form-label">{{ __('Employee_Name') }}</label>
