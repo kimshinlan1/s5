@@ -19,6 +19,8 @@ class EmployeesTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         $data = [];
+
+        // Kaizenbase
         $max = 1;
         $count = 0;
         for ($i = 0; $i < $max; $i++) {
@@ -37,6 +39,7 @@ class EmployeesTableSeeder extends Seeder
             $data[] = $e;
         }
 
+        // 会社A
         $max = 5;
         for ($i = 0; $i < $max; $i++) {
             ++$count;
@@ -54,6 +57,7 @@ class EmployeesTableSeeder extends Seeder
             $data[] = $e;
         }
 
+        // 会社B
         $max = 20;
         for ($i = 0; $i < $max; $i++) {
             ++$count;
