@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SkillMapController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\TeamController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SkillMapController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,5 +93,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
         Route::get('/teams/dept_id', [TeamController::class, 'getTeamsByDepartmentId']);
         Route::get('teams/list', [TeamController::class, 'list']);
+
+        // Show log
+        Route::get('/show_log', [Controller::class, 'showLog']);
     });
 });
