@@ -35,7 +35,7 @@ window.queryParams = function (params) {
 /*==================
  * Save team data
  ===================*/
- window.saveData = function () {
+ window.saveTeamData = function () {
     $('#teamForm').removeClass('was-validated');
     $('#teamForm .form-control').removeClass('is-invalid');
     $('#teamForm .invalid-feedback').html('');
@@ -304,7 +304,7 @@ window.saveDataEmployee = function () {
      * Save team data
      -----------------------------------------------*/
     $("#saveTeamBtn").on("click", function () {
-        window.saveData();
+        window.saveTeamData();
     });
 
     /** ------------------

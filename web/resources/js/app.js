@@ -448,7 +448,6 @@ window.addTestValue = function (parent_class){
             if (isTriggerChange) {
                 elem.change();
             }
-
         }
     });
 }
