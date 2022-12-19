@@ -105,7 +105,7 @@ class Controller extends BaseController
             ], 500);
         } catch (Exception $e) {
             return response()->json([
-                'errors' => __("Common_System_Error")
+                'errors' => __("Common_Error_System")
             ], 500);
         }
     }
