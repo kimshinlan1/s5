@@ -105,22 +105,21 @@ $(function () {
    *   Delete dialog show
    --------------------- */
     $("#patternListDeleteDialog").on("show.bs.modal", function (e) {
-
+        showDialogDelete('#patternListTable', '#deletePatternListId', '#patternListDeleteDialog', e);
     });
 
     /** ------------------
     *    Delete
     --------------------- */
-    $("#deleteDepartmentBtn").on("click", function () {
+    $("#deletePatternListBtn").on("click", function () {
         showLoading();
-        let id = $("#deleteDepartmentId").val();
+        let id = $("#deletePatternListId").val();
         $.ajax({
-            url: "/departments/" + id,
+            url: "/pattern_list/" + id,
             type: "DELETE",
         })
             .done(function (_department, _textStatus, _jqXHR) {
-                reloadDataDepartment();
-                $("#departmentTable").bootstrapTable("refresh");
+                $("#patternListTable").bootstrapTable("refresh");
                 showToast($("#toast2"), 3000, true);
             })
             .fail(function (jqXHR, _textStatus, _errorThrown) {
@@ -129,7 +128,7 @@ $(function () {
             })
             .always(function () {
                 hideLoading();
-                $("#departmentDeleteDialog").modal("hide");
+                $("#patternListDeleteDialog").modal("hide");
             });
     });
 });
