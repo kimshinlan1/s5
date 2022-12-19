@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -82,6 +84,29 @@ class Controller extends BaseController
             return abort(Response::HTTP_NOT_FOUND, $message);
         } elseif ($code == 500) {
             return abort(Response::HTTP_INTERNAL_SERVER_ERROR, $message);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $data = $this->service->destroy($id);
+            return response()->json($data);
+        } catch (QueryException $e) {
+            return response()->json([
+                'errors' => __("Common_Error_SQL_Exception")
+            ], 500);
+        } catch (Exception $e) {
+            return response()->json([
+                'errors' => __("Common_System_Error")
+            ], 500);
         }
     }
 

@@ -54,7 +54,7 @@ class UserController extends Controller
             $pwd = $userCollection[$x]['password'];
             $descript = Crypt::decryptString($pwd);
             $userCollection[$x]['password'] = $descript;
-        };
+        }
 
         return response()->json([
             'total' => $data->total(),
@@ -121,9 +121,13 @@ class UserController extends Controller
         try {
             $data = $this->service->destroy($id);
             return response()->json($data);
+        } catch (QueryException $e) {
+            return response()->json([
+                'errors' => __("Common_Error_SQL_Exception")
+            ], 500);
         } catch (\Exception $e) {
             return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
+                'errors' => __("Common_System_Error")
             ], 500);
         }
     }

@@ -19,6 +19,8 @@
     "Logout": "ログアウト",
     "Common_Back": "戻る",
     "Common_Confirm": "確認",
+    "Common_Error_SQL_Exception": "SQLエラーが発生しました",
+    "Common_System_Error": "内部でエラーが発生しました。しばらく待ってから、もう一度操作してください。",
     "===== BLOCK_COMMON_END =====": "",
 
     "===== BLOCK_ERROR_MESSAGE_START =====": "",

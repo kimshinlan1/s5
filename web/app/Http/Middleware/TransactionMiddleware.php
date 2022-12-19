@@ -35,7 +35,7 @@ class TransactionMiddleware
                 DB::rollBack();
                 LogUtil::setClassName($class);
                 LogUtil::logError($function, $e->getMessage());
-                return (new Controller())->responseException(__('Error_SQL_Not_valid'));
+                return (new Controller())->responseException(__('Common_Error_SQL_Exception'));
             } catch (\Exception $e) {
                 DB::rollBack();
                 LogUtil::setClassName($class);
