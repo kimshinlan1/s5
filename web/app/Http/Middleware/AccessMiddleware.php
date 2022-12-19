@@ -32,7 +32,7 @@ class AccessMiddleware
             } catch (QueryException $e) {
                 LogUtil::setClassName($class);
                 LogUtil::logError($function, $e->getMessage());
-                $response = (new Controller())->responseException(__('Error_SQL_Not_valid'));
+                $response = (new Controller())->responseException(__('Common_Error_SQL_Exception'));
             } catch (\Exception $e) {
                 LogUtil::setClassName($class);
                 LogUtil::logError($function, $e->getMessage());

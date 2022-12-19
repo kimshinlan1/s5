@@ -54,7 +54,7 @@ class UserController extends Controller
             $pwd = $userCollection[$x]['password'];
             $descript = Crypt::decryptString($pwd);
             $userCollection[$x]['password'] = $descript;
-        };
+        }
 
         return response()->json([
             'total' => $data->total(),
@@ -102,25 +102,6 @@ class UserController extends Controller
             return response()->json([
                 'errors' => $e->getMessage()
             ], 500);
-        } catch (\Exception $e) {
-            return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
-            ], 500);
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        try {
-            $data = $this->service->destroy($id);
-            return response()->json($data);
         } catch (\Exception $e) {
             return response()->json([
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])

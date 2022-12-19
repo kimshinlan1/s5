@@ -2,6 +2,7 @@
 
 namespace App\Common;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Utility
@@ -22,10 +23,18 @@ class Utility
             $len = 3;
         }
 
-        $max = $model::max($field);
+        // Get max value
+        if ($prefix) {
+            $sql = DB::raw(" Max(Convert(REPLACE($field, '$prefix', ''), INT)) as max");
+            $max = $model::select($sql)->value('max');
+        } else {
+            $sql = DB::raw(" Max(Convert($field, INT)) as max");
+            $max = $model::select($sql)->value('max');
+        }
+
+        // Init new
         if ($max) {
-            $number = substr($max, -5);
-            $generateUniqueId = str_pad(($number + 1), $len, '0', STR_PAD_LEFT);
+            $generateUniqueId = str_pad(($max + 1), $len, '0', STR_PAD_LEFT);
         } else {
             $generateUniqueId = str_pad(1, $len, '0', STR_PAD_LEFT);
         }

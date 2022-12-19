@@ -18,26 +18,37 @@ class TeamsTableSeeder extends Seeder
     {
         $data = [
             [
-                'id' => 1,
                 'no' => 'TEAM00001',
-                'name' => '係1',
+                'name' => 'Kaizen_係1',
                 'department_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'id' => 2,
                 'no' => 'TEAM00002',
-                'name' => '係2',
+                'name' => 'Kaizen_係2',
                 'department_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'id' => 3,
                 'no' => 'TEAM00003',
-                'name' => '係3',
+                'name' => 'Kaizen_係3',
                 'department_id' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'no' => 'TEAM00004',
+                'name' => '会社A_係1',
+                'department_id' => 2,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'no' => 'TEAM00005',
+                'name' => '会社B_係1',
+                'department_id' => 4,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
