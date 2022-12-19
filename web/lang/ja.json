@@ -183,5 +183,13 @@
     "Team_Management": "各係管理",
     "Team_No": "係ID",
     "Team_please_enter_your_team_information": "係名を入力してください。",
-    "=====  BLOCK_TEAM_END =====": ""
+    "=====  BLOCK_TEAM_END =====": "",
+
+    "=====  BLOCK_PATTERN_LIST_START =====": "",
+    "Pattern_List": "５Sチェックリストパターン一覧 ",
+    "Pattern_List_Customer": "５Sチェックリストパターン一覧 (部門)",
+    "Pattern_ID": "チェックリストパターンID",
+    "Pattern_Name": "チェックリストパターン名",
+    "Pattern_Note": "チェックリストNote",
+    "=====  BLOCK_PATTERN_LIST_END =====": ""
 }
