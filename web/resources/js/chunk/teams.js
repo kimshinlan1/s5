@@ -161,21 +161,8 @@ $(function () {
      -----------------------------------*/
     if ($('#companyListID')) {
         // GET NAME AND LIST OF COMPANY
-        $.ajax({
-            type: 'GET',
-            url: '/company/list',
-            success: function (res) {
-                let html = '';
-                if (res.currentCompany.mode == 0) {
-                    for (let e of res.rows) {
-                        html += '<option value="' + e.id + '">' + e.name + '</option>';
-                    }
-                } else {
-                    html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
-                }
-                $('#companyListID').html(html);
-            }
-        });
+        loadCompanyList($('#companyListID'));
+
 
         // ONCHANGE COMPANY => UPDATE DEPARTMENT LIST
         $('#companyListID').on('change',function () {

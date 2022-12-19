@@ -24,8 +24,8 @@
                 <th data-width="130" data-formatter="companyTableActions" rowspan="2"></th>
             </tr>
             <tr style="text-align: center;">
-                <th data-field="mode" data-formatter="formatterDataMode">{{ __('Company_Mode') }}</th>
-                <th data-field="mode_5s" data-formatter="formatter5sMode">{{ __('Company_5S_Mode') }}</th>
+                <th data-field="mode" data-width="240" data-formatter="formatterDataMode">{{ __('Company_TechMap_Mode') }}</th>
+                <th data-field="mode_5s" data-width="240" data-formatter="formatter5sMode">{{ __('Company_5S_Mode') }}</th>
             </tr>
         </thead>
     </table>
@@ -73,8 +73,8 @@
                             {{-- Techmap mode --}}
                             <label for="companyMode" class="form-label"
                                 id="companyModeLabel"><strong>{{ __('Company_TechMap_Mode') }}</strong></label>
-                            <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
-                                <div class="form-check">
+                            <div class="d-flex justify-content-between" style="width: 350px; padding-left: 20px;" >
+                                <div class="form-check" style="padding-left: 3rem;">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="companyMode_free" checked>
                                     <label class="form-check-label" for="companyMode_free">
                                         <strong>{{ __('Company_Free_Contract') }}</strong>
@@ -90,8 +90,8 @@
                             {{-- 5S mode --}}
                             <label for="5sMode" class="form-label"
                                 id="5sModeLabel"><strong>{{ __('Company_5S_Mode') }}</strong></label>
-                            <div class="d-flex justify-content-between" style="width: 300px; padding-left: 20px;" >
-                                <div class="form-check">
+                            <div class="d-flex justify-content-between" style="width: 350px; padding-left: 20px;" >
+                                <div class="form-check" style="padding-left: 3rem;">
                                     <input class="form-check-input" type="radio" name="5sMode" id="5sMode_free" checked>
                                     <label class="form-check-label" for="5sMode_free">
                                         <strong>{{ __('Company_Free_Contract') }}</strong>

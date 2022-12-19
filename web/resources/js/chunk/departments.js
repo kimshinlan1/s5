@@ -26,7 +26,7 @@ window.departmentTableActions = function (_value, row, _index) {
   *    queryParams
 --------------------- */
 window.queryParams = function (params) {
-    params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
+    params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get("PAGING")) + 1 : 1;
     params.company_id = $('#companyListID').val();
 
     return params;
@@ -240,24 +240,7 @@ window.saveDataEmployee = function () {
      jQuery
  ==============================*/
  $(function () {
-    $.ajax({
-        type: 'GET',
-        url: '/company/list',
-        success: function (res) {
-            let html = '';
-            if(res.currentCompany.mode == 0) {
-                for (let e of res.rows) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
-                }
-            }
-            else {
-                html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
-            }
-            $('#companyListID').html(html);
-
-            $('#companyListID').change();
-        }
-    });
+    loadCompanyList($('#companyListID'), true);
 
     $("#departmentTable").bootstrapTable({
         pagination: "true",

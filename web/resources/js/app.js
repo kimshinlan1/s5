@@ -12,6 +12,7 @@ window.CONFIG = (function () {
     let private_const = {
         'PAGING': 10,
         'TIME_ZONE': 'Asia/Tokyo',
+        'KAIZENBASE_MODE': 0,
         'ROLE_ADMIN_ID': 1,
         'ROLE_USER_ID': 2,
         'GRADE_YEAR': 6,
@@ -424,4 +425,30 @@ window.addTestValue = function (parent_class){
             $(this).val(1);
         });
     })
+}
+
+/** ------------------
+ *    Load Company List
+ --------------------- */
+ window.loadCompanyList = function (elem, isTriggerChange = false){
+    $.ajax({
+        type: 'GET',
+        url: '/company/list',
+        success: function (res) {
+            let html = '';
+            if(res.currentCompany.mode == CONFIG.get("KAIZENBASE_MODE")) {
+                for (let e of res.rows) {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+            }
+            else {
+                html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
+            }
+            elem.html(html);
+            if (isTriggerChange) {
+                elem.change();
+            }
+
+        }
+    });
 }
