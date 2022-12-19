@@ -108,27 +108,4 @@ class UserController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        try {
-            $data = $this->service->destroy($id);
-            return response()->json($data);
-        } catch (QueryException $e) {
-            return response()->json([
-                'errors' => __("Common_Error_SQL_Exception")
-            ], 500);
-        } catch (\Exception $e) {
-            return response()->json([
-                'errors' => __("Common_System_Error")
-            ], 500);
-        }
-    }
 }
