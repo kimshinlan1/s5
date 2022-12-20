@@ -6,7 +6,7 @@
         @endif
         <a class="list-group-item list-group-item-action @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Management') }}</a>
         <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
-        <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
+        <a class="list-group-item list-group-item-action @if(request()->path()==='pattern_detail')active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>
         <a class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
     </div>
 </div>

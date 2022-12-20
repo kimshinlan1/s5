@@ -191,5 +191,25 @@
     "Team_Management": "各係管理",
     "Team_No": "係ID",
     "Team_please_enter_your_team_information": "係名を入力してください。",
-    "=====  BLOCK_TEAM_END =====": ""
+    "=====  BLOCK_TEAM_END =====": "",
+
+    "=====  BLOCK_PATTERN_DETAIL_START =====": "",
+    "Pattern_Detail_5S_Checklist_Pattern_Input": "5Sチェックリストパターン入力",
+    "Pattern_Detail_Selection_Of_Improvement_Points": "改善ポイントの選択：",
+    "Pattern_Detail_Name": "パターン名",
+    "Pattern_Detail_Explanation": "説明",
+    "Pattern_Detail_S1": "S1: 整理",
+    "Pattern_Detail_S2": "S2: 整頓",
+    "Pattern_Detail_S3": "S3: 清掃",
+    "Pattern_Detail_S4": "S4: 清潔",
+    "Pattern_Detail_S5": "S5: 躾",
+    "Pattern_Detail_Area": "No",
+    "Pattern_Detail_Location": "点検箇所",
+    "Pattern_Detail_Point": "ﾎﾟｲﾝﾄ",
+    "Pattern_Detail_Level_1": "最悪(ﾚﾍﾞﾙ1)",
+    "Pattern_Detail_Level_2": "悪い(ﾚﾍﾞﾙ2)",
+    "Pattern_Detail_Level_3": "普通(ﾚﾍﾞﾙ3)",
+    "Pattern_Detail_Level_4": "良い(ﾚﾍﾞﾙ4)",
+    "Pattern_Detail_Level_5": "大変良い(ﾚﾍﾞﾙ5)",
+    "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }
