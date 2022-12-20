@@ -19,6 +19,13 @@
     "Logout": "ログアウト",
     "Common_Back": "戻る",
     "Common_Confirm": "確認",
+    "Common_Error_SQL_Exception": "SQLエラーが発生しました",
+    "Common_Error_System": "内部でエラーが発生しました。しばらく待ってから、もう一度操作してください。",
+    "Common_Error_Required_Input": "必須項目を入力してください",
+    "Common_Error_No_Selected_Items": "実行する項目が選択されていません",
+    "Common_Save_Success": "保存しました。",
+    "Common_Delete_Success": "削除しました",
+    "Common_Confirm_Message": "本気ですか？",
     "===== BLOCK_COMMON_END =====": "",
 
     "===== BLOCK_ERROR_MESSAGE_START =====": "",
