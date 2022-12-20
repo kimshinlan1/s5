@@ -17,7 +17,7 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ auth()->user()->name }} ({{ Constant::MODE_NAME[auth()->user()->getModeUser()] }})
+                    {{ auth()->user()->name }}
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
                         class="bi bi-gear-fill" viewBox="0 0 16 16">
                         <path

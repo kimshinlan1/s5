@@ -14,7 +14,7 @@ let listDepartment = [];
 window.teamTableActions = function (_value, row, _index) {
     return (
         '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
-        row.id + '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
+        row.department_id + '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog" >編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -125,7 +125,8 @@ window.saveDataEmployee = function () {
     let data = {
         name: $("#employeeName").val(),
         email: $("#employeeEmail").val(),
-        team_id:  $("#employeeTeamId").val(),
+        team_id: $("#employeeTeamId").val(),
+        department_id: $("#deptd").val(),
     };
 
     showLoading();
@@ -160,21 +161,8 @@ $(function () {
      -----------------------------------*/
     if ($('#companyListID')) {
         // GET NAME AND LIST OF COMPANY
-        $.ajax({
-            type: 'GET',
-            url: '/company/list',
-            success: function (res) {
-                let html = '';
-                if (res.currentCompany.mode == 0) {
-                    for (let e of res.rows) {
-                        html += '<option value="' + e.id + '">' + e.name + '</option>';
-                    }
-                } else {
-                    html += '<option value="' + res.currentCompany.id + '" hidden>' + res.currentCompany.name + '</option>';
-                }
-                $('#companyListID').html(html);
-            }
-        });
+        loadCompanyList($('#companyListID'));
+
 
         // ONCHANGE COMPANY => UPDATE DEPARTMENT LIST
         $('#companyListID').on('change',function () {
@@ -251,16 +239,14 @@ $(function () {
         });
     });
 
-    reloadDataTeam();
-
     /*------------------------------
      * SHOW DIALOG ADD EMPLOYEE
      -------------------------------*/
     $("#employeeAddDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
-        let rowData = $("#teamTable").bootstrapTable("getRowByUniqueId", id);
-        $("#employeeTeamId").val(rowData.id);
+        reloadDataTeam(id);
+        $("#deptd").val(id);
         $("#employeeName").val('');
         $("#employeeEmail").val('');
     });
