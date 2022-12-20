@@ -39,4 +39,23 @@ class PatternService extends BaseService
             return DB::table('dept_patterns')->whereIn('id', $ids)->orderBy('id')->paginate($limit);
         }
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return object
+     */
+    public function destroyPatternByMode($id)
+    {
+        if (auth()->user()->company->mode == Constant::MODE['OWNER_COMPANY']) {
+            $data = $this->model::find($id);
+            $data->delete();
+        } else {
+            $data = DB::table('dept_patterns')->where('id', $id);
+            $data->delete();
+        }
+
+        return $data;
+    }
 }

@@ -12,14 +12,19 @@
  *    Actions
  --------------------- */
 window.patternListTableActions = function (_value, row, _index) {
-    return (
+    let buttons = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
+    || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
+    (
         '<button style="margin-right: 10px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id +
         '" data-bs-toggle="modal" data-bs-target="" >編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
         row.id +
         '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
-    );
+    ) : ''
+
+
+    return buttons;
 };
 
 /** ------------------
@@ -131,4 +136,11 @@ $(function () {
                 $("#patternListDeleteDialog").modal("hide");
             });
     });
+
+    // Handle click on row event
+    $('#patternListTable').on('click-row.bs.table', function (row, $element, field) {
+        // Redirect to 5S pattern preview page
+        console.log($element);
+    })
+
 });

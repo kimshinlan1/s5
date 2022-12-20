@@ -28,19 +28,21 @@
     >
     <thead class="table-light">
         <tr style="text-align: center;">
-            <th data-align="center" data-field="id">{{ __('Pattern_ID') }}</th>
-            <th data-field="name" class="word-wrap">{{ __('Pattern_Name') }}</th>
+            <th data-align="center" data-width="200" data-field="id">{{ __('Pattern_ID') }}</th>
+            <th data-field="name" data-width="350" class="word-wrap">{{ __('Pattern_Name') }}</th>
             <th data-field="note" class="word-wrap">{{ __('Pattern_Note') }}</th>
-            <th data-width="240" data-formatter="patternListTableActions"></th>
+            <th data-width="120" data-formatter="patternListTableActions"></th>
         </tr>
     </thead>
 </table>
 <br />
 
 {{-- Button Add/Edit Dialog --}}
+@if ((Auth::user()->isAdmin()) || (Auth::user()->isUser() && !Auth::user()->is5SModeFree() ))
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="">
     {{ __('Common_button_add') }}
 </button>
+@endif
 
 {{-- Delete Dialog --}}
 <div id="patternListDeleteDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
