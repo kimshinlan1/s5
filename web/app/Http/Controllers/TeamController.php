@@ -40,12 +40,7 @@ class TeamController extends Controller
      */
     public function list(Request $request)
     {
-        $data = $this->service->getList($request);
-        $arrTeam = $this->getFinalList($data->getCollection());
-        return response()->json([
-            'total' => $data->total(),
-            'rows' => $arrTeam,
-        ]);
+        return $this->service->getList($request);
     }
 
     /**
@@ -158,20 +153,5 @@ class TeamController extends Controller
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
             ], 500);
         }
-    }
-
-    /**
-     * Returns final list.
-     *
-     * @param  obj  $arr
-     * @return Array
-     */
-    public function getFinalList($arr)
-    {
-        foreach ($arr as $key=>$item) {
-            $cntEmployees = $this->serviceEmployee->getNumberEmployeeByTeam($item['id']);
-            $arr[$key]['employee_cnt'] = $cntEmployees;
-        }
-        return $arr;
     }
 }

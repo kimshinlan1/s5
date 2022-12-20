@@ -240,7 +240,7 @@ $(function () {
         }
         setTimeout(function (){
             $('#companyNo').focus();
-        }, 1000);
+        }, 100);
     });
 
     $("#companyEditDialog input").keypress(function (e) {

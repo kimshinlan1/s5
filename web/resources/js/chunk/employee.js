@@ -287,7 +287,7 @@ window.loadDeptListByComp = function(id) {
          }
         setTimeout(function (){
             $('#employeeName').focus();
-        }, 1000);
+        }, 100);
      });
 
     /** ------------------

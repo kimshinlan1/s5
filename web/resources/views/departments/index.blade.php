@@ -162,4 +162,8 @@
         </div>
     </div>
 </div>
+
+{{-- Registration Dialog --}}
+@include('layouts.common_dialog')
+
 @endsection

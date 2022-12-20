@@ -35,11 +35,23 @@
             <td>{{$user->company->name}}</td>
         </tr>
         <tr id="trUserCompanyMode" data-value="{{$user->company->mode}}">
-            <th scope="row">{{__('Company_mode')}}</th>
+            <th scope="row" colspan="2" class="align-middle">{{__('Company_mode')}}</th>
+        </tr>
+        <tr id="trUserCompanyMode" data-value="{{$user->company->mode}}">
+            <td style="padding-left: 3rem;">{{__('Company_TechMap_Mode')}}</td>
             <td>
                 @if($user->company->mode == Constant::MODE['OWNER_COMPANY']) {{Constant::MODE_NAME['0']}}
                 @elseif ($user->company->mode == Constant::MODE['IS_CHARGE']) {{Constant::MODE_NAME['1']}}
                 @elseif ($user->company->mode == Constant::MODE['FREE']) {{Constant::MODE_NAME['2']}}
+                @endif
+            </td>
+        </tr>
+        <tr id="trUserCompanyMode" data-value="{{$user->company->mode}}">
+            <td style="padding-left: 3rem;">{{__('Company_5S_Mode')}}</td>
+            <td>
+                @if($user->company->mode_5s == Constant::MODE['OWNER_COMPANY']) {{Constant::MODE_NAME['0']}}
+                @elseif ($user->company->mode_5s == Constant::MODE['IS_CHARGE']) {{Constant::MODE_NAME['1']}}
+                @elseif ($user->company->mode_5s == Constant::MODE['FREE']) {{Constant::MODE_NAME['2']}}
                 @endif
             </td>
         </tr>

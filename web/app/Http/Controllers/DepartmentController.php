@@ -153,7 +153,7 @@ class DepartmentController extends Controller
      */
     public function getFinalList($arr)
     {
-        foreach ($arr as $key=>$item) {
+        foreach ($arr as $key => $item) {
             $cntEmployees = $this->serviceEmployee->getNumberEmployee($item['id']);
             $arr[$key]['employee_cnt'] = $cntEmployees;
         }
