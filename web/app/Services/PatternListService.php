@@ -8,7 +8,7 @@ use App\Models\Pattern;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PatternService extends BaseService
+class PatternListService extends BaseService
 {
     /* @var Model */
     private $model;

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PatternService;
+use App\Services\PatternListService;
 use Illuminate\Http\Request;
 
-class PatternController extends Controller
+class PatternListController extends Controller
 {
     /* @var patternservice */
     private $service;
 
-    public function __construct(PatternService $service)
+    public function __construct(PatternListService $service)
     {
         $this->service = $service;
     }

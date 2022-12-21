@@ -101,8 +101,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('teams/list', [TeamController::class, 'list']);
 
         // Pattern_list
-        Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::get('/pattern_list/patern_list_by_company', [PatternController::class, 'getPatternByCompanyId']);
+        Route::resource('/pattern_list', PatternListController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('/pattern_list/patern_list_by_company', [PatternListController::class, 'getPatternByCompanyId']);
 
         // Show log
         Route::get('/show_log', [Controller::class, 'showLog']);
