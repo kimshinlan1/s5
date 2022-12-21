@@ -26,7 +26,7 @@ class PatternDetailController extends Controller
      */
     public function index()
     {
-        return view('pattern.pattern_detail');
+        return view('pattern.pattern_detail_2');
     }
 
     /**
@@ -134,5 +134,107 @@ class PatternDetailController extends Controller
     public function getByCompany($id)
     {
         return $this->service->getDataByCompany($id);
+    }
+
+    /**
+     * generate area html
+     *
+     */
+    public function generateAreaHtml(Request $request)
+    {
+
+        $selected5s = json_decode($request->get('selected_5s'));
+        $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
+
+        // Add New
+        if ($request->get('new')) {
+            foreach ($selected5s as $key => $method) {
+                $data[] = [
+                    "area_id" => "new" . $totalRows,
+                    "area_name" => "",
+                    "location_id" => "new" . $totalRows,
+                    "location_name" => "",
+                    "count_locations" => 1,
+                    "5s" => Constant::NAME_5S[$method],
+                    "level_1" => "",
+                    "level_2" => "",
+                    "level_3" => "",
+                    "level_4" => "",
+                    "level_5" => "",
+                ];
+            }
+
+        } elseif ($request->get('remove')) {
+            $data = json_decode($request->get('rows'), true);
+// dd($data);
+
+
+        } else {
+            // todo: Get database for edit follow by below structure
+            //$data = [];
+
+            // Sample structure
+            $data = [
+                0 => [
+                    "area_id" => 1,
+                    "area_name" => "area",
+                    "location_id" => 1,
+                    "location_name" => "location",
+                    "count_locations" => 1, // count current locations in 1 area
+                    "5s" => "整理", // get name from constant
+                    "level_1" => "level_1",
+                    "level_2" => "level_2",
+                    "level_3" => "level_3",
+                    "level_4" => "level_4",
+                    "level_5" => "level_5",
+                ],
+                1 => [
+                    "area_id" => 1,
+                    "area_name" => "area",
+                    "location_id" => 1,
+                    "location_name" => "location",
+                    "count_locations" => 1, // count current locations in 1 area
+                    "5s" => "整頓", // get name from constant
+                    "level_1" => "level_1",
+                    "level_2" => "level_2",
+                    "level_3" => "level_3",
+                    "level_4" => "level_4",
+                    "level_5" => "level_5",
+                ],
+                2 => [
+                    "area_id" => 2,
+                    "area_name" => "area2",
+                    "location_id" => 2,
+                    "location_name" => "location",
+                    "count_locations" => 1, // count current locations in 1 area
+                    "5s" => "整理",
+                    "level_1" => "level_1",
+                    "level_2" => "level_2",
+                    "level_3" => "level_3",
+                    "level_4" => "level_4",
+                    "level_5" => "level_5",
+                ],
+                3 => [
+                    "area_id" => 2,
+                    "area_name" => "area",
+                    "location_id" => 2,
+                    "location_name" => "location",
+                    "count_locations" => 1, // count current locations in 1 area
+                    "5s" => "整頓",
+                    "level_1" => "level_1",
+                    "level_2" => "level_2",
+                    "level_3" => "level_3",
+                    "level_4" => "level_4",
+                    "level_5" => "level_5",
+                ],
+            ];
+        }
+
+
+        return view('pattern.pattern_row', [
+            "data" => $data,
+            "count5sChecked" => count($selected5s),
+            "currentTotalRows" => $totalRows
+        ]);
     }
 }

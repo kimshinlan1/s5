@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/pattern_detail', PatternDetailController::class)->only(['index', 'update', 'destroy']);
         Route::post('/pattern_detail', [PatternDetailController::class, 'store'])->name('skillmaps-add');
 
+        Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
+
     });
 
     // Route with middleware all user
