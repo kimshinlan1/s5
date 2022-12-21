@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Common\Constant;
-use App\Common\Utility;
 use App\Models\Department;
 use App\Models\Pattern;
 use Illuminate\Http\Request;
