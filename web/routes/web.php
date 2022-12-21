@@ -12,6 +12,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SkillMapController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PatternController;
+use App\Http\Controllers\PatternDetailController;
+use App\Http\Controllers\PatternListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('users/list', [UserController::class, 'list']);
         Route::get('users/available_company_list', [UserController::class, 'listAvailableCompany']);
 
+        //Pattern detail
+        Route::resource('/pattern_detail', PatternDetailController::class)->only(['index', 'update', 'destroy']);
+        Route::post('/pattern_detail', [PatternDetailController::class, 'store'])->name('skillmaps-add');
 
     });
 

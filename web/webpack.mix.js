@@ -19,6 +19,7 @@ const glob = require("glob");
     .css('resources/css/login.css','public/css')
     .css('resources/css/my_page.css','public/css')
     .sass('resources/sass/app.scss', 'public/css')
+    .css('resources/css/pattern.css','public/css')
     .sourceMaps()
     .version();
 

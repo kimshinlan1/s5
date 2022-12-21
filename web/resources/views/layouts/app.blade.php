@@ -50,6 +50,8 @@
     </div>
     <input type="hidden" id="userMode" name="userMode" value="{{auth()->user()->isAdmin()}}"/>
     <input type="hidden" id="userCompanyId" name="userCompanyId" value="{{auth()->user()->company_id}}"/>
+    <input type="hidden" id="techmapMode" name="techmapMode" value="{{auth()->user()->company->mode}}"/>
+    <input type="hidden" id="mode5S" name="mode5S" value="{{auth()->user()->company->mode_5s}}"/>
 
 </body>
 </html>

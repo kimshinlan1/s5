@@ -14,6 +14,16 @@ window.CONFIG = (function () {
         'TIME_ZONE': 'Asia/Tokyo',
         'KAIZENBASE_MODE': 0,
         'ROLE_ADMIN_ID': 1,
+        '5S_MODE': {
+            'OWNER_COMPANY'  : 0,
+            'IS_CHARGE'      : 1,
+            'FREE'           : 2
+        },
+        'TECHMAP_MODE': {
+            'OWNER_COMPANY'  : 0,
+            'IS_CHARGE'      : 1,
+            'FREE'           : 2
+        },
         'ROLE_USER_ID': 2,
         'GRADE_YEAR': 6,
         'GRADE_NAME': '年⽣',
