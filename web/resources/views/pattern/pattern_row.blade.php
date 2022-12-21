@@ -8,7 +8,7 @@ $locations = [];
 
 @foreach ($data as $key => $row)
 @if (!in_array($row['area_id'], $areas))
-<tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_area main_location">
+<tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_area">
 @elseif (!in_array($row['location_id'], $locations))
 <tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_location">
 @else
@@ -17,7 +17,7 @@ $locations = [];
 
     {{-- Area --}}
     @if (!in_array($row['area_id'], $areas))
-    <td rowspan="{{ $count5sChecked * $row['count_locations'] }}">
+    <td rowspan="{{ $count5sChecked * $row['count_locations'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
         <a href="javascript:addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }}, {{ $row['count_locations'] }} )" id="">Add Location</a>
     </td>
@@ -43,6 +43,8 @@ $locations = [];
     <td>
         {{ $row['5s'] }}
         <input type="hidden" id="hid5S" value="{{ $row['5s'] }}"/>
+        <input type="hidden" id="hidCountLocation" value="{{ $row['count_locations'] }}"/>
+        <input type="hidden" id="hidCountLocationDelete" value="0"/>
     </td>
 
     {{-- Levels --}}
@@ -54,8 +56,6 @@ $locations = [];
 
     <?php $index++ ?>
 
-    {{-- Hidden --}}
-    <input type="hidden" id="hidCountLocation" value="{{ $row['count_locations'] }}"/>
 </tr>
 @endforeach
 

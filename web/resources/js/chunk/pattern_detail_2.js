@@ -5,117 +5,95 @@ var count_selected_5s = selected_5s.length;
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var count_rows = 0;
 var select_location_to_delete = [];
+var highlight = 'aqua';
 
 // Select 5S - 改善ポイントの選択
-window.select5S = function () {
+window.select5S = function (ele) {
+    if (!$(ele).is(':checked')) {
+        alert("Lost data, Are you sure?");
+    }
+
     selected_5s = [];
+    $('.check_5s').find('input').each(function(){
+        if ($(this).is(':checked')) {
+            selected_5s.push($(this).val());
+        }
+    });
+
+    // todo: reload data onchange
+
+    console.log(selected_5s);
 }
 
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index, count_locations) {
-    let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
-    let count_current_location = tr.find("#hidCountLocation").val();
-    let current_total_rows = count_selected_5s * (parseInt(count_current_location));
+    setTimeout(() => {
+        let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
+        let count_current_location = tr.find("#hidCountLocation").val();
 
-    let row = ``;
-    for(let i=0; i < count_selected_5s; i++) {
-        let new_index = parseInt(current_total_rows) + i;
-        if (i == 0) {
-            row += `
-            <tr id='area_`+area_id+`_location_new_row_new_`+new_index+`' class='main_location'>
-                <td rowspan='`+count_selected_5s+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new')">
-                    <input type='text' class='form-control' id='' value=''/>
+        let current_total_rows = count_selected_5s * (parseInt(count_current_location));
 
-                    <input type="hidden" id="hidLocationId" value=''/>
+        let new_location_index = parseInt(current_total_rows) + 1;
 
-                </td>
-                <td>`+name_5s[selected_5s[i]]+`</td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-            </tr>
-            `;
+        let row = ``;
+        for(let i=0; i < count_selected_5s; i++) {
+            let new_index = parseInt(current_total_rows) + i;
+            if (i == 0) {
+                row += `
+                <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`' class='main_location'>
+                    <td rowspan='`+count_selected_5s+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new`+new_location_index+`')">
+                        <input type='text' class='form-control' id='' value=''/>
 
-        } else {
-            row += `
-            <tr id='area_`+area_id+`_location_new_row_new_`+new_index+`'>
-                <td>`+name_5s[selected_5s[i]]+`</td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                        <input type="hidden" id="hidLocationId" value=''/>
 
-                <input type="hidden" id="hidCountLocation" value=''/>
-            </tr>
-            `;
-        }
-    }
+                    </td>
+                    <td>
+                    `+ name_5s[selected_5s[i]] +`
+                    <input type="hidden" id="hid5S" value="`+ name_5s[selected_5s[i]] +`"/>
+                    <input type="hidden" id="hidCountLocation" value=""/>
+                    <input type="hidden" id="hidCountLocationDelete" value="0"/>
+                    </td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                </tr>
+                `;
 
-    // Insert location todo:
-    tr.next("*:lt("+current_total_rows+")").after(row);
+            } else {
+                row += `
+                <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`'>
+                    <td>
+                    `+ name_5s[selected_5s[i]] +`
+                    <input type="hidden" id="hid5S" value="`+ name_5s[selected_5s[i]] +`"/>
+                    <input type="hidden" id="hidCountLocation" value=""/>
+                    <input type="hidden" id="hidCountLocationDelete" value="0"/>
+                    </td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
 
-    // Update rowspan
-    let new_total_rows = count_selected_5s * (parseInt(count_current_location)+1);
-    tr.find("td:first").attr('rowspan', new_total_rows);
-
-    // Update count current locations
-    let new_count_current_location = parseInt(count_current_location) + 1;
-    $("[id*=area_"+area_id+"]").each(function() {
-        $(this).find("#hidCountLocation").val(new_count_current_location);
-    });
-}
-
-// Select location
-window.selectLocationToDelete_BK = function(ele, area_id, location_id) {
-
-    // Get id parent tr
-    // Check tr main area
-       // if main: copy main to below tr + update info (rowspan, event, count locaiton,...) + remove tr
-       // else: remove tr
-
-
-
-    // Get id parent tr
-    let parent_tr = $(ele).parent();
-
-
-    // Check main
-    let is_main_area = parent_tr.attr('class').indexOf('main_area') >= 0 ? true : false;
-    let count_location = parent_tr.find("#hidCountLocation").val();
-    console.log(parent_tr.attr('id'));
-    console.log(count_location);
-    if (count_location > 1) {
-        if (is_main_area) {
-            // Update info before remove
-            // let next = parseInt(count_selected_5s) + 1;
-            // console.log(parent_tr.next().attr('id'));
-            console.log(parent_tr.nextAll('.main_location').first().attr('id'));
-            // console.log(parent_tr.nextAll(":lt("+next+")").first().attr('id'));
-            // console.log(parent_tr.next("*:lt("+next+")").attr('id'));
-
-            // let new_main = parent_tr.nextAll('.main_location').first().html(parent_tr.html());
-            // console.log(new_main.html());
-            // new_main.find("#hidCountLocation").val(new_main.find("#hidCountLocation").val()-1);
-            // new_main.find("tr").first().attr("rowspan", new_main.find("#hidCountLocation").val() * count_selected_5s);
-
-            parent_tr.remove();
-            parent_tr.next().remove();
-
-            // Remove tr
+                </tr>
+                `;
+            }
         }
 
-        parent_tr.remove();
-            parent_tr.next().remove();
+        // Insert location todo: update next
+        tr.next("*:lt("+current_total_rows+")").after(row);
 
-    } else {
-        // Remove tr
-    }
+        // Update rowspan
+        let new_total_rows = count_selected_5s * (parseInt(count_current_location)+1);
+        tr.find("td:first").attr('rowspan', new_total_rows);
 
-
-    // todo: high-light all rows in location
+        // Update count current locations
+        let new_count_current_location = parseInt(count_current_location) + 1;
+        $("[id*=area_"+area_id+"]").each(function() {
+            $(this).find("#hidCountLocation").val(new_count_current_location);
+        });
+    }, 10);
 }
 
 // Select location
@@ -126,9 +104,6 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
         return;
     }
 
-    // todo: high-light all rows in location
-
-
     /*
     * Main process:
     *    Get all id parent tr
@@ -136,16 +111,71 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
     *    When call func remove : regenerate html
     */
 
-    $("[id*=area_"+area_id+"_location_"+location_id+"]").each(function() {
-        select_location_to_delete.push($(this).attr('id'));
-    });
+    setTimeout(() => {
+        // todo: Check existed before
+        let id = "area_"+area_id+"_location_"+location_id;
 
-    $("[id*=area_"+area_id+"]").each(function() {
-        $(this).find("#hidCountLocation").val($(this).find("#hidCountLocation").val() - 1);
-    });
+        // If: Remove selected before
+        // Else: add new item
+        if (checkExistId(select_location_to_delete, id)) {
+            let new_count = "";
+            $("[id*=area_"+area_id+"_location_"+location_id+"]").each(function() {
+                // Remove item
+                let id = "area_"+area_id+"_location_"+location_id;
+                select_location_to_delete = removeExistId(select_location_to_delete, id);
+
+                if (!new_count) {
+                    new_count = parseInt($(this).find("#hidCountLocationDelete").val()) - 1;
+                }
+
+                // // Reset high-light
+                $(this).find('td').css('background-color', 'white');
+            });
+
+            $("[id*=area_"+area_id+"]").each(function() {
+                // $(this).find("#hidCountLocation").val(new_count);
+                $(this).find("#hidCountLocationDelete").val(new_count);
+            });
+
+        } else {
+            let new_count = "";
+            $("[id*=area_"+area_id+"_location_"+location_id+"]").each(function() {
+                select_location_to_delete.push($(this).attr('id'));
+
+                if (!new_count) {
+                    new_count = parseInt($(this).find("#hidCountLocationDelete").val()) + 1;
+                }
+
+                // high-light
+                $(this).find('td').not('.area').css('background-color', highlight);
+            });
+
+            $("[id*=area_"+area_id+"]").each(function() {
+                // $(this).find("#hidCountLocation").val(new_count);
+                $(this).find("#hidCountLocationDelete").val(new_count);
+            });
+        }
+    }, 10);
 
 }
 
+window.checkExistId = function(arr, id) {
+    let result = false;
+    $.each( arr, function( key, value ) {
+        if (value.indexOf(id) >= 0) {
+            result = true;
+            return false;
+        }
+    });
+    return result;
+}
+
+window.removeExistId = function(arr, id) {
+    arr.splice( $.inArray(id,arr) , 1 );
+    return arr;
+}
+
+// Get data to re-render after delete
 window.getValidRows = function() {
     // console.log(select_location_to_delete);
 
@@ -161,15 +191,22 @@ window.getValidRows = function() {
             let row = {};
             row["area_id"] = area_id ? area_id : "";
             row["area_name"] = $(this).find("#area").val() ? $(this).find("#area").val() : "";
+
+
+            // todo:
             row["location_id"] = location_id ? location_id : "";
+
+
             row["location_name"] = $(this).find("#location").val() ? $(this).find("#location").val() : "";
-            row["count_locations"] = 1;
-            row["5s"] = $(this).find("#hid5S").val();
+            row["5s"] = $(this).find("#hid5S").val() ? $(this).find("#hid5S").val() : "";
             row["level_1"] = $(this).find("#level_1").val() ? $(this).find("#level_1").val() : "";
             row["level_2"] = $(this).find("#level_2").val() ? $(this).find("#level_2").val() : "";
             row["level_3"] = $(this).find("#level_3").val() ? $(this).find("#level_3").val() : "";
             row["level_4"] = $(this).find("#level_4").val() ? $(this).find("#level_4").val() : "";
             row["level_5"] = $(this).find("#level_5").val() ? $(this).find("#level_5").val() : "";
+
+            let count = parseInt($(this).find("#hidCountLocation").val()) - parseInt($(this).find("#hidCountLocationDelete").val());
+            row["count_locations"] = count;
 
             params.push(row);
         }
@@ -178,9 +215,14 @@ window.getValidRows = function() {
     return params;
 }
 
-// Remove ocation
+// Remove Location
 window.removeLocation = function() {
     // todo:
+
+    if (select_location_to_delete.length == 0) {
+        // todo: show warning no item to delete
+        return;
+    }
 
     let params = {
         remove: 1, // case remove
@@ -241,6 +283,9 @@ $(function () {
 
     // Add New Area
     $("#openModal").click(function () {
+        // todo: Check 5S
+
+        // Add Area
         let params = {
             new: 1, // case add new (remove in case edit)
             selected_5s: JSON.stringify(selected_5s),

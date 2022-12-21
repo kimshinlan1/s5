@@ -60,27 +60,27 @@
                 </div>
             </div>
             <br />
-            <fieldset style="display: flex;">
-                <legend style="width: auto; font-size: 1.2rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
-                <div class="col-2" style="padding-left: 8%;">
-                    <input type="radio" id="s1" name="drone" value="s1" checked>
-                    <label style="font-size: 1.1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
+            <fieldset style="display: flex;" class="check_5s">
+                <legend style="width: auto; font-size: 1rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s2" name="drone" value="s2">
-                    <label style="font-size: 1.1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s3" name="drone" value="s3">
-                    <label style="font-size: 1.1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s4" name="drone" value="s4">
-                    <label style="font-size: 1.1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s5" name="drone" value="s5">
-                    <label style="font-size: 1.1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
             <div class="main-container">
