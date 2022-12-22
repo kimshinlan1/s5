@@ -49,12 +49,10 @@ class PatternListService extends BaseService
     {
         if (auth()->user()->company->mode == Constant::MODE['OWNER_COMPANY']) {
             $data = $this->model::find($id);
-            $data->delete();
         } else {
             $data = DB::table('dept_patterns')->where('id', $id);
-            $data->delete();
         }
 
-        return $data;
+        return $data->delete();
     }
 }

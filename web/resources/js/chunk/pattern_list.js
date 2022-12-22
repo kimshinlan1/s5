@@ -22,8 +22,6 @@ window.patternListTableActions = function (_value, row, _index) {
         row.id +
         '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
     ) : ''
-
-
     return buttons;
 };
 
@@ -37,7 +35,6 @@ window.queryParams = function (params) {
     } else {
         params.company_id = $("#companyListID").find(":selected").val();
     }
-
     return params;
 };
 
@@ -140,7 +137,6 @@ $(function () {
     // Handle click on row event
     $('#patternListTable').on('click-row.bs.table', function (row, $element, field) {
         // Redirect to 5S pattern preview page
-        console.log($element);
     })
 
 });
