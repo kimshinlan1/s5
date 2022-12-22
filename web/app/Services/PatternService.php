@@ -8,7 +8,7 @@ use App\Models\Pattern;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PatternListService extends BaseService
+class PatternService extends BaseService
 {
     /* @var Model */
     private $model;
@@ -42,17 +42,17 @@ class PatternListService extends BaseService
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return object
      */
-    public function destroyPatternByMode($id)
+    public function destroyPatternByMode($id, $compId)
     {
-        if (auth()->user()->company->mode == Constant::MODE['OWNER_COMPANY']) {
+        if ($compId && $compId == Constant::KAIZEN_BASE_COMPANY_ID) {
             $data = $this->model::find($id);
         } else {
             $data = DB::table('dept_patterns')->where('id', $id);
         }
-
         return $data->delete();
     }
 }

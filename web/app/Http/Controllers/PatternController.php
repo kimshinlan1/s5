@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PatternListService;
+use App\Services\PatternService;
 use Illuminate\Http\Request;
 
-class PatternListController extends Controller
+class PatternController extends Controller
 {
     /* @var patternservice */
     private $service;
 
-    public function __construct(PatternListService $service)
+    public function __construct(PatternService $service)
     {
         $this->service = $service;
     }
@@ -50,13 +50,15 @@ class PatternListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        $compId = request()->all()['companyId'];
         try {
-            $data = $this->service->destroyPatternByMode($id);
+            $data = $this->service->destroyPatternByMode($id, $compId);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([
