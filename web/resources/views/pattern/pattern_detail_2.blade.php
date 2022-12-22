@@ -11,7 +11,7 @@
     <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
-    <script src="{{ mix('/js/pattern_detail.js') }}"></script>
+    <script src="{{ mix('/js/pattern_detail_2.js') }}"></script>
 @endpush
 
 @section('sidebar')
@@ -20,7 +20,7 @@
 
 @section('content')
     <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</div>
-    <div class="row" onclick="hideSkillUpLevel()">
+    <div class="row" onclick="">
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
@@ -60,173 +60,73 @@
                 </div>
             </div>
             <br />
-            <fieldset style="display: flex;">
-                <legend style="width: auto; font-size: 1.2rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
-                <div class="col-2" style="padding-left: 8%;">
-                    <input type="radio" id="s1" name="drone" value="s1" checked>
-                    <label style="font-size: 1.1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
+            <fieldset style="display: flex;" class="check_5s">
+                <legend style="width: auto; font-size: 1rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s2" name="drone" value="s2">
-                    <label style="font-size: 1.1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s3" name="drone" value="s3">
-                    <label style="font-size: 1.1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s4" name="drone" value="s4">
-                    <label style="font-size: 1.1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s5" name="drone" value="s5">
-                    <label style="font-size: 1.1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
+                <div class="col-1" style="padding-left: 3%;">
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)">
+                    <label style="font-size: 1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
             <div class="main-container">
                 {{-- Data List --}}
                 <div id="scroll-table" class="data_table">
                     <div class="main-table-group">
-                        <div class="table-responsive" style="overflow-x: hidden; min-width: 450px;">
-                            <table class="table table-bordered margin-top-0 table-left" id="table-left">
+                        <div class="" style="overflow-x: hidden; min-width: 450px;">
+                            <table class="table table-bordered" id="table-content" style="width: 100%">
                                 <thead style="">
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <th style="width: 82px;" scope="col">{{ __('Pattern_Detail_Area') }}</th>
-                                        <th style="width: 82px;" scope="col">{{ __('Pattern_Detail_Location') }}</th>
-                                        <th style="width: 51px;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
-                                        <th style="width: 274px;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
-                                        <th style="width: 259px;" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
-                                        <th style="width: 306px;" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
-                                        <th style="width: 290px;" scope="col">{{ __('Pattern_Detail_Level_4') }}</th>
-                                        <th style="width: 242px;" scope="col">{{ __('Pattern_Detail_Level_5') }}</th>
+                                    <tr style="height: 40.5px;" id="header-2-table-content">
+                                        <th scope="col">{{ __('Pattern_Detail_Area') }}</th>
+                                        <th scope="col">{{ __('Pattern_Detail_Location') }}</th>
+                                        <th style="width: 5%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_4') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_5') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=6>通路周辺</td>
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                     <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=6>通路周辺</td>
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
+
+                            {{-- Hidden --}}
+
+
                         </div>
                     </div>
                 </div>
             </div>
+            <br><br><br>
             <div class="input-group action-btn" style="justify-content: flex-start">
                 <button type="button" id="save" class="btn btn-success btn-ripple">
                     <div class="inside-btn">
                         {{ __('Skillmap_Button_Save') }}
                     </div>
                 </button>
-                <button type="button" id="openModal" onclick="btnOpenModal()"
+
+                <button type="button" id="openModal"
                     class="btn btn-primary btn-ripple" data-toggle="modal"
-                    data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}</button>
-                <button type="button" id="delete" class="btn btn-danger btn-ripple" data-toggle="modal"
-                    data-target="#exampleModalConfirm">
-                    {{ __('Skillmap_Button_Delete') }}
+                    data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}
                 </button>
-                <button type="button" id="cancel" class="btn btn-secondary" data-toggle="modal"
-                        onclick="btnOpenModalBackPage()">
-                    {{ __('Common_Back') }}
-                </button>
+
+                <button type="button" id="removeLocation" class="btn btn-secondary">Remove</button>
             </div>
         </div>
     </div>
@@ -302,16 +202,6 @@
                 {{ __('SkillMap_MaxLength') }}
             </div>
         </div>
-    </div>
-
-    <!-- Right click Menu -->
-    <div class="shadow list-group right-click-menu" id="right-click-menu">
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-while border-button"
-            onclick="paintBgSkillMap(this, 'while')">{{ __('SkillUp_Button_0') }}</button>
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-pink border-button"
-            onclick="paintBgSkillMap(this, 'pink')">{{ __('SkillUp_Button_1') }}</button>
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-yellow border-button"
-            onclick="paintBgSkillMap(this, 'yellow')">{{ __('SkillUp_Button_2') }}</button>
     </div>
 
     <!-- Modal -->
