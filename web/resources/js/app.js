@@ -79,6 +79,35 @@ window.zeroPad = function (num, digits = 0) {
     return num;
 }
 
+/** ------------------
+ *    AJAX
+ --------------------- */
+ $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+window.runAjax = function (url, method, data, donecallback, failcallback, alwayscallback, async) {
+    // run ajax
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        async: async ? async : true,
+    })
+        .done(donecallback ? donecallback : function (res) {
+            console.log(res);
+        })
+        .fail(failcallback ? failcallback : function (res) {
+            console.log(res);
+        })
+        .always(alwayscallback ? alwayscallback : function () {
+            // hide dialog
+            // todo:
+        });
+}
+
 /**
  * remove leading zero number
  *

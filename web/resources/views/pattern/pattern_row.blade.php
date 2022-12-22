@@ -7,9 +7,12 @@ $locations = [];
 ?>
 
 @foreach ($data as $key => $row)
+
+<?php $locaitonIdToCheck = $row['area_id'] . $row['location_id'] ?>
+
 @if (!in_array($row['area_id'], $areas))
 <tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_area">
-@elseif (!in_array($row['location_id'], $locations))
+@elseif (!in_array($locaitonIdToCheck, $locations))
 <tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_location">
 @else
 <tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="">
@@ -29,11 +32,11 @@ $locations = [];
     @endif
 
     {{-- Locations --}}
-    @if (!in_array($row['location_id'], $locations))
-    <td rowspan="{{ $count5sChecked }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')">
+    @if (!in_array($locaitonIdToCheck, $locations))
+    <td rowspan="{{ $count5sChecked }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location">
         <input type="text" class="form-control" id="location" value="{{ $row['location_name'] }}"/>
     </td>
-    <?php $locations[] = $row['location_id'] ?>
+    <?php $locations[] = $locaitonIdToCheck ?>
 
     {{-- Hidden --}}
     <input type="hidden" id="hidLocationId" value="{{ $row['location_id'] }}"/>
