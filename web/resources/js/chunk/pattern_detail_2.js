@@ -3,13 +3,13 @@
 var selected_5s = ["s1","s2"];
 var count_selected_5s = selected_5s.length;
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
-var count_rows = 0;
 var select_location_to_delete = [];
 var highlight = 'aqua';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
     if (!$(ele).is(':checked')) {
+        // todo:
         alert("Lost data, Are you sure?");
     }
 
@@ -27,13 +27,14 @@ window.select5S = function (ele) {
 
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index, count_locations) {
-    setTimeout(() => {
+
+    // setTimeout(() => {
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
         let count_current_location = tr.find("#hidCountLocation").val();
-
         let current_total_rows = count_selected_5s * (parseInt(count_current_location));
-
-        let new_location_index = parseInt(current_total_rows) + 1;
+        // let new_location_index = parseInt(current_total_rows) + 1;
+        let new_location_index = $.now();
+        let new_count_current_location = parseInt(count_current_location) + 1;
 
         let row = ``;
         for(let i=0; i < count_selected_5s; i++) {
@@ -42,16 +43,14 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                 row += `
                 <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`' class='main_location'>
                     <td rowspan='`+count_selected_5s+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new`+new_location_index+`')">
-                        <input type='text' class='form-control' id='' value=''/>
-
+                        <input type='text' class='form-control' id='location' value=''/>
                         <input type="hidden" id="hidLocationId" value=''/>
-
                     </td>
                     <td>
                     `+ name_5s[selected_5s[i]] +`
                     <input type="hidden" id="hid5S" value="`+ name_5s[selected_5s[i]] +`"/>
-                    <input type="hidden" id="hidCountLocation" value=""/>
-                    <input type="hidden" id="hidCountLocationDelete" value="0"/>
+                    <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
+                    <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     </td>
                     <td><textarea class='form-control' id='' rows='1'></textarea></td>
                     <td><textarea class='form-control' id='' rows='1'></textarea></td>
@@ -67,8 +66,8 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                     <td>
                     `+ name_5s[selected_5s[i]] +`
                     <input type="hidden" id="hid5S" value="`+ name_5s[selected_5s[i]] +`"/>
-                    <input type="hidden" id="hidCountLocation" value=""/>
-                    <input type="hidden" id="hidCountLocationDelete" value="0"/>
+                    <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
+                    <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     </td>
                     <td><textarea class='form-control' id='' rows='1'></textarea></td>
                     <td><textarea class='form-control' id='' rows='1'></textarea></td>
@@ -81,24 +80,35 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
             }
         }
 
-        // Insert location todo: update next
-        tr.next("*:lt("+current_total_rows+")").after(row);
-
         // Update rowspan
         let new_total_rows = count_selected_5s * (parseInt(count_current_location)+1);
         tr.find("td:first").attr('rowspan', new_total_rows);
 
-        // Update count current locations
-        let new_count_current_location = parseInt(count_current_location) + 1;
-        $("[id*=area_"+area_id+"]").each(function() {
+        // Update hidCountLocation and Insert location
+        let count_location_delete = "";
+        $("[id*=area_"+area_id+"]").each(function(i) {
             $(this).find("#hidCountLocation").val(new_count_current_location);
+
+            if (!count_location_delete) {
+                count_location_delete = $(this).find("#hidCountLocationDelete").val() ? $(this).find("#hidCountLocationDelete").val() : 0;
+            }
+
+            // Insert location at last row
+            let isLastElement = i == $("[id*=area_"+area_id+"]").length -1;
+            if (isLastElement) {
+                row = row.replace(/count_location_delete/g, count_location_delete);
+                $(this).after(row);
+            }
         });
-    }, 10);
+
+    // }, 10);
 }
 
 // Select location
 window.selectLocationToDelete = function(ele, area_id, location_id) {
 
+    console.log("before:");
+    console.log(select_location_to_delete);
     // Check focus input
     if ($(ele).find('input').is(":focus")) {
         return;
@@ -111,8 +121,7 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
     *    When call func remove : regenerate html
     */
 
-    setTimeout(() => {
-        // todo: Check existed before
+    // setTimeout(() => {
         let id = "area_"+area_id+"_location_"+location_id;
 
         // If: Remove selected before
@@ -124,12 +133,13 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
                 let id = "area_"+area_id+"_location_"+location_id;
                 select_location_to_delete = removeExistId(select_location_to_delete, id);
 
+                // Reset high-light
+                $(this).find('td').css('background-color', 'white');
+
                 if (!new_count) {
                     new_count = parseInt($(this).find("#hidCountLocationDelete").val()) - 1;
                 }
-
-                // // Reset high-light
-                $(this).find('td').css('background-color', 'white');
+                // $(this).find("#hidCountLocationDelete").val(new_count);
             });
 
             $("[id*=area_"+area_id+"]").each(function() {
@@ -142,12 +152,14 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
             $("[id*=area_"+area_id+"_location_"+location_id+"]").each(function() {
                 select_location_to_delete.push($(this).attr('id'));
 
+                // high-light
+                $(this).find('td').not('.area').css('background-color', highlight);
+                // $(this).find('td.location').css('background-color', highlight);
+
                 if (!new_count) {
                     new_count = parseInt($(this).find("#hidCountLocationDelete").val()) + 1;
                 }
-
-                // high-light
-                $(this).find('td').not('.area').css('background-color', highlight);
+                // $(this).find("#hidCountLocationDelete").val(new_count);
             });
 
             $("[id*=area_"+area_id+"]").each(function() {
@@ -155,7 +167,13 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
                 $(this).find("#hidCountLocationDelete").val(new_count);
             });
         }
-    }, 10);
+
+        console.log("after_added:");
+        console.log(select_location_to_delete);
+
+    // }, 10);
+
+
 
 }
 
@@ -271,8 +289,23 @@ window.loadData = function() {
 }
 
 // Save
-window.saveData = function() {
+window.saveData = function(params) {
     // todo:
+    $.ajax({
+        url: "/pattern_save",
+        type: "POST",
+        data: params
+    })
+    .done(function (res) {
+        // notify
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // show errors
+
+    })
+    .always(function () {
+
+    });
 }
 
 
@@ -309,6 +342,7 @@ $(function () {
         });
     });
 
+    // Save click
     $("#save").click(function () {
         // todo: Validate required field (pattern_name, create_date, update_date)
 
@@ -336,31 +370,15 @@ $(function () {
 
         console.log(params);
 
-        // Submit
-        // $.ajax({
-        //     url: "/pattern_save/",
-        //     type: "POST",
-        //     data: params
-        // })
-        // .done(function (res) {
-        //     // notify
-        // })
-        // .fail(function (jqXHR, _textStatus, _errorThrown) {
-        //     // show errors
+        saveData(params);
 
-        // })
-        // .always(function () {
-
-        // });
     });
 
-
+    // Remove click
     $("#removeLocation").click(function () {
         // if (confirm("Remove?")) {
             removeLocation();
         // }
-
-
     });
 
 

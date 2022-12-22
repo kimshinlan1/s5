@@ -145,14 +145,15 @@ class PatternDetailController extends Controller
 
         $selected5s = json_decode($request->get('selected_5s'));
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
+        $index = time();
 
         // Add New
         if ($request->get('new')) {
             foreach ($selected5s as $key => $method) {
                 $data[] = [
-                    "area_id" => "new" . $totalRows,
+                    "area_id" => "new" . $index,
                     "area_name" => "",
-                    "location_id" => "new" . $totalRows,
+                    "location_id" => "new" . $index,
                     "location_name" => "",
                     "count_locations" => 1,
                     "5s" => Constant::NAME_5S[$method],
@@ -165,6 +166,7 @@ class PatternDetailController extends Controller
             }
 
         } elseif ($request->get('remove')) {
+            // Get and re generate html after delete rows
             $data = json_decode($request->get('rows'), true);
 // dd($data);
 
@@ -236,5 +238,25 @@ class PatternDetailController extends Controller
             "count5sChecked" => count($selected5s),
             "currentTotalRows" => $totalRows
         ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function savePattern(Request $request)
+    {
+        dd($request->all());
+        try {
+            // $data = $this->service->store($request);
+            // return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
+            ], 500);
+        }
     }
 }

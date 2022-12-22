@@ -52,9 +52,10 @@ Route::group(['middleware' => ['auth']], function () {
 
         //Pattern detail
         Route::resource('/pattern_detail', PatternDetailController::class)->only(['index', 'update', 'destroy']);
-        Route::post('/pattern_detail', [PatternDetailController::class, 'store'])->name('skillmaps-add');
+        Route::post('/pattern_detail', [PatternDetailController::class, 'store']);
 
         Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
+        Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
 
     });
 
