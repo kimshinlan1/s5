@@ -58,6 +58,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Check 5s mode free of current account
+     */
+    public function is5SModeFree()
+    {
+        return auth()->user()->company()->first()->mode_5s == Constant::MODE["FREE"] ? true : false;
+    }
+
+    /**
      * Get the mode of current account
      */
     public function getModeUser()

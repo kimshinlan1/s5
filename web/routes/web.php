@@ -11,6 +11,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SkillMapController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PatternController;
 use App\Http\Controllers\PatternDetailController;
 use App\Http\Controllers\PatternListController;
 
@@ -101,6 +102,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
         Route::get('/teams/dept_id', [TeamController::class, 'getTeamsByDepartmentId']);
         Route::get('teams/list', [TeamController::class, 'list']);
+
+        // Pattern_list
+        Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('/pattern_list/patern_list_by_company', [PatternController::class, 'getPatternByCompanyId']);
 
         // Show log
         Route::get('/show_log', [Controller::class, 'showLog']);

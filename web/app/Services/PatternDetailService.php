@@ -6,7 +6,6 @@ use App\Models\PatternDetail;
 use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatternDetailRequest;
-use App\Common\Utility;
 
 class PatternDetailService extends BaseService
 {

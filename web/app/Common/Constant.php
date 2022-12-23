@@ -46,6 +46,8 @@ class Constant
 
     public const PDF_PATH_FILE = 'storage/app/export';
 
+    public const KAIZEN_BASE_COMPANY_ID = 1;
+
     public const NAME_5S = [
         's1'  => '整理',
         's2'  => '整頓',

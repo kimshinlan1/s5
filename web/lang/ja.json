@@ -193,7 +193,12 @@
     "Team_please_enter_your_team_information": "係名を入力してください。",
     "=====  BLOCK_TEAM_END =====": "",
 
-    "=====  BLOCK_PATTERN_DETAIL_START =====": "",
+    "=====  BLOCK_PATTERN_LIST_START =====": "",
+    "Pattern_List": "５Sチェックリストパターン一覧 ",
+    "Pattern_List_Customer": "５Sチェックリストパターン一覧 (部門)",
+    "Pattern_ID": "チェックリストパターンID",
+    "Pattern_Name": "チェックリストパターン名",
+    "Pattern_Note": "チェックリストNote",
     "Pattern_Detail_5S_Checklist_Pattern_Input": "5Sチェックリストパターン入力",
     "Pattern_Detail_Selection_Of_Improvement_Points": "改善ポイントの選択：",
     "Pattern_Detail_Name": "パターン名",
