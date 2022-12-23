@@ -36,8 +36,8 @@
                             <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
                         </div>
                         <div class="col-2 date">
-                            <input type="text" class="form-control" id="dateFrom" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateFrom')" data-toggle="tooltip"
+                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('SkillMap_Tooltip_1') }}">
                         </div>
                     </div>
@@ -46,14 +46,14 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
                         <div class="col-4">
-                            <input type="text" class="form-control" id="lineName">
+                            <input type="text" class="form-control" id="patternNote">
                         </div>
                         <div class="col-2">
                             <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
                         </div>
                         <div class="col-2 date">
-                            <input type="text" class="form-control" id="dateTo" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateTo')" data-toggle="tooltip"
+                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('SkillMap_Tooltip_1') }}">
                         </div>
                     </div>
@@ -322,4 +322,8 @@
         </div>
     </div>
 @include('layouts.confirm')
+
+    {{-- Hidden --}}
+    <input type="hidden" id="hidPatternId" value="" />
+
 @endsection

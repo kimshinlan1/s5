@@ -1,6 +1,7 @@
 
 // 改善ポイントの選択 - Select 5S methods
 var selected_5s = ["s1","s2"];
+var str_selected_5s = "";
 var count_selected_5s = selected_5s.length;
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var select_location_to_delete = [];
@@ -8,17 +9,24 @@ var highlight = 'aqua';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
-    if (!$(ele).is(':checked')) {
+    if (ele && !$(ele).is(':checked')) {
         // todo:
         alert("Lost data, Are you sure?");
     }
 
     selected_5s = [];
+    str_selected_5s = "";
     $('.check_5s').find('input').each(function(){
+        let config = $(this).attr('id');
         if ($(this).is(':checked')) {
             selected_5s.push($(this).val());
+            config += ":1";
+        } else {
+            config += ":0";
         }
+        str_selected_5s += config + " | ";
     });
+    str_selected_5s = str_selected_5s.replace(/^\|+|\|+$/g, '');
 
     // todo: reload data onchange
 
@@ -52,11 +60,11 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                     <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
                     <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     </td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_1' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_2' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_3' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_4' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_5' rows='1'></textarea></td>
                 </tr>
                 `;
 
@@ -69,11 +77,11 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                     <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
                     <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     </td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_1' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_2' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_3' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_4' rows='1'></textarea></td>
+                    <td><textarea class='form-control' id='level_5' rows='1'></textarea></td>
 
                 </tr>
                 `;
@@ -209,12 +217,7 @@ window.getValidRows = function() {
             let row = {};
             row["area_id"] = area_id ? area_id : "";
             row["area_name"] = $(this).find("#area").val() ? $(this).find("#area").val() : "";
-
-
-            // todo:
             row["location_id"] = location_id ? location_id : "";
-
-
             row["location_name"] = $(this).find("#location").val() ? $(this).find("#location").val() : "";
             row["5s"] = $(this).find("#hid5S").val() ? $(this).find("#hid5S").val() : "";
             row["level_1"] = $(this).find("#level_1").val() ? $(this).find("#level_1").val() : "";
@@ -289,8 +292,12 @@ window.loadData = function() {
 }
 
 // Save
-window.saveData = function(params) {
+window.saveData = function(data) {
     // todo:
+    let params = {
+        data: data
+    };
+
     $.ajax({
         url: "/pattern_save",
         type: "POST",
@@ -311,8 +318,8 @@ window.saveData = function(params) {
 
 $(function () {
 
-    // Load data
-    // loadData();
+    // Load data (for test)
+    loadData();
 
     // Add New Area
     $("#openModal").click(function () {
@@ -348,24 +355,58 @@ $(function () {
 
 
         // todo: Validate data table (all rows) and generate submit params
-        let params = [];
-        $("#table-content tbody").find("tr").each(function() {
-            // console.log($(this).find("#area").val());
+        let params = {};
 
-            // todo: Check required => focus => notify => stop check
+        if (!str_selected_5s) {
+            select5S();
+        }
 
-            // Generate submit params
-            let row = {};
-            row["area"] = $(this).find("#area").val();
-            row["location"] = $(this).find("#location").val();
-            row["5s"] = $(this).find("#hid5S").val();
-            row["level_1"] = $(this).find("#level_1").val();
-            row["level_2"] = $(this).find("#level_2").val();
-            row["level_3"] = $(this).find("#level_3").val();
-            row["level_4"] = $(this).find("#level_4").val();
-            row["level_5"] = $(this).find("#level_5").val();
+        let info = {
+            'pattern_id': $('#hidPatternId').val(), // get from hidden html
+            'pattern_name': $('#patternName').val(),
+            'pattern_note': $('#patternNote').val(),
+            'pattern_5s_selected': str_selected_5s ? str_selected_5s : "",
+            'pattern_created_at': $('#dateCreate').val(),
+            'pattern_updated_at': $('#dateUpdate').val(),
+        }
+        params['info'] = info;
+        params['data'] = [];
 
-            params.push(row);
+        // Loop main area
+        $("#table-content tbody").find("tr.main_area").each(function() {
+            // New Area
+            let area = {
+                'area_name': $(this).find("#area").val(),
+                'locations': []
+            };
+
+            // Loop all locations
+            let trid = $(this).attr("id").split('_location_')[0];
+            $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
+                // New location
+                let location = {
+                    'location_name': $(ele).find("#location").val(),
+                    'rows':{}
+                };
+
+                // Loop all rows in location
+                let trid_location = $(ele).attr("id").split('_row_')[0];
+                $('[id*='+trid_location+']').each(function(i, e) {
+                    // Add levels in 1 methos 5S (1 row)
+                    let row = {};
+                    row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
+                    row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
+                    row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
+                    row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
+                    row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
+                    location['rows'][$(e).find("#hid5S").val()] = row;
+                });
+
+                area['locations'].push(location);
+            });
+
+            params['data'].push(area);
+
         });
 
         console.log(params);

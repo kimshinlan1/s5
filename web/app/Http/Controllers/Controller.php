@@ -60,7 +60,7 @@ class Controller extends BaseController
     public function responseException(string $message = '', int $code = 500)
     {
         if (empty($message)) {
-            $message = __("Internal_Server_Error");
+            $message = __("Common_Error_System");
         }
 
         $response = [

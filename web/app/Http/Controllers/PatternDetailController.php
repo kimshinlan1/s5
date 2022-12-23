@@ -179,11 +179,11 @@ class PatternDetailController extends Controller
             $data = [
                 0 => [
                     "area_id" => 1,
-                    "area_name" => "area",
+                    "area_name" => "area1",
                     "location_id" => 1,
-                    "location_name" => "location",
+                    "location_name" => "location1",
                     "count_locations" => 1, // count current locations in 1 area
-                    "5s" => "整理", // get name from constant
+                    "5s" => "s1", // get name from constant
                     "level_1" => "level_1",
                     "level_2" => "level_2",
                     "level_3" => "level_3",
@@ -192,42 +192,42 @@ class PatternDetailController extends Controller
                 ],
                 1 => [
                     "area_id" => 1,
-                    "area_name" => "area",
+                    "area_name" => "area1",
                     "location_id" => 1,
-                    "location_name" => "location",
+                    "location_name" => "location1",
                     "count_locations" => 1, // count current locations in 1 area
-                    "5s" => "整頓", // get name from constant
-                    "level_1" => "level_1",
-                    "level_2" => "level_2",
-                    "level_3" => "level_3",
-                    "level_4" => "level_4",
-                    "level_5" => "level_5",
+                    "5s" => "s2", // get name from constant
+                    "level_1" => "level_11",
+                    "level_2" => "level_21",
+                    "level_3" => "level_31",
+                    "level_4" => "level_41",
+                    "level_5" => "level_51",
                 ],
                 2 => [
                     "area_id" => 2,
                     "area_name" => "area2",
                     "location_id" => 2,
-                    "location_name" => "location",
+                    "location_name" => "location2",
                     "count_locations" => 1, // count current locations in 1 area
-                    "5s" => "整理",
-                    "level_1" => "level_1",
-                    "level_2" => "level_2",
-                    "level_3" => "level_3",
-                    "level_4" => "level_4",
-                    "level_5" => "level_5",
+                    "5s" => "s1",
+                    "level_1" => "level_12",
+                    "level_2" => "level_22",
+                    "level_3" => "level_32",
+                    "level_4" => "level_42",
+                    "level_5" => "level_52",
                 ],
                 3 => [
                     "area_id" => 2,
-                    "area_name" => "area",
+                    "area_name" => "area2",
                     "location_id" => 2,
-                    "location_name" => "location",
+                    "location_name" => "location2",
                     "count_locations" => 1, // count current locations in 1 area
-                    "5s" => "整頓",
-                    "level_1" => "level_1",
-                    "level_2" => "level_2",
-                    "level_3" => "level_3",
-                    "level_4" => "level_4",
-                    "level_5" => "level_5",
+                    "5s" => "s2",
+                    "level_1" => "level_122",
+                    "level_2" => "level_222",
+                    "level_3" => "level_322",
+                    "level_4" => "level_422",
+                    "level_5" => "level_522",
                 ],
             ];
         }
@@ -249,14 +249,7 @@ class PatternDetailController extends Controller
      */
     public function savePattern(Request $request)
     {
-        dd($request->all());
-        try {
-            // $data = $this->service->store($request);
-            // return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
-            ], 500);
-        }
+        $data = $this->service->save($request);
+        return response()->json($data);
     }
 }

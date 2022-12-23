@@ -11,7 +11,7 @@ $locations = [];
 <?php $locaitonIdToCheck = $row['area_id'] . $row['location_id'] ?>
 
 @if (!in_array($row['area_id'], $areas))
-<tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_area">
+<tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_area main_location">
 @elseif (!in_array($locaitonIdToCheck, $locations))
 <tr id="area_{{ $row['area_id'] }}_location_{{ $row['location_id'] }}_row_{{ $index }}" class="main_location">
 @else
@@ -44,7 +44,7 @@ $locations = [];
 
     {{-- Point --}}
     <td>
-        {{ $row['5s'] }}
+        {{ Constant::NAME_5S[$row['5s']] }}
         <input type="hidden" id="hid5S" value="{{ $row['5s'] }}"/>
         <input type="hidden" id="hidCountLocation" value="{{ $row['count_locations'] }}"/>
         <input type="hidden" id="hidCountLocationDelete" value="0"/>
