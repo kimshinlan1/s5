@@ -14,4 +14,17 @@ class LocationService extends BaseService
         $this->model = $model;
         parent::__construct($model);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $patternId
+     * @return object
+     */
+    public function deleteByAreaId($areaId)
+    {
+        $data = $this->model::where("area_id", $areaId);
+        $data->delete();
+        return $data;
+    }
 }

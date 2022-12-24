@@ -14,19 +14,26 @@ window.select5S = function (ele) {
         alert("Lost data, Are you sure?");
     }
 
+    // selected_5s = [];
+    // str_selected_5s = "";
+    // $('.check_5s').find('input').each(function(){
+    //     let config = $(this).attr('id');
+    //     if ($(this).is(':checked')) {
+    //         selected_5s.push($(this).val());
+    //         config += ":1";
+    //     } else {
+    //         config += ":0";
+    //     }
+    //     str_selected_5s += config + " | ";
+    // });
+    // str_selected_5s = str_selected_5s.replace(/^\|+|\|+$/g, '');
+
     selected_5s = [];
-    str_selected_5s = "";
     $('.check_5s').find('input').each(function(){
-        let config = $(this).attr('id');
         if ($(this).is(':checked')) {
             selected_5s.push($(this).val());
-            config += ":1";
-        } else {
-            config += ":0";
         }
-        str_selected_5s += config + " | ";
     });
-    str_selected_5s = str_selected_5s.replace(/^\|+|\|+$/g, '');
 
     // todo: reload data onchange
 
@@ -56,7 +63,7 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                     </td>
                     <td>
                     `+ name_5s[selected_5s[i]] +`
-                    <input type="hidden" id="hid5S" value="`+ name_5s[selected_5s[i]] +`"/>
+                    <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
                     <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
                     <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     </td>
@@ -73,7 +80,7 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                 <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`'>
                     <td>
                     `+ name_5s[selected_5s[i]] +`
-                    <input type="hidden" id="hid5S" value="`+ name_5s[selected_5s[i]] +`"/>
+                    <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
                     <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
                     <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     </td>
@@ -273,14 +280,18 @@ window.removeLocation = function() {
 
 // Onchange 5S methods 改善ポイントの選択
 window.loadData = function() {
+    let params = {
+        selected_5s: JSON.stringify(selected_5s),
+        id: $('#hidPatternId').val()
+    };
+
     $.ajax({
         url: "/pattern_detail_generate_area/",
         type: "GET",
-        data: {selected_5s: JSON.stringify(selected_5s)}
+        data: params
     })
     .done(function (res) {
         $("#table-content tbody").append(res);
-        // alert($("#table-content tbody").find("tr").length);
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
@@ -304,10 +315,18 @@ window.saveData = function(data) {
         data: params
     })
     .done(function (res) {
-        // notify
+        // todo: notify
+        alert("OK");
+
+        if (!$('#hidPatternId').val()) {
+            location.href = "/pattern_list";
+        } else {
+            location.reload();
+        }
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
+        alert("err");
 
     })
     .always(function () {
@@ -318,8 +337,10 @@ window.saveData = function(data) {
 
 $(function () {
 
-    // Load data (for test)
-    loadData();
+    // Load data
+    if ($('#hidPatternId').val()) {
+        loadData();
+    }
 
     // Add New Area
     $("#openModal").click(function () {
@@ -357,27 +378,30 @@ $(function () {
         // todo: Validate data table (all rows) and generate submit params
         let params = {};
 
-        if (!str_selected_5s) {
+        if (selected_5s.length == 0) {
             select5S();
         }
 
         let info = {
-            'pattern_id': $('#hidPatternId').val(), // get from hidden html
+            'pattern_id': $('#hidPatternId').val(),
             'pattern_name': $('#patternName').val(),
             'pattern_note': $('#patternNote').val(),
-            'pattern_5s_selected': str_selected_5s ? str_selected_5s : "",
+            'pattern_5s_selected': JSON.stringify(selected_5s),
             'pattern_created_at': $('#dateCreate').val(),
             'pattern_updated_at': $('#dateUpdate').val(),
         }
         params['info'] = info;
         params['data'] = [];
+        params['old_areas'] = [];
+        params['old_locations'] = [];
 
         // Loop main area
         $("#table-content tbody").find("tr.main_area").each(function() {
             // New Area
             let area = {
                 'area_name': $(this).find("#area").val(),
-                'locations': []
+                'locations': [],
+                'old_locations': []
             };
 
             // Loop all locations
@@ -403,13 +427,22 @@ $(function () {
                 });
 
                 area['locations'].push(location);
+
+                // Add old location (for delete)
+                // if ($(ele).find("#hidLocationId").val()) {
+                //     params['old_locations'].push($(ele).find("#hidLocationId").val());
+                // }
             });
 
             params['data'].push(area);
 
-        });
+            // Add old area (for delete)
+            if ($(this).find("#hidAreaId").val()) {
+                params['old_areas'].push($(this).find("#hidAreaId").val());
+            }
 
-        console.log(params);
+
+        });
 
         saveData(params);
 

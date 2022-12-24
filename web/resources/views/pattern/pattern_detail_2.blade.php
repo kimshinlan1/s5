@@ -30,7 +30,7 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
                         <div class="col-4">
-                            <input type="text" class="form-control" id="patternName">
+                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
                         </div>
                         <div class="col-2">
                             <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
@@ -46,7 +46,7 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
                         <div class="col-4">
-                            <input type="text" class="form-control" id="patternNote">
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
                         </div>
                         <div class="col-2">
                             <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
@@ -63,23 +63,23 @@
             <fieldset style="display: flex;" class="check_5s">
                 <legend style="width: auto; font-size: 1rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
                 <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)">
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" {{ in_array('s1', $selected5s) ? 'checked' : '' }}>
                     <label style="font-size: 1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
                 <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)">
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" {{ in_array('s2', $selected5s) ? 'checked' : '' }}>
                     <label style="font-size: 1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
                 <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)">
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" {{ in_array('s3', $selected5s) ? 'checked' : '' }}>
                     <label style="font-size: 1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
                 <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)">
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" {{ in_array('s4', $selected5s) ? 'checked' : '' }}>
                     <label style="font-size: 1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
                 <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)">
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" {{ in_array('s5', $selected5s) ? 'checked' : '' }}>
                     <label style="font-size: 1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
@@ -324,6 +324,6 @@
 @include('layouts.confirm')
 
     {{-- Hidden --}}
-    <input type="hidden" id="hidPatternId" value="" />
+    <input type="hidden" id="hidPatternId" value="{{ isset($info['id']) ? $info['id'] : '' }}" />
 
 @endsection

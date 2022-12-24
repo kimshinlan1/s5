@@ -22,6 +22,18 @@ class PatternService extends BaseService
     /**
      * Get list by conditions
      *
+     * @param  $id
+     *
+     * @return array
+     */
+    public function getDataById($id)
+    {
+        return $this->model::where('id', $id)->get()->first()?->toArray();
+    }
+
+    /**
+     * Get list by conditions
+     *
      * @param  \Illuminate\Http\Request  $request
      *
      * @return object
