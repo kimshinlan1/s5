@@ -1,0 +1,28 @@
+.legend_5s {
+    width: auto;
+    font-size: 1rem;
+    margin-right: 4%;
+}
+
+.label_5s {
+    font-size: 1rem;
+}
+
+.checkbox {
+    margin-right: 3%;
+}
+
+.label_header {
+    margin-right: 0.5%;
+    width: 15%;
+}
+
+.label_header_1 {
+    margin-right: 2%;
+    width: 40%;
+}
+
+.table_header {
+    text-align: center;
+    background-color: #e9ecef;
+}
