@@ -95,7 +95,7 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                 `;
             }
         }
-alert(count_current_location);
+
         // Update rowspan
         let new_total_rows = count_selected_5s * (parseInt(count_current_location)+1);
         tr.find("td:first").attr('rowspan', new_total_rows);
