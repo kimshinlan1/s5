@@ -126,13 +126,13 @@
                     data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}
                 </button>
 
-                <button type="button" id="delete" 
+                <button type="button" id="removeLocation" 
                     class="btn btn-danger btn-ripple" data-toggle="modal" style="margin-right: 1%;"
                     data-target="#exampleModalConfirm">{{ __('Common_Delete') }}
                 </button>
 
-                <button type="button" id="removeLocation" 
-                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
+                {{-- <button type="button" id="removeLocation" 
+                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button> --}}
             </div>
         </div>
     </div>
