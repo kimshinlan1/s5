@@ -20,40 +20,40 @@
 
 @section('content')
     <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</div>
-    <div class="row" onclick="">
+    <div class="row">
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
                 <div class="col-9">
-                    <div class="input-group">
-                        <div class="col-3">
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header">
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                        <div class="label_header_1">
+                            <input type="text" class="form-control" id="patternName">
                         </div>
-                        <div class="col-2">
+                        <div class="label_header">
                             <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
                         </div>
-                        <div class="col-2 date">
+                        <div class="date">
                             <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateCreate')" data-toggle="tooltip"
+                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('SkillMap_Tooltip_1') }}">
                         </div>
                     </div>
                     <div class="input-group">
-                        <div class="col-3">
+                        <div class="label_header">
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
+                        <div class="label_header_1">
+                            <input type="text" class="form-control" id="patternNote">
                         </div>
-                        <div class="col-2">
+                        <div class="label_header">
                             <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
                         </div>
-                        <div class="col-2 date">
+                        <div class="date">
                             <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
+                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('SkillMap_Tooltip_1') }}">
                         </div>
                     </div>
@@ -61,39 +61,39 @@
             </div>
             <br />
             <fieldset style="display: flex;" class="check_5s">
-                <legend style="width: auto; font-size: 1rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
-                <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" {{ in_array('s1', $selected5s) ? 'checked' : '' }}>
-                    <label style="font-size: 1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
+                <legend class="legend_5s"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
+                <div class="checkbox">
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)">
+                    <label class="label_5s" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
-                <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" {{ in_array('s2', $selected5s) ? 'checked' : '' }}>
-                    <label style="font-size: 1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)">
+                    <label class="label_5s" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
-                <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" {{ in_array('s3', $selected5s) ? 'checked' : '' }}>
-                    <label style="font-size: 1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)">
+                    <label class="label_5s" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
-                <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" {{ in_array('s4', $selected5s) ? 'checked' : '' }}>
-                    <label style="font-size: 1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)">
+                    <label class="label_5s" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
-                <div class="col-1" style="padding-left: 3%;">
-                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" {{ in_array('s5', $selected5s) ? 'checked' : '' }}>
-                    <label style="font-size: 1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)">
+                    <label class="label_5s" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
             <div class="main-container">
                 {{-- Data List --}}
                 <div id="scroll-table" class="data_table">
                     <div class="main-table-group">
-                        <div class="" style="overflow-x: hidden; min-width: 450px;">
+                        <div class="table-scroll">
                             <table class="table table-bordered" id="table-content" style="width: 100%">
-                                <thead style="">
+                                <thead class="table_header">
                                     <tr style="height: 40.5px;" id="header-2-table-content">
                                         <th scope="col">{{ __('Pattern_Detail_Area') }}</th>
                                         <th scope="col">{{ __('Pattern_Detail_Location') }}</th>
-                                        <th style="width: 5%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
+                                        <th style="width: 6%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
                                         <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
                                         <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
                                         <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
@@ -114,19 +114,25 @@
                 </div>
             </div>
             <br><br><br>
-            <div class="input-group action-btn" style="justify-content: flex-start">
-                <button type="button" id="save" class="btn btn-success btn-ripple">
+            <div class="action-btn" style="justify-content: flex-start">
+                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">
-                        {{ __('Skillmap_Button_Save') }}
+                        {{ __('Common_button_save') }}
                     </div>
                 </button>
 
                 <button type="button" id="openModal"
-                    class="btn btn-primary btn-ripple" data-toggle="modal"
+                    class="btn btn-primary btn-ripple" data-toggle="modal" style="margin-right: 1%;"
                     data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}
                 </button>
 
-                <button type="button" id="removeLocation" class="btn btn-secondary">Remove</button>
+                <button type="button" id="delete" 
+                    class="btn btn-danger btn-ripple" data-toggle="modal" style="margin-right: 1%;"
+                    data-target="#exampleModalConfirm">{{ __('Common_Delete') }}
+                </button>
+
+                <button type="button" id="removeLocation" 
+                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
             </div>
         </div>
     </div>

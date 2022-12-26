@@ -334,8 +334,30 @@ window.saveData = function(data) {
     });
 }
 
+/**
+ * Open celendar 
+ */
+function openCalendar(name) {
+    $('#' + name).focus();
+}
 
 $(function () {
+    $('#dateCreate').datepicker({
+        autoclose: true,
+        dateFormat: 'yy年mm月dd日',
+        language: 'ja',
+        changeYear: true
+    });
+
+    $('#dateUpdate').datepicker({
+        autoclose: true,
+        dateFormat: 'yy年mm月dd日',
+        language: 'ja',
+        changeYear: true,
+        onSelect: function(_dateText) {
+            updatedAtChanged = true;
+        }
+    });
 
     // Load data
     if ($('#hidPatternId').val()) {
