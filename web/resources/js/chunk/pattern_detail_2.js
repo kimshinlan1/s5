@@ -1,6 +1,7 @@
 
 // 改善ポイントの選択 - Select 5S methods
-var selected_5s = ["s1","s2"];
+var selected_5s = ["s1","s2"]; // for test
+// var selected_5s = [];
 var str_selected_5s = "";
 var count_selected_5s = selected_5s.length;
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
@@ -94,7 +95,7 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
                 `;
             }
         }
-
+alert(count_current_location);
         // Update rowspan
         let new_total_rows = count_selected_5s * (parseInt(count_current_location)+1);
         tr.find("td:first").attr('rowspan', new_total_rows);
@@ -335,7 +336,7 @@ window.saveData = function(data) {
 }
 
 /**
- * Open celendar 
+ * Open celendar
  */
 function openCalendar(name) {
     $('#' + name).focus();
@@ -366,7 +367,12 @@ $(function () {
 
     // Add New Area
     $("#openModal").click(function () {
-        // todo: Check 5S
+        // todo: Check 5S (empty, ...)
+        console.log(selected_5s);
+        if (selected_5s.length == 0) {
+            alert("改善ポイントの選択");
+            return;
+        }
 
         // Add Area
         let params = {
@@ -472,9 +478,10 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        // if (confirm("Remove?")) {
+        if (confirm("Remove?")) {
+            // Remove row but not save DB (need to save to update DB)
             removeLocation();
-        // }
+        }
     });
 
 

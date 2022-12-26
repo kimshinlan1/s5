@@ -22,7 +22,7 @@ $locations = [];
     @if (!in_array($row['area_id'], $areas))
     <td rowspan="{{ $count5sChecked * $row['count_locations'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
-        <a href="javascript:addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }}, {{ $row['count_locations'] }} )" id="">Add Location</a>
+        <a href="javascript:addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }}, {{ $row['count_locations'] }} )" id="">点検箇所を追加</a>
     </td>
     <?php $areas[] = $row['area_id'] ?>
 
