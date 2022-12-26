@@ -70,7 +70,7 @@ class PatternDetailController extends Controller
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
         $index = time();
 
-        // Add New
+        // Case: Add New
         if ($request->get('new')) {
             foreach ($selected5s as $key => $method) {
                 $data[] = [
@@ -78,7 +78,7 @@ class PatternDetailController extends Controller
                     "area_name" => "",
                     "location_id" => "new" . $index,
                     "location_name" => "",
-                    "count_locations" => 1,
+                    "count_locations" => 1, // update from user
                     "5s" => $method,
                     "level_1" => "",
                     "level_2" => "",
@@ -89,10 +89,12 @@ class PatternDetailController extends Controller
             }
 
         } elseif ($request->get('remove')) {
+            // Case: Delete rows
             // Get and re generate html after delete rows
             $data = json_decode($request->get('rows'), true);
 
         } else {
+            // Case: Edit
             // Get database for edit follow by below structure
             $id = $request->get('id');
             $data = $this->service->getData($id);

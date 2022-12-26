@@ -1,33 +1,17 @@
 
 // 改善ポイントの選択 - Select 5S methods
-var selected_5s = ["s1","s2"]; // for test
-// var selected_5s = [];
-var str_selected_5s = "";
-var count_selected_5s = selected_5s.length;
+// var selected_5s = ["s1","s2"]; // for test
+var selected_5s = [];
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var select_location_to_delete = [];
 var highlight = 'aqua';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
-    if (ele && !$(ele).is(':checked')) {
-        // todo:
-        alert("Lost data, Are you sure?");
-    }
-
-    // selected_5s = [];
-    // str_selected_5s = "";
-    // $('.check_5s').find('input').each(function(){
-    //     let config = $(this).attr('id');
-    //     if ($(this).is(':checked')) {
-    //         selected_5s.push($(this).val());
-    //         config += ":1";
-    //     } else {
-    //         config += ":0";
-    //     }
-    //     str_selected_5s += config + " | ";
-    // });
-    // str_selected_5s = str_selected_5s.replace(/^\|+|\|+$/g, '');
+    // if (ele && !$(ele).is(':checked')) {
+    //     // todo:
+    //     alert("Lost data, Are you sure?");
+    // }
 
     selected_5s = [];
     $('.check_5s').find('input').each(function(){
@@ -44,21 +28,23 @@ window.select5S = function (ele) {
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index, count_locations) {
 
-    // setTimeout(() => {
+    setTimeout(() => {
+        // Get tr info
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
         let count_current_location = tr.find("#hidCountLocation").val();
-        let current_total_rows = count_selected_5s * (parseInt(count_current_location));
-        // let new_location_index = parseInt(current_total_rows) + 1;
+        let current_total_rows = selected_5s.length * (parseInt(count_current_location));
         let new_location_index = $.now();
         let new_count_current_location = parseInt(count_current_location) + 1;
 
+        // Set new row info from 5S 改善ポイントの選択
         let row = ``;
-        for(let i=0; i < count_selected_5s; i++) {
+        for(let i=0; i < selected_5s.length; i++) {
             let new_index = parseInt(current_total_rows) + i;
             if (i == 0) {
+                // row: main location
                 row += `
                 <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`' class='main_location'>
-                    <td rowspan='`+count_selected_5s+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new`+new_location_index+`')">
+                    <td rowspan='`+selected_5s.length+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new`+new_location_index+`')">
                         <input type='text' class='form-control' id='location' value=''/>
                         <input type="hidden" id="hidLocationId" value=''/>
                     </td>
@@ -96,15 +82,16 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
             }
         }
 
-        // Update rowspan
-        let new_total_rows = count_selected_5s * (parseInt(count_current_location)+1);
+        // Update rowspan (location number * selected_5s)
+        let new_total_rows = selected_5s.length * (parseInt(count_current_location)+1);
         tr.find("td:first").attr('rowspan', new_total_rows);
 
-        // Update hidCountLocation and Insert location
+        // Loop all tr with id => Update hidCountLocation and Insert location
         let count_location_delete = "";
         $("[id*=area_"+area_id+"]").each(function(i) {
             $(this).find("#hidCountLocation").val(new_count_current_location);
 
+            // Get for delete
             if (!count_location_delete) {
                 count_location_delete = $(this).find("#hidCountLocationDelete").val() ? $(this).find("#hidCountLocationDelete").val() : 0;
             }
@@ -117,7 +104,7 @@ window.addLocation = function (area_id, location_id, area_index, count_locations
             }
         });
 
-    // }, 10);
+    }, 10);
 }
 
 // Select location
@@ -342,7 +329,11 @@ function openCalendar(name) {
     $('#' + name).focus();
 }
 
+/**
+ * Document Ready
+ */
 $(function () {
+
     $('#dateCreate').datepicker({
         autoclose: true,
         dateFormat: 'yy年mm月dd日',
@@ -360,7 +351,7 @@ $(function () {
         }
     });
 
-    // Load data
+    // Load data for edit
     if ($('#hidPatternId').val()) {
         loadData();
     }
@@ -368,7 +359,6 @@ $(function () {
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
-        console.log(selected_5s);
         if (selected_5s.length == 0) {
             alert("改善ポイントの選択");
             return;
@@ -404,8 +394,9 @@ $(function () {
 
 
         // todo: Validate data table (all rows) and generate submit params
-        let params = {};
 
+        // Get param to submit
+        let params = {};
         if (selected_5s.length == 0) {
             select5S();
         }
@@ -455,11 +446,6 @@ $(function () {
                 });
 
                 area['locations'].push(location);
-
-                // Add old location (for delete)
-                // if ($(ele).find("#hidLocationId").val()) {
-                //     params['old_locations'].push($(ele).find("#hidLocationId").val());
-                // }
             });
 
             params['data'].push(area);
@@ -483,7 +469,6 @@ $(function () {
             removeLocation();
         }
     });
-
 
 
 });
