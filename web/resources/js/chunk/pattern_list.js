@@ -15,7 +15,7 @@ window.patternListTableActions = function (_value, row, _index) {
     let buttons = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
     || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
     (
-        '<button style="margin-right: 10px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id +
         '" onclick="redirectToEdit(' +row.id+ ')" id="patternListEdit">編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -26,13 +26,22 @@ window.patternListTableActions = function (_value, row, _index) {
 };
 
 /** ------------------
+ *    Add styles/classes to button cells
+ --------------------- */
+window.cellStyle = function (value, row, index) {
+    return {
+        classes: 'd-flex justify-content-around',
+    }
+}
+
+/** ------------------
  *   Open Edit tab
  --------------------- */
  window.redirectToEdit = function (id) {
     window.location = '/pattern_detail/' + id;
 }
 
-/** ------------------
+/** ------------------`
  *    queryParams
 --------------------- */
 window.queryParams = function (params) {
@@ -143,10 +152,11 @@ $(function () {
     });
 
     // Handle click on row event
-    $('#patternListTable').on('click-row.bs.table', function (row, $element, field) {
+    $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
-        console.log($element);
-        window.location = '/pattern_detail/' + $element.id;
+        if (row !== undefined) {
+            window.location = '/pattern_detail/' + $el.id;
+        }
     })
 
     $('#patternListAdd').on('click', function() {
