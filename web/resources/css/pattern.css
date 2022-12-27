@@ -26,3 +26,10 @@
     text-align: center;
     background-color: #e9ecef;
 }
+
+.toast {
+    position: fixed;
+    top: 75px;
+    right: 31px;
+    z-index: 1;
+}

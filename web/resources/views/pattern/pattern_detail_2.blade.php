@@ -201,14 +201,6 @@
             </div>
         </div>
     </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast9">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_MaxLength') }}
-            </div>
-        </div>
-    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -221,24 +213,21 @@
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
                         <div class="input-group">
-                            <div class="col">
+                            <div class="col" style="margin-right: 2%">
                                 <input type="text" class="form-control" placeholder="分類名" autofocus
-                                    id="area" required="required" oninvalid="InvalidMsgMyForm(this);"
-                                    oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                    id="area" required="required"/>
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
-                                    id="rowTable" required="required"
-                                    oninvalid="InvalidMsgMyForm(this);" oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                    id="rowLocation" required="required"/>
                             </div>
                         </div>
-                        <button type="submit" name="submit" style="display: none;" />
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnModalAreaCancel">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="validateMyform()"
+                    <button type="button" onclick="cancelAddAreaToTable()"
+                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="addAreaToTable()"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
@@ -281,27 +270,6 @@
                         {{ __('SkillMap_Cancel_Save_Button') }}</button>
                     <button type="button" onclick="backPageSaveData(true)"
                         class="btn btn-primary">{{ __('Common_button_save') }}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal confirm save data and export pdf -->
-    <div class="modal fade" id="saveExportPdf" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_PDF_Confirm') }}</span></h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="saveAndExport()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelExport()">
-                        {{ __('Common_button_cancel') }}</button>
-
                 </div>
             </div>
         </div>
