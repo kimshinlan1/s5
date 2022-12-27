@@ -39,7 +39,7 @@
 
     {{-- Button Add/Edit Dialog --}}
     @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="">
+        <button type="button" class="btn btn-primary" id="patternListAdd">
             {{ __('Common_button_add') }}
         </button>
     @endif

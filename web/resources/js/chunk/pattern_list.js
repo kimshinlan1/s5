@@ -17,13 +17,20 @@ window.patternListTableActions = function (_value, row, _index) {
     (
         '<button style="margin-right: 10px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id +
-        '" data-bs-toggle="modal" data-bs-target="" >編集</button> ' +
+        '" onclick="redirectToEdit(' +row.id+ ')" id="patternListEdit">編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
         row.id +
         '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
     ) : ''
     return buttons;
 };
+
+/** ------------------
+ *   Open Edit tab
+ --------------------- */
+ window.redirectToEdit = function (id) {
+    window.location = '/pattern_detail/' + id;
+}
 
 /** ------------------
  *    queryParams
@@ -138,6 +145,12 @@ $(function () {
     // Handle click on row event
     $('#patternListTable').on('click-row.bs.table', function (row, $element, field) {
         // Redirect to 5S pattern preview page
+        console.log($element);
+        window.location = '/pattern_detail/' + $element.id;
     })
+
+    $('#patternListAdd').on('click', function() {
+        window.location = '/pattern_detail';
+    });
 
 });
