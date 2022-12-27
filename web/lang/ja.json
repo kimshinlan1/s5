@@ -81,6 +81,7 @@
     "Department_ID": "部門ID",
     "Please enter your department information": "部門情報を入力してください",
     "Deparment_Name": "部門名",
+    "Deparment_5S_Checklist": "５S管理用のチェックリスト",
     "Deparment_Count_Employee": "※最大35名まで登録できます。",
     "Department_Save_Successfully_Employee": "登録しました。",
     "=====  BLOCK_DEPARTMENT_END =====": "",

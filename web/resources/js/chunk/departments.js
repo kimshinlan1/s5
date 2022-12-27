@@ -23,6 +23,45 @@ window.departmentTableActions = function (_value, row, _index) {
 };
 
 /** ------------------
+  *    5S Checklist Actions
+  --------------------- */
+
+window.department5SChecklistActions = function (_value, row, _index) {
+    var options = '<select class="checklist5s">' +  '<option> </option>';
+    var data = [];
+
+    setTimeout($.ajax({
+        url: '/pattern_list/list',
+        type: 'GET',
+    })
+    .done(function (_data, _textStatus, _jqXHR) {
+        console.log("TCL: window.department5SChecklistActions -> _data", _data)
+        data = _data;
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        console.log("TCL: window.department5SChecklistActions -> jqXHR", jqXHR)
+    }) , 1000);
+
+
+    data.forEach(ele => {
+        options += "<option>" + ele.name + "</option>";
+    });
+    options += " </select>";
+    return (
+    options +
+         '<button type="button" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="' +
+         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> '
+    );
+};
+
+window.cellStyle = function(value, row, index) {
+    return {
+        classes: 'd-flex justify-content-around'
+    }
+  }
+
+/** ------------------
   *    queryParams
 --------------------- */
 window.queryParams = function (params) {
@@ -66,6 +105,7 @@ window.queryParams = function (params) {
         data: data,
     })
     .done(function (_data, _textStatus, _jqXHR) {
+    console.log("TCL: window.saveTeamData -> _data", _data)
         // SAVE SUCCESSFUL
         $("#teamEditDialog").modal("hide");
         showToast($(dialog), 2000, true);
@@ -202,6 +242,7 @@ window.saveDataEmployee = function () {
         data: data,
     })
     .done(function (_data, _textStatus, _jqXHR) {
+    console.log("TCL: window.saveDataEmployee -> _data", _data)
         $("#departmentAddDialog").modal("hide");
         showToast($('#successAddDialog'), 2000, true);
     })

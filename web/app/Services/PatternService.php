@@ -52,6 +52,19 @@ class PatternService extends BaseService
     }
 
     /**
+     * Get list
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function listPattern()
+    {
+        return $this->model::orderBy('id')->get();
+
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request

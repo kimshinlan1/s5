@@ -30,8 +30,8 @@
     </div>
 @else
     <div class="d-flex justify-content-start mb-4">
-        <div class="col-1 mt-1 fs-5" hidden>{{ __('Company_List') }}</div>
-        <select class="form-select form-select-arrow w-25" aria-label="Company select" id="companyListID" style="text-align-last: center;" hidden>
+        <div class="mt-1 fs-5" hidden>{{ __('Company_List') }}</div>
+        <select class="form-select form-select-arrow w-25 mx-2" aria-label="Company select" id="companyListID" style="text-align-last: center;" hidden>
         </select>
     </div>
 @endif
@@ -46,6 +46,7 @@
             <th data-field="company_id" data-visible="false">Company ID</th>
             <th data-align="center" data-field="no">{{ __('Department_ID') }}</th>
             <th data-field="name" class="word-wrap">{{ __('Deparment_Name') }}</th>
+            <th data-width="240" data-formatter="department5SChecklistActions" data-cell-style="cellStyle">{{ __('Deparment_5S_Checklist') }}</th>
             <th data-width="240" data-formatter="departmentTableActions"></th>
         </tr>
     </thead>

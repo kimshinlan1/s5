@@ -48,6 +48,25 @@ class PatternController extends Controller
     }
 
     /**
+     * Get pattern list
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listPattern()
+    {
+        try {
+            $data = $this->service->getAll();
+            return $data;
+        } catch (\Throwable $th) {
+            return response()->json([
+                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
+            ], 500);
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
