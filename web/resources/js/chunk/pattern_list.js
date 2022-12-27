@@ -15,7 +15,7 @@ window.patternListTableActions = function (_value, row, _index) {
     let buttons = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
     || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
     (
-        '<button style="margin-right: 10px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id +
         '" onclick="redirectToEdit(' +row.id+ ')" id="patternListEdit">編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -24,6 +24,12 @@ window.patternListTableActions = function (_value, row, _index) {
     ) : ''
     return buttons;
 };
+
+window.cellStyle = function (value, row, index) {
+    return {
+        classes: 'd-flex justify-content-around',
+    }
+}
 
 /** ------------------
  *   Open Edit tab

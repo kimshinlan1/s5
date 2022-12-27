@@ -16,8 +16,8 @@
     </div>
     @if (Auth::user()->isAdmin())
         <div class="d-flex justify-content-start mb-4">
-            <div class="col-1 mt-1 fs-5">{{ __('Company_List') }}</div>
-            <select class="form-select form-select-arrow w-25" aria-label="Company select" id="companyListID"
+            <div class="mt-1 fs-5">{{ __('Company_List') }}</div>
+            <select class="form-select form-select-arrow w-25 mx-3" aria-label="Company select" id="companyListID"
                 style="text-align-last: center;">
             </select>
         </div>
@@ -30,7 +30,7 @@
                 <th data-field="name" data-width="350" class="word-wrap">{{ __('Pattern_Name') }}</th>
                 <th data-field="note" class="word-wrap">{{ __('Pattern_Note') }}</th>
                 @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
-                    <th data-width="120" data-formatter="patternListTableActions"></th>
+                    <th data-width="120" data-formatter="patternListTableActions" data-cell-style="cellStyle"></th>
                 @endif
             </tr>
         </thead>
