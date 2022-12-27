@@ -25,6 +25,9 @@ window.patternListTableActions = function (_value, row, _index) {
     return buttons;
 };
 
+/** ------------------
+ *    Add styles/classes to button cells
+ --------------------- */
 window.cellStyle = function (value, row, index) {
     return {
         classes: 'd-flex justify-content-around',
