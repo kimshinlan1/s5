@@ -30,7 +30,7 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternName">
+                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
@@ -46,7 +46,7 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote">
+                            <input type="text" class="form-control" id="patternNote" {{ isset($info['note']) ? $info['note'] : '' }}>
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
@@ -63,23 +63,23 @@
             <fieldset style="display: flex;" class="check_5s">
                 <legend class="legend_5s"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
                 <div class="checkbox">
-                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)">
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" checked>
                     <label class="label_5s" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)">
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" checked>
                     <label class="label_5s" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)">
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" checked>
                     <label class="label_5s" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)">
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" checked>
                     <label class="label_5s" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)">
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" checked>
                     <label class="label_5s" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
@@ -126,12 +126,12 @@
                     data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}
                 </button>
 
-                <button type="button" id="removeLocation" 
+                <button type="button" id="removeLocation"
                     class="btn btn-danger btn-ripple" data-toggle="modal" style="margin-right: 1%;"
                     data-target="#exampleModalConfirm">{{ __('Common_Delete') }}
                 </button>
 
-                {{-- <button type="button" id="removeLocation" 
+                {{-- <button type="button" id="removeLocation"
                     class="btn btn-secondary">{{ __('Common_button_cancel') }}</button> --}}
             </div>
         </div>
@@ -201,14 +201,6 @@
             </div>
         </div>
     </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast9">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_MaxLength') }}
-            </div>
-        </div>
-    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -221,24 +213,21 @@
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
                         <div class="input-group">
-                            <div class="col">
+                            <div class="col" style="margin-right: 2%">
                                 <input type="text" class="form-control" placeholder="分類名" autofocus
-                                    id="area" required="required" oninvalid="InvalidMsgMyForm(this);"
-                                    oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                    id="area" required="required"/>
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
-                                    id="rowTable" required="required"
-                                    oninvalid="InvalidMsgMyForm(this);" oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                    id="rowLocation" required="required"/>
                             </div>
                         </div>
-                        <button type="submit" name="submit" style="display: none;" />
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnModalAreaCancel">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="validateMyform()"
+                    <button type="button" onclick="cancelAddAreaToTable()"
+                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="addAreaToTable()"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
@@ -285,27 +274,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal confirm save data and export pdf -->
-    <div class="modal fade" id="saveExportPdf" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_PDF_Confirm') }}</span></h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="saveAndExport()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelExport()">
-                        {{ __('Common_button_cancel') }}</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Modal confirm save data -->
     <div class="modal fade" id="saveData" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -327,6 +295,7 @@
             </div>
         </div>
     </div>
+
 @include('layouts.confirm')
 
     {{-- Hidden --}}

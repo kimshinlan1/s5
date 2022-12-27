@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Common\Constant;
 use Illuminate\Http\Request;
 use App\Services\PatternService;
 use App\Services\PatternDetailService;
-use App\Http\Requests\PatternDetailRequest;
 
 class PatternDetailController extends Controller
 {
@@ -69,16 +67,20 @@ class PatternDetailController extends Controller
         $selected5s = json_decode($request->get('selected_5s'));
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
         $index = time();
+        $newLocationNo = $request->get('new_location_no') ?: 1;
+        $newAreaName = $request->get('new_area_name') ?: "";
 
         // Case: Add New
         if ($request->get('new')) {
             foreach ($selected5s as $key => $method) {
                 $data[] = [
                     "area_id" => "new" . $index,
-                    "area_name" => "",
+                    "area_name" => $newAreaName,
                     "location_id" => "new" . $index,
                     "location_name" => "",
-                    "count_locations" => 1, // update from user
+                    "count_locations" => $newLocationNo,
+                    "area_rowspan" => count($selected5s) * $newLocationNo,
+                    "location_rowspan" => count($selected5s),
                     "5s" => $method,
                     "level_1" => "",
                     "level_2" => "",
@@ -103,8 +105,6 @@ class PatternDetailController extends Controller
             $data = json_decode(json_encode($data), true);
         }
 
-        // dd($data);
-
         return view('pattern.pattern_row', [
             "data" => $data,
             "count5sChecked" => count($selected5s),
@@ -121,6 +121,12 @@ class PatternDetailController extends Controller
      */
     public function savePattern(Request $request)
     {
+        // todo: Check not exist data
+        $data = $request->get('data');
+        if (!isset($data['info']) || !isset($data['data'])) {
+            return;
+        }
+
         $data = $this->service->save($request);
         return response()->json($data);
     }

@@ -20,9 +20,10 @@ $locations = [];
 
     {{-- Area --}}
     @if (!in_array($row['area_id'], $areas))
-    <td rowspan="{{ $count5sChecked * $row['count_locations'] }}" class="area">
+    {{-- <td rowspan="{{ $count5sChecked * $row['count_locations'] }}" class="area"> --}}
+    <td rowspan="{{ $row['area_rowspan'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
-        <a href="javascript:addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }}, {{ $row['count_locations'] }} )" id="">点検箇所を追加</a>
+        <a href="javascript:addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )" id="">点検箇所を追加</a>
     </td>
     <?php $areas[] = $row['area_id'] ?>
 
@@ -33,7 +34,8 @@ $locations = [];
 
     {{-- Locations --}}
     @if (!in_array($locaitonIdToCheck, $locations))
-    <td rowspan="{{ $count5sChecked }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location">
+    {{-- <td rowspan="{{ $count5sChecked }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location"> --}}
+    <td rowspan="{{ $row['location_rowspan'] }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location">
         <input type="text" class="form-control" id="location" value="{{ $row['location_name'] }}"/>
     </td>
     <?php $locations[] = $locaitonIdToCheck ?>
@@ -48,6 +50,9 @@ $locations = [];
         <input type="hidden" id="hid5S" value="{{ $row['5s'] }}"/>
         <input type="hidden" id="hidCountLocation" value="{{ $row['count_locations'] }}"/>
         <input type="hidden" id="hidCountLocationDelete" value="0"/>
+
+        <input type="hidden" id="hidAreaRowspan" value="{{ $row['area_rowspan'] }}"/>
+        <input type="hidden" id="hidLocationRowspan" value="{{ $row['location_rowspan'] }}"/>
     </td>
 
     {{-- Levels --}}

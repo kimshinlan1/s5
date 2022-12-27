@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\PatternDetail;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\PatternDetailRequest;
 
 class PatternDetailService extends BaseService
 {
@@ -55,8 +54,18 @@ class PatternDetailService extends BaseService
             'pattern_details.level_3 as level_3',
             'pattern_details.level_4 as level_4',
             'pattern_details.level_5 as level_5',
+
             DB::raw('(SELECT count(locations.id) FROM locations
-            WHERE areas.id = locations.area_id) as count_locations')
+            WHERE areas.id = locations.area_id) as count_locations'),
+
+            DB::raw('(SELECT count(pd.id) FROM pattern_details pd
+            WHERE pd.pattern_id = pattern_details.pattern_id
+            and pd.area_id = pattern_details.area_id) as area_rowspan'),
+
+            DB::raw('(SELECT count(pd2.id) FROM pattern_details pd2
+            WHERE pd2.pattern_id = pattern_details.pattern_id
+            and pd2.location_id = pattern_details.location_id) as location_rowspan')
+
         ])
         ->leftJoin('locations', 'locations.id', '=', 'pattern_details.location_id')
         ->leftJoin('areas', 'areas.id', '=', 'locations.area_id');
@@ -87,14 +96,11 @@ class PatternDetailService extends BaseService
          *    Step: Inert new Location
          *    Step: Insert new pattern_detail
          *
+         *    Note: array data must be created in valid structure
+         *
          */
 
-        // todo: Check not exist data
-        if (!isset($data['info']) || !isset($data['data'])) {
-            return;
-        }
-
-        // todo: Step: Remove old data by pattern_id
+        // Step: Remove old data by pattern_id
         if ($data['info']['pattern_id']) {
             // Remove Pattern Detail
             $this->deleteByPatternId($data['info']['pattern_id']);
@@ -104,10 +110,7 @@ class PatternDetailService extends BaseService
 
             // Remove Area
             (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
-
         }
-
-
 
         // sample
         // $data = [
@@ -180,6 +183,7 @@ class PatternDetailService extends BaseService
                 foreach ($location['rows'] as $key => $row) {
                     // Step: Insert new content of method
                     PatternDetail::create([
+                        'area_id' => $areaId,
                         'pattern_id' => $patternId,
                         'location_id' => $locationId,
                         'point' => $key,
