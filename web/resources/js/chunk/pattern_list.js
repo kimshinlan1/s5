@@ -32,7 +32,7 @@ window.patternListTableActions = function (_value, row, _index) {
     window.location = '/pattern_detail/' + id;
 }
 
-/** ------------------
+/** ------------------`
  *    queryParams
 --------------------- */
 window.queryParams = function (params) {
@@ -143,10 +143,11 @@ $(function () {
     });
 
     // Handle click on row event
-    $('#patternListTable').on('click-row.bs.table', function (row, $element, field) {
+    $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
-        console.log($element);
-        window.location = '/pattern_detail/' + $element.id;
+        if (row !== undefined) {
+            window.location = '/pattern_detail/' + $el.id;
+        }
     })
 
     $('#patternListAdd').on('click', function() {
