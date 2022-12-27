@@ -66,28 +66,37 @@ class PatternDetailController extends Controller
 
         $selected5s = json_decode($request->get('selected_5s'));
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
-        $index = time();
         $newLocationNo = $request->get('new_location_no') ?: 1;
         $newAreaName = $request->get('new_area_name') ?: "";
+        $areaIndex = time();
 
         // Case: Add New
         if ($request->get('new')) {
-            foreach ($selected5s as $key => $method) {
-                $data[] = [
-                    "area_id" => "new" . $index,
-                    "area_name" => $newAreaName,
-                    "location_id" => "new" . $index,
-                    "location_name" => "",
-                    "count_locations" => $newLocationNo,
-                    "area_rowspan" => count($selected5s) * $newLocationNo,
-                    "location_rowspan" => count($selected5s),
-                    "5s" => $method,
-                    "level_1" => "",
-                    "level_2" => "",
-                    "level_3" => "",
-                    "level_4" => "",
-                    "level_5" => "",
-                ];
+            // Loop locations
+            $l = 0;
+            while ($l < $newLocationNo) {
+                $index = time() . $l;
+
+                // Loop rows
+                foreach ($selected5s as $method) {
+                    $data[] = [
+                        "area_id" => "new" . $areaIndex,
+                        "area_name" => $newAreaName,
+                        "location_id" => "new" . $index,
+                        "location_name" => "",
+                        "count_locations" => $newLocationNo,
+                        "area_rowspan" => count($selected5s) * $newLocationNo,
+                        "location_rowspan" => count($selected5s),
+                        "5s" => $method,
+                        "level_1" => "",
+                        "level_2" => "",
+                        "level_3" => "",
+                        "level_4" => "",
+                        "level_5" => "",
+                    ];
+                }
+
+                $l++;
             }
 
         } elseif ($request->get('remove')) {

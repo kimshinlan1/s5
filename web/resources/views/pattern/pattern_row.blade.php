@@ -20,7 +20,6 @@ $locations = [];
 
     {{-- Area --}}
     @if (!in_array($row['area_id'], $areas))
-    {{-- <td rowspan="{{ $count5sChecked * $row['count_locations'] }}" class="area"> --}}
     <td rowspan="{{ $row['area_rowspan'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
         <a href="javascript:addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )" id="">点検箇所を追加</a>
@@ -34,7 +33,6 @@ $locations = [];
 
     {{-- Locations --}}
     @if (!in_array($locaitonIdToCheck, $locations))
-    {{-- <td rowspan="{{ $count5sChecked }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location"> --}}
     <td rowspan="{{ $row['location_rowspan'] }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location">
         <input type="text" class="form-control" id="location" value="{{ $row['location_name'] }}"/>
     </td>
