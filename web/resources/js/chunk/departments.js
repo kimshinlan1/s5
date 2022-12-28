@@ -282,7 +282,7 @@ window.saveDataEmployee = function () {
         type: 'GET',
         url: '/departments/list/' + id,
         success: function (res) {
-            let html = '<option value=""> </option>';
+            let html = '';
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
