@@ -436,8 +436,8 @@ function saveDataChange() {
         'pattern_name': $('#patternName').val(),
         'pattern_note': $('#patternNote').val(),
         'pattern_5s_selected': JSON.stringify(selected_5s),
-        'pattern_created_at': $('#dateCreate').val(),
-        'pattern_updated_at': $('#dateUpdate').val(),
+        'pattern_created_at': dateFormat($('#dateCreate').datepicker("getDate")),
+        'pattern_updated_at': dateFormat($('#dateUpdate').datepicker("getDate"))
     }
     params['info'] = info;
     params['data'] = [];
