@@ -322,6 +322,8 @@ window.removeLocation = function() {
 
     if (select_location_to_delete.length == 0) {
         // todo: show warning no item to delete
+        $("#confirmDialog2").modal("show");
+        $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
         return;
     }
 
@@ -390,12 +392,10 @@ window.saveData = function(data) {
     .done(function (res) {
         // todo: notify
         if (!$('#hidPatternId').val()) {
-            setTimeout(function (){
-                showToast($('#toast1'), 2000, true);
-            }, 3000);
+            showToast($('#patternSaveSuccess'), 2000, true);
             location.href = "/pattern_list";
         } else {
-            showToast($('#toast1'), 2000, true);
+            showToast($('#patternSaveSuccess'), 2000, true);
             location.reload();
         }
     })
@@ -576,13 +576,13 @@ function cancelSaveDataChange() {
  */
 function addAreaToTable() {
     // Add Area
-    let rowLocation = $('#rowLocation').val();
+    let locationNo = $('#locationNo').val();
     let areaName = $('#area').val();
     let params = {
         new: 1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
         total_rows: $("#table-content tbody").find("tr").length,
-        new_location_no: rowLocation,
+        new_location_no: locationNo,
         new_area_name: areaName
     };
 
@@ -601,14 +601,14 @@ function addAreaToTable() {
     .always(function () {
 
     });
-    $("#exampleModalCenter").modal('hide');
+    $("#modalAddInspectionPoint").modal('hide');
 }
 
 /**
  * Button cancel save data change
  */
 function cancelAddAreaToTable() {
-    $("#exampleModalCenter").modal('hide');
+    $("#modalAddInspectionPoint").modal('hide');
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -655,18 +655,11 @@ $(function () {
         // todo: Check 5S (empty, ...)
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
-            $(".confirmMessage").html(CONFIG.get('MESSAGE_ALARM_EMPTY_TABLE'));
+            $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
             return;
         }
-        $("#exampleModalCenter").modal('show');
-        // // Add Area
-        // let params = {
-        //     new: 1, // case add new (remove in case edit)
-        //     selected_5s: JSON.stringify(selected_5s),
-        //     total_rows: $("#table-content tbody").find("tr").length
-        // };
 
-        $("#exampleModalCenter").modal('show');
+        $("#modalAddInspectionPoint").modal('show');
     });
 
     // Save click
@@ -676,26 +669,25 @@ $(function () {
         let locationName = $('#location').val();
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
-            showToast($('#toast8'), 2000, true);
+            showToast($('#patternNameErr'), 2000, true);
             $('#patternName').focus();
             return;
         }
 
         // todo: Validate data table (all rows) and generate submit params
         if (!areaName || areaName === '') {
-            showToast($('#toast8'), 2000, true);
+            showToast($('#areaNameErr'), 2000, true);
             $('#area').focus();
             return;
         }
 
         if (!locationName || locationName === '') {
-            showToast($('#toast8'), 2000, true);
+            showToast($('#locationNameErr'), 2000, true);
             $('#location').focus();
             return;
         }
 
         $("#saveData").modal('show');
-
 
     });
 
@@ -703,7 +695,8 @@ $(function () {
     $("#removeLocation").click(function () {
         if (select_location_to_delete.length == 0) {
             // todo: show warning no item to delete
-            alert("No selected to delete");
+            $("#confirmDialog2").modal("show");
+            $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
             return;
         }
 
