@@ -139,8 +139,8 @@
             </p>
         </td>
         <td style="width: 20%; text-indent: 20px; font-weight: lightest; color: gray; font-size: 12px">
-            {{ __('SkillMap_Header_FromDate') }}: {!! $dateFrom !!}<br>
-            {{ __('SkillMap_Header_ToDate') }}: {!! $dateTo !!}
+            {{ __('Common_Created_Date') }}: {!! $dateFrom !!}<br>
+            {{ __('Common_Last_Update_Date') }}: {!! $dateTo !!}
         </td>
         <td style="width: 30%; ">
             <img alt="" class="icon_legend" src="{!! 'assets/img/skill-1.png' !!}"/>{{ __('SkillMap_label_5') }}<br>
