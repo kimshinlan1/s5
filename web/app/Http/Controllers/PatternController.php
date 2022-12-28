@@ -50,14 +50,14 @@ class PatternController extends Controller
     /**
      * Get pattern list
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function listPattern()
+    public function listPattern($id)
     {
         try {
-            $data = $this->service->getAll();
+            $data = $this->service->listPatternbyDept($id);
             return $data;
         } catch (\Throwable $th) {
             return response()->json([

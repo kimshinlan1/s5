@@ -58,9 +58,11 @@ class PatternService extends BaseService
      *
      * @return object
      */
-    public function listPattern()
+    public function listPatternbyDept($id)
     {
-        return $this->model::orderBy('id')->get();
+        $hasPattern = Department::where('dept_pattern_id', $id)->exists();
+        $orderByRaw = 'CASE WHEN dept_pattern_id IS NOT NULL THEN 0 ELSE 1 END DESC';
+        return $this->model::orderByRaw($orderByRaw)->get();
 
     }
 

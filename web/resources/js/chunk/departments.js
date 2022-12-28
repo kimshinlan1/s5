@@ -25,41 +25,59 @@ window.departmentTableActions = function (_value, row, _index) {
 /** ------------------
   *    5S Checklist Actions
   --------------------- */
-
 window.department5SChecklistActions = function (_value, row, _index) {
-    var options = '<select class="checklist5s">' +  '<option> </option>';
-    var data = [];
+    var options = '<select class="checklist5s" id="checklist5sID" onchange="selectPattern()" style="width: 50%;">';
+    options += '<option> </option>';
 
-    setTimeout($.ajax({
-        url: '/pattern_list/list',
+    $.ajax({
+        url: '/pattern_list/getlist_by_department/' + row.id,
         type: 'GET',
+        async: false
     })
     .done(function (_data, _textStatus, _jqXHR) {
-        console.log("TCL: window.department5SChecklistActions -> _data", _data)
-        data = _data;
+        _data.forEach(ele => {
+            options += "<option value=" + ele.id + ">" + ele.name + "</option>";
+        });
+        options += " </select>";
+        options += '<button type="button" id="editPatternBtn" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="" onClick="openEditDeptPattern()">編集</button> ';
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
         console.log("TCL: window.department5SChecklistActions -> jqXHR", jqXHR)
-    }) , 1000);
-
-
-    data.forEach(ele => {
-        options += "<option>" + ele.name + "</option>";
     });
-    options += " </select>";
-    return (
-    options +
-         '<button type="button" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="' +
-         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> '
-    );
+    console.log("TCL: window.department5SChecklistActions -> options", options)
+    return options;
 };
 
+/** ------------------
+  *    Add classes / css
+--------------------- */
 window.cellStyle = function(value, row, index) {
     return {
         classes: 'd-flex justify-content-around'
     }
-  }
+}
+
+/** ------------------
+  *    Handle onchange pattern selection
+--------------------- */
+window.selectPattern = function() {
+    let id = $('#checklist5sID').find(":selected").val();
+    $('#checklist5sID').siblings().attr('data-id', id);
+}
+
+/** ------------------
+  *    Redirect to dept pattern edit
+--------------------- */
+window.openEditDeptPattern = function() {
+    let id = $('#editPatternBtn').data("id");
+    if(id != "") {
+        window.location = '/pattern_dept_detail/' + id;
+    } else {
+        $('.error-messages').text($('#messageNoSelectedData').val());
+        $('#errorDialog').modal('show');
+    }
+}
 
 /** ------------------
   *    queryParams
@@ -282,7 +300,6 @@ window.saveDataEmployee = function () {
  ==============================*/
  $(function () {
     loadCompanyList($('#companyListID'), true);
-
     $("#departmentTable").bootstrapTable({
         pagination: "true",
         paginationParts: "['pageList']",
