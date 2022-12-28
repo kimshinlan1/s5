@@ -488,3 +488,26 @@ window.addTestValue = function (parent_class){
         }
     });
 }
+
+/** ------------------
+ *    Check item in array
+ --------------------- */
+window.checkExistId = function(arr, id) {
+    let existed = false;
+    arr.every(val => {
+        if (val.includes(id)) {
+            existed = true;
+            return false;
+        }
+        return true;
+    });
+    return existed;
+}
+
+/** ------------------
+ *    Remove existed item in array
+ --------------------- */
+window.removeExistId = function(arr, id) {
+    arr.splice( $.inArray(id,arr) , 1 );
+    return arr;
+}
