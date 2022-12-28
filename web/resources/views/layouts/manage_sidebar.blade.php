@@ -12,7 +12,7 @@
 
         @if(auth()->user()->isAdmin())
         <a class="list-group-item list-group-item-action @if(request()->path()==='pattern_list')active @endif" href="/pattern_list">{{ __('Pattern_List') }}</a>
-        <a class="list-group-item list-group-item-action @if(request()->path()==='pattern_detail')active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>
+        <a class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'pattern_detail'))active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>
         @endif
 
         <a class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
