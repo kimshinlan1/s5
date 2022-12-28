@@ -35,7 +35,7 @@
         </select>
     </div>
 @endif
-
+@include('layouts.confirm')
 <table
     id="departmentTable"
     class="table table-sm table-striped"

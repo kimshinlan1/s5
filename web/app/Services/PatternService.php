@@ -60,10 +60,18 @@ class PatternService extends BaseService
      */
     public function listPatternbyDept($id)
     {
-        $hasPattern = Department::where('dept_pattern_id', $id)->exists();
-        $orderByRaw = 'CASE WHEN dept_pattern_id IS NOT NULL THEN 0 ELSE 1 END DESC';
-        return $this->model::orderByRaw($orderByRaw)->get();
+        $deptPatternId = Department::select('dept_pattern_id')->where('id', $id)->get();
+        $data = DB::table('dept_patterns')->where('id', $deptPatternId[0]->dept_pattern_id)->get()->toArray();
+        if (count($data) > 0) {
+            $data[0]->isPattern = false; // isPattern is used for checking if the pattern belongs to customer or kaizenbase
+        }
+        $patterns = DB::table('patterns')->orderBy('id')->get()->toArray();
+        foreach ($patterns as $pattern) {
+            $pattern->isPattern = true;
+        }
 
+        $data = array_merge($data, $patterns);
+        return $data;
     }
 
     /**

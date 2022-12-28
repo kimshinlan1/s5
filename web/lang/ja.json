@@ -40,6 +40,7 @@
     "Message_Loading": "Loading",
     "Message_Waiting_Search": "読み込んでいます...しばらくお待ちください。",
     "Message_No_Data": "データが見つかりません。",
+    "Message_No_Selected_Data": "オプションを選択してください",
     "Message_Alarm_Empty_Table": "1つ以上のスキルマップを設定する必要があります。",
     "Confirm_Delete": "のデータを削除してよろしいですか？",
     "Confirm_Copy": "コピーしますか？",

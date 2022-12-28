@@ -15,3 +15,4 @@
 <input type="hidden" id="messageSkillMapMaxLength" name="messageSkillMapMaxLength" value="{{ __('SkillMap_MaxLength') }}"/>
 <input type="hidden" id="messageCompanyFreeContract" name="messageCompanyFreeContract" value="{{ __('Company_Free_Contract') }}"/>
 <input type="hidden" id="messageCompanyPaidContract" name="messageCompanyPaidContract" value="{{ __('Company_Paid_Contract') }}"/>
+<input type="hidden" id="confirmMessage" name="confirmMessage" value="{{ __('Common_Confirm_Message') }}"/>

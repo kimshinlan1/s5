@@ -26,7 +26,7 @@ window.departmentTableActions = function (_value, row, _index) {
   *    5S Checklist Actions
   --------------------- */
 window.department5SChecklistActions = function (_value, row, _index) {
-    var options = '<select class="checklist5s" id="checklist5sID" onchange="selectPattern()" style="width: 50%;">';
+    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center;">';
     options += '<option> </option>';
 
     $.ajax({
@@ -36,10 +36,20 @@ window.department5SChecklistActions = function (_value, row, _index) {
     })
     .done(function (_data, _textStatus, _jqXHR) {
         _data.forEach(ele => {
-            options += "<option value=" + ele.id + ">" + ele.name + "</option>";
+            options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
         });
         options += " </select>";
-        options += '<button type="button" id="editPatternBtn" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="" onClick="openEditDeptPattern()">編集</button> ';
+        let editButton = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
+        || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
+        (
+            '<button type="button" id="editPatternBtn' + row.id
+            + '" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="-1" data-isPattern="" onClick="openEditDeptPattern(' + row.id
+            + ')">編集</button> '
+        ) :
+            '<button type="button" id="editPatternBtn' + row.id
+            + '" class="btn btn-secondary btn-sm disabled" style="width: 35%;" data-id="-1" onClick="openEditDeptPattern(' + row.id
+            + ')">編集</button> ';
+        options += editButton;
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
@@ -54,25 +64,34 @@ window.department5SChecklistActions = function (_value, row, _index) {
 --------------------- */
 window.cellStyle = function(value, row, index) {
     return {
-        classes: 'd-flex justify-content-around'
+        classes: 'd-flex justify-content-around w-100'
     }
 }
 
 /** ------------------
   *    Handle onchange pattern selection
 --------------------- */
-window.selectPattern = function() {
-    let id = $('#checklist5sID').find(":selected").val();
-    $('#checklist5sID').siblings().attr('data-id', id);
+window.selectPattern = function(id) {
+    let dataId = $("#checklist5sID" + id).find(":selected").val();
+    let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
+    $('#checklist5sID' + id).siblings().attr('data-id', dataId);
+    $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
+    if (dataId != "" && isPattern == "true") {
+        $('#confirmDialog3').modal('show');
+        $('.confirmMessage3').text($('#confirmMessage').val());
+        $('#okBtnId').attr('data-deptid', id);
+        $('#okBtnId').attr('data-patternid', dataId);
+        $('#okBtnId').attr('data-isPattern', isPattern);
+    }
 }
 
 /** ------------------
   *    Redirect to dept pattern edit
 --------------------- */
-window.openEditDeptPattern = function() {
-    let id = $('#editPatternBtn').data("id");
-    if(id != "") {
-        window.location = '/pattern_dept_detail/' + id;
+window.openEditDeptPattern = function(id) {
+    let dataId = $('#editPatternBtn' + id).attr("data-id");
+    if(dataId != "-1") {
+        window.location = '/dept_pattern_detail/' + dataId;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -326,6 +345,19 @@ window.saveDataEmployee = function () {
     });
 
     reloadDataDepartment();
+
+    $('#okBtnId').on('click', function() {
+        let deptId = $('#okBtnId').attr('data-deptid');
+        let patternId = $('#okBtnId').attr('data-patternid');
+        let isPattern = $('#okBtnId').attr('data-isPattern');
+        window.location = '/dept_pattern_detail?deptId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
+    })
+
+    $('#cancelBtnId').on('click', function() {
+        let deptId = $('#okBtnId').attr('data-deptid');
+        $('#checklist5sID' + deptId).val("").change();
+
+    })
 
     /** ------------------
       *    Add dialog show
