@@ -46,7 +46,7 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote" {{ isset($info['note']) ? $info['note'] : '' }}>
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
@@ -112,7 +112,11 @@
                     </div>
                 </div>
             </div>
-            <br><br><br>
+            <br>
+            Total Rows:<strong id="countRows"></strong>
+            <br>
+            <button onclick="setValueTest()">Set value test</button>
+            <br>
             <div class="action-btn" style="justify-content: flex-start">
                 <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">
@@ -120,7 +124,7 @@
                     </div>
                 </button>
 
-                <button type="button" id="openModal" class="btn btn-primary btn-ripple" data-toggle="modal" 
+                <button type="button" id="openModal" class="btn btn-primary btn-ripple" data-toggle="modal"
                     style="margin-right: 1%;">{{ __('Pattern_Add_Inspection_Point') }}
                 </button>
 

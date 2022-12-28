@@ -367,6 +367,9 @@ window.loadData = function() {
     })
     .done(function (res) {
         $("#table-content tbody").append(res);
+        if ($('#hidTotalRows')) {
+            $('#countRows').html($('#hidTotalRows').val());
+        }
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
@@ -533,6 +536,19 @@ function addAreaToTable() {
  */
 function cancelAddAreaToTable() {
     $("#modalAddInspectionPoint").modal('hide');
+}
+
+
+function setValueTest() {
+    // Loop main area
+    $("#table-content tbody input[type=text]").each(function() {
+
+        $(this).val("test");
+    });
+
+    $("#table-content tbody textarea").each(function() {
+        $(this).val("level");
+    });
 }
 
 /////////////////////////////////////////////////////////////////////////////

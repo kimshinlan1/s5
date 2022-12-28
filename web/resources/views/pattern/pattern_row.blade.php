@@ -65,3 +65,5 @@ $locations = [];
 </tr>
 @endforeach
 
+<input type="hidden" id="hidTotalRows" value="{{ count($data) }}" />
+

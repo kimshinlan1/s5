@@ -68,7 +68,8 @@ class PatternDetailService extends BaseService
 
         ])
         ->leftJoin('locations', 'locations.id', '=', 'pattern_details.location_id')
-        ->leftJoin('areas', 'areas.id', '=', 'locations.area_id');
+        ->leftJoin('areas', 'areas.id', '=', 'locations.area_id')
+        ->orderBy('areas.id');
 
         if ($id) {
             $sql->where('pattern_details.pattern_id', $id);
@@ -112,53 +113,19 @@ class PatternDetailService extends BaseService
             (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
         }
 
-        // sample
-        // $data = [
-        //     'info' => [
-        //         "pattern_id" => null,
-        //         "pattern_name" => null,
-        //         "pattern_note" => null,
-        //         "pattern_5s_selected" => null,
-        //         "pattern_created_at" => null,
-        //         "pattern_updated_at" => null
-        //     ],
-        //     'old_areas' => [],
-        //     'data' => [
-        //         0 => [
-        //             'area_name' => '',
-        //             'locations' => [
-        //                 0 => [
-        //                     'location_name' => '',
-        //                     'rows' => [
-        //                         's1' => [
-        //                             'level_1' => '',
-        //                             'level_2' => '',
-        //                             'level_3' => '',
-        //                             'level_4' => '',
-        //                             'level_5' => ''
-        //                         ],
-        //                         's2' => [
-        //                             'level_1' => '',
-        //                             'level_2' => '',
-        //                             'level_3' => '',
-        //                             'level_4' => '',
-        //                             'level_5' => ''
-        //                         ],
-        //                     ]
-        //                 ]
-        //             ]
-        //         ]
-        //     ]
-        // ];
-
-
         // Step: Insert new pattern
-        $patternId = Pattern::updateOrCreate([
-            'id' => $data['info']['pattern_id'],
-            'name' => $data['info']['pattern_name'],
-            'note' => $data['info']['pattern_note'],
-            '5s' => $data['info']['pattern_5s_selected'],
-        ]);
+        $patternId = Pattern::updateOrCreate(
+            [
+                'id' => $data['info']['pattern_id']
+            ],
+            [
+                'name' => $data['info']['pattern_name'],
+                'note' => $data['info']['pattern_note'],
+                '5s' => $data['info']['pattern_5s_selected'],
+                'created_at' => $data['info']['pattern_created_at'],
+                'updated_at' => $data['info']['pattern_updated_at'],
+            ]
+        );
         $patternId = $patternId->id;
 
         // Loop to insert Areas
