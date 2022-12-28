@@ -391,11 +391,10 @@ window.saveData = function(data) {
     })
     .done(function (res) {
         // todo: notify
+        showToast($('#patternSaveSuccess'), 2000, true);
         if (!$('#hidPatternId').val()) {
-            showToast($('#patternSaveSuccess'), 2000, true);
             location.href = "/pattern_list";
         } else {
-            showToast($('#patternSaveSuccess'), 2000, true);
             location.reload();
         }
     })
@@ -407,81 +406,6 @@ window.saveData = function(data) {
     .always(function () {
 
     });
-}
-
-/**
- * Button save data change
- */
-function saveDataChange() {
-    $("#saveData").modal('hide');
-    showLoading();
-    // Get param to submit
-    let params = {};
-    if (selected_5s.length == 0) {
-        select5S();
-    }
-
-    let info = {
-        'pattern_id': $('#hidPatternId').val(),
-        'pattern_name': $('#patternName').val(),
-        'pattern_note': $('#patternNote').val(),
-        'pattern_5s_selected': JSON.stringify(selected_5s),
-        'pattern_created_at': $('#dateCreate').val(),
-        'pattern_updated_at': $('#dateUpdate').val(),
-    }
-    params['info'] = info;
-    params['data'] = [];
-    params['old_areas'] = [];
-    params['old_locations'] = [];
-
-    // Loop main area
-    $("#table-content tbody").find("tr.main_area").each(function() {
-        // New Area
-        let area = {
-            'area_name': $(this).find("#area").val(),
-            'locations': [],
-            'old_locations': []
-        };
-
-        // Loop all locations
-        let trid = $(this).attr("id").split('_location_')[0];
-        $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
-            // New location
-            let location = {
-                'location_name': $(ele).find("#location").val(),
-                'rows':{}
-            };
-
-            // Loop all rows in location
-            let trid_location = $(ele).attr("id").split('_row_')[0];
-            $('[id*='+trid_location+']').each(function(i, e) {
-                // Add levels in 1 methos 5S (1 row)
-                let row = {};
-                row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
-                row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
-                row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
-                row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
-                row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
-                location['rows'][$(e).find("#hid5S").val()] = row;
-            });
-            area['locations'].push(location);
-        });
-
-        params['data'].push(area);
-
-        // Add old area (for delete)
-        if ($(this).find("#hidAreaId").val()) {
-            params['old_areas'].push($(this).find("#hidAreaId").val());
-        }
-    });
-    saveData(params);
-}
-
-/**
- * Button cancel save data change
- */
-function cancelSaveDataChange() {
-    $("#saveData").modal('hide');
 }
 
 /**
