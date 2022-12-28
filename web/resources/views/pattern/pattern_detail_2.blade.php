@@ -128,13 +128,13 @@
                     style="margin-right: 1%;">{{ __('Pattern_Add_Inspection_Point') }}
                 </button>
 
-                <button type="button" id="removeLocation"
-                    class="btn btn-danger btn-ripple" data-toggle="modal" style="margin-right: 1%;"
-                    data-target="#exampleModalConfirm">{{ __('Common_button_delete') }}
+                <button type="button" id="removeLocation" class="btn btn-danger btn-ripple" data-toggle="modal"
+                    style="margin-right: 1%;">{{ __('Common_button_delete') }}
                 </button>
 
-                {{-- <button type="button" id="removeLocation"
-                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button> --}}
+                <button type="button" id="backPage" class="btn btn-secondary" data-toggle="modal">
+                    {{ __('Common_button_cancel') }}
+                </button>
             </div>
         </div>
     </div>
@@ -172,7 +172,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Add Inspection Point -->
     <div class="modal fade" id="modalAddInspectionPoint" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -203,61 +203,59 @@
         </div>
     </div>
 
-    <!-- Modal Confirm -->
-    {{-- <div class="modal fade" id="exampleModalConfirm" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal Remove Location -->
+    <div class="modal fade" id="modalDelectLocation" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">確認</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span class="badge bg-danger">{{ __('SkillMap_Question_Delete_1') }}</span></h4>
+                    <h4><span class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="deleteDataSkillMap()"
+                        onclick="btnCancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="btnRemoveLocation()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- Modal confirm save data when back page -->
-    {{-- <div class="modal fade" id="backPageModalConfirm" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalBackPage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('SkillMap_Question_BackPage') }}</span></h4>
+                <div class="modal-body">
+                    <h4><span>{{ __('Pattern_Question_BackPage') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="backPageSaveData(false)">
-                        {{ __('SkillMap_Cancel_Save_Button') }}</button>
-                    <button type="button" onclick="backPageSaveData(true)"
-                        class="btn btn-primary">{{ __('Common_button_save') }}</button>
+                    <button type="button" class="btn btn-secondary" onclick="btnCancelBackPage(false)">
+                        {{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="btnBackPage(true)"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
+
     <!-- Modal confirm save data -->
-    <div class="modal fade" id="saveData" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalSaveData" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
-                <div class="modal-body" id="modal-body">
+                <div class="modal-body">
                     <h4><span>{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveDataChange()"
+                    <button type="button" onclick="btnSaveData()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelSaveDataChange()">
+                    <button type="button" class="btn btn-secondary" onclick="btnCancelSaveData()">
                         {{ __('Common_button_cancel') }}</button>
 
                 </div>

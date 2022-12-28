@@ -224,5 +224,7 @@
     "Pattern_At_Least_One_Verification_Point_Must_Be_Configured": "少なくとも 1 つの検査ポイントを構成する必要があります。",
     "Pattern_Label_Modal_Save_Pattern": "パターンを保存しますか?",
     "Pattern_Save_Successfully": "パターンを保存しました。",
+    "Pattern_Delete_Are_You_Sure_You_Want_To": "削除してもよろしいですか？",
+    "Pattern_Question_BackPage": "更新は保存されていません。終了しますか?",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }

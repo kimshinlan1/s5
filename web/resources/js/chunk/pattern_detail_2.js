@@ -234,36 +234,6 @@ window.getValidRows = function() {
 
     let params = [];
 
-    // $("#table-content tbody").find("tr").each(function() {
-
-    //     // Get all not in select_location_to_delete
-    //     if (select_location_to_delete.length == 0 || $.inArray($(this).attr("id"), select_location_to_delete) < 0) {
-    //         let id = $(this).attr("id").split("_");
-    //         let area_id = id[1];
-    //         let location_id = id[3];
-
-    //         let row = {};
-    //         row["area_id"] = area_id ? area_id : "";
-    //         row["area_name"] = $(this).find("#area").val() ? $(this).find("#area").val() : "";
-    //         row["location_id"] = location_id ? location_id : "";
-    //         row["location_name"] = $(this).find("#location").val() ? $(this).find("#location").val() : "";
-    //         row["5s"] = $(this).find("#hid5S").val() ? $(this).find("#hid5S").val() : "";
-    //         row["level_1"] = $(this).find("#level_1").val() ? $(this).find("#level_1").val() : "";
-    //         row["level_2"] = $(this).find("#level_2").val() ? $(this).find("#level_2").val() : "";
-    //         row["level_3"] = $(this).find("#level_3").val() ? $(this).find("#level_3").val() : "";
-    //         row["level_4"] = $(this).find("#level_4").val() ? $(this).find("#level_4").val() : "";
-    //         row["level_5"] = $(this).find("#level_5").val() ? $(this).find("#level_5").val() : "";
-    //         row["count_locations"] = parseInt($(this).find("#hidCountLocation").val()) - parseInt($(this).find("#hidCountLocationDelete").val());
-
-    //         row["area_rowspan"] = $(this).find("#hidAreaRowspan").val() ? $(this).find("#hidAreaRowspan").val() : "";
-    //         row["location_rowspan"] = $(this).find("#hidLocationRowspan").val() ? $(this).find("#hidLocationRowspan").val() : "";
-
-    //         params.push(row);
-    //     }
-
-    // });
-
-
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {
 
@@ -395,11 +365,13 @@ window.saveData = function(data) {
     .done(function (res) {
         // todo: notify
         showToast($('#patternSaveSuccess'), 2000, true);
-        if (!$('#hidPatternId').val()) {
-            location.href = "/pattern_list";
-        } else {
-            location.reload();
-        }
+        setTimeout(() => {
+            if (!$('#hidPatternId').val()) {
+                location.href = "/pattern_list";
+            } else {
+                location.reload();
+            }
+        }, 2000);
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
@@ -419,10 +391,10 @@ function openCalendar(name) {
 }
 
 /**
- * Save data change
+ * Button save data
  */
-function saveDataChange() {
-    $("#saveData").modal('hide');
+function btnSaveData() {
+    $("#modalSaveData").modal('hide');
     showLoading();
 
     // Get param to submit
@@ -492,10 +464,10 @@ function saveDataChange() {
 }
 
 /**
- * Button cancel save data change
+ * Button cancel save data
  */
-function cancelSaveDataChange() {
-    $("#saveData").modal('hide');
+function btnCancelSaveData() {
+    $("#modalSaveData").modal('hide');
 }
 
 /**
@@ -538,6 +510,35 @@ function cancelAddAreaToTable() {
     $("#modalAddInspectionPoint").modal('hide');
 }
 
+/**
+ * Button remove location
+ */
+function btnRemoveLocation() {
+    $("#modalDelectLocation").modal('hide');
+    removeLocation();
+}
+
+/**
+ * Button cancel remove location
+ */
+function btnCancelRemoveLocation() {
+    $("#modalDelectLocation").modal('hide');
+}
+
+/**
+ * Button back page
+ */
+function btnBackPage() {
+    $("#modalBackPage").modal('hide');
+    location.href = "/pattern_list";
+}
+
+/**
+ * Button cancel back page
+ */
+function btnCancelBackPage() {
+    $("#modalBackPage").modal('hide');
+}
 
 function setValueTest() {
     // Loop main area
@@ -627,7 +628,7 @@ $(function () {
             return;
         }
 
-        $("#saveData").modal('show');
+        $("#modalSaveData").modal('show');
 
     });
 
@@ -640,11 +641,11 @@ $(function () {
             return;
         }
 
-        if (confirm("Remove?")) {
-            // Remove row but not save DB (need to save to update DB)
-            removeLocation();
-        }
+        $("#modalDelectLocation").modal('show');
     });
 
-
+    //Back page
+    $("#backPage").click(function () {
+        $("#modalBackPage").modal('show');
+    })
 });
