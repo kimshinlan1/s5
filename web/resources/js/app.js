@@ -25,9 +25,6 @@ window.CONFIG = (function () {
             'FREE'           : 2
         },
         'ROLE_USER_ID': 2,
-        'GRADE_YEAR': 6,
-        'GRADE_NAME': '年⽣',
-        'COMPLIANT_COMMON': '共通',
         'DELETE_MESSAGE': $('#messageDelete').val(),
         'DELETE_USER_MESSAGE': $('#messageUserDelete').val(),
         'MESSAGE_WAIT_SEACH': $('#messageWaitSearch').val(),
