@@ -46,8 +46,8 @@
                 <div class="confirmMessage3"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="okBtnId" data-deptid="" data-patternid="" data-isPattern="" data-bs-dismiss="modal">{{ __('Common_button_ok') }}</button>
-                <button type="button" class="btn btn-primary" id="cancelBtnId" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-primary" id="okBtn" data-deptid="" data-patternid="" data-isPattern="" data-bs-dismiss="modal">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-primary" id="cancelBtn" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
             </div>
         </div>
     </div>

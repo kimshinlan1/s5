@@ -56,14 +56,8 @@ class PatternController extends Controller
      */
     public function listPattern($id)
     {
-        try {
-            $data = $this->service->listPatternbyDept($id);
-            return $data;
-        } catch (\Throwable $th) {
-            return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
-            ], 500);
-        }
+        $data = $this->service->listPatternbyDept($id);
+        return $data;
     }
 
     /**

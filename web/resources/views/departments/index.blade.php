@@ -24,8 +24,8 @@
 </div>
 @if (Auth::user()->isAdmin())
     <div class="d-flex justify-content-start mb-4">
-        <div class="col-1 mt-1 fs-5">{{ __('Company_List') }}</div>
-        <select class="form-select form-select-arrow w-25" aria-label="Company select" id="companyListID" style="text-align-last: center;">
+        <div class="mt-1 fs-5">{{ __('Company_List') }}</div>
+        <select class="form-select form-select-arrow w-25 mx-3" aria-label="Company select" id="companyListID" style="text-align-last: center;">
         </select>
     </div>
 @else
@@ -44,10 +44,10 @@
         <tr style="text-align: center;">
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="company_id" data-visible="false">Company ID</th>
-            <th data-align="center" data-field="no">{{ __('Department_ID') }}</th>
-            <th data-field="name" class="word-wrap">{{ __('Deparment_Name') }}</th>
-            <th data-width="240" data-formatter="department5SChecklistActions" data-cell-style="cellStyle">{{ __('Deparment_5S_Checklist') }}</th>
-            <th data-width="240" data-formatter="departmentTableActions"></th>
+            <th data-align="center" data-field="no"  data-cell-style="idStyle">{{ __('Department_ID') }}</th>
+            <th data-field="name" class="word-wrap" data-cell-style="departmentStyle">{{ __('Deparment_Name') }}</th>
+            <th data-formatter="department5SChecklistActions" data-cell-style="checkListStyle">{{ __('Deparment_5S_Checklist') }}</th>
+            <th data-formatter="departmentTableActions" data-cell-style="buttonStyle"></th>
         </tr>
     </thead>
 </table>

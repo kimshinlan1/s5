@@ -26,7 +26,7 @@ window.departmentTableActions = function (_value, row, _index) {
   *    5S Checklist Actions
   --------------------- */
 window.department5SChecklistActions = function (_value, row, _index) {
-    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center;">';
+    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 20px;">';
     options += '<option> </option>';
 
     $.ajax({
@@ -60,12 +60,60 @@ window.department5SChecklistActions = function (_value, row, _index) {
 };
 
 /** ------------------
-  *    Add classes / css
+  *    Add classes / css for 5s pattern checklist column
 --------------------- */
-window.cellStyle = function(value, row, index) {
+window.checkListStyle = function(value, row, index) {
+    let width = isIpad() ? '20%' : '25%';
     return {
-        classes: 'd-flex justify-content-around w-100'
+        classes: 'text-center',
+        css: {
+            width: width
+        }
     }
+}
+
+/** ------------------
+  *    Add classes / css for id column
+--------------------- */
+window.idStyle = function(value, row, index) {
+    let width = isIpad() ? '10%' : '20%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for department name column
+--------------------- */
+window.departmentStyle = function(value, row, index) {
+    let width = isIpad() ? '30%' : '40%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for button column
+--------------------- */
+window.buttonStyle = function(value, row, index) {
+    let width = isIpad() ? '40%' : '20%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for button column
+--------------------- */
+window.isIpad = function() {
+    var width = $(window).width();
+    return width < 830;
 }
 
 /** ------------------
@@ -79,9 +127,9 @@ window.selectPattern = function(id) {
     if (dataId != "" && isPattern == "true") {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#confirmMessage').val());
-        $('#okBtnId').attr('data-deptid', id);
-        $('#okBtnId').attr('data-patternid', dataId);
-        $('#okBtnId').attr('data-isPattern', isPattern);
+        $('#okBtn').attr('data-deptid', id);
+        $('#okBtn').attr('data-patternid', dataId);
+        $('#okBtn').attr('data-isPattern', isPattern);
     }
 }
 
@@ -346,15 +394,15 @@ window.saveDataEmployee = function () {
 
     reloadDataDepartment();
 
-    $('#okBtnId').on('click', function() {
-        let deptId = $('#okBtnId').attr('data-deptid');
-        let patternId = $('#okBtnId').attr('data-patternid');
-        let isPattern = $('#okBtnId').attr('data-isPattern');
+    $('#okBtn').on('click', function() {
+        let deptId = $('#okBtn').attr('data-deptid');
+        let patternId = $('#okBtn').attr('data-patternid');
+        let isPattern = $('#okBtn').attr('data-isPattern');
         window.location = '/dept_pattern_detail?deptId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
     })
 
-    $('#cancelBtnId').on('click', function() {
-        let deptId = $('#okBtnId').attr('data-deptid');
+    $('#cancelBtn').on('click', function() {
+        let deptId = $('#okBtn').attr('data-deptid');
         $('#checklist5sID' + deptId).val("").change();
 
     })
