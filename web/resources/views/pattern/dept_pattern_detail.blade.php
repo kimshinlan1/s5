@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</div>
+    <div class="h-title">５Sチェックリスト設定</div>
     <div class="row">
         <div class="col-12">
             {{-- Option --}}
