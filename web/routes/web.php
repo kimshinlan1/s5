@@ -8,12 +8,13 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PatternController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SkillMapController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\PatternController;
-use App\Http\Controllers\PatternDetailController;
 use App\Http\Controllers\PatternListController;
+use App\Http\Controllers\PatternDetailController;
+use App\Http\Controllers\DeptPatternDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +54,11 @@ Route::group(['middleware' => ['auth']], function () {
         //Pattern detail
         Route::get('/pattern_detail', [PatternDetailController::class, 'index']);
         Route::get('/pattern_detail/{id}', [PatternDetailController::class, 'edit']);
-
         Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
         Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
+
+        Route::get('/dept_pattern_detail', [DeptPatternDetailController::class, 'index']);
+        Route::get('/dept_pattern_detail/{id}', [DeptPatternDetailController::class, 'edit']);
 
     });
 
