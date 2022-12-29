@@ -5,6 +5,8 @@ var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":
 var select_location_to_delete = [];
 var highlight = 'aqua';
 var highlight = '#ced4da';
+var params = {};
+var maxCnt5s = 5;
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
@@ -307,8 +309,13 @@ window.saveAjax = function(data) {
 
     })
     .always(function () {
-
+        params = {};
     });
+}
+
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
 }
 
 /**
@@ -319,15 +326,12 @@ function openCalendar(name) {
 }
 
 /**
- * Button save data
+ * Validate data table
  */
-function saveData() {
-    $("#modalSaveData").modal('hide');
-    showLoading();
-
+function validDataTable() {
     // todo: Validate all rows and Get param to submit
     let valid = true;
-    let params = {};
+ 
 
     if (selected_5s.length == 0) {
         select5S();
@@ -349,8 +353,18 @@ function saveData() {
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {
         // New Area
+        // get area name
+        let areaName = $(this).find("#area").val();
+
+        // if area is empty
+        if (areaName.trim().length === 0) {
+            valid = false;
+            $(this).find("#area").addClass('is-invalid');
+        } else {
+            $(this).find("#area").removeClass('is-invalid');
+        }
         let area = {
-            'area_name': $(this).find("#area").val(),
+            'area_name': areaName,
             'locations': [],
             'old_locations': []
         };
@@ -359,8 +373,17 @@ function saveData() {
         let trid = $(this).attr("id").split('_location_')[0];
         $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
             // New location
+            // get location name on each row
+            let locName = $(ele).find("#location").val();
+            // if location is empty
+            if (locName.trim().length === 0) {
+                valid = false;
+                $(ele).find("#location").addClass('is-invalid');
+            } else {
+                $(ele).find("#location").removeClass('is-invalid');
+            }
             let location = {
-                'location_name': $(ele).find("#location").val(),
+                'location_name': locName,
                 'rows':{}
             };
 
@@ -369,35 +392,47 @@ function saveData() {
             $('[id*='+trid_location+']').each(function(i, e) {
 
                 // todo: Validate
-                let input = $(e).find('td input[type=text]');
-                let textarea = $(e).find('td textarea');
-                if (!input.val() || !textarea.val()) {
-                    if (!input.val()) {
-                        // input.focus();
-                        input.addClass('is-invalid');
-                        hideLoading();
-                    }
-                    if (!textarea.val()) {
-                        // input.focus();
-                        textarea.addClass('is-invalid');
-                        hideLoading();
-                    }
-                    valid = false;
-                    return;
+                // let input = $(e).find('td input[type=text]');
+                // let textarea = $(e).find('td textarea');
+                // if (!input.val() || !textarea.val()) {
+                //     if (!input.val()) {
+                //         // input.focus();
+                //         input.addClass('is-invalid');
+                //         hideLoading();
+                //     }
+                //     if (!textarea.val()) {
+                //         // input.focus();
+                //         textarea.addClass('is-invalid');
+                //         hideLoading();
+                //     }
+                //     valid = false;
+                //     return;
 
-                } else {
-                    input.removeClass('is-invalid');
-                    textarea.removeClass('is-invalid');
-                }
+                // } else {
+                //     input.removeClass('is-invalid');
+                //     textarea.removeClass('is-invalid');
+                // }
 
                 // Case Valid
                 // Add levels in 1 methos 5S (1 row)
                 let row = {};
-                row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
-                row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
-                row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
-                row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
-                row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
+                // row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
+                // row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
+                // row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
+                // row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
+                // row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
+                for (let cnt = 1; cnt <= maxCnt5s; cnt++) {
+                    let levelName = $(e).find("#level_"  + cnt).val();
+                    // if level is empty
+                    if (levelName.trim().length === 0) {
+                        valid = false;
+                        row["level_" + cnt] = "";
+                        $(e).find("#level_"  + cnt).addClass('is-invalid');
+                    } else {
+                        row["level_" + cnt] = levelName;
+                        $(e).find("#level_"  + cnt).removeClass('is-invalid');
+                    }
+                }
                 location['rows'][$(e).find("#hid5S").val()] = row;
             });
 
@@ -410,14 +445,21 @@ function saveData() {
         if ($(this).find("#hidAreaId").val()) {
             params['old_areas'].push($(this).find("#hidAreaId").val());
         }
-
     });
 
-    // todo: Check validate and submit ajax here
+    // show modal when data input is valid
     if (valid) {
-        saveAjax(params);
+        $("#modalSaveData").modal('show');
     }
+}
 
+/**
+ * Button save data
+ */
+function saveData() {
+    $("#modalSaveData").modal('hide');
+    showLoading();
+    saveAjax(params);
 }
 
 /**
@@ -433,7 +475,7 @@ function cancelSaveData() {
 function addAreaToTable() {
     // Add Area
     let locationNo = $('#locationNo').val();
-    let areaName = $('#area').val();
+    let areaName = $('#rowArea').val();
     let params = {
         new: 1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
@@ -452,12 +494,11 @@ function addAreaToTable() {
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
-
+        failAjax(jqXHR, _textStatus, _errorThrown);
     })
     .always(function () {
-
+        $("#modalAddInspectionPoint").modal('hide');
     });
-    $("#modalAddInspectionPoint").modal('hide');
 }
 
 /**
@@ -488,6 +529,58 @@ function cancelRemoveLocation() {
 function backPage() {
     $("#modalBackPage").modal('hide');
     location.href = "/pattern_list";
+}
+
+/**
+ * Event validate myForm
+ */
+function validateMyform() {
+    let errFlag = InvalidMsgMyForm($('#rowArea')[0]);
+    if (!errFlag) {
+        errFlag = InvalidMsgMyForm($('#locationNo')[0]);
+        if (!errFlag) {
+            addAreaToTable();
+        }
+    }
+    let form = document.getElementById('myForm');
+    let inpArea = document.getElementById("rowArea");
+    let inpCntLocation = document.getElementById("locationNo");
+    if (!inpArea.checkValidity() || !inpCntLocation.checkValidity()) {
+        form.reportValidity();
+    }
+}
+
+/**
+ * Validate my form
+ * @param  {} textbox
+ */
+function RemoveMsgMyForm(textbox) {
+    textbox.setCustomValidity('');
+}
+
+/**
+ * Validate my form
+ * @param  {} textbox
+ */
+function InvalidMsgMyForm(textbox) {
+    let flag = false;
+    if (textbox.value.trim() == '') {
+        textbox.setCustomValidity(CONFIG.get("SKILL_MAP_REQUIRED"));
+        flag = true;
+    } else if (textbox.validity.patternMismatch) {
+        textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+        flag = true;
+    } else if (textbox.placeholder == (CONFIG.get("PLACE_HOLDER_POINT"))) {
+        if (isNaN(parseInt(textbox.value))) {
+            textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+            flag = true;
+        } else {
+            textbox.setCustomValidity('');
+        }
+    } else {
+        textbox.setCustomValidity('');
+    }
+    return flag;
 }
 
 /**
@@ -549,10 +642,11 @@ $(function () {
         loadData();
     }
 
-
-
     // Add New Area
     $("#openModal").click(function () {
+      	$('#rowArea').val('');
+        $('#locationNo').val('');
+        $('#rowArea').focus();
         // todo: Check 5S (empty, ...)
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
@@ -569,48 +663,16 @@ $(function () {
         }
     });
 
-    $('#area').keyup(function () {
-        if ($('#area').val()) {
-            $('#area').removeClass('is-invalid');
-        }
-    });
-
-    $('#location').keyup(function () {
-        if ($('#location').val()) {
-            $('#location').removeClass('is-invalid');
-        }
-    });
-
     // Save click
     $("#save").click(function () {
-        let patternName = $('#patternName').val();
-        let areaName = $('#area').val();
-        let locationName = $('#location').val();
+        let patternName = $('#patternName').val().trim();
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
-            showToast($('#patternNameErr'), 2000, true);
             $('#patternName').focus();
             $('#patternName').addClass('is-invalid');
             return;
         }
-
-        // todo: Validate data table (all rows) and generate submit params
-        // if (!areaName || areaName === '') {
-        //     showToast($('#areaNameErr'), 2000, true);
-        //     $('#area').focus();
-        //     $('#area').addClass('is-invalid');
-        //     return;
-        // }
-
-        // if (!locationName || locationName === '') {
-        //     showToast($('#locationNameErr'), 2000, true);
-        //     $('#location').focus();
-        //     $('#location').addClass('is-invalid');
-        //     return;
-        // }
-
-        $("#modalSaveData").modal('show');
-
+        validDataTable();
     });
 
     // Remove click
