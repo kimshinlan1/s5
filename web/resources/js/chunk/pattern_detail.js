@@ -634,8 +634,8 @@ $(function () {
     let date_create = new Date();
     let date_update = new Date();
     if ($('#hidPatternId').val()) {
-        date_create = dateFormat($('#hidDateCreate').val());
-        date_update = new Date();
+        date_create = dateFormatterYmd($('#hidDateCreate').val());
+        date_update = dateFormatterYmd($('#hidDateUpdate').val());
     }
 
     $('#dateCreate').datepicker("setDate", date_create);
