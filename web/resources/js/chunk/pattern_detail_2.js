@@ -8,11 +8,6 @@ var highlight = '#ced4da';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
-    // if (ele && !$(ele).is(':checked')) {
-    //     // todo:
-    //     alert("Lost data, Are you sure?");
-    // }
-
     selected_5s = [];
     $('.check_5s').find('input').each(function(){
         if ($(this).is(':checked')) {
@@ -20,9 +15,6 @@ window.select5S = function (ele) {
         }
     });
 
-    // todo: reload data onchange
-
-    console.log(selected_5s);
 }
 
 // Add Location 点検箇所
@@ -89,9 +81,7 @@ window.addLocation = function (area_id, location_id, area_index) {
         }
 
 
-        // todo:  update lại count theo flow
-        // Update rowspan
-
+        // Update rowspan area
         tr.find("td:first").attr('rowspan', new_total_rows);
 
         // todo: Loop all tr with id => Update info and Insert location
@@ -113,39 +103,12 @@ window.addLocation = function (area_id, location_id, area_index) {
             }
         });
 
-
-
-        // // Update rowspan (location number * selected_5s)
-        // let new_total_rows = selected_5s.length * (parseInt(count_current_location)+1);
-        // tr.find("td:first").attr('rowspan', new_total_rows);
-
-        // // todo: Loop all tr with id => Update hidCountLocation and Insert location
-        // let count_location_delete = "";
-        // $("[id*=area_"+area_id+"]").each(function(i) {
-        //     $(this).find("#hidCountLocation").val(new_count_current_location);
-
-        //     // Get for delete
-        //     if (!count_location_delete) {
-        //         count_location_delete = $(this).find("#hidCountLocationDelete").val() ? $(this).find("#hidCountLocationDelete").val() : 0;
-        //     }
-
-        //     // Insert location at last row
-        //     let isLastElement = i == $("[id*=area_"+area_id+"]").length -1;
-        //     if (isLastElement) {
-        //         row = row.replace(/count_location_delete/g, count_location_delete);
-        //         $(this).after(row);
-        //     }
-        // });
-
     }, 10);
 }
 
 // Select location
 window.selectLocationToDelete = function(ele, area_id, location_id) {
 
-    // console.log("before:");
-    // console.log(select_location_to_delete);
-    // Check focus input
     if ($(ele).find('input').is(":focus")) {
         return;
     }
@@ -316,7 +279,7 @@ window.loadData = function() {
 }
 
 // Save
-window.saveData = function(data) {
+window.saveAjax = function(data) {
     // todo:
     let params = {
         data: data
@@ -358,12 +321,14 @@ function openCalendar(name) {
 /**
  * Button save data
  */
-function btnSaveData() {
+function saveData() {
     $("#modalSaveData").modal('hide');
     showLoading();
 
-    // Get param to submit
+    // todo: Validate all rows and Get param to submit
+    let valid = true;
     let params = {};
+
     if (selected_5s.length == 0) {
         select5S();
     }
@@ -402,6 +367,30 @@ function btnSaveData() {
             // Loop all rows in location
             let trid_location = $(ele).attr("id").split('_row_')[0];
             $('[id*='+trid_location+']').each(function(i, e) {
+
+                // todo: Validate
+                let input = $(e).find('td input[type=text]');
+                let textarea = $(e).find('td textarea');
+                if (!input.val() || !textarea.val()) {
+                    if (!input.val()) {
+                        // input.focus();
+                        input.addClass('is-invalid');
+                        hideLoading();
+                    }
+                    if (!textarea.val()) {
+                        // input.focus();
+                        textarea.addClass('is-invalid');
+                        hideLoading();
+                    }
+                    valid = false;
+                    return;
+
+                } else {
+                    input.removeClass('is-invalid');
+                    textarea.removeClass('is-invalid');
+                }
+
+                // Case Valid
                 // Add levels in 1 methos 5S (1 row)
                 let row = {};
                 row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
@@ -422,16 +411,19 @@ function btnSaveData() {
             params['old_areas'].push($(this).find("#hidAreaId").val());
         }
 
-
     });
 
-    saveData(params);
+    // todo: Check validate and submit ajax here
+    if (valid) {
+        saveAjax(params);
+    }
+
 }
 
 /**
  * Button cancel save data
  */
-function btnCancelSaveData() {
+function cancelSaveData() {
     $("#modalSaveData").modal('hide');
 }
 
@@ -478,7 +470,7 @@ function cancelAddAreaToTable() {
 /**
  * Button remove location
  */
-function btnRemoveLocation() {
+function runRemoveLocation() {
     $("#modalDelectLocation").modal('hide');
     removeLocation();
 }
@@ -486,14 +478,14 @@ function btnRemoveLocation() {
 /**
  * Button cancel remove location
  */
-function btnCancelRemoveLocation() {
+function cancelRemoveLocation() {
     $("#modalDelectLocation").modal('hide');
 }
 
 /**
  * Button back page
  */
-function btnBackPage() {
+function backPage() {
     $("#modalBackPage").modal('hide');
     location.href = "/pattern_list";
 }
@@ -501,10 +493,13 @@ function btnBackPage() {
 /**
  * Button cancel back page
  */
-function btnCancelBackPage() {
+function cancelBackPage() {
     $("#modalBackPage").modal('hide');
 }
 
+/**
+ * todo: Test => Remove when release
+ */
 function setValueTest() {
     // Loop main area
     $("#table-content tbody input[type=text]").each(function() {
@@ -516,6 +511,7 @@ function setValueTest() {
         $(this).val("level");
     });
 }
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -570,19 +566,19 @@ $(function () {
     $('#patternName').keyup(function () {
         if ($('#patternName').val()) {
             $('#patternName').removeClass('is-invalid');
-        } 
+        }
     });
 
     $('#area').keyup(function () {
         if ($('#area').val()) {
             $('#area').removeClass('is-invalid');
-        } 
+        }
     });
 
     $('#location').keyup(function () {
         if ($('#location').val()) {
             $('#location').removeClass('is-invalid');
-        } 
+        }
     });
 
     // Save click
@@ -599,19 +595,19 @@ $(function () {
         }
 
         // todo: Validate data table (all rows) and generate submit params
-        if (!areaName || areaName === '') {
-            showToast($('#areaNameErr'), 2000, true);
-            $('#area').focus();
-            $('#area').addClass('is-invalid');
-            return;
-        }
+        // if (!areaName || areaName === '') {
+        //     showToast($('#areaNameErr'), 2000, true);
+        //     $('#area').focus();
+        //     $('#area').addClass('is-invalid');
+        //     return;
+        // }
 
-        if (!locationName || locationName === '') {
-            showToast($('#locationNameErr'), 2000, true);
-            $('#location').focus();
-            $('#location').addClass('is-invalid');
-            return;
-        }
+        // if (!locationName || locationName === '') {
+        //     showToast($('#locationNameErr'), 2000, true);
+        //     $('#location').focus();
+        //     $('#location').addClass('is-invalid');
+        //     return;
+        // }
 
         $("#modalSaveData").modal('show');
 

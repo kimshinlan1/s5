@@ -215,8 +215,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="btnCancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="btnRemoveLocation()"
+                        onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="runRemoveLocation()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
@@ -233,9 +233,9 @@
                     <h4><span>{{ __('Pattern_Question_BackPage') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="btnCancelBackPage(false)">
+                    <button type="button" class="btn btn-secondary" onclick="cancelBackPage(false)">
                         {{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="btnBackPage(true)"
+                    <button type="button" onclick="backPage(true)"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
@@ -253,9 +253,9 @@
                     <h4><span>{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="btnSaveData()"
+                    <button type="button" onclick="saveData()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="btnCancelSaveData()">
+                    <button type="button" class="btn btn-secondary" onclick="cancelSaveData()">
                         {{ __('Common_button_cancel') }}</button>
 
                 </div>
