@@ -44,12 +44,12 @@
                             </select>
                         </div>
                         <div class="col-2">
-                            <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
+                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="col-2 date">
                             <input type="text" class="form-control" id="dateFrom" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateFrom')" data-toggle="tooltip"
-                                title="{{ __('SkillMap_Tooltip_1') }}">
+                                title="{{ __('Common_Click_To_Select_Date') }}">
                         </div>
                     </div>
                     <div class="input-group">
@@ -60,12 +60,12 @@
                             <input type="text" class="form-control" id="lineName" placeholder="[A-Za-z]">
                         </div>
                         <div class="col-2">
-                            <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
+                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="col-2 date">
                             <input type="text" class="form-control" id="dateTo" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateTo')" data-toggle="tooltip"
-                                title="{{ __('SkillMap_Tooltip_1') }}">
+                                title="{{ __('Common_Click_To_Select_Date') }}">
                         </div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                     data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}</button>
                 <button type="button" id="delete" class="btn btn-danger btn-ripple" disabled data-toggle="modal"
                     data-target="#exampleModalConfirm">
-                    {{ __('Skillmap_Button_Delete') }}
+                    {{ __('Common_button_delete') }}
                 </button>
                 <button type="button" id="cancel" class="btn btn-secondary" data-toggle="modal"
                         onclick="btnOpenModalBackPage()">

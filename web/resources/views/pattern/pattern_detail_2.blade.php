@@ -33,12 +33,12 @@
                             <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
                         </div>
                         <div class="label_header">
-                            <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
+                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
                             <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
-                                title="{{ __('SkillMap_Tooltip_1') }}">
+                                title="{{ __('Common_Click_To_Select_Date') }}">
                         </div>
                     </div>
                     <div class="input-group">
@@ -46,15 +46,15 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote" {{ isset($info['note']) ? $info['note'] : '' }}>
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
                         </div>
                         <div class="label_header">
-                            <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
+                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
                             <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
-                                title="{{ __('SkillMap_Tooltip_1') }}">
+                                title="{{ __('Common_Click_To_Select_Date') }}">
                         </div>
                     </div>
                 </div>
@@ -108,12 +108,15 @@
 
                             {{-- Hidden --}}
 
-
                         </div>
                     </div>
                 </div>
             </div>
-            <br><br><br>
+            <br>
+            Total Rows:<strong id="countRows"></strong>
+            <br>
+            <button onclick="setValueTest()">Set value test</button>
+            <br>
             <div class="action-btn" style="justify-content: flex-start">
                 <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">
@@ -121,105 +124,71 @@
                     </div>
                 </button>
 
-                <button type="button" id="openModal"
-                    class="btn btn-primary btn-ripple" data-toggle="modal" style="margin-right: 1%;"
-                    data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}
+                <button type="button" id="openModal" class="btn btn-primary btn-ripple" data-toggle="modal"
+                    style="margin-right: 1%;">{{ __('Pattern_Add_Inspection_Point') }}
                 </button>
 
-                <button type="button" id="removeLocation"
-                    class="btn btn-danger btn-ripple" data-toggle="modal" style="margin-right: 1%;"
-                    data-target="#exampleModalConfirm">{{ __('Common_Delete') }}
+                <button type="button" id="removeLocation" class="btn btn-danger btn-ripple" data-toggle="modal"
+                    style="margin-right: 1%;">{{ __('Common_button_delete') }}
                 </button>
 
-                {{-- <button type="button" id="removeLocation"
-                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button> --}}
+                <button type="button" id="backPage" class="btn btn-secondary" data-toggle="modal">
+                    {{ __('Common_button_cancel') }}
+                </button>
             </div>
         </div>
     </div>
     <!-- My Toast -->
     <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast1">
+        aria-atomic="true" id="patternSaveSuccess">
         <div class="d-flex">
             <div class="toast-body">
-                {{ __('SkillMapp_Save_Successfully') }}
+                {{ __('Pattern_Save_Successfully') }}
             </div>
         </div>
     </div>
     <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast2">
+        aria-atomic="true" id="patternNameErr">
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_1') }}
+                {{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>
     <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast3">
+        aria-atomic="true" id="areaNameErr">
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_2') }}
+                {{ __('Pattern_Adding_An_Area_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>
     <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast4">
+        aria-atomic="true" id="locationNameErr">
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_3') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast5">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_4') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast6">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_5') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast7">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_6') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast8">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_7') }}
+                {{ __('Pattern_Adding_The_Location_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal Add Inspection Point -->
+    <div class="modal fade" id="modalAddInspectionPoint" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">作業名の行数を含む新しい分類を追加する。</h5>
+                    <h5 class="modal-title">{{ __('Pattern_Adds_Inspection_Points_With_Location_Number_In_The_Area') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
                         <div class="input-group">
                             <div class="col" style="margin-right: 2%">
-                                <input type="text" class="form-control" placeholder="分類名" autofocus
+                                <input type="text" class="form-control" placeholder="{{ __('Pattern_Area_Name') }}" autofocus
                                     id="area" required="required"/>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
-                                    id="rowLocation" required="required"/>
+                                <input type="text" class="form-control" maxlength="3" placeholder="{{ __('Pattern_Location_Number_In_The_Area') }}"
+                                    id="locationNo" required="required"/>
                             </div>
                         </div>
                     </form>
@@ -228,67 +197,65 @@
                     <button type="button" onclick="cancelAddAreaToTable()"
                     class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="addAreaToTable()"
-                        class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
+                        class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Confirm -->
-    <div class="modal fade" id="exampleModalConfirm" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal Remove Location -->
+    <div class="modal fade" id="modalDelectLocation" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">確認</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span class="badge bg-danger">{{ __('SkillMap_Question_Delete_1') }}</span></h4>
+                    <h4><span class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="deleteDataSkillMap()"
+                        onclick="btnCancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="btnRemoveLocation()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal confirm save data when back page -->
-    <div class="modal fade" id="backPageModalConfirm" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalBackPage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('SkillMap_Question_BackPage') }}</span></h4>
+                <div class="modal-body">
+                    <h4><span>{{ __('Pattern_Question_BackPage') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="backPageSaveData(false)">
-                        {{ __('SkillMap_Cancel_Save_Button') }}</button>
-                    <button type="button" onclick="backPageSaveData(true)"
-                        class="btn btn-primary">{{ __('Common_button_save') }}</button>
+                    <button type="button" class="btn btn-secondary" onclick="btnCancelBackPage(false)">
+                        {{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="btnBackPage(true)"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Modal confirm save data -->
-    <div class="modal fade" id="saveData" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalSaveData" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_Button_Save_Confirm') }}</span></h4>
+                <div class="modal-body">
+                    <h4><span>{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveDataChange()"
+                    <button type="button" onclick="btnSaveData()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelSaveDataChange()">
+                    <button type="button" class="btn btn-secondary" onclick="btnCancelSaveData()">
                         {{ __('Common_button_cancel') }}</button>
 
                 </div>

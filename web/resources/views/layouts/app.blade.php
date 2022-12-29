@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- force http -> https for test (remove when release) --}}
+    {{-- todo: force http -> https for test (remove when release) --}}
+    @if (!app()->environment('production') && strpos(Request::root(), "solutions.com"))
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    @endif
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

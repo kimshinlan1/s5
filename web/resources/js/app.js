@@ -44,6 +44,7 @@ window.CONFIG = (function () {
         'SKILL_MAP_FORMAT_NUMBER': $('#messageSkillMapFormatNumber').val(),
         'SKILL_MAP_ERROR_MAX_LENGTH': $('#messageSkillMapMaxLength').val(),
         'PLACE_HOLDER_CATEGORY' : '分類名',
+        'PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED': $('#patternAtLeastOneVerificationPointMustBeConfigured').val(),
     };
     return {
         get: function (name) { return private_const[name]; }
@@ -486,4 +487,27 @@ window.addTestValue = function (parent_class){
             }
         }
     });
+}
+
+/** ------------------
+ *    Check item in array
+ --------------------- */
+window.checkExistId = function(arr, id) {
+    let existed = false;
+    arr.every(val => {
+        if (val.includes(id)) {
+            existed = true;
+            return false;
+        }
+        return true;
+    });
+    return existed;
+}
+
+/** ------------------
+ *    Remove existed item in array
+ --------------------- */
+window.removeExistId = function(arr, id) {
+    arr.splice( $.inArray(id,arr) , 1 );
+    return arr;
 }

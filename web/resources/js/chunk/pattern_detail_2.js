@@ -4,6 +4,7 @@ var selected_5s = [];
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var select_location_to_delete = [];
 var highlight = 'aqua';
+var highlight = '#ced4da';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
@@ -156,113 +157,47 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
     *    When call func remove : regenerate html
     */
 
-    // setTimeout(() => {
-        let id = "area_"+area_id+"_location_"+location_id;
-// console.log($.inArray(id, select_location_to_delete));
-        // If existed: Remove selected before
-        // Else: add new item
-        if (checkExistId(select_location_to_delete, id)) {
-        // if ($.inArray(id, select_location_to_delete) >= 0) {
-            let new_count = "";
-            $("[id*=area_"+area_id+"_location_"+location_id+"]").each(function() {
-                // Remove item
-                let id = "area_"+area_id+"_location_"+location_id;
-                select_location_to_delete = removeExistId(select_location_to_delete, id);
+
+    let id = "area_"+area_id+"_location_"+location_id;
+    let new_count = parseInt($(id).first().find("#hidCountLocationDelete").val()) - 1;
+    if (checkExistId(select_location_to_delete, id) === true) {
+        // Loop all rows in area
+        $("[id*=area_"+area_id+"]").each(function() {
+            $(this).find("#hidCountLocationDelete").val(new_count);
+
+            if ($(this).attr('id').includes(id)) {
+                // Remove existed item
+                select_location_to_delete = removeExistId(select_location_to_delete, $(this).attr('id'));
 
                 // Reset high-light
                 $(this).find('td').css('background-color', 'white');
+            }
+        });
 
-                if (!new_count) {
-                    new_count = parseInt($(this).find("#hidCountLocationDelete").val()) - 1;
-                }
-                // $(this).find("#hidCountLocationDelete").val(new_count);
-            });
+    } else {
+        // Loop all rows in area
+        $("[id*=area_"+area_id+"]").each(function() {
+            $(this).find("#hidCountLocationDelete").val(new_count);
 
-            $("[id*=area_"+area_id+"]").each(function() {
-                // $(this).find("#hidCountLocation").val(new_count);
-                $(this).find("#hidCountLocationDelete").val(new_count);
-            });
-
-        } else {
-            let new_count = "";
-            $("[id*=area_"+area_id+"_location_"+location_id+"]").each(function() {
+            if ($(this).attr('id').includes(id)) {
+                // Add item
                 select_location_to_delete.push($(this).attr('id'));
 
                 // high-light
                 $(this).find('td').not('.area').css('background-color', highlight);
-                // $(this).find('td.location').css('background-color', highlight);
+            }
+        });
+    }
 
-                if (!new_count) {
-                    new_count = parseInt($(this).find("#hidCountLocationDelete").val()) + 1;
-                }
-                // $(this).find("#hidCountLocationDelete").val(new_count);
-            });
+    // console.log("updated:");
+    // console.log(select_location_to_delete);
 
-            $("[id*=area_"+area_id+"]").each(function() {
-                // $(this).find("#hidCountLocation").val(new_count);
-                $(this).find("#hidCountLocationDelete").val(new_count);
-            });
-        }
-
-        // console.log("after_added:");
-        // console.log(select_location_to_delete);
-
-    // }, 10);
-
-
-
-}
-
-window.checkExistId = function(arr, id) {
-    let result = false;
-    $.each( arr, function( key, value ) {
-        if (value.indexOf(id) >= 0) {
-            result = true;
-            return false;
-        }
-    });
-    return result;
-}
-
-window.removeExistId = function(arr, id) {
-    arr.splice( $.inArray(id,arr) , 1 );
-    return arr;
 }
 
 // Get data to re-render after delete
 window.getValidRows = function() {
 
     let params = [];
-
-    // $("#table-content tbody").find("tr").each(function() {
-
-    //     // Get all not in select_location_to_delete
-    //     if (select_location_to_delete.length == 0 || $.inArray($(this).attr("id"), select_location_to_delete) < 0) {
-    //         let id = $(this).attr("id").split("_");
-    //         let area_id = id[1];
-    //         let location_id = id[3];
-
-    //         let row = {};
-    //         row["area_id"] = area_id ? area_id : "";
-    //         row["area_name"] = $(this).find("#area").val() ? $(this).find("#area").val() : "";
-    //         row["location_id"] = location_id ? location_id : "";
-    //         row["location_name"] = $(this).find("#location").val() ? $(this).find("#location").val() : "";
-    //         row["5s"] = $(this).find("#hid5S").val() ? $(this).find("#hid5S").val() : "";
-    //         row["level_1"] = $(this).find("#level_1").val() ? $(this).find("#level_1").val() : "";
-    //         row["level_2"] = $(this).find("#level_2").val() ? $(this).find("#level_2").val() : "";
-    //         row["level_3"] = $(this).find("#level_3").val() ? $(this).find("#level_3").val() : "";
-    //         row["level_4"] = $(this).find("#level_4").val() ? $(this).find("#level_4").val() : "";
-    //         row["level_5"] = $(this).find("#level_5").val() ? $(this).find("#level_5").val() : "";
-    //         row["count_locations"] = parseInt($(this).find("#hidCountLocation").val()) - parseInt($(this).find("#hidCountLocationDelete").val());
-
-    //         row["area_rowspan"] = $(this).find("#hidAreaRowspan").val() ? $(this).find("#hidAreaRowspan").val() : "";
-    //         row["location_rowspan"] = $(this).find("#hidLocationRowspan").val() ? $(this).find("#hidLocationRowspan").val() : "";
-
-    //         params.push(row);
-    //     }
-
-    // });
-
 
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {
@@ -322,6 +257,8 @@ window.removeLocation = function() {
 
     if (select_location_to_delete.length == 0) {
         // todo: show warning no item to delete
+        $("#confirmDialog2").modal("show");
+        $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
         return;
     }
 
@@ -365,6 +302,9 @@ window.loadData = function() {
     })
     .done(function (res) {
         $("#table-content tbody").append(res);
+        if ($('#hidTotalRows')) {
+            $('#countRows').html($('#hidTotalRows').val());
+        }
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
@@ -389,17 +329,14 @@ window.saveData = function(data) {
     })
     .done(function (res) {
         // todo: notify
-        alert("OK");
-
-        if (!$('#hidPatternId').val()) {
-            setTimeout(function (){
-                showToast($('#toast1'), 2000, true);
-            }, 3000);
-            location.href = "/pattern_list";
-        } else {
-            showToast($('#toast1'), 2000, true);
-            location.reload();
-        }
+        showToast($('#patternSaveSuccess'), 2000, true);
+        setTimeout(() => {
+            if (!$('#hidPatternId').val()) {
+                location.href = "/pattern_list";
+            } else {
+                location.reload();
+            }
+        }, 2000);
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
@@ -419,10 +356,10 @@ function openCalendar(name) {
 }
 
 /**
- * Save data change
+ * Button save data
  */
-function saveDataChange() {
-    $("#saveData").modal('hide');
+function btnSaveData() {
+    $("#modalSaveData").modal('hide');
     showLoading();
 
     // Get param to submit
@@ -436,8 +373,8 @@ function saveDataChange() {
         'pattern_name': $('#patternName').val(),
         'pattern_note': $('#patternNote').val(),
         'pattern_5s_selected': JSON.stringify(selected_5s),
-        'pattern_created_at': $('#dateCreate').val(),
-        'pattern_updated_at': $('#dateUpdate').val(),
+        'pattern_created_at': dateFormat($('#dateCreate').datepicker("getDate")),
+        'pattern_updated_at': dateFormat($('#dateUpdate').datepicker("getDate"))
     }
     params['info'] = info;
     params['data'] = [];
@@ -492,10 +429,10 @@ function saveDataChange() {
 }
 
 /**
- * Button cancel save data change
+ * Button cancel save data
  */
-function cancelSaveDataChange() {
-    $("#saveData").modal('hide');
+function btnCancelSaveData() {
+    $("#modalSaveData").modal('hide');
 }
 
 /**
@@ -503,13 +440,13 @@ function cancelSaveDataChange() {
  */
 function addAreaToTable() {
     // Add Area
-    let rowLocation = $('#rowLocation').val();
+    let locationNo = $('#locationNo').val();
     let areaName = $('#area').val();
     let params = {
         new: 1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
         total_rows: $("#table-content tbody").find("tr").length,
-        new_location_no: rowLocation,
+        new_location_no: locationNo,
         new_area_name: areaName
     };
 
@@ -528,16 +465,57 @@ function addAreaToTable() {
     .always(function () {
 
     });
-    $("#exampleModalCenter").modal('hide');
+    $("#modalAddInspectionPoint").modal('hide');
 }
 
 /**
  * Button cancel save data change
  */
 function cancelAddAreaToTable() {
-    $("#exampleModalCenter").modal('hide');
+    $("#modalAddInspectionPoint").modal('hide');
 }
 
+/**
+ * Button remove location
+ */
+function btnRemoveLocation() {
+    $("#modalDelectLocation").modal('hide');
+    removeLocation();
+}
+
+/**
+ * Button cancel remove location
+ */
+function btnCancelRemoveLocation() {
+    $("#modalDelectLocation").modal('hide');
+}
+
+/**
+ * Button back page
+ */
+function btnBackPage() {
+    $("#modalBackPage").modal('hide');
+    location.href = "/pattern_list";
+}
+
+/**
+ * Button cancel back page
+ */
+function btnCancelBackPage() {
+    $("#modalBackPage").modal('hide');
+}
+
+function setValueTest() {
+    // Loop main area
+    $("#table-content tbody input[type=text]").each(function() {
+
+        $(this).val("test");
+    });
+
+    $("#table-content tbody textarea").each(function() {
+        $(this).val("level");
+    });
+}
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -582,11 +560,29 @@ $(function () {
         // todo: Check 5S (empty, ...)
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
-            $(".confirmMessage").html(CONFIG.get('MESSAGE_ALARM_EMPTY_TABLE'));
+            $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
             return;
         }
 
-        $("#exampleModalCenter").modal('show');
+        $("#modalAddInspectionPoint").modal('show');
+    });
+
+    $('#patternName').keyup(function () {
+        if ($('#patternName').val()) {
+            $('#patternName').removeClass('is-invalid');
+        } 
+    });
+
+    $('#area').keyup(function () {
+        if ($('#area').val()) {
+            $('#area').removeClass('is-invalid');
+        } 
+    });
+
+    $('#location').keyup(function () {
+        if ($('#location').val()) {
+            $('#location').removeClass('is-invalid');
+        } 
     });
 
     // Save click
@@ -594,29 +590,30 @@ $(function () {
         let patternName = $('#patternName').val();
         let areaName = $('#area').val();
         let locationName = $('#location').val();
-
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
-            showToast($('#toast8'), 2000, true);
+            showToast($('#patternNameErr'), 2000, true);
             $('#patternName').focus();
+            $('#patternName').addClass('is-invalid');
             return;
         }
 
         // todo: Validate data table (all rows) and generate submit params
         if (!areaName || areaName === '') {
-            showToast($('#toast8'), 2000, true);
+            showToast($('#areaNameErr'), 2000, true);
             $('#area').focus();
+            $('#area').addClass('is-invalid');
             return;
         }
 
         if (!locationName || locationName === '') {
-            showToast($('#toast8'), 2000, true);
+            showToast($('#locationNameErr'), 2000, true);
             $('#location').focus();
+            $('#location').addClass('is-invalid');
             return;
         }
 
-        $("#saveData").modal('show');
-
+        $("#modalSaveData").modal('show');
 
     });
 
@@ -624,15 +621,16 @@ $(function () {
     $("#removeLocation").click(function () {
         if (select_location_to_delete.length == 0) {
             // todo: show warning no item to delete
-            alert("No selected to delete");
+            $("#confirmDialog2").modal("show");
+            $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
             return;
         }
 
-        if (confirm("Remove?")) {
-            // Remove row but not save DB (need to save to update DB)
-            removeLocation();
-        }
+        $("#modalDelectLocation").modal('show');
     });
 
-
+    //Back page
+    $("#backPage").click(function () {
+        $("#modalBackPage").modal('show');
+    })
 });

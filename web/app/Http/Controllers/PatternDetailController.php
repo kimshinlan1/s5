@@ -135,7 +135,6 @@ class PatternDetailController extends Controller
         if (!isset($data['info']) || !isset($data['data'])) {
             return;
         }
-
         $data = $this->service->save($request);
         return response()->json($data);
     }
