@@ -52,6 +52,32 @@ class PatternService extends BaseService
     }
 
     /**
+     * Get list
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return array
+     */
+    public function listPatternbyDept($id)
+    {
+        $data = [];
+        $deptPatternId = Department::where('id', $id)->first()->dept_pattern_id;
+        if ($deptPatternId) {
+            $data = DB::table('dept_patterns')->where('id', $deptPatternId)->get()->toArray();
+        }
+        if (count($data) > 0) {
+            // isPattern is used for checking if the pattern belongs to customer or kaizenbase
+            $data[0]->isPattern = false;
+        }
+        $patterns = DB::table('patterns')->orderBy('id')->get()->toArray();
+        foreach ($patterns as $pattern) {
+            $pattern->isPattern = true;
+        }
+        $data = array_merge($data, $patterns);
+        return $data;
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -43,3 +43,7 @@
     right: 31px;
     z-index: 1;
 }
+
+.form-control[readonly] {
+    background: inherit;
+}

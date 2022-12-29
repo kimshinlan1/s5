@@ -57,11 +57,11 @@ $locations = [];
     </td>
 
     {{-- Levels --}}
-    <td><textarea class="form-control" id="level_1" rows="1">{{ $row['level_1'] }}</textarea></td>
-    <td><textarea class="form-control" id="level_2" rows="1">{{ $row['level_2'] }}</textarea></td>
-    <td><textarea class="form-control" id="level_3" rows="1">{{ $row['level_3'] }}</textarea></td>
-    <td><textarea class="form-control" id="level_4" rows="1">{{ $row['level_4'] }}</textarea></td>
-    <td><textarea class="form-control" id="level_5" rows="1">{{ $row['level_5'] }}</textarea></td>
+    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_1" rows="1">{{ $row['level_1'] }}</textarea></td>
+    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_2" rows="1">{{ $row['level_2'] }}</textarea></td>
+    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_3" rows="1">{{ $row['level_3'] }}</textarea></td>
+    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_4" rows="1">{{ $row['level_4'] }}</textarea></td>
+    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_5" rows="1">{{ $row['level_5'] }}</textarea></td>
 
     <?php $index++ ?>
 

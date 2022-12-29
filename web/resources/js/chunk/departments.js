@@ -23,6 +23,129 @@ window.departmentTableActions = function (_value, row, _index) {
 };
 
 /** ------------------
+  *    5S Checklist Actions
+  --------------------- */
+window.department5SChecklistActions = function (_value, row, _index) {
+    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 20px;">';
+    options += '<option> </option>';
+
+    $.ajax({
+        url: '/pattern_list/getlist_by_department/' + row.id,
+        type: 'GET',
+        async: false
+    })
+    .done(function (_data, _textStatus, _jqXHR) {
+        _data.forEach(ele => {
+            options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
+        });
+        options += " </select>";
+        let editButton = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
+        || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
+        (
+            '<button type="button" id="editPatternBtn' + row.id
+            + '" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="-1" data-isPattern="" onClick="openEditDeptPattern(' + row.id
+            + ')">編集</button> '
+        ) :
+            '<button type="button" id="editPatternBtn' + row.id
+            + '" class="btn btn-secondary btn-sm disabled" style="width: 35%;" data-id="-1" onClick="openEditDeptPattern(' + row.id
+            + ')">編集</button> ';
+        options += editButton;
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    });
+    return options;
+};
+
+/** ------------------
+  *    Add classes / css for 5s pattern checklist column
+--------------------- */
+window.checkListStyle = function(value, row, index) {
+    let width = isIpad() ? '20%' : '25%';
+    return {
+        classes: 'text-center',
+        css: {
+            width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for id column
+--------------------- */
+window.idStyle = function(value, row, index) {
+    let width = isIpad() ? '10%' : '20%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for department name column
+--------------------- */
+window.departmentStyle = function(value, row, index) {
+    let width = isIpad() ? '30%' : '40%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for button column
+--------------------- */
+window.buttonStyle = function(value, row, index) {
+    let width = isIpad() ? '40%' : '20%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for button column
+--------------------- */
+window.isIpad = function() {
+    var width = $(window).width();
+    return width < 830;
+}
+
+/** ------------------
+  *    Handle onchange pattern selection
+--------------------- */
+window.selectPattern = function(id) {
+    let dataId = $("#checklist5sID" + id).find(":selected").val();
+    let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
+    $('#checklist5sID' + id).siblings().attr('data-id', dataId);
+    $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
+    if (dataId && isPattern == "true") {
+        $('#confirmDialog3').modal('show');
+        $('.confirmMessage3').text($('#confirmMessage').val());
+        $('#okBtn').attr('data-deptid', id);
+        $('#okBtn').attr('data-patternid', dataId);
+        $('#okBtn').attr('data-isPattern', isPattern);
+    }
+}
+
+/** ------------------
+  *    Redirect to dept pattern edit
+--------------------- */
+window.openEditDeptPattern = function(id) {
+    let dataId = $('#editPatternBtn' + id).attr("data-id");
+    if(dataId != "-1") {
+        window.location = '/pattern_dept_setting/' + dataId;
+    } else {
+        $('.error-messages').text($('#messageNoSelectedData').val());
+        $('#errorDialog').modal('show');
+    }
+}
+
+/** ------------------
   *    queryParams
 --------------------- */
 window.queryParams = function (params) {
@@ -66,6 +189,7 @@ window.queryParams = function (params) {
         data: data,
     })
     .done(function (_data, _textStatus, _jqXHR) {
+    console.log("TCL: window.saveTeamData -> _data", _data)
         // SAVE SUCCESSFUL
         $("#teamEditDialog").modal("hide");
         showToast($(dialog), 2000, true);
@@ -202,6 +326,7 @@ window.saveDataEmployee = function () {
         data: data,
     })
     .done(function (_data, _textStatus, _jqXHR) {
+    console.log("TCL: window.saveDataEmployee -> _data", _data)
         $("#departmentAddDialog").modal("hide");
         showToast($('#successAddDialog'), 2000, true);
     })
@@ -241,7 +366,6 @@ window.saveDataEmployee = function () {
  ==============================*/
  $(function () {
     loadCompanyList($('#companyListID'), true);
-
     $("#departmentTable").bootstrapTable({
         pagination: "true",
         paginationParts: "['pageList']",
@@ -268,6 +392,19 @@ window.saveDataEmployee = function () {
     });
 
     reloadDataDepartment();
+
+    $('#okBtn').on('click', function() {
+        let deptId = $('#okBtn').attr('data-deptid');
+        let patternId = $('#okBtn').attr('data-patternid');
+        let isPattern = $('#okBtn').attr('data-isPattern');
+        window.location = '/pattern_dept_setting?deptId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
+    })
+
+    $('#cancelBtn').on('click', function() {
+        let deptId = $('#okBtn').attr('data-deptid');
+        $('#checklist5sID' + deptId).val("").change();
+
+    })
 
     /** ------------------
       *    Add dialog show

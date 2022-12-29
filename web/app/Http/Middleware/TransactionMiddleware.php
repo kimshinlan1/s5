@@ -20,29 +20,40 @@ class TransactionMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (in_array($request->getMethod(), ["POST", "PUT", "DELETE"])) {
+        if (in_array($request->getMethod(), ["GET", "POST", "PUT", "DELETE"])) {
 
             $class = (new \ReflectionClass(Route::getCurrentRoute()->getControllerClass()))->getShortName();
             $function = Route::getCurrentRoute()->getActionMethod();
             LogUtil::setClassName($class);
             LogUtil::logInfo($function);
 
-            DB::beginTransaction();
+            // Use transaction without GET
+            if (!in_array($request->getMethod(), ["GET"])) {
+                DB::beginTransaction();
+            }
 
             try {
                 $response = $next($request);
             } catch (QueryException $e) {
-                DB::rollBack();
+                if (!in_array($request->getMethod(), ["GET"])) {
+                    DB::rollBack();
+                }
                 LogUtil::setClassName($class);
                 LogUtil::logError($function, $e->getMessage());
                 return (new Controller())->responseException(__('Common_Error_SQL_Exception'));
             } catch (\Exception $e) {
-                DB::rollBack();
+                if (!in_array($request->getMethod(), ["GET"])) {
+                    DB::rollBack();
+                }
                 LogUtil::setClassName($class);
                 LogUtil::logError($function, $e->getMessage());
                 return (new Controller())->responseException();
             }
-            DB::commit();
+
+            if (!in_array($request->getMethod(), ["GET"])) {
+                DB::commit();
+            }
+
             return $response;
         }
         return $next($request);

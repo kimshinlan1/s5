@@ -22,7 +22,7 @@ class PatternController extends Controller
      */
     public function index()
     {
-        return view('pattern_list.index');
+        return view('pattern.index');
     }
 
     /**
@@ -45,6 +45,18 @@ class PatternController extends Controller
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
             ], 500);
         }
+    }
+
+    /**
+     * Get pattern list
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listPattern($id)
+    {
+        return $this->service->listPatternbyDept($id);
     }
 
     /**
