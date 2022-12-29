@@ -53,9 +53,8 @@ window.department5SChecklistActions = function (_value, row, _index) {
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
-        console.log("TCL: window.department5SChecklistActions -> jqXHR", jqXHR)
+        failAjax(jqXHR, _textStatus, _errorThrown);
     });
-    console.log("TCL: window.department5SChecklistActions -> options", options)
     return options;
 };
 
@@ -124,7 +123,7 @@ window.selectPattern = function(id) {
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
     $('#checklist5sID' + id).siblings().attr('data-id', dataId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
-    if (dataId != "" && isPattern == "true") {
+    if (dataId && isPattern == "true") {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#confirmMessage').val());
         $('#okBtn').attr('data-deptid', id);

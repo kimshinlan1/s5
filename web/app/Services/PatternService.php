@@ -56,13 +56,14 @@ class PatternService extends BaseService
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return object
+     * @return array
      */
     public function listPatternbyDept($id)
     {
-        $deptPatternId = Department::select('dept_pattern_id')->where('id', $id)->get();
-        if (count($deptPatternId) > 0) {
-            $data = DB::table('dept_patterns')->where('id', $deptPatternId[0]->dept_pattern_id)->get()->toArray();
+        $data = [];
+        $deptPatternId = Department::where('id', $id)->first()->dept_pattern_id;
+        if ($deptPatternId) {
+            $data = DB::table('dept_patterns')->where('id', $deptPatternId)->get()->toArray();
         }
         if (count($data) > 0) {
             // isPattern is used for checking if the pattern belongs to customer or kaizenbase
@@ -72,7 +73,6 @@ class PatternService extends BaseService
         foreach ($patterns as $pattern) {
             $pattern->isPattern = true;
         }
-
         $data = array_merge($data, $patterns);
         return $data;
     }

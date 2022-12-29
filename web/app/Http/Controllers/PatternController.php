@@ -56,8 +56,7 @@ class PatternController extends Controller
      */
     public function listPattern($id)
     {
-        $data = $this->service->listPatternbyDept($id);
-        return $data;
+        return $this->service->listPatternbyDept($id);
     }
 
     /**
