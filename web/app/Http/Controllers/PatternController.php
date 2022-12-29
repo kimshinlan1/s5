@@ -22,7 +22,7 @@ class PatternController extends Controller
      */
     public function index()
     {
-        return view('pattern_list.index');
+        return view('pattern.index');
     }
 
     /**
