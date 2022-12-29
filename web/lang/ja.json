@@ -196,7 +196,7 @@
     "Pattern_List_Customer": "５Sチェックリストパターン一覧 (部門)",
     "Pattern_ID": "チェックリストパターンID",
     "Pattern_Name": "チェックリストパターン名",
-    "Pattern_Note": "チェックリストNote",
+    "Pattern_Note": "チェックリストの説明",
     "Pattern_Detail_5S_Checklist_Pattern_Input": "5Sチェックリストパターン入力",
     "Pattern_Detail_Selection_Of_Improvement_Points": "改善ポイントの選択：",
     "Pattern_Detail_Name": "パターン名",
@@ -215,9 +215,6 @@
     "Pattern_Detail_Level_4": "良い(ﾚﾍﾞﾙ4)",
     "Pattern_Detail_Level_5": "大変良い(ﾚﾍﾞﾙ5)",
     "Pattern_Add_Inspection_Point": "点検箇所の追加",
-    "Pattern_Adds_Inspection_Points_With_Location_Number_In_The_Area": "エリア内の場所の番号を含む検査ポイントを追加します。",
-    "Pattern_Area_Name": "エリア名",
-    "Pattern_Location_Number_In_The_Area": "エリア内の場所番号",
     "Pattern_Adding_A_Pattern_Name_Is_Mandatory": "パターン名の追加は必須です。",
     "Pattern_Adding_An_Area_Name_Is_Mandatory": "エリア名の追加は必須です。",
     "Pattern_Adding_The_Location_Name_Is_Mandatory": "ロケーション名の追加は必須です。",
@@ -226,5 +223,8 @@
     "Pattern_Save_Successfully": "パターンを保存しました。",
     "Pattern_Delete_Are_You_Sure_You_Want_To": "削除してもよろしいですか？",
     "Pattern_Question_BackPage": "更新は保存されていません。終了しますか?",
+    "Pattern_Detail_Num_Point": "点検箇所の行数",
+    "Pattern_Detail_Area_Name": "エリア名",
+    "Pattern_Detail_Title_Add_Dialog": "点検箇所の行数を含む新しい分類を追加する。",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }

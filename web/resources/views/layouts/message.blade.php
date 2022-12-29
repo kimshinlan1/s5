@@ -15,3 +15,4 @@
 <input type="hidden" id="messageCompanyFreeContract" name="messageCompanyFreeContract" value="{{ __('Company_Free_Contract') }}"/>
 <input type="hidden" id="messageCompanyPaidContract" name="messageCompanyPaidContract" value="{{ __('Company_Paid_Contract') }}"/>
 <input type="hidden" id="patternAtLeastOneVerificationPointMustBeConfigured" name="patternAtLeastOneVerificationPointMustBeConfigured" value="{{ __('Pattern_At_Least_One_Verification_Point_Must_Be_Configured') }}"/>
+<input type="hidden" id="placeHolderPoint" name="placeHolderPoint" value="{{ __('Pattern_Detail_Num_Point') }}"/>

@@ -5,6 +5,7 @@ var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":
 var select_location_to_delete = [];
 var highlight = 'aqua';
 var highlight = '#ced4da';
+var params = {};
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
@@ -307,7 +308,7 @@ window.saveAjax = function(data) {
 
     })
     .always(function () {
-
+        params = {};
     });
 }
 
@@ -319,15 +320,12 @@ function openCalendar(name) {
 }
 
 /**
- * Button save data
+ * Validate data table
  */
-function saveData() {
-    $("#modalSaveData").modal('hide');
-    showLoading();
-
+function validDataTable() {
     // todo: Validate all rows and Get param to submit
     let valid = true;
-    let params = {};
+ 
 
     if (selected_5s.length == 0) {
         select5S();
@@ -410,14 +408,19 @@ function saveData() {
         if ($(this).find("#hidAreaId").val()) {
             params['old_areas'].push($(this).find("#hidAreaId").val());
         }
-
+        if (valid) {
+            $("#modalSaveData").modal('show');
+        }
     });
+}
 
-    // todo: Check validate and submit ajax here
-    if (valid) {
-        saveAjax(params);
-    }
-
+/**
+ * Button save data
+ */
+function saveData() {
+    $("#modalSaveData").modal('hide');
+    showLoading();
+    saveAjax(params);
 }
 
 /**
@@ -433,7 +436,7 @@ function cancelSaveData() {
 function addAreaToTable() {
     // Add Area
     let locationNo = $('#locationNo').val();
-    let areaName = $('#area').val();
+    let areaName = $('#rowArea').val();
     let params = {
         new: 1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
@@ -452,12 +455,11 @@ function addAreaToTable() {
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
-
+        failAjax(jqXHR, _textStatus, _errorThrown);
     })
     .always(function () {
-
+        $("#modalAddInspectionPoint").modal('hide');
     });
-    $("#modalAddInspectionPoint").modal('hide');
 }
 
 /**
@@ -488,6 +490,58 @@ function cancelRemoveLocation() {
 function backPage() {
     $("#modalBackPage").modal('hide');
     location.href = "/pattern_list";
+}
+
+/**
+ * Event validate myForm
+ */
+function validateMyform() {
+    let errFlag = InvalidMsgMyForm($('#rowArea')[0]);
+    if (!errFlag) {
+        errFlag = InvalidMsgMyForm($('#locationNo')[0]);
+        if (!errFlag) {
+            addAreaToTable();
+        }
+    }
+    let form = document.getElementById('myForm');
+    let inpArea = document.getElementById("rowArea");
+    let inpCntLocation = document.getElementById("locationNo");
+    if (!inpArea.checkValidity() || !inpCntLocation.checkValidity()) {
+        form.reportValidity();
+    }
+}
+
+/**
+ * Validate my form
+ * @param  {} textbox
+ */
+function RemoveMsgMyForm(textbox) {
+    textbox.setCustomValidity('');
+}
+
+/**
+ * Validate my form
+ * @param  {} textbox
+ */
+function InvalidMsgMyForm(textbox) {
+    let flag = false;
+    if (textbox.value == '') {
+        textbox.setCustomValidity(CONFIG.get("SKILL_MAP_REQUIRED"));
+        flag = true;
+    } else if (textbox.validity.patternMismatch) {
+        textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+        flag = true;
+    } else if (textbox.placeholder == (CONFIG.get("PLACE_HOLDER_POINT"))) {
+        if (isNaN(parseInt(textbox.value))) {
+            textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+            flag = true;
+        } else {
+            textbox.setCustomValidity('');
+        }
+    } else {
+        textbox.setCustomValidity('');
+    }
+    return flag;
 }
 
 /**
@@ -549,10 +603,11 @@ $(function () {
         loadData();
     }
 
-
-
     // Add New Area
     $("#openModal").click(function () {
+      	$('#rowArea').val('');
+        $('#locationNo').val('');
+        $('#rowArea').focus();
         // todo: Check 5S (empty, ...)
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
@@ -569,23 +624,10 @@ $(function () {
         }
     });
 
-    $('#area').keyup(function () {
-        if ($('#area').val()) {
-            $('#area').removeClass('is-invalid');
-        }
-    });
-
-    $('#location').keyup(function () {
-        if ($('#location').val()) {
-            $('#location').removeClass('is-invalid');
-        }
-    });
-
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();
-        let areaName = $('#area').val();
-        let locationName = $('#location').val();
+
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
@@ -593,24 +635,8 @@ $(function () {
             $('#patternName').addClass('is-invalid');
             return;
         }
-
-        // todo: Validate data table (all rows) and generate submit params
-        // if (!areaName || areaName === '') {
-        //     showToast($('#areaNameErr'), 2000, true);
-        //     $('#area').focus();
-        //     $('#area').addClass('is-invalid');
-        //     return;
-        // }
-
-        // if (!locationName || locationName === '') {
-        //     showToast($('#locationNameErr'), 2000, true);
-        //     $('#location').focus();
-        //     $('#location').addClass('is-invalid');
-        //     return;
-        // }
-
-        $("#modalSaveData").modal('show');
-
+        validDataTable();
+        
     });
 
     // Remove click
