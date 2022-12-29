@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\PatternService;
 use App\Services\DeptPatternDetailService;
 
-class DeptPatternDetailController extends Controller
+class PatternDeptSettingController extends Controller
 {
     /** @var patterndetailservice */
     private $service;
@@ -29,7 +29,7 @@ class DeptPatternDetailController extends Controller
             'selected5s' => []
         ];
 
-        return view('pattern.dept_pattern_detail', $data);
+        return view('pattern.pattern_dept_setting', $data);
     }
 
     /**

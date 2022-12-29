@@ -11,7 +11,7 @@
     <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
-    <script src="{{ mix('/js/dept_pattern_detail.js') }}"></script>
+    <script src="{{ mix('/js/pattern_dept_setting.js') }}"></script>
 @endpush
 
 @section('sidebar')

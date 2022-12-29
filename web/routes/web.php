@@ -14,7 +14,9 @@ use App\Http\Controllers\SkillMapController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PatternListController;
 use App\Http\Controllers\PatternDetailController;
-use App\Http\Controllers\DeptPatternDetailController;
+use App\Http\Controllers\PatternTopPageController;
+use App\Http\Controllers\PatternDeptSettingController;
+use App\Http\Controllers\PatternTeamInspectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,9 +58,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_detail/{id}', [PatternDetailController::class, 'edit']);
         Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
         Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
-
-        Route::get('/dept_pattern_detail', [DeptPatternDetailController::class, 'index']);
-        Route::get('/dept_pattern_detail/{id}', [DeptPatternDetailController::class, 'edit']);
 
     });
 
@@ -109,6 +108,18 @@ Route::group(['middleware' => ['auth']], function () {
         // Pattern_list
         Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/pattern_list/patern_list_by_company', [PatternController::class, 'getPatternByCompanyId']);
+
+        // Dept pattern setting
+        Route::get('/pattern_dept_setting', [PatternDeptSettingController::class, 'index']);
+        Route::get('/pattern_dept_setting/{id}', [PatternDeptSettingController::class, 'edit']);
+
+        // Team inspection by pattern
+        Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);
+
+        // Pattern top page
+        Route::get('/pattern_top_page', [PatternTopPageController::class, 'index']);
+
+
 
         // Show log
         Route::get('/show_log', [Controller::class, 'showLog']);
