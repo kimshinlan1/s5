@@ -1,6 +1,7 @@
 <!-- Define Message -->
 <input type="hidden" id="messageWaitSearch" name="messageWaitSearch" value="{{ __('Message_Waiting_Search') }}"/>
 <input type="hidden" id="messageNoData" name="messageNoData" value="{{ __('Message_No_Data') }}"/>
+<input type="hidden" id="messageNoSelectedData" name="messageNoSelectedData" value="{{ __('Message_No_Selected_Data') }}"/>
 <input type="hidden" id="messageAlarmEmptyTable" name="messageNoData" value="{{ __('Message_Alarm_Empty_Table') }}"/>
 <input type="hidden" id="messageDelete" name="messageDelete" value="{{ __('Confirm_Delete') }}"/>
 <input type="hidden" id="messageCopy" name="messageCopy" value="{{ __('Confirm_Copy') }}"/>
@@ -14,4 +15,5 @@
 <input type="hidden" id="messageSkillMapMaxLength" name="messageSkillMapMaxLength" value="{{ __('SkillMap_MaxLength') }}"/>
 <input type="hidden" id="messageCompanyFreeContract" name="messageCompanyFreeContract" value="{{ __('Company_Free_Contract') }}"/>
 <input type="hidden" id="messageCompanyPaidContract" name="messageCompanyPaidContract" value="{{ __('Company_Paid_Contract') }}"/>
+<input type="hidden" id="confirmMessage" name="confirmMessage" value="{{ __('Common_Confirm_Message') }}"/>
 <input type="hidden" id="patternAtLeastOneVerificationPointMustBeConfigured" name="patternAtLeastOneVerificationPointMustBeConfigured" value="{{ __('Pattern_At_Least_One_Verification_Point_Must_Be_Configured') }}"/>

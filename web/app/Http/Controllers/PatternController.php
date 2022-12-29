@@ -48,6 +48,18 @@ class PatternController extends Controller
     }
 
     /**
+     * Get pattern list
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listPattern($id)
+    {
+        return $this->service->listPatternbyDept($id);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
