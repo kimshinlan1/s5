@@ -26,7 +26,7 @@ window.departmentTableActions = function (_value, row, _index) {
   *    5S Checklist Actions
   --------------------- */
 window.department5SChecklistActions = function (_value, row, _index) {
-    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 20px;">';
+    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
     options += '<option> </option>';
 
     $.ajax({
@@ -43,11 +43,11 @@ window.department5SChecklistActions = function (_value, row, _index) {
         || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
         (
             '<button type="button" id="editPatternBtn' + row.id
-            + '" class="btn btn-secondary btn-sm" style="width: 35%;" data-id="-1" data-isPattern="" onClick="openEditDeptPattern(' + row.id
+            + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="-1" data-isPattern="" onClick="openEditDeptPattern(' + row.id
             + ')">編集</button> '
         ) :
             '<button type="button" id="editPatternBtn' + row.id
-            + '" class="btn btn-secondary btn-sm disabled" style="width: 35%;" data-id="-1" onClick="openEditDeptPattern(' + row.id
+            + '" class="btn btn-secondary btn-sm disabled" style="width: 55px;" data-id="-1" onClick="openEditDeptPattern(' + row.id
             + ')">編集</button> ';
         options += editButton;
     })
