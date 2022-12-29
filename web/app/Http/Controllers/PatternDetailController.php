@@ -29,7 +29,7 @@ class PatternDetailController extends Controller
             'selected5s' => []
         ];
 
-        return view('pattern.pattern_detail_2', $data);
+        return view('pattern.pattern_detail', $data);
     }
 
     /**
@@ -54,7 +54,7 @@ class PatternDetailController extends Controller
             'info' => $info,
             'selected5s' => $selected5s
         ];
-        return view('pattern.pattern_detail_2', $data);
+        return view('pattern.pattern_detail', $data);
     }
 
     /**

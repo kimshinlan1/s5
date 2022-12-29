@@ -20,211 +20,125 @@
 
 @section('content')
     <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</div>
-    <div class="row" onclick="hideSkillUpLevel()">
+    <div class="row">
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
                 <div class="col-9">
-                    <div class="input-group">
-                        <div class="col-3">
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header">
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="patternName">
+                        <div class="label_header_1">
+                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
                         </div>
-                        <div class="col-2">
-                            <span class="input-group-text">{{ __('SkillMap_label_2') }}</span>
+                        <div class="label_header">
+                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
-                        <div class="col-2 date">
-                            <input type="text" class="form-control" id="dateFrom" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateFrom')" data-toggle="tooltip"
-                                title="{{ __('SkillMap_Tooltip_1') }}">
+                        <div class="date">
+                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateCreate')" data-toggle="tooltip"
+                                title="{{ __('Common_Click_To_Select_Date') }}" value="">
+                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
                     <div class="input-group">
-                        <div class="col-3">
+                        <div class="label_header">
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="lineName">
+                        <div class="label_header_1">
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
                         </div>
-                        <div class="col-2">
-                            <span class="input-group-text">{{ __('SkillMap_label_4') }}</span>
+                        <div class="label_header">
+                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
-                        <div class="col-2 date">
-                            <input type="text" class="form-control" id="dateTo" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateTo')" data-toggle="tooltip"
-                                title="{{ __('SkillMap_Tooltip_1') }}">
+                        <div class="date">
+                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
+                                title="{{ __('Common_Click_To_Select_Date') }}" value="">
+                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            <fieldset style="display: flex;">
-                <legend style="width: auto; font-size: 1.2rem"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
-                <div class="col-2" style="padding-left: 8%;">
-                    <input type="radio" id="s1" name="drone" value="s1" checked>
-                    <label style="font-size: 1.1rem;" for="s1">{{ __('Pattern_Detail_S1') }}</label>
+            <fieldset style="display: flex;" class="check_5s">
+                <legend class="legend_5s"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
+                <div class="checkbox">
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" checked>
+                    <label class="label_5s" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s2" name="drone" value="s2">
-                    <label style="font-size: 1.1rem;" for="s2">{{ __('Pattern_Detail_S2') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" checked>
+                    <label class="label_5s" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s3" name="drone" value="s3">
-                    <label style="font-size: 1.1rem;" for="s3">{{ __('Pattern_Detail_S3') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" checked>
+                    <label class="label_5s" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s4" name="drone" value="s4">
-                    <label style="font-size: 1.1rem;" for="s4">{{ __('Pattern_Detail_S4') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" checked>
+                    <label class="label_5s" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
-                <div class="col-1">
-                    <input type="radio" id="s5" name="drone" value="s5">
-                    <label style="font-size: 1.1rem;" for="s5">{{ __('Pattern_Detail_S5') }}</label>
+                <div class="checkbox">
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" checked>
+                    <label class="label_5s" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
             <div class="main-container">
                 {{-- Data List --}}
                 <div id="scroll-table" class="data_table">
                     <div class="main-table-group">
-                        <div class="table-responsive" style="overflow-x: hidden; min-width: 450px;">
-                            <table class="table table-bordered margin-top-0 table-left" id="table-left">
-                                <thead style="">
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <th style="width: 82px;" scope="col">{{ __('Pattern_Detail_Area') }}</th>
-                                        <th style="width: 82px;" scope="col">{{ __('Pattern_Detail_Location') }}</th>
-                                        <th style="width: 51px;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
-                                        <th style="width: 274px;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
-                                        <th style="width: 259px;" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
-                                        <th style="width: 306px;" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
-                                        <th style="width: 290px;" scope="col">{{ __('Pattern_Detail_Level_4') }}</th>
-                                        <th style="width: 242px;" scope="col">{{ __('Pattern_Detail_Level_5') }}</th>
+                        <div class="table-scroll">
+                            <table class="table table-bordered" id="table-content" style="width: 100%">
+                                <thead class="table_header">
+                                    <tr style="height: 40.5px;" id="header-2-table-content">
+                                        <th scope="col">{{ __('Pattern_Detail_Area') }}</th>
+                                        <th scope="col">{{ __('Pattern_Detail_Location') }}</th>
+                                        <th style="width: 6%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_4') }}</th>
+                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_5') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=6>通路周辺</td>
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                     <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=6>通路周辺</td>
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td rowspan=3>通路周辺</td>
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
-                                    <tr style="height: 40.5px;" id="header-2-table-left">
-                                        <td>整理</td>
-                                        <td>区画線が無く物が乱雑に置いてある</td>
-                                        <td>区画線が消えて物が置かれている</td>
-                                        <td>区画線は有るが古い線も一部残っている</td>
-                                        <td>古い区画線は完全に消され汚れがない</td>
-                                        <td>通路上には何も無く歩行しやすい</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
+
+                            {{-- Hidden --}}
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="input-group action-btn" style="justify-content: flex-start">
-                <button type="button" id="save" class="btn btn-success btn-ripple">
+            @if (!strpos(Request::root(), "solutions.com"))
+            <br>
+            Total Rows:<strong id="countRows"></strong>
+            <br>
+            <button onclick="setValueTest()">Set value test</button>
+            <br><br>
+            @else
+            <br><br><br>
+            @endif
+            <div class="action-btn" style="justify-content: flex-start">
+                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">
-                        {{ __('Skillmap_Button_Save') }}
+                        {{ __('Common_button_save') }}
                     </div>
                 </button>
-                <button type="button" id="openModal" onclick="btnOpenModal()"
-                    class="btn btn-primary btn-ripple" data-toggle="modal"
-                    data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}</button>
-                <button type="button" id="delete" class="btn btn-danger btn-ripple" data-toggle="modal"
-                    data-target="#exampleModalConfirm">
-                    {{ __('Skillmap_Button_Delete') }}
+
+                <button type="button" id="openModal" class="btn btn-primary btn-ripple" data-toggle="modal"
+                    style="margin-right: 1%;">{{ __('Pattern_Add_Inspection_Point') }}
                 </button>
-                <button type="button" id="cancel" class="btn btn-secondary" data-toggle="modal"
-                        onclick="btnOpenModalBackPage()">
+
+                <button type="button" id="removeLocation" class="btn btn-danger btn-ripple" data-toggle="modal"
+                    style="margin-right: 1%;">{{ __('Common_button_delete') }}
+                </button>
+
+                <button type="button" id="backPage" class="btn btn-secondary" data-toggle="modal">
                     {{ __('Common_Back') }}
                 </button>
             </div>
@@ -232,204 +146,132 @@
     </div>
     <!-- My Toast -->
     <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast1">
+        aria-atomic="true" id="patternSaveSuccess">
         <div class="d-flex">
             <div class="toast-body">
-                {{ __('SkillMapp_Save_Successfully') }}
+                {{ __('Pattern_Save_Successfully') }}
             </div>
         </div>
     </div>
     <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast2">
+        aria-atomic="true" id="patternNameErr">
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_1') }}
+                {{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>
     <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast3">
+        aria-atomic="true" id="areaNameErr">
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_2') }}
+                {{ __('Pattern_Adding_An_Area_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>
     <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast4">
+        aria-atomic="true" id="locationNameErr">
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_3') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast5">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_4') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast6">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_5') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast7">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_6') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast8">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_Danger_7') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="toast9">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('SkillMap_MaxLength') }}
+                {{ __('Pattern_Adding_The_Location_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>
 
-    <!-- Right click Menu -->
-    <div class="shadow list-group right-click-menu" id="right-click-menu">
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-while border-button"
-            onclick="paintBgSkillMap(this, 'while')">{{ __('SkillUp_Button_0') }}</button>
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-pink border-button"
-            onclick="paintBgSkillMap(this, 'pink')">{{ __('SkillUp_Button_1') }}</button>
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-yellow border-button"
-            onclick="paintBgSkillMap(this, 'yellow')">{{ __('SkillUp_Button_2') }}</button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal Add Inspection Point -->
+    <div class="modal fade" id="modalAddInspectionPoint" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">作業名の行数を含む新しい分類を追加する。</h5>
+                    <h5 class="modal-title">{{ __('Pattern_Detail_Title_Add_Dialog') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
                         <div class="input-group">
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="分類名" autofocus
-                                    id="area" required="required" oninvalid="InvalidMsgMyForm(this);"
-                                    oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                            <div class="col" style="margin-right: 2%">
+                                <input type="text" class="form-control" placeholder="{{ __('Pattern_Detail_Area_Name') }}" autofocus
+                                    id="rowArea" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
-                                    id="rowTable" required="required"
-                                    oninvalid="InvalidMsgMyForm(this);" oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                <input type="text" class="form-control" maxlength="3" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
+                                    id="locationNo" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
                         </div>
-                        <button type="submit" name="submit" style="display: none;" />
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnModalAreaCancel">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="cancelAddAreaToTable()"
+                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
-                        class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
+                        class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Confirm -->
-    <div class="modal fade" id="exampleModalConfirm" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal Remove Location -->
+    <div class="modal fade" id="modalDelectLocation" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">確認</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span class="badge bg-danger">{{ __('SkillMap_Question_Delete_1') }}</span></h4>
+                    <h4><span class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="deleteDataSkillMap()"
+                        onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="runRemoveLocation()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal confirm save data when back page -->
-    <div class="modal fade" id="backPageModalConfirm" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalBackPage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('SkillMap_Question_BackPage') }}</span></h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="backPageSaveData(false)">
-                        {{ __('SkillMap_Cancel_Save_Button') }}</button>
-                    <button type="button" onclick="backPageSaveData(true)"
-                        class="btn btn-primary">{{ __('Common_button_save') }}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal confirm save data and export pdf -->
-    <div class="modal fade" id="saveExportPdf" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_PDF_Confirm') }}</span></h4>
+                <div class="modal-body">
+                    <h4><span>{{ __('Pattern_Question_BackPage') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveAndExport()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelExport()">
+                    <button type="button" class="btn btn-secondary" onclick="cancelBackPage(false)">
                         {{ __('Common_button_cancel') }}</button>
-
+                    <button type="button" onclick="backPage(true)"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Modal confirm save data -->
-    <div class="modal fade" id="saveData" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalSaveData" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
-                <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_Button_Save_Confirm') }}</span></h4>
+                <div class="modal-body">
+                    <h4><span>{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveDataChange()"
+                    <button type="button" onclick="saveData()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelSaveDataChange()">
+                    <button type="button" class="btn btn-secondary" onclick="cancelSaveData()">
                         {{ __('Common_button_cancel') }}</button>
 
                 </div>
             </div>
         </div>
     </div>
+
 @include('layouts.confirm')
+
+    {{-- Hidden --}}
+    <input type="hidden" id="hidPatternId" value="{{ isset($info['id']) ? $info['id'] : '' }}" />
+
 @endsection
