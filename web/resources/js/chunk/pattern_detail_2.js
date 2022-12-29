@@ -325,8 +325,10 @@ function saveData() {
     $("#modalSaveData").modal('hide');
     showLoading();
 
-    // Get param to submit
+    // todo: Validate all rows and Get param to submit
+    let valid = true;
     let params = {};
+
     if (selected_5s.length == 0) {
         select5S();
     }
@@ -366,6 +368,7 @@ function saveData() {
             let trid_location = $(ele).attr("id").split('_row_')[0];
             $('[id*='+trid_location+']').each(function(i, e) {
 
+                // todo: Validate
                 let input = $(e).find('td input[type=text]');
                 let textarea = $(e).find('td textarea');
                 if (!input.val() || !textarea.val()) {
@@ -379,13 +382,15 @@ function saveData() {
                         textarea.addClass('is-invalid');
                         hideLoading();
                     }
+                    valid = false;
                     return;
+
                 } else {
                     input.removeClass('is-invalid');
                     textarea.removeClass('is-invalid');
                 }
 
-
+                // Case Valid
                 // Add levels in 1 methos 5S (1 row)
                 let row = {};
                 row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
@@ -406,10 +411,13 @@ function saveData() {
             params['old_areas'].push($(this).find("#hidAreaId").val());
         }
 
-
     });
 
-    saveAjax(params);
+    // todo: Check validate and submit ajax here
+    if (valid) {
+        saveAjax(params);
+    }
+
 }
 
 /**
