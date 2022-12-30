@@ -220,7 +220,7 @@
     "Pattern_Adding_A_Pattern_Name_Is_Mandatory": "パターン名の追加は必須です。",
     "Pattern_Adding_An_Area_Name_Is_Mandatory": "エリア名の追加は必須です。",
     "Pattern_Adding_The_Location_Name_Is_Mandatory": "ロケーション名の追加は必須です。",
-    "Pattern_At_Least_One_Verification_Point_Must_Be_Configured": "少なくとも 1 つの検査ポイントを構成する必要があります。",
+    "Pattern_At_Least_One_Verification_Point_Must_Be_Configured": "少なくとも 1 つのエリアを構成する必要があります。",
     "Pattern_Label_Modal_Save_Pattern": "パターンを保存しますか?",
     "Pattern_Save_Successfully": "パターンを保存しました。",
     "Pattern_Delete_Are_You_Sure_You_Want_To": "削除してもよろしいですか？",
