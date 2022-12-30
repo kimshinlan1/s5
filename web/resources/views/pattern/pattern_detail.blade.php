@@ -93,7 +93,7 @@
                             <table class="table table-bordered" id="table-content" style="width: 100%">
                                 <thead class="table_header">
                                     <tr style="height: 40.5px;" id="header-2-table-content">
-                                        <th scope="col">{{ __('Pattern_Detail_Area') }}</th>
+                                        <th  scope="col">{{ __('Pattern_Detail_Area') }}</th>
                                         <th scope="col">{{ __('Pattern_Detail_Location') }}</th>
                                         <th style="width: 6%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
                                         <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
