@@ -25,6 +25,16 @@ class PatternController extends Controller
         return view('pattern.index');
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexCustomer()
+    {
+        return view('pattern.pattern_list_customer');
+    }
+
     /**
      * Get pattern list by company id
      *

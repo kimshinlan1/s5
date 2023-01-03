@@ -15,12 +15,12 @@
         <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'pattern_detail'))active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>
         @endif
        
-        <a style="background-color: cornflowerblue" class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
+        <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
 
         <a style="background-color: cornflowerblue" class="list-group-item list-group-item-action">{{ __('5s_Manage') }}</a>
         <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">{{ __('Pattern_Top_Page') }}</a>
         <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='pattern_team_inspection')active @endif" href="/pattern_team_inspection">{{ __('Pattern_Team_Inspection') }}</a>
-        <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='pattern_dept_setting')active @endif" href="/pattern_dept_setting">{{ __('Pattern_Dept_Setting') }}</a>
-        <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='pattern_list')active @endif" href="/pattern_list">{{ __('Pattern_List_Customer') }}</a>
+        <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'pattern_dept_setting'))active @endif" href="/pattern_dept_setting">{{ __('Pattern_Dept_Setting') }}</a>
+        <a style="padding-left: 30px;" class="list-group-item list-group-item-action @if(request()->path()==='pattern_list_customer')active @endif" href="/pattern_list_customer">{{ __('Pattern_List_Customer') }}</a>
     </div>
 </div>
