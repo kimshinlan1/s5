@@ -1,10 +1,7 @@
 
 // 改善ポイントの選択 - Select 5S methods
 var selected_5s = [];
-var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var select_location_to_delete = [];
-var highlight = 'aqua';
-var highlight = '#ced4da';
 var params = {};
 var maxCnt5s = 5;
 
@@ -575,7 +572,7 @@ $(function () {
     if ($('#hidPatternId').val()) {
         date_create = new Date(dateFormat($('#hidDateCreate').val()));
         date_update = new Date(dateFormat($('#hidDateUpdate').val()));
-    } 
+    }
 
     $('#dateCreate').datepicker("setDate", date_create);
     $("#dateUpdate").datepicker("setDate", date_update);

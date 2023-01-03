@@ -21,6 +21,7 @@
     <script src="{!! url('assets/jquery/jquery.tablednd.min.js') !!}"></script>
 
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script defer>
     $.ajaxSetup({
         headers: {
