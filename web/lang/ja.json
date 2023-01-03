@@ -1,4 +1,10 @@
 {
+    
+    "===== BLOCK_MANAGE_START =====": "",
+    "Manage": "管理",
+    "5s_Manage": "５S管理",
+    "===== BLOCK_MANAGE_END =====": "",
+
     "===== BLOCK_COMMON_START =====": "",
     "Techmap_System": "カイゼンDXシステム",
     "Login_ID": "ログインID",
@@ -228,5 +234,8 @@
     "Pattern_Detail_Num_Point": "点検箇所の行数",
     "Pattern_Detail_Area_Name": "エリア名",
     "Pattern_Detail_Title_Add_Dialog": "点検箇所の行数を含む新しい分類を追加する。",
+    "Pattern_Top_Page": "トップページ",
+    "Pattern_Team_Inspection": "入力画面",
+    "Pattern_Dept_Setting": "５Sチェックリスト設定",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }
