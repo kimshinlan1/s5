@@ -70,3 +70,8 @@ $locations = [];
 
 <input type="hidden" id="hidTotalRows" value="{{ count($data) }}" />
 
+<script>
+    $("textarea").each(function () {
+        this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+    });
+</script>
