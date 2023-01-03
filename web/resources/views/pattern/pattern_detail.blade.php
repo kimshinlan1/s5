@@ -93,7 +93,7 @@
                             <table class="table table-bordered" id="table-content" style="width: 100%">
                                 <thead class="table_header">
                                     <tr style="height: 40.5px;" id="header-2-table-content">
-                                        <th scope="col">{{ __('Pattern_Detail_Area') }}</th>
+                                        <th  scope="col">{{ __('Pattern_Detail_Area') }}</th>
                                         <th scope="col">{{ __('Pattern_Detail_Location') }}</th>
                                         <th style="width: 6%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
                                         <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
@@ -217,7 +217,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></h4>
+                    <div><span class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -236,7 +236,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body">
-                    <h4><span>{{ __('Pattern_Question_BackPage') }}</span></h4>
+                    <div><span>{{ __('Pattern_Question_BackPage') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="cancelBackPage(false)">

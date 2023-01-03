@@ -16,7 +16,6 @@ window.select5S = function (ele) {
             selected_5s.push($(this).val());
         }
     });
-
 }
 
 // Add Location 点検箇所
@@ -29,7 +28,6 @@ window.addLocation = function (area_id, location_id, area_index) {
         let current_total_rows = $("[id*=area_"+area_id+"]").length;
         let new_location_index = $.now();
         let new_count_current_location = parseInt(count_current_location) + 1;
-
         let new_total_rows = selected_5s.length + current_total_rows;
 
         // Set new row info from 5S 改善ポイントの選択
@@ -59,7 +57,6 @@ window.addLocation = function (area_id, location_id, area_index) {
                     <td><textarea class='form-control' id='level_5' rows='1'></textarea></td>
                 </tr>
                 `;
-
             } else {
                 row += `
                 <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`'>
@@ -76,12 +73,10 @@ window.addLocation = function (area_id, location_id, area_index) {
                     <td><textarea class='form-control' id='level_3' rows='1'></textarea></td>
                     <td><textarea class='form-control' id='level_4' rows='1'></textarea></td>
                     <td><textarea class='form-control' id='level_5' rows='1'></textarea></td>
-
                 </tr>
                 `;
             }
         }
-
 
         // Update rowspan area
         tr.find("td:first").attr('rowspan', new_total_rows);
@@ -104,7 +99,6 @@ window.addLocation = function (area_id, location_id, area_index) {
                 $(this).after(row);
             }
         });
-
     }, 10);
 }
 
@@ -121,8 +115,6 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
     *    Add to list
     *    When call func remove : regenerate html
     */
-
-
     let id = "area_"+area_id+"_location_"+location_id;
     let new_count = parseInt($(id).first().find("#hidCountLocationDelete").val()) - 1;
     if (checkExistId(select_location_to_delete, id) === true) {
@@ -138,12 +130,10 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
                 $(this).find('td').css('background-color', 'white');
             }
         });
-
     } else {
         // Loop all rows in area
         $("[id*=area_"+area_id+"]").each(function() {
             $(this).find("#hidCountLocationDelete").val(new_count);
-
             if ($(this).attr('id').includes(id)) {
                 // Add item
                 select_location_to_delete.push($(this).attr('id'));
@@ -153,15 +143,10 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
             }
         });
     }
-
-    // console.log("updated:");
-    // console.log(select_location_to_delete);
-
 }
 
 // Get data to re-render after delete
 window.getValidRows = function() {
-
     let params = [];
 
     // Loop main area
@@ -187,7 +172,6 @@ window.getValidRows = function() {
                     let id = $(e).attr("id").split("_");
                     let area_id = id[1];
                     let location_id = id[3];
-
                     let row = {};
                     row["area_id"] = area_id ? area_id : "";
                     row["area_name"] = area_name;
@@ -204,24 +188,17 @@ window.getValidRows = function() {
                     row["area_rowspan"] = $(e).find("#hidAreaRowspan").val() - delete_rows;
 
                     params.push(row);
-
                 });
             }
-
         });
-
     });
-
-
     return params;
 }
 
 // Remove Location
 window.removeLocation = function() {
-    // todo:
-
     if (select_location_to_delete.length == 0) {
-        // todo: show warning no item to delete
+        //Show warning no item to delete
         $("#confirmDialog2").modal("show");
         $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
         return;
@@ -232,7 +209,6 @@ window.removeLocation = function() {
         selected_5s: JSON.stringify(selected_5s),
         rows: JSON.stringify(getValidRows())
     };
-    // console.log(params);
 
     $.ajax({
         url: "/pattern_detail_generate_area/",
@@ -246,7 +222,6 @@ window.removeLocation = function() {
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
-
     })
     .always(function () {
 
@@ -273,7 +248,6 @@ window.loadData = function() {
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
-
     })
     .always(function () {
 
@@ -282,7 +256,6 @@ window.loadData = function() {
 
 // Save
 window.saveAjax = function(data) {
-    // todo:
     let params = {
         data: data
     };
@@ -293,7 +266,7 @@ window.saveAjax = function(data) {
         data: params
     })
     .done(function (res) {
-        // todo: notify
+        // Notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             if (!$('#hidPatternId').val()) {
@@ -301,12 +274,10 @@ window.saveAjax = function(data) {
             } else {
                 location.reload();
             }
-        }, 2000);
+        },500);
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
-        showToast($('#toast8'), 2000, true);
-
     })
     .always(function () {
         params = {};
@@ -326,12 +297,11 @@ function openCalendar(name) {
 }
 
 /**
- * Validate data table
+ * Validate and get data table
  */
-function validDataTable() {
-    // todo: Validate all rows and Get param to submit
+function validateAndGetDataTable() {
+    //Validate all rows and Get param to submit
     let valid = true;
-
 
     if (selected_5s.length == 0) {
         select5S();
@@ -390,37 +360,9 @@ function validDataTable() {
             // Loop all rows in location
             let trid_location = $(ele).attr("id").split('_row_')[0];
             $('[id*='+trid_location+']').each(function(i, e) {
-
-                // todo: Validate
-                // let input = $(e).find('td input[type=text]');
-                // let textarea = $(e).find('td textarea');
-                // if (!input.val() || !textarea.val()) {
-                //     if (!input.val()) {
-                //         // input.focus();
-                //         input.addClass('is-invalid');
-                //         hideLoading();
-                //     }
-                //     if (!textarea.val()) {
-                //         // input.focus();
-                //         textarea.addClass('is-invalid');
-                //         hideLoading();
-                //     }
-                //     valid = false;
-                //     return;
-
-                // } else {
-                //     input.removeClass('is-invalid');
-                //     textarea.removeClass('is-invalid');
-                // }
-
                 // Case Valid
                 // Add levels in 1 methos 5S (1 row)
                 let row = {};
-                // row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
-                // row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
-                // row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
-                // row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
-                // row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
                 for (let cnt = 1; cnt <= maxCnt5s; cnt++) {
                     let levelName = $(e).find("#level_"  + cnt).val();
                     // if level is empty
@@ -435,10 +377,8 @@ function validDataTable() {
                 }
                 location['rows'][$(e).find("#hid5S").val()] = row;
             });
-
             area['locations'].push(location);
         });
-
         params['data'].push(area);
 
         // Add old area (for delete)
@@ -591,7 +531,7 @@ function cancelBackPage() {
 }
 
 /**
- * todo: Test => Remove when release
+ * Test => Remove when release
  */
 function setValueTest() {
     // Loop main area
@@ -611,9 +551,7 @@ function setValueTest() {
  * Document Ready
  */
 $(function () {
-
     // Trigger init page
-
     $('#dateCreate').datepicker({
         autoclose: true,
         dateFormat: 'yy年mm月dd日',
@@ -633,14 +571,14 @@ $(function () {
 
     let date_create = new Date();
     let date_update = new Date();
+
     if ($('#hidPatternId').val()) {
-        date_create = dateFormatterYmd($('#hidDateCreate').val());
-        date_update = dateFormatterYmd($('#hidDateUpdate').val());
-    }
+        date_create = new Date(dateFormat($('#hidDateCreate').val()));
+        date_update = new Date(dateFormat($('#hidDateUpdate').val()));
+    } 
 
     $('#dateCreate').datepicker("setDate", date_create);
     $("#dateUpdate").datepicker("setDate", date_update);
-
 
     select5S();
 
@@ -654,13 +592,12 @@ $(function () {
       	$('#rowArea').val('');
         $('#locationNo').val('');
         $('#rowArea').focus();
-        // todo: Check 5S (empty, ...)
+        // Check 5S (empty, ...)
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
             return;
         }
-
         $("#modalAddInspectionPoint").modal('show');
     });
 
@@ -672,25 +609,30 @@ $(function () {
 
     // Save click
     $("#save").click(function () {
-        let patternName = $('#patternName').val().trim();
-        // todo: Validate required field (pattern_name, create_date, update_date)
-        if (!patternName || patternName === '') {
-            $('#patternName').focus();
-            $('#patternName').addClass('is-invalid');
-            return;
-        }
-        validDataTable();
-    });
-
-    // Remove click
-    $("#removeLocation").click(function () {
-        if (select_location_to_delete.length == 0) {
-            // todo: show warning no item to delete
+        if ($("#table-content tbody").find("tr.main_area").length === 0) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
             return;
         }
 
+        let patternName = $('#patternName').val().trim();
+        // Validate required field pattern_name
+        if (!patternName || patternName === '') {
+            $('#patternName').focus();
+            $('#patternName').addClass('is-invalid');
+            return;
+        }
+        validateAndGetDataTable();
+    });
+
+    // Remove click
+    $("#removeLocation").click(function () {
+        if (select_location_to_delete.length == 0) {
+            //Show warning no item to delete
+            $("#confirmDialog2").modal("show");
+            $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
+            return;
+        }
         $("#modalDelectLocation").modal('show');
     });
 
