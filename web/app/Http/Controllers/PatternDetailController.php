@@ -15,7 +15,6 @@ class PatternDetailController extends Controller
     public function __construct(PatternDetailService $service)
     {
         $this->service = $service;
-        $this->user = app(User::class);
     }
 
     /**
@@ -28,7 +27,6 @@ class PatternDetailController extends Controller
         $data = [
             'selected5s' => []
         ];
-
         return view('pattern.pattern_detail', $data);
     }
 
@@ -43,9 +41,7 @@ class PatternDetailController extends Controller
     {
         $info = (app()->get(PatternService::class))->getDataById($id);
         if (empty($info)) {
-            // todo:
-            dd("No data");
-            return;
+            return $this->responseException();
         }
 
         $selected5s = json_decode($info['5s']);
@@ -106,12 +102,10 @@ class PatternDetailController extends Controller
 
                 $l++;
             }
-
         } elseif ($request->get('remove')) {
             // Case: Delete rows
             // Get and re generate html after delete rows
             $data = json_decode($request->get('rows'), true);
-
         } else {
             // Case: Edit
             // Get database for edit follow by below structure
@@ -132,7 +126,7 @@ class PatternDetailController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */

@@ -81,7 +81,7 @@ class PatternDetailService extends BaseService
     /**
      * Save pattern full info
      *
-     * @param  \App\Http\Requests  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return object
      */
     public function save(Request $request)

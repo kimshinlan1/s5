@@ -90,7 +90,7 @@ window.addLocation = function (area_id, location_id, area_index) {
     }, 10);
 }
 
-// Select location
+// Select location and high-light
 window.selectLocationToDelete = function(ele, area_id, location_id) {
 
     if ($(ele).find('input').is(":focus")) {
@@ -183,7 +183,7 @@ window.getValidRows = function() {
     return params;
 }
 
-// Remove Location
+// Remove Location and re generate html (not save)
 window.removeLocation = function() {
     if (select_location_to_delete.length == 0) {
         //Show warning no item to delete
@@ -216,7 +216,7 @@ window.removeLocation = function() {
     });
 }
 
-// Onchange 5S methods 改善ポイントの選択
+// Load DB
 window.loadData = function() {
     let params = {
         selected_5s: JSON.stringify(selected_5s),
@@ -242,7 +242,7 @@ window.loadData = function() {
     });
 }
 
-// Save
+// Save pattern
 window.saveAjax = function(data) {
     let params = {
         data: data
@@ -383,7 +383,7 @@ function validateAndGetDataTable() {
 }
 
 /**
- * Button save data
+ * Accept save
  */
 function saveData() {
     $("#modalSaveData").modal('hide');
