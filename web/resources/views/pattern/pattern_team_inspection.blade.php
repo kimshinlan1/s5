@@ -35,35 +35,10 @@
 
     @php
         $width_data = "50px";
-        $countColumn = 5;
 
-
-        // Mockup data
-        $data = [];
-        $locationList = [1 => 'Location1', 2 => 'Location2'];
-        $newLocationNo = count($locationList);
-        $selected5s = ['s1', 's2', 's3'];
         $areas = [];
         $locations = [];
-        foreach ($locationList as $id => $l) {
-            $index = time() . $l;
 
-            // Loop rows
-            foreach ($selected5s as $method) {
-                $data[] = [
-                    "area_id" => "",
-                    "area_name" => "Area Name",
-                    "location_id" => $id,
-                    "location_name" => $l,
-                    "count_locations" => $newLocationNo,
-                    "area_rowspan" => count($selected5s) * $newLocationNo,
-                    "location_rowspan" => count($selected5s),
-                    "5s" => $method,
-
-                ];
-            }
-
-        }
     @endphp
 
     <div style="width: 100%; height: auto; overflow: auto; ">
