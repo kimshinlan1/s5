@@ -31,6 +31,21 @@ window.addLocation = function (area_id, location_id, area_index) {
         let row = ``;
         for(let i=0; i < selected_5s.length; i++) {
             let new_index = parseInt(current_total_rows) + i;
+            let rows = `
+                <td>
+                    `+ name_5s[selected_5s[i]] +`
+                    <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
+                    <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
+                    <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
+                    <input type="hidden" id="hidAreaRowspan" value="`+new_total_rows+`"/>
+                    <input type="hidden" id="hidLocationRowspan" value="`+selected_5s.length+`"/>
+                </td>
+                <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_1' rows='1'></textarea></td>
+                <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_2' rows='1'></textarea></td>
+                <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_3' rows='1'></textarea></td>
+                <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_4' rows='1'></textarea></td>
+                <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_5' rows='1'></textarea></td>
+                `;
             if (i == 0) {
                 // row: main location
                 row += `
@@ -39,37 +54,13 @@ window.addLocation = function (area_id, location_id, area_index) {
                         <input type='text' class='form-control' id='location' value=''/>
                         <input type="hidden" id="hidLocationId" value=''/>
                     </td>
-                    <td>
-                    `+ name_5s[selected_5s[i]] +`
-                    <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
-                    <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
-                    <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
-                    <input type="hidden" id="hidAreaRowspan" value="`+new_total_rows+`"/>
-                    <input type="hidden" id="hidLocationRowspan" value="`+selected_5s.length+`"/>
-                    </td>
-                    <td><textarea class='form-control' id='level_1' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_2' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_3' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_4' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_5' rows='1'></textarea></td>
+                    `+ rows +`
                 </tr>
                 `;
             } else {
                 row += `
                 <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`'>
-                    <td>
-                    `+ name_5s[selected_5s[i]] +`
-                    <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
-                    <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
-                    <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
-                    <input type="hidden" id="hidAreaRowspan" value="`+new_total_rows+`"/>
-                    <input type="hidden" id="hidLocationRowspan" value="`+selected_5s.length+`"/>
-                    </td>
-                    <td><textarea class='form-control' id='level_1' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_2' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_3' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_4' rows='1'></textarea></td>
-                    <td><textarea class='form-control' id='level_5' rows='1'></textarea></td>
+                    `+ rows +`
                 </tr>
                 `;
             }
@@ -534,11 +525,11 @@ function setValueTest() {
     // Loop main area
     $("#table-content tbody input[type=text]").each(function() {
 
-        $(this).val("test");
+        $(this).val("通路周辺");
     });
 
     $("#table-content tbody textarea").each(function() {
-        $(this).val("level");
+        $(this).val("ｳｴｯｸｽ、手袋等が放置されている");
     });
 }
 
