@@ -19,3 +19,4 @@
 <input type="hidden" id="patternAtLeastOneVerificationPointMustBeConfigured" name="patternAtLeastOneVerificationPointMustBeConfigured" value="{{ __('Pattern_At_Least_One_Verification_Point_Must_Be_Configured') }}"/>
 <input type="hidden" id="messagePatternRequired" name="messagePatternRequired" value="{{ __('Pattern_Err_Required') }}"/>
 <input type="hidden" id="messagePatternFormatNumber" name="messagePatternFormatNumber" value="{{ __('Pattern_Err_FormatNumber') }}"/>
+<input type="hidden" id="placeHolderPoint" name="placeHolderPoint" value="{{ __('Pattern_Detail_Num_Point') }}"/>
