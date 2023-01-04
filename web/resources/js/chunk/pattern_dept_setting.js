@@ -14,12 +14,10 @@ window.select5S = function (ele) {
             selected_5s.push($(this).val());
         }
     });
-
 }
 
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index) {
-
     setTimeout(() => {
         // Get tr info
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
@@ -512,12 +510,81 @@ function setValueTest() {
     });
 }
 
+/**
+ * List department list
+ */
+window.loadDeptList = function(id, mode = null) {
+    let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+            let html = '';
+            for (let e of res) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#departmentId').html(html);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + ': ' + errorThrown);
+        },
+    });
+}
+
+/**
+ * List department list
+ */
+window.loadPatternList = function(id, isPattern = null, patternId = null ) {
+    $.ajax({
+        url: '/pattern_list/getlist_by_department/' + id,
+        type: 'GET',
+        async: false
+    })
+    .done(function (data, _textStatus, _jqXHR) {
+        let html = '';
+        data.forEach(function callback(e, index) {
+            if (isPattern) {
+                if(index != 0 && e.id == patternId ) {
+                    html += '<option value="' + e.id + '" selected>' + e.name + '</option>';
+                }
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            } else {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+        });
+        $('#patternId').html(html);
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    });
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Document Ready
  */
 $(function () {
+    let id = $('#userCompanyId').val();
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let deptId = urlParams.get('departmentId');
+    let isPattern = urlParams.get('isPattern');
+    let patternId = urlParams.get('patternId');
+    if (deptId) {
+        loadPatternList(deptId, isPattern, patternId);
+        loadDeptList(deptId, 'edit');
+        $('#departmentId').prop( "disabled",true);
+    }
+    else {
+        if($('#userMode').val() == CONFIG.get('FREE')) {
+            $('#departmentId').prop( "disabled",true);
+        } else {
+            $('#departmentId').prop( "disabled",false);
+        }
+        loadDeptList(id);
+    }
 
     // Trigger init page
 
@@ -549,11 +616,11 @@ $(function () {
         loadData();
     }
 
-
-
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
+        $('#area').val('');
+        $('#locationNo').val('');
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));

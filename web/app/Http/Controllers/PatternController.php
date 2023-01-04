@@ -88,4 +88,16 @@ class PatternController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Returns resource as a list.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        return $this->service->getAll($request);
+    }
 }

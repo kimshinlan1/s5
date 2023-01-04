@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PatternService;
-use App\Services\DeptPatternDetailService;
+use App\Services\PatternDeptSettingService;
 
 class PatternDeptSettingController extends Controller
 {
     /** @var patterndetailservice */
     private $service;
 
-    public function __construct(DeptPatternDetailService $service)
+    public function __construct(PatternDeptSettingService $service)
     {
         $this->service = $service;
         $this->user = app(User::class);
@@ -39,22 +39,26 @@ class PatternDeptSettingController extends Controller
       *
       * @return \Illuminate\Http\Response
     */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $info = (app()->get(PatternService::class))->getDataById($id);
-        if (empty($info)) {
-            // todo:
-            dd("No data");
-            return;
+        $selected5s = null;
+        $info = null;
+        $id = $request->get('id');
+        $mode = $request->get('mode');
+        if ($mode == 'edit') {
+            $info = (app()->get(PatternService::class))->getDataById($id);
+        }
+        if (!empty($info)) {
+            $selected5s = json_decode($info['5s']);
+
         }
 
-        $selected5s = json_decode($info['5s']);
         $data = [
-            'mode' => 'edit',
+            'mode' => $mode,
             'info' => $info,
             'selected5s' => $selected5s
         ];
-        return view('pattern.pattern_detail', $data);
+        return view('pattern.pattern_dept_setting', $data);
     }
 
     /**

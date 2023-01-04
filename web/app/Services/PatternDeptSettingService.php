@@ -10,7 +10,7 @@ use App\Models\PatternDetail;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
 
-class DeptPatternDetailService extends BaseService
+class PatternDeptSettingService extends BaseService
 {
     /* @var Model */
     private $model;

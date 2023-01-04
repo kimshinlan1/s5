@@ -185,6 +185,11 @@ $(function () {
     $("#companyEditDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
+        if (id == CONFIG.get("KAIZENBASE_ID")) {
+            $('label[for="companyMode"]').hide();
+        } else {
+            $('label[for="companyMode"]').show();
+        }
         if (id) {
             let rowData = $("#companyTable").bootstrapTable(
                 "getRowByUniqueId", id

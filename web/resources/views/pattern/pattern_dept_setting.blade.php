@@ -24,13 +24,16 @@
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-9">
+                <div class="col-10">
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
+                        <div class="label_header" style="width: 20%;">
+                            <span class="input-group-text">{{ __('Pattern_Department_Label') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            aria-label="Department select" id="departmentId" >
+                            </select>
+
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
@@ -42,11 +45,13 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
+                        <div class="label_header" style="width: 20%;">
+                            <span class="input-group-text">{{ __('Dept_Pattern_Detail_Name') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            aria-label="Pattern select" id="patternId" >
+                            </select>
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
@@ -55,6 +60,19 @@
                             <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 0.5%;">
+                        <div class="label_header" style="width: 20%;">
+                            <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
+                        </div>
+                        <div class="label_header_1">
+                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                        </div>
+                        <div class="label_header">
+                        </div>
+                        <div class="date">
                         </div>
                     </div>
                 </div>
@@ -215,7 +233,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></h4>
+                    <div><span  style="font-size: 0.9rem;" class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -234,7 +252,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body">
-                    <h4><span>{{ __('Pattern_Question_BackPage') }}</span></h4>
+                    <div><span style="font-size: 0.9rem;">{{ __('Pattern_Question_BackPage') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="cancelBackPage(false)">
@@ -254,7 +272,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body">
-                    <h4><span>{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></h4>
+                    <div><span style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="saveData()"
@@ -271,5 +289,6 @@
 
     {{-- Hidden --}}
     <input type="hidden" id="hidPatternId" value="{{ isset($info['id']) ? $info['id'] : '' }}" />
+    <input type="hidden" id="hiddenMode" value="{{ isset($mode) ? $mode : '' }}" />
 
 @endsection

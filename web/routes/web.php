@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('departments', DepartmentController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('departments/list', [DepartmentController::class, 'list']);
         Route::get('departments/list/{id}', [DepartmentController::class, 'getByCompany']);
+        Route::get('/departments/getDepartment/{id}', [DepartmentController::class, 'getDept']);
         Route::get('departments/emp_list', [DepartmentController::class, 'employeeList']);
         Route::get('/departments/comp_list', [DepartmentController::class, 'getDepartmentListByID']);
 
@@ -110,13 +111,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/pattern_list/patern_list_by_company', [PatternController::class, 'getPatternByCompanyId']);
         Route::get('/pattern_list/getlist_by_department/{id}', [PatternController::class, 'listPattern']);
+        Route::get('/pattern_list/list', [PatternController::class, 'list']);
 
         // Pattern_List_Customer
         Route::get('/pattern_list_customer', [PatternController::class, 'indexCustomer']);
 
         // Dept pattern setting
         Route::get('/pattern_dept_setting', [PatternDeptSettingController::class, 'index']);
-        Route::get('/pattern_dept_setting/{id}', [PatternDeptSettingController::class, 'edit']);
+        Route::get('/pattern_dept_setting/edit', [PatternDeptSettingController::class, 'edit']);
 
         // Team inspection by pattern
         Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);

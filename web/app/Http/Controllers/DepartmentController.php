@@ -170,4 +170,15 @@ class DepartmentController extends Controller
     {
         return $this->service->getDataByCompany($id);
     }
+
+    /**
+     * Returns department.
+     *
+     * @param  id
+     * @return object
+     */
+    public function getDept($id)
+    {
+        return $this->service->getDeptBtId($id);
+    }
 }
