@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            {{-- @if (!strpos(Request::root(), "solutions.com"))
+            @if (!strpos(Request::root(), "solutions.com"))
             <br>
             Total Rows:<strong id="countRows"></strong>
             <br>
@@ -122,7 +122,7 @@
             <br><br>
             @else
             <br><br><br>
-            @endif --}}
+            @endif
             <div class="action-btn" style="justify-content: flex-start">
                 <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">

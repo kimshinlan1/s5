@@ -63,7 +63,7 @@
     width: 6%;
 }
 
-.text-area {
+.t-area {
     resize: none;
     overflow: hidden;
     max-height: 100px;
