@@ -193,7 +193,7 @@
                                     id="rowArea" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" maxlength="3" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
+                                <input type="text" class="form-control" maxlength="2" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
                                     id="locationNo" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
                         </div>
