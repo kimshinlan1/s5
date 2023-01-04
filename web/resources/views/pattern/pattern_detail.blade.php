@@ -93,14 +93,14 @@
                             <table class="table table-bordered" id="table-content" style="width: 100%">
                                 <thead class="table_header">
                                     <tr style="height: 40.5px;" id="header-2-table-content">
-                                        <th  scope="col">{{ __('Pattern_Detail_Area') }}</th>
-                                        <th scope="col">{{ __('Pattern_Detail_Location') }}</th>
-                                        <th style="width: 6%;" scope="col">{{ __('Pattern_Detail_Point') }}</th>
-                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
-                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
-                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
-                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_4') }}</th>
-                                        <th style="width: 15%;" scope="col">{{ __('Pattern_Detail_Level_5') }}</th>
+                                        <th class="value-area" scope="col">{{ __('Pattern_Detail_Area') }}</th>
+                                        <th class="value-location" scope="col">{{ __('Pattern_Detail_Location') }}</th>
+                                        <th class="value-5s" scope="col">{{ __('Pattern_Detail_Point') }}</th>
+                                        <th class="value-level" scope="col">{{ __('Pattern_Detail_Level_1') }}</th>
+                                        <th class="value-level" scope="col">{{ __('Pattern_Detail_Level_2') }}</th>
+                                        <th class="value-level" scope="col">{{ __('Pattern_Detail_Level_3') }}</th>
+                                        <th class="value-level" scope="col">{{ __('Pattern_Detail_Level_4') }}</th>
+                                        <th class="value-level" scope="col">{{ __('Pattern_Detail_Level_5') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
