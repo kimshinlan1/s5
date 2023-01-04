@@ -198,48 +198,38 @@ window.removeLocation = function() {
         rows: JSON.stringify(getValidRows())
     };
 
-    $.ajax({
-        url: "/pattern_detail_remove",
-        type: "POST",
-        data: params
-    })
-    .done(function (res) {
-        $("#table-content tbody").html("");
-        $("#table-content tbody").append(res);
-        select_location_to_delete = [];
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // show errors
-    })
-    .always(function () {
+    let url = "/pattern_detail_remove";
+    let method = "POST";
 
-    });
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        $("#table-content tbody").html("");
+        $("#table-content tbody").append(data);
+        select_location_to_delete = [];
+    };
+
+    runAjax(url, method, params, doneCallback);
 }
 
 // Load DB
 window.loadData = function() {
+    showLoading();
+
     let params = {
         selected_5s: JSON.stringify(selected_5s),
         id: $('#hidPatternId').val()
     };
 
-    $.ajax({
-        url: "/pattern_detail_generate_area/",
-        type: "GET",
-        data: params
-    })
-    .done(function (res) {
-        $("#table-content tbody").append(res);
+    let url = "/pattern_detail_generate_area";
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        $("#table-content tbody").append(data);
         if ($('#hidTotalRows')) {
             $('#countRows').html($('#hidTotalRows').val());
         }
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // show errors
-    })
-    .always(function () {
+    };
 
-    });
+    runAjax(url, method, params, doneCallback);
 }
 
 // Save pattern
@@ -250,7 +240,7 @@ window.saveAjax = function(data) {
     let url = "/pattern_save";
     let method = "POST";
 
-    let doneCallback = function (data, textStatus, _jqXHR) {
+    let doneCallback = function (data, _textStatus, _jqXHR) {
         // Notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
@@ -262,7 +252,7 @@ window.saveAjax = function(data) {
         },500);
     };
 
-    let failCallback = function (jqXHR, textStatus, errorThrown) {
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         // show errors
         let err = jqXHR.errors ? jqXHR.errors : JSON.parse(jqXHR.responseText).errors;
         if (err) {
@@ -402,7 +392,6 @@ function cancelSaveData() {
  * Add new area to table
  */
 function addAreaToTable() {
-    // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
     let params = {
@@ -413,21 +402,22 @@ function addAreaToTable() {
         new_area_name: areaName
     };
 
-    $.ajax({
-        url: "/pattern_detail_generate_area/",
-        type: "GET",
-        data: params
-    })
-    .done(function (res) {
-        $("#table-content tbody").append(res);
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // show errors
+    let url = "/pattern_detail_generate_area";
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        $("#table-content tbody").append(data);
+    };
+
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
-    })
-    .always(function () {
+    };
+
+    let alwaysCallback = function () {
         $("#modalAddInspectionPoint").modal('hide');
-    });
+    };
+
+    runAjax(url, method, params, doneCallback, failCallback, alwaysCallback);
 }
 
 /**
