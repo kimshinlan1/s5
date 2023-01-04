@@ -112,8 +112,7 @@ window.runAjax = function (url, method, data, donecallback, failcallback, always
             console.log(res);
         })
         .always(alwayscallback ? alwayscallback : function () {
-            // hide dialog
-            // todo:
+            hideLoading();
         });
 }
 

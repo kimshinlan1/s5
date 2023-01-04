@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_detail', [PatternDetailController::class, 'index']);
         Route::get('/pattern_detail/{id}', [PatternDetailController::class, 'edit']);
         Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
+        Route::post('/pattern_detail_remove', [PatternDetailController::class, 'removeLocation']);
         Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
 
     });

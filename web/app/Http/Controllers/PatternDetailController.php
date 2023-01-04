@@ -58,12 +58,20 @@ class PatternDetailController extends Controller
     }
 
     /**
-     * generate area html
+     * Generate area html after remove rows
+     *
+     */
+    public function removeLocation(Request $request)
+    {
+        return $this->generateAreaHtml($request);
+    }
+
+    /**
+     * Generate area html
      *
      */
     public function generateAreaHtml(Request $request)
     {
-
         $selected5s = json_decode($request->get('selected_5s'));
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
         $newLocationNo = $request->get('new_location_no') ?: 1;
@@ -130,10 +138,9 @@ class PatternDetailController extends Controller
      */
     public function savePattern(Request $request)
     {
-        // todo: Check not exist data
         $data = $request->get('data');
         if (!isset($data['info']) || !isset($data['data'])) {
-            return;
+            return $this->responseException();
         }
         $data = $this->service->save($request);
         return response()->json($data);

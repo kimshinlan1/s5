@@ -199,8 +199,8 @@ window.removeLocation = function() {
     };
 
     $.ajax({
-        url: "/pattern_detail_generate_area/",
-        type: "GET",
+        url: "/pattern_detail_remove",
+        type: "POST",
         data: params
     })
     .done(function (res) {
@@ -247,13 +247,10 @@ window.saveAjax = function(data) {
     let params = {
         data: data
     };
+    let url = "/pattern_save";
+    let method = "POST";
 
-    $.ajax({
-        url: "/pattern_save",
-        type: "POST",
-        data: params
-    })
-    .done(function (res) {
+    let doneCallback = function (data, textStatus, _jqXHR) {
         // Notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
@@ -263,13 +260,17 @@ window.saveAjax = function(data) {
                 location.reload();
             }
         },500);
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
+    };
+
+    let failCallback = function (jqXHR, textStatus, errorThrown) {
         // show errors
-    })
-    .always(function () {
-        params = {};
-    });
+        let err = jqXHR.errors ? jqXHR.errors : JSON.parse(jqXHR.responseText).errors;
+        if (err) {
+            handleSystemError(null, err);
+        }
+    };
+
+    runAjax(url, method, params, doneCallback, failCallback);
 }
 
 function auto_grow(element) {
