@@ -480,7 +480,7 @@ function RemoveMsgMyForm(textbox) {
  */
 function InvalidMsgMyForm(textbox) {
     let flag = false;
-    if (textbox.value.trim() == '') {
+    if ((textbox.value.trim() == '') || (textbox.value == 0)) {
         textbox.setCustomValidity(CONFIG.get("PATTERN_REQUIRED"));
         flag = true;
     } else if (textbox.validity.patternMismatch) {
@@ -488,6 +488,9 @@ function InvalidMsgMyForm(textbox) {
         flag = true;
     } else if (textbox.placeholder == (CONFIG.get("PLACE_HOLDER_POINT"))) {
         if (isNaN(parseInt(textbox.value))) {
+            textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
+            flag = true;
+        } else if (!/^[0-9]+$/.test(textbox.value)) {
             textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
             flag = true;
         } else {
