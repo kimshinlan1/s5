@@ -461,11 +461,8 @@ function validateMyform() {
             addAreaToTable();
         }
     }
-    let form = document.getElementById('myForm');
-    let inpArea = document.getElementById("rowArea");
-    let inpCntLocation = document.getElementById("locationNo");
-    if (!inpArea.checkValidity() || !inpCntLocation.checkValidity()) {
-        form.reportValidity();
+    if (!($('#rowArea')[0]).checkValidity() || !($('#locationNo')[0]).checkValidity()) {
+        $('#myForm')[0].reportValidity();
     }
 }
 
@@ -484,14 +481,14 @@ function RemoveMsgMyForm(textbox) {
 function InvalidMsgMyForm(textbox) {
     let flag = false;
     if (textbox.value.trim() == '') {
-        textbox.setCustomValidity(CONFIG.get("SKILL_MAP_REQUIRED"));
+        textbox.setCustomValidity(CONFIG.get("PATTERN_REQUIRED"));
         flag = true;
     } else if (textbox.validity.patternMismatch) {
-        textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+        textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
         flag = true;
     } else if (textbox.placeholder == (CONFIG.get("PLACE_HOLDER_POINT"))) {
         if (isNaN(parseInt(textbox.value))) {
-            textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+            textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
             flag = true;
         } else {
             textbox.setCustomValidity('');

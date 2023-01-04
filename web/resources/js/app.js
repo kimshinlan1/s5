@@ -46,6 +46,8 @@ window.CONFIG = (function () {
         'PLACE_HOLDER_CATEGORY' : '分類名',
         'PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED': $('#patternAtLeastOneVerificationPointMustBeConfigured').val(),
         'PLACE_HOLDER_POINT' : $('#placeHolderPoint').val(),
+        'PATTERN_REQUIRED': $('#messagePatternRequired').val(),
+        'PATTERN_FORMAT_NUMBER': $('#messagePatternFormatNumber').val(),
     };
     return {
         get: function (name) { return private_const[name]; }

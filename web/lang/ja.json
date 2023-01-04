@@ -237,5 +237,7 @@
     "Pattern_Top_Page": "トップページ",
     "Pattern_Team_Inspection": "入力画面",
     "Pattern_Dept_Setting": "５Sチェックリスト設定",
+    "Pattern_Err_Required": "このフィールドを記入してください",
+    "Pattern_Err_FormatNumber": "要求された形式に一致してください",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }

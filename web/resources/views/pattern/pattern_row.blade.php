@@ -22,7 +22,7 @@ $locations = [];
     @if (!in_array($row['area_id'], $areas))
     <td rowspan="{{ $row['area_rowspan'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
-        <button id="" class="btn btn-sm btn-info form-control" style="margin-top: 2px; color: white; font-size: 0.67rem;"
+        <button id="" class="btn btn-sm btn-info form-control btn-add-location"
         onclick="addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )" >点検箇所を追加
         </button>
     </td>
@@ -56,11 +56,11 @@ $locations = [];
     </td>
 
     {{-- Levels --}}
-    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_1" rows="1">{{ $row['level_1'] }}</textarea></td>
-    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_2" rows="1">{{ $row['level_2'] }}</textarea></td>
-    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_3" rows="1">{{ $row['level_3'] }}</textarea></td>
-    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_4" rows="1">{{ $row['level_4'] }}</textarea></td>
-    <td><textarea class="form-control" style="resize: none; overflow: hidden; max-height: 100px;" oninput="auto_grow(this)" id="level_5" rows="1">{{ $row['level_5'] }}</textarea></td>
+    <td><textarea class="form-control text-area" oninput="auto_grow(this)" id="level_1" rows="1">{{ $row['level_1'] }}</textarea></td>
+    <td><textarea class="form-control text-area" oninput="auto_grow(this)" id="level_2" rows="1">{{ $row['level_2'] }}</textarea></td>
+    <td><textarea class="form-control text-area" oninput="auto_grow(this)" id="level_3" rows="1">{{ $row['level_3'] }}</textarea></td>
+    <td><textarea class="form-control text-area" oninput="auto_grow(this)" id="level_4" rows="1">{{ $row['level_4'] }}</textarea></td>
+    <td><textarea class="form-control text-area" oninput="auto_grow(this)" id="level_5" rows="1">{{ $row['level_5'] }}</textarea></td>
 
     <?php $index++ ?>
 
