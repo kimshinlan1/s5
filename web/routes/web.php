@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Pattern_list
         Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::get('pattern_list/list', [PatternController::class, 'list']);
+        Route::get('pattern_list/data', [PatternController::class, 'list']);
 
         // Pattern_List_Customer
         Route::get('/pattern_list_customer', [PatternController::class, 'indexCustomer']);

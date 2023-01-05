@@ -12,7 +12,7 @@
  *    get List
  --------------------- */
  window.getTableList = function (params) {
-    let url = "/pattern_list/list";
+    let url = "pattern_list/data";
     params.data.page =
     params.data.offset > 0
         ? Math.ceil(params.data.offset / CONFIG.get("PAGING")) + 1
