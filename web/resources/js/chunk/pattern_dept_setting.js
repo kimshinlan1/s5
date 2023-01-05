@@ -343,7 +343,7 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     };
 
     $.ajax({
-        url: !isPattern ? "/dept_pattern_detail_generate_area" : "/pattern_detail_generate_area",
+        url: !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area",
         type: "GET",
         data: params
     })
