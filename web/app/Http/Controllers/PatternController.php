@@ -25,6 +25,21 @@ class PatternController extends Controller
         return view('pattern.index');
     }
 
+    /**
+     * Returns resource as a list.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        $data = $this->service->getList($request);
+        return response()->json([
+            'total' => $data->total(),
+            'rows' => $data->getCollection(),
+        ]);
+    }
+
      /**
      * Display a listing of the resource.
      *
