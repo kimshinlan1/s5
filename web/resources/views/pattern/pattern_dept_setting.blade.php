@@ -206,11 +206,11 @@
                         <div class="input-group">
                             <div class="col" style="margin-right: 2%">
                                 <input type="text" class="form-control" placeholder="{{ __('Pattern_Detail_Area_Name') }}" autofocus
-                                    id="rowArea" required="required"/>
+                                    id="rowArea" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" maxlength="3" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
-                                    id="locationNo" required="required"/>
+                                <input type="text" class="form-control" maxlength="2" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
+                                    id="locationNo" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
                         </div>
                     </form>
@@ -218,7 +218,7 @@
                 <div class="modal-footer">
                     <button type="button" onclick="cancelAddAreaToTable()"
                     class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="addAreaToTable()"
+                    <button type="button" onclick="validateMyform()"
                         class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
                 </div>
             </div>

@@ -6,6 +6,7 @@ var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":
 var select_location_to_delete = [];
 var highlight = 'aqua';
 var highlight = '#ced4da';
+var department_id = null;
 const maxCnt5s = 5;
 
 
@@ -331,7 +332,7 @@ function cancelSaveData() {
 /**
  * Add new area to table
  */
-function addAreaToTable(mode = null, id = null) {
+function addAreaToTable(mode = null, id = null, isPattern = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
@@ -345,7 +346,7 @@ function addAreaToTable(mode = null, id = null) {
     };
 
     $.ajax({
-        url: "/dept_pattern_detail_generate_area",
+        url: !isPattern ? "/dept_pattern_detail_generate_area" : "/pattern_detail_generate_area",
         type: "GET",
         data: params
     })
@@ -422,12 +423,14 @@ window.loadDeptList = function(id, mode = null) {
     $.ajax({
         type: 'GET',
         url: url,
+        async: false,
         success: function (res) {
             let html = '';
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
             $('#departmentId').html(html);
+            department_id = $('#departmentId').val();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus + ': ' + errorThrown);
@@ -481,7 +484,7 @@ $(function () {
         loadPatternList(deptId, isPattern, patternId);
         loadDeptList(deptId, 'edit');
         $('#departmentId').prop( "disabled",true);
-        addAreaToTable('edit', deptPatternid);
+        addAreaToTable('edit', deptPatternid, isPattern);
     }
     else {
         if($('#userMode').val() == CONFIG.get('FREE')) {
@@ -490,6 +493,8 @@ $(function () {
             $('#departmentId').prop( "disabled",false);
         }
         loadDeptList(id);
+        loadPatternList(department_id);
+
     }
 
     // Trigger init page
@@ -525,7 +530,6 @@ $(function () {
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
-        debugger
         $('#rowArea').val('');
         $('#locationNo').val('');
         $('#rowArea').focus();
@@ -700,4 +704,8 @@ $(function () {
     $("#backPage").click(function () {
         $("#modalBackPage").modal('show');
     })
+    // $('#patternId').change(function() {
+    //     let patternid = $('#patternId').find(':selected').val();
+    //     addAreaToTable('edit', patternid);
+    // });
 });
