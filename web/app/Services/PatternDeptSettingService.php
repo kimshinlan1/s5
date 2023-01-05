@@ -130,7 +130,6 @@ class PatternDeptSettingService extends BaseService
             ],
             [
                 'name' => $data['info']['pattern_name'],
-                'note' => $data['info']['pattern_note'],
                 '5s' => $data['info']['pattern_5s_selected'],
                 'created_at' => $data['info']['pattern_created_at'],
                 'updated_at' => $data['info']['pattern_updated_at'],

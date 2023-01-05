@@ -132,12 +132,12 @@ class PatternDeptSettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function savePattern(Request $request)
+    public function saveDeptPattern(Request $request)
     {
         // todo: Check not exist data
         $data = $request->get('data');
         if (!isset($data['info']) || !isset($data['data'])) {
-            return;
+            return $this->responseException();
         }
         $data = $this->service->save($request);
         return response()->json($data);

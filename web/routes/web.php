@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth']], function () {
         // Dept pattern setting
         Route::get('/pattern_dept_setting', [PatternDeptSettingController::class, 'index']);
         Route::get('/pattern_dept_setting/edit', [PatternDeptSettingController::class, 'edit']);
+        Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
+
 
         // Team inspection by pattern
         Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);
