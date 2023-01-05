@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Team inspection by pattern
         Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);
+        Route::get('/pattern_team_inspection/data', [PatternTeamInspectionController::class, 'generateDataHtml']);
 
         // Pattern top page
         Route::get('/pattern_top_page', [PatternTopPageController::class, 'index']);

@@ -4,6 +4,9 @@ namespace App\Common;
 
 class Constant
 {
+    /**
+     * Common
+     */
     public const PAGING = 10;
 
     public const MAX_EMP = 35;
@@ -48,6 +51,9 @@ class Constant
 
     public const KAIZEN_BASE_COMPANY_ID = 1;
 
+    /**
+     * ５S管理
+     */
     public const NAME_5S = [
         's1'  => '整理',
         's2'  => '整頓',
@@ -55,4 +61,6 @@ class Constant
         's4'  => '清潔',
         's5'  => '躾'
     ];
+    public const POINT_VALUE_5S = [0,1,2,3,4,5];
+    public const INSPECTION_DEFAULT_COLUMN_NUMBER = 5;
 }

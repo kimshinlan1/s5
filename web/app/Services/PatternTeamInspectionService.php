@@ -78,16 +78,21 @@ class PatternTeamInspectionService extends BaseService
      * @param  teamId
      * @return array
      */
-    public function getInspectionDetails($teamId)
+    public function getInspectionDetailsByTeam($teamId)
     {
 
         $sql = DB::table('inspection_details')
         ->select([
+            'inspection_details.inspection_id as inspection_id',
             'inspection.inspection_date as inspection_date',
             'areas.id as area_id',
             'inspection_details.id as location_id',
             'inspection_details.point as 5s',
-            'inspection_details.point_value as point_value'
+            'inspection_details.point_value as point_value',
+
+            DB::raw('(SELECT count(inspection_images.id) FROM inspection_images
+            WHERE inspection_images.inspections_id = inspection_details.inspections_id
+            ) as count_evidence')
         ])
         ->leftJoin('inspection', 'inspection.id', '=', 'inspection_details.inspection_id')
         ->leftJoin('locations', 'locations.id', '=', 'inspection_details.location_id')
