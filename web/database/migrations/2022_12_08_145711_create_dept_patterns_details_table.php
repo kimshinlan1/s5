@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('dept_pattern_id');
             $table->integer('location_id');
-            $table->integer('area_id');
+            // $table->integer('area_id');
             $table->string('point', 3);
             $table->text('level_1')->nullable();
             $table->text('level_2')->nullable();
