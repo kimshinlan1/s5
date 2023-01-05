@@ -452,13 +452,13 @@ function backPage() {
 
 
 
-// /**
-//  * Validate my form
-//  * @param  {} textbox
-//  */
-// function RemoveMsgMyForm(textbox) {
-//     textbox.setCustomValidity('');
-// }
+/**
+ * Validate my form
+ * @param  {} textbox
+ */
+function RemoveMsgMyForm(textbox) {
+    textbox.setCustomValidity('');
+}
 
 /**
  * Validate my form
