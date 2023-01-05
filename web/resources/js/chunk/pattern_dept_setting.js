@@ -2,10 +2,7 @@
 // 改善ポイントの選択 - Select 5S methods
 var selected_5s = [];
 var params = {};
-var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var select_location_to_delete = [];
-var highlight = 'aqua';
-var highlight = '#ced4da';
 var department_id = null;
 const maxCnt5s = 5;
 
@@ -420,34 +417,34 @@ function setValueTest() {
  */
 window.loadDeptList = function(id, mode = null) {
     let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
-    $.ajax({
-        type: 'GET',
-        url: url,
-        async: false,
-        success: function (res) {
-            let html = '';
-            for (let e of res) {
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+            for (let e of data) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
             $('#departmentId').html(html);
             department_id = $('#departmentId').val();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus + ': ' + errorThrown);
-        },
-    });
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+
+
+    runAjax(url, method, {}, doneCallback, failCallback, false);
 }
 
 /**
- * List department list
+ * List pattern list
  */
 window.loadPatternList = function(id, isPattern = null, patternId = null ) {
-    $.ajax({
-        url: '/pattern_list/getlist_by_department/' + id,
-        type: 'GET',
-        async: false
-    })
-    .done(function (data, _textStatus, _jqXHR) {
+    let url = '/pattern_list/getlist_by_department/' + id;
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
         let html = '';
         data.forEach(function callback(e, index) {
             if (isPattern) {
@@ -460,11 +457,11 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
             }
         });
         $('#patternId').html(html);
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // SHOW ERRORS
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
-    });
+    };
+    runAjax(url, method, {}, doneCallback, failCallback, false);
 }
 
 /////////////////////////////////////////////////////////////////////////////
