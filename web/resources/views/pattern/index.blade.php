@@ -14,15 +14,7 @@
         <!-- My Toast -->
         @include('layouts.success')
     </div>
-    @if (Auth::user()->isAdmin())
-        <div class="d-flex justify-content-start mb-4">
-            <div class="mt-1 fs-5">{{ __('Company_List') }}</div>
-            <select class="form-select form-select-arrow w-25 mx-3" aria-label="Company select" id="companyListID"
-                style="text-align-last: center;">
-            </select>
-        </div>
-    @endif
-
+    <br />
     <table id="patternListTable" class="table table-sm table-striped">
         <thead class="table-light">
             <tr style="text-align: center;">
@@ -38,11 +30,9 @@
     <br />
 
     {{-- Button Add/Edit Dialog --}}
-    @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
-        <button type="button" class="btn btn-primary" id="patternListAdd">
-            {{ __('Common_button_add') }}
-        </button>
-    @endif
+    <button type="button" class="btn btn-primary" id="patternListAdd">
+        {{ __('Common_button_add') }}
+    </button>
 
     {{-- Delete Dialog --}}
     <div id="patternListDeleteDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">

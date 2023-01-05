@@ -9,6 +9,21 @@
 ============================== */
 
 /** ------------------
+ *    get List
+ --------------------- */
+ window.getTableList = function (params) {
+    let url = "/pattern_list/list";
+    params.data.page =
+    params.data.offset > 0
+        ? Math.ceil(params.data.offset / CONFIG.get("PAGING")) + 1
+        : 1;
+    $.get(url + "?" + $.param(params.data))
+    .then(function (res) {
+        params.success(res);
+    })
+};
+
+/** ------------------
  *    Actions
  --------------------- */
 window.patternListTableActions = function (_value, row, _index) {
@@ -41,54 +56,16 @@ window.cellStyle = function (value, row, index) {
     window.location = '/pattern_detail/' + id;
 }
 
-/** ------------------`
- *    queryParams
---------------------- */
-window.queryParams = function (params) {
-    params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
-    if($('#userMode').val() != CONFIG.get('ROLE_ADMIN_ID')) {
-        params.company_id = $('#userCompanyId').val();
-    } else {
-        params.company_id = $("#companyListID").find(":selected").val();
-    }
-    return params;
-};
-
 /* ==============================
     Document Ready
 ==============================*/
 $(function () {
-    $.ajax({
-        type: "GET",
-        url: "/company/list",
-        success: function (res) {
-            let html = "";
-            if (res.currentCompany.mode == 0) {
-                for (let e of res.rows) {
-                    html +=
-                        '<option value="' + e.id + '">' + e.name + "</option>";
-                }
-            } else {
-                html +=
-                    '<option value="' +
-                    res.currentCompany.id +
-                    '" hidden>' +
-                    res.currentCompany.name +
-                    "</option>";
-            }
-            $("#companyListID").html(html);
-
-            $("#companyListID").change();
-        },
-    });
-
     $("#patternListTable").bootstrapTable({
+        ajax: "getTableList",
         pagination: "true",
         paginationParts: "['pageList']",
         sidePagination: "server",
         uniqueId: "id",
-        escape: "true",
-        queryParams: "queryParams",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $("#patternListTable"));
         },
@@ -97,31 +74,10 @@ $(function () {
     if ($("#errorDialog .modal-body .error-messages").length) {
         $("#errorDialog .modal-body .error-messages").html("");
     }
-    if($('#userMode').val() != CONFIG.get('ROLE_ADMIN_ID')) {
-        $("#patternListTable").bootstrapTable("refresh", {
-            url: "/pattern_list/patern_list_by_company",
-        });
-    }
-    $("#companyListID").on("change", function () {
-        $("#patternListTable").bootstrapTable("refresh", {
-            url: "/pattern_list/patern_list_by_company",
-        });
-        $("#patternListTable").on(
-            "load-success.bs.table.bs.table",
-            function (_e, _result, _status, _jqXHR) {
-                // hide loading modal
-                $(".md-loading").modal("hide");
-            }
-        );
-        $("#patternListTable").on(
-            "load-error.bs.table.bs.table",
-            function (_e, _status, _jqXHR) {}
-        );
-    });
 
     /** ------------------
-   *   Delete dialog show
-   --------------------- */
+    *   Delete dialog show
+    --------------------- */
     $("#patternListDeleteDialog").on("show.bs.modal", function (e) {
         showDialogDelete('#patternListTable', '#deletePatternListId', '#patternListDeleteDialog', e);
     });
