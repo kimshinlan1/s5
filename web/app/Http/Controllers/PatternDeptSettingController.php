@@ -67,7 +67,6 @@ class PatternDeptSettingController extends Controller
      */
     public function generateAreaHtml(Request $request)
     {
-
         $selected5s = json_decode($request->get('selected_5s'));
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
         $newLocationNo = $request->get('new_location_no') ?: 1;
@@ -75,7 +74,7 @@ class PatternDeptSettingController extends Controller
         $areaIndex = time();
 
         // Case: Add New
-        if ($request->get('new')) {
+        if ($request->get('new') != '-1') {
             // Loop locations
             $l = 0;
             while ($l < $newLocationNo) {
@@ -117,7 +116,6 @@ class PatternDeptSettingController extends Controller
             // Convert StdClass to Array
             $data = json_decode(json_encode($data), true);
         }
-
         return view('pattern.pattern_row', [
             "data" => $data,
             "count5sChecked" => count($selected5s),

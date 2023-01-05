@@ -199,17 +199,17 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Pattern_Adds_Inspection_Points_With_Location_Number_In_The_Area') }}</h5>
+                    <h5 class="modal-title">{{ __('Pattern_Detail_Title_Add_Dialog') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
                         <div class="input-group">
                             <div class="col" style="margin-right: 2%">
-                                <input type="text" class="form-control" placeholder="{{ __('Pattern_Area_Name') }}" autofocus
-                                    id="area" required="required"/>
+                                <input type="text" class="form-control" placeholder="{{ __('Pattern_Detail_Area_Name') }}" autofocus
+                                    id="rowArea" required="required"/>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" maxlength="3" placeholder="{{ __('Pattern_Location_Number_In_The_Area') }}"
+                                <input type="text" class="form-control" maxlength="3" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
                                     id="locationNo" required="required"/>
                             </div>
                         </div>

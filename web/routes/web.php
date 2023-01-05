@@ -120,7 +120,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_dept_setting', [PatternDeptSettingController::class, 'index']);
         Route::get('/pattern_dept_setting/edit', [PatternDeptSettingController::class, 'edit']);
         Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
-
+        Route::get('/dept_pattern_detail_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);
 
         // Team inspection by pattern
         Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);

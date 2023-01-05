@@ -159,9 +159,7 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
 // Get data to re-render after delete
 window.getValidRows = function() {
-
     let params = [];
-
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {
 
@@ -333,20 +331,21 @@ function cancelSaveData() {
 /**
  * Add new area to table
  */
-function addAreaToTable() {
+function addAreaToTable(mode = null, id = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
-    let areaName = $('#area').val();
+    let areaName = $('#rowArea').val();
     let params = {
-        new: 1, // case add new (remove in case edit)
+        new: !mode ? 1 : -1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
         total_rows: $("#table-content tbody").find("tr").length,
         new_location_no: locationNo,
-        new_area_name: areaName
+        new_area_name: areaName,
+        id: id
     };
 
     $.ajax({
-        url: "/pattern_detail_generate_area/",
+        url: "/dept_pattern_detail_generate_area",
         type: "GET",
         data: params
     })
@@ -477,10 +476,12 @@ $(function () {
     let deptId = urlParams.get('departmentId');
     let isPattern = urlParams.get('isPattern');
     let patternId = urlParams.get('patternId');
+    let deptPatternid = urlParams.get('id');
     if (deptId) {
         loadPatternList(deptId, isPattern, patternId);
         loadDeptList(deptId, 'edit');
         $('#departmentId').prop( "disabled",true);
+        addAreaToTable('edit', deptPatternid);
     }
     else {
         if($('#userMode').val() == CONFIG.get('FREE')) {
@@ -524,8 +525,10 @@ $(function () {
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
-        $('#area').val('');
+        debugger
+        $('#rowArea').val('');
         $('#locationNo').val('');
+        $('#rowArea').focus();
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
@@ -556,8 +559,6 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();
-        let areaName = $('#area').val();
-        let locationName = $('#location').val();
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
@@ -588,11 +589,11 @@ $(function () {
     function validateAndGetDataTable() {
         //Validate all rows and Get param to submit
         let valid = true;
-    
+
         if (selected_5s.length == 0) {
             select5S();
         }
-    
+
         let info = {
             'pattern_id': $('#hidPatternId').val(),
             'pattern_name': $('#patternName').val(),
@@ -605,13 +606,17 @@ $(function () {
         params['data'] = [];
         params['old_areas'] = [];
         params['old_locations'] = [];
-    
+        params['department'] = [];
+
+        // get department id
+        params['department'] = $('#departmentId').find(':selected').val();
+
         // Loop main area
         $("#table-content tbody").find("tr.main_area").each(function() {
             // New Area
             // get area name
             let areaName = $(this).find("#area").val();
-    
+
             // if area is empty
             if (areaName.trim().length === 0) {
                 valid = false;
@@ -624,7 +629,7 @@ $(function () {
                 'locations': [],
                 'old_locations': []
             };
-    
+
             // Loop all locations
             let trid = $(this).attr("id").split('_location_')[0];
             $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
@@ -642,7 +647,7 @@ $(function () {
                     'location_name': locName,
                     'rows':{}
                 };
-    
+
                 // Loop all rows in location
                 let trid_location = $(ele).attr("id").split('_row_')[0];
                 $('[id*='+trid_location+']').each(function(i, e) {
@@ -666,13 +671,13 @@ $(function () {
                 area['locations'].push(location);
             });
             params['data'].push(area);
-    
+
             // Add old area (for delete)
             if ($(this).find("#hidAreaId").val()) {
                 params['old_areas'].push($(this).find("#hidAreaId").val());
             }
         });
-    
+
         // show modal when data input is valid
         if (valid) {
             $("#modalSaveData").modal('show');
