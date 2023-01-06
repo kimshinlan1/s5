@@ -159,6 +159,54 @@ window.saveData = function () {
         });
 }
 
+/** ------------------
+  *    Add classes / css for id column
+--------------------- */
+window.noStyle = function(value, row, index) {
+    let width = '20%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for id column
+--------------------- */
+window.nameStyle = function(value, row, index) {
+    let width = '25%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for id column
+--------------------- */
+window.modeStyle = function(value, row, index) {
+    let width = '45%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
+/** ------------------
+  *    Add classes / css for id column
+--------------------- */
+window.btnStyle = function(value, row, index) {
+    let width = '10%';
+    return {
+        css: {
+          width: width
+        }
+    }
+}
+
 /* ==============================
     jQuery
 ==============================*/
