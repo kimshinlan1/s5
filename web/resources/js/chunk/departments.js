@@ -138,7 +138,7 @@ window.selectPattern = function(id) {
 window.openEditDeptPattern = function(id) {
     let dataId = $('#editPatternBtn' + id).attr("data-id");
     if(dataId != "-1") {
-        window.location = '/pattern_dept_setting/' + dataId;
+        window.location = '/pattern_dept_setting/edit?id=' + dataId + '&departmentId=' + id;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -397,7 +397,7 @@ window.saveDataEmployee = function () {
         let deptId = $('#okBtn').attr('data-deptid');
         let patternId = $('#okBtn').attr('data-patternid');
         let isPattern = $('#okBtn').attr('data-isPattern');
-        window.location = '/pattern_dept_setting?deptId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
+        window.location = '/pattern_dept_setting/edit?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
     })
 
     $('#cancelBtn').on('click', function() {

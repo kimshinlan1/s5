@@ -3,21 +3,24 @@
 namespace App\Services;
 
 use App\Models\Area;
-use App\Models\Pattern;
+use App\Models\Department;
+use App\Models\DeptPattern;
+use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use Illuminate\Http\Request;
-use App\Models\PatternDetail;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
 
-class DeptPatternDetailService extends BaseService
+class PatternDeptSettingService extends BaseService
 {
     /* @var Model */
     private $model;
+    private $modelDetail;
 
-    public function __construct(PatternDetail $model)
+    public function __construct(DeptPatternDetail $modelDetail, DeptPattern $model)
     {
         $this->model = $model;
+        $this->modelDetail = $modelDetail;
         parent::__construct($model);
     }
 
@@ -48,37 +51,37 @@ class DeptPatternDetailService extends BaseService
         // todo: Update => Call from DeptPatternService, use common. If diffence, update here
 
 
-        $sql = DB::table('pattern_details')
+        $sql = DB::table('dept_patterns_details')
         ->select([
             'areas.id as area_id',
             'areas.name as area_name',
             'locations.id as location_id',
             'locations.name as location_name',
-            'pattern_details.point as 5s',
-            'pattern_details.level_1 as level_1',
-            'pattern_details.level_2 as level_2',
-            'pattern_details.level_3 as level_3',
-            'pattern_details.level_4 as level_4',
-            'pattern_details.level_5 as level_5',
+            'dept_patterns_details.point as 5s',
+            'dept_patterns_details.level_1 as level_1',
+            'dept_patterns_details.level_2 as level_2',
+            'dept_patterns_details.level_3 as level_3',
+            'dept_patterns_details.level_4 as level_4',
+            'dept_patterns_details.level_5 as level_5',
 
             DB::raw('(SELECT count(locations.id) FROM locations
             WHERE areas.id = locations.area_id) as count_locations'),
 
-            DB::raw('(SELECT count(pd.id) FROM pattern_details pd
-            WHERE pd.pattern_id = pattern_details.pattern_id
-            and pd.area_id = pattern_details.area_id) as area_rowspan'),
+            DB::raw('(SELECT count(pd.id) FROM dept_patterns_details pd
+            WHERE pd.dept_pattern_id = dept_patterns_details.dept_pattern_id
+            and pd.area_id = dept_patterns_details.area_id) as area_rowspan'),
 
-            DB::raw('(SELECT count(pd2.id) FROM pattern_details pd2
-            WHERE pd2.pattern_id = pattern_details.pattern_id
-            and pd2.location_id = pattern_details.location_id) as location_rowspan')
+            DB::raw('(SELECT count(pd2.id) FROM dept_patterns_details pd2
+            WHERE pd2.dept_pattern_id = dept_patterns_details.dept_pattern_id
+            and pd2.location_id = dept_patterns_details.location_id) as location_rowspan')
 
         ])
-        ->leftJoin('locations', 'locations.id', '=', 'pattern_details.location_id')
+        ->leftJoin('locations', 'locations.id', '=', 'dept_patterns_details.location_id')
         ->leftJoin('areas', 'areas.id', '=', 'locations.area_id')
         ->orderBy('areas.id');
 
         if ($id) {
-            $sql->where('pattern_details.pattern_id', $id);
+            $sql->where('dept_patterns_details.dept_pattern_id', $id);
         }
 
         return $sql->get()->toArray();
@@ -124,26 +127,28 @@ class DeptPatternDetailService extends BaseService
         }
 
         // Step: Insert new pattern
-        $patternId = Pattern::updateOrCreate(
+        $deptPattern = $this->model::updateOrCreate(
             [
                 'id' => $data['info']['pattern_id']
             ],
             [
                 'name' => $data['info']['pattern_name'],
-                'note' => $data['info']['pattern_note'],
                 '5s' => $data['info']['pattern_5s_selected'],
                 'created_at' => $data['info']['pattern_created_at'],
                 'updated_at' => $data['info']['pattern_updated_at'],
             ]
         );
-        $patternId = $patternId->id;
+        $deptPatternId = $deptPattern->id;
+        $dept = Department::find($request->data['department']);
+        $dept->dept_pattern_id = $deptPatternId;
+        $dept->save();
 
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
             // Step: Insert new Area
             $areaId = Area::create([
                 'name' => $area['area_name'],
-                'pattern_id' => $patternId
+                'pattern_id' => $deptPatternId
             ]);
             $areaId = $areaId->id;
 
@@ -159,9 +164,9 @@ class DeptPatternDetailService extends BaseService
                 // Loop to insert detail rows
                 foreach ($location['rows'] as $key => $row) {
                     // Step: Insert new content of method
-                    PatternDetail::create([
-                        'area_id' => $areaId,
-                        'pattern_id' => $patternId,
+                    DeptPatternDetail::create([
+                        // 'area_id' => $areaId,
+                        'dept_pattern_id' => $deptPatternId,
                         'location_id' => $locationId,
                         'point' => $key,
                         'level_1' => $row['level_1'],
@@ -174,6 +179,6 @@ class DeptPatternDetailService extends BaseService
             }
         }
 
-        return $patternId;
+        return $deptPattern;
     }
 }

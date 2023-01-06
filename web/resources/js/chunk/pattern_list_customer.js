@@ -155,7 +155,7 @@ $(function () {
     $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
         if (row !== undefined) {
-            window.location = '/pattern_dept_setting/' + $el.id;
+            window.location = '/pattern_dept_setting/edit/?id=' + $el.id + '&departmentId=' + row.id;
         }
     })
 

@@ -158,4 +158,15 @@ class DepartmentService extends BaseService
     {
         return $this->model->where('company_id', $id)->orderBy('id')->get()->toArray();
     }
+
+    /**
+     * Returns department object.
+     *
+     * @param  id
+     * @return object
+     */
+    public function getDeptBtId($id)
+    {
+        return $this->model->where('id', $id)->get();
+    }
 }

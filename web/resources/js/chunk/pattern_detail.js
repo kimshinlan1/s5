@@ -450,21 +450,7 @@ function backPage() {
     location.href = "/pattern_list";
 }
 
-/**
- * Event validate myForm
- */
-function validateMyform() {
-    let errFlag = InvalidMsgMyForm($('#rowArea')[0]);
-    if (!errFlag) {
-        errFlag = InvalidMsgMyForm($('#locationNo')[0]);
-        if (!errFlag) {
-            addAreaToTable();
-        }
-    }
-    if (!($('#rowArea')[0]).checkValidity() || !($('#locationNo')[0]).checkValidity()) {
-        $('#myForm')[0].reportValidity();
-    }
-}
+
 
 /**
  * Validate my form

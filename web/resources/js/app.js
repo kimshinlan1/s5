@@ -13,6 +13,7 @@ window.CONFIG = (function () {
         'PAGING': 10,
         'TIME_ZONE': 'Asia/Tokyo',
         'KAIZENBASE_MODE': 0,
+        'KAIZENBASE_ID': 1,
         'ROLE_ADMIN_ID': 1,
         '5S_MODE': {
             'OWNER_COMPANY'  : 0,

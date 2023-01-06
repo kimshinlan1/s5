@@ -1,5 +1,5 @@
 {
-    
+
     "===== BLOCK_MANAGE_START =====": "",
     "Manage": "管理",
     "5s_Manage": "５S管理",
@@ -208,6 +208,8 @@
     "Pattern_Detail_5S_Checklist_Pattern_Input": "5Sチェックリストパターン入力",
     "Pattern_Detail_Selection_Of_Improvement_Points": "改善ポイントの選択：",
     "Pattern_Detail_Name": "パターン名",
+    "Dept_Pattern_Detail_Name": "５Sチェックリストパターン",
+    "Pattern_Department_Label": "制作部門",
     "Pattern_Detail_Explanation": "説明",
     "Pattern_Detail_S1": "S1: 整理",
     "Pattern_Detail_S2": "S2: 整頓",
@@ -237,6 +239,7 @@
     "Pattern_Top_Page": "トップページ",
     "Pattern_Team_Inspection": "入力画面",
     "Pattern_Dept_Setting": "５Sチェックリスト設定",
+    "Pattern_Dept_Name": "パターン名",
     "Pattern_Err_Required": "このフィールドを記入してください",
     "Pattern_Err_FormatNumber": "要求された形式に一致してください",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""

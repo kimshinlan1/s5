@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PatternService;
-use App\Services\DeptPatternDetailService;
+use App\Services\PatternDeptSettingService;
 
 class PatternDeptSettingController extends Controller
 {
     /** @var patterndetailservice */
     private $service;
 
-    public function __construct(DeptPatternDetailService $service)
+    public function __construct(PatternDeptSettingService $service)
     {
         $this->service = $service;
         $this->user = app(User::class);
@@ -39,22 +39,26 @@ class PatternDeptSettingController extends Controller
       *
       * @return \Illuminate\Http\Response
     */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $info = (app()->get(PatternService::class))->getDataById($id);
-        if (empty($info)) {
-            // todo:
-            dd("No data");
-            return;
+        $selected5s = null;
+        $info = null;
+        $id = $request->get('id');
+        $mode = $request->get('mode');
+        if ($mode == 'edit') {
+            $info = (app()->get(PatternService::class))->getDataById($id);
+        }
+        if (!empty($info)) {
+            $selected5s = json_decode($info['5s']);
+
         }
 
-        $selected5s = json_decode($info['5s']);
         $data = [
-            'mode' => 'edit',
+            'mode' => $mode,
             'info' => $info,
             'selected5s' => $selected5s
         ];
-        return view('pattern.pattern_detail', $data);
+        return view('pattern.pattern_dept_setting', $data);
     }
 
     /**
@@ -63,7 +67,6 @@ class PatternDeptSettingController extends Controller
      */
     public function generateAreaHtml(Request $request)
     {
-
         $selected5s = json_decode($request->get('selected_5s'));
         $totalRows = $request->get('total_rows') ? $request->get('total_rows') : 0;
         $newLocationNo = $request->get('new_location_no') ?: 1;
@@ -71,7 +74,7 @@ class PatternDeptSettingController extends Controller
         $areaIndex = time();
 
         // Case: Add New
-        if ($request->get('new')) {
+        if ($request->get('new') != '-1') {
             // Loop locations
             $l = 0;
             while ($l < $newLocationNo) {
@@ -113,7 +116,6 @@ class PatternDeptSettingController extends Controller
             // Convert StdClass to Array
             $data = json_decode(json_encode($data), true);
         }
-
         return view('pattern.pattern_row', [
             "data" => $data,
             "count5sChecked" => count($selected5s),
@@ -128,12 +130,12 @@ class PatternDeptSettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function savePattern(Request $request)
+    public function saveDeptPattern(Request $request)
     {
         // todo: Check not exist data
         $data = $request->get('data');
         if (!isset($data['info']) || !isset($data['data'])) {
-            return;
+            return $this->responseException();
         }
         $data = $this->service->save($request);
         return response()->json($data);

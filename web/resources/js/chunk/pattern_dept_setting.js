@@ -1,10 +1,11 @@
 
 // 改善ポイントの選択 - Select 5S methods
 var selected_5s = [];
-var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
+var params = {};
 var select_location_to_delete = [];
-var highlight = 'aqua';
-var highlight = '#ced4da';
+var department_id = null;
+const maxCnt5s = 5;
+
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
@@ -14,12 +15,10 @@ window.select5S = function (ele) {
             selected_5s.push($(this).val());
         }
     });
-
 }
 
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index) {
-
     setTimeout(() => {
         // Get tr info
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
@@ -108,7 +107,6 @@ window.addLocation = function (area_id, location_id, area_index) {
 
 // Select location
 window.selectLocationToDelete = function(ele, area_id, location_id) {
-
     if ($(ele).find('input').is(":focus")) {
         return;
     }
@@ -159,9 +157,7 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
 // Get data to re-render after delete
 window.getValidRows = function() {
-
     let params = [];
-
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {
 
@@ -205,12 +201,8 @@ window.getValidRows = function() {
 
                 });
             }
-
         });
-
     });
-
-
     return params;
 }
 
@@ -286,7 +278,7 @@ window.saveAjax = function(data) {
     };
 
     $.ajax({
-        url: "/pattern_save",
+        url: "/pattern_dept_setting/save",
         type: "POST",
         data: params
     })
@@ -295,7 +287,7 @@ window.saveAjax = function(data) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             if (!$('#hidPatternId').val()) {
-                location.href = "/pattern_list";
+                location.href = "/pattern_list_customer";
             } else {
                 location.reload();
             }
@@ -319,105 +311,12 @@ function openCalendar(name) {
 }
 
 /**
- * Button save data
+ * Accept save
  */
 function saveData() {
     $("#modalSaveData").modal('hide');
     showLoading();
-
-    // todo: Validate all rows and Get param to submit
-    let valid = true;
-    let params = {};
-
-    if (selected_5s.length == 0) {
-        select5S();
-    }
-
-    let info = {
-        'pattern_id': $('#hidPatternId').val(),
-        'pattern_name': $('#patternName').val(),
-        'pattern_note': $('#patternNote').val(),
-        'pattern_5s_selected': JSON.stringify(selected_5s),
-        'pattern_created_at': dateFormat($('#dateCreate').datepicker("getDate")),
-        'pattern_updated_at': dateFormat($('#dateUpdate').datepicker("getDate"))
-    }
-    params['info'] = info;
-    params['data'] = [];
-    params['old_areas'] = [];
-    params['old_locations'] = [];
-
-    // Loop main area
-    $("#table-content tbody").find("tr.main_area").each(function() {
-        // New Area
-        let area = {
-            'area_name': $(this).find("#area").val(),
-            'locations': [],
-            'old_locations': []
-        };
-
-        // Loop all locations
-        let trid = $(this).attr("id").split('_location_')[0];
-        $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
-            // New location
-            let location = {
-                'location_name': $(ele).find("#location").val(),
-                'rows':{}
-            };
-
-            // Loop all rows in location
-            let trid_location = $(ele).attr("id").split('_row_')[0];
-            $('[id*='+trid_location+']').each(function(i, e) {
-
-                // todo: Validate
-                let input = $(e).find('td input[type=text]');
-                let textarea = $(e).find('td textarea');
-                if (!input.val() || !textarea.val()) {
-                    if (!input.val()) {
-                        // input.focus();
-                        input.addClass('is-invalid');
-                        hideLoading();
-                    }
-                    if (!textarea.val()) {
-                        // input.focus();
-                        textarea.addClass('is-invalid');
-                        hideLoading();
-                    }
-                    valid = false;
-                    return;
-
-                } else {
-                    input.removeClass('is-invalid');
-                    textarea.removeClass('is-invalid');
-                }
-
-                // Case Valid
-                // Add levels in 1 methos 5S (1 row)
-                let row = {};
-                row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
-                row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
-                row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
-                row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
-                row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
-                location['rows'][$(e).find("#hid5S").val()] = row;
-            });
-
-            area['locations'].push(location);
-        });
-
-        params['data'].push(area);
-
-        // Add old area (for delete)
-        if ($(this).find("#hidAreaId").val()) {
-            params['old_areas'].push($(this).find("#hidAreaId").val());
-        }
-
-    });
-
-    // todo: Check validate and submit ajax here
-    if (valid) {
-        saveAjax(params);
-    }
-
+    saveAjax(params);
 }
 
 /**
@@ -430,20 +329,21 @@ function cancelSaveData() {
 /**
  * Add new area to table
  */
-function addAreaToTable() {
+function addAreaToTable(mode = null, id = null, isPattern = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
-    let areaName = $('#area').val();
+    let areaName = $('#rowArea').val();
     let params = {
-        new: 1, // case add new (remove in case edit)
+        new: !mode ? 1 : -1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
         total_rows: $("#table-content tbody").find("tr").length,
         new_location_no: locationNo,
-        new_area_name: areaName
+        new_area_name: areaName,
+        id: id
     };
 
     $.ajax({
-        url: "/pattern_detail_generate_area/",
+        url: !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area",
         type: "GET",
         data: params
     })
@@ -512,12 +412,87 @@ function setValueTest() {
     });
 }
 
+/**
+ * List department list
+ */
+window.loadDeptList = function(id, mode = null) {
+    let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+            for (let e of data) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#departmentId').html(html);
+            department_id = $('#departmentId').val();
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+
+
+    runAjax(url, method, {}, doneCallback, failCallback, false);
+}
+
+/**
+ * List pattern list
+ */
+window.loadPatternList = function(id, isPattern = null, patternId = null ) {
+    let url = '/pattern_list/getlist_by_department/' + id;
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+        data.forEach(function callback(e, index) {
+            if (isPattern) {
+                if(index != 0 && e.id == patternId ) {
+                    html += '<option value="' + e.id + '" selected>' + e.name + '</option>';
+                }
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            } else {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+        });
+        $('#patternId').html(html);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+    runAjax(url, method, {}, doneCallback, failCallback, false);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Document Ready
  */
 $(function () {
+    let id = $('#userCompanyId').val();
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let deptId = urlParams.get('departmentId');
+    let isPattern = urlParams.get('isPattern');
+    let patternId = urlParams.get('patternId');
+    let deptPatternid = urlParams.get('id');
+    if (deptId) {
+        loadPatternList(deptId, isPattern, patternId);
+        loadDeptList(deptId, 'edit');
+        $('#departmentId').prop( "disabled",true);
+        addAreaToTable('edit', deptPatternid, isPattern);
+    }
+    else {
+        if($('#userMode').val() == CONFIG.get('FREE')) {
+            $('#departmentId').prop( "disabled",true);
+        } else {
+            $('#departmentId').prop( "disabled",false);
+        }
+        loadDeptList(id);
+        loadPatternList(department_id);
+
+    }
 
     // Trigger init page
 
@@ -549,11 +524,12 @@ $(function () {
         loadData();
     }
 
-
-
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
+        $('#rowArea').val('');
+        $('#locationNo').val('');
+        $('#rowArea').focus();
         if (selected_5s.length == 0) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
@@ -584,8 +560,6 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();
-        let areaName = $('#area').val();
-        let locationName = $('#location').val();
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
@@ -609,7 +583,7 @@ $(function () {
         //     return;
         // }
 
-        $("#modalSaveData").modal('show');
+        validateAndGetDataTable();
 
     });
 
@@ -629,4 +603,8 @@ $(function () {
     $("#backPage").click(function () {
         $("#modalBackPage").modal('show');
     })
+    // $('#patternId').change(function() {
+    //     let patternid = $('#patternId').find(':selected').val();
+    //     addAreaToTable('edit', patternid);
+    // });
 });
