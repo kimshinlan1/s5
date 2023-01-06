@@ -106,7 +106,7 @@ window.runAjax = function (url, method, data, donecallback, failcallback, always
         url: url,
         type: method,
         data: data,
-        async: async ? async : true,
+        async: async
     })
         .done(donecallback ? donecallback : function (res) {
             console.log(res);
