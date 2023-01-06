@@ -50,7 +50,7 @@
                         </div>
                         <div class="label_header_1">
                             <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
-                            aria-label="Pattern select" id="patternId" >
+                            aria-label="Pattern select" id="selectPatternIds" >
                             </select>
                         </div>
                         <div class="label_header">

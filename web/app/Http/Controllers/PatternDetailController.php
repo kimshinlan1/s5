@@ -75,7 +75,7 @@ class PatternDetailController extends Controller
         $areaIndex = time();
 
         // Case: Add New
-        if ($request->get('new')) {
+        if ($request->get('new') && $request->get('new') != '-1') {
             // Loop locations
             $l = 0;
             while ($l < $newLocationNo) {
