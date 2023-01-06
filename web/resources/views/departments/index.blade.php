@@ -44,7 +44,7 @@
         <tr style="text-align: center;">
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="company_id" data-visible="false">Company ID</th>
-            <th data-align="center" data-field="no"  data-cell-style="idStyle">{{ __('Department_ID') }}</th>
+            <th data-align="center" data-field="no" data-cell-style="idStyle">{{ __('Department_ID') }}</th>
             <th data-field="name" class="word-wrap" data-cell-style="departmentStyle">{{ __('Deparment_Name') }}</th>
             <th data-formatter="department5SChecklistActions" data-cell-style="checkListStyle">{{ __('Deparment_5S_Checklist') }}</th>
             <th data-formatter="departmentTableActions" data-cell-style="buttonStyle"></th>
