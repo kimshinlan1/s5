@@ -463,7 +463,11 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
 
-    runAjax(url, method, params, doneCallback, failCallback, null, false);
+    let alwaysCallback = function () {
+        $("#modalAddInspectionPoint").modal('hide');
+    };
+
+    runAjax(url, method, params, doneCallback, failCallback, alwaysCallback, false);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -478,12 +482,12 @@ $(function () {
     let deptId = urlParams.get('departmentId');
     let isPattern = urlParams.get('isPattern');
     let patternId = urlParams.get('patternId');
-    let deptPatternid = urlParams.get('id');
     if (deptId) {
-        loadPatternList(deptId, isPattern, patternId);
         loadDeptList(deptId, 'edit');
+        loadPatternList(deptId, isPattern, patternId);
         $('#departmentId').prop( "disabled",true);
-        addAreaToTable('edit', deptPatternid, isPattern);
+        let patId = $('#selectPatternIds').find(':selected').val();
+        addAreaToTable('edit', patId, isPattern);
     }
     else {
         if($('#userMode').val() == CONFIG.get('FREE')) {
@@ -493,7 +497,9 @@ $(function () {
         }
         loadDeptList(id);
         loadPatternList(department_id);
-
+        let patId = $('#selectPatternIds').find(':selected').val();
+        isPattern = isPattern == "true" ? true : false;
+        addAreaToTable('edit', patId, isPattern);
     }
 
     // Trigger init page
