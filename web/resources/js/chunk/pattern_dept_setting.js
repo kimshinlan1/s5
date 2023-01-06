@@ -397,11 +397,8 @@ window.loadDeptList = function(id, mode = null) {
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
-    let alwaysCallback = function () {
-        //
-    };
 
-    runAjax(url, method, {}, doneCallback, failCallback, alwaysCallback, false);
+    runAjax(url, method, {}, doneCallback, failCallback, null, false);
 }
 
 /**
@@ -424,13 +421,13 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
                 html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '">' + e.name + '</option>';
             }
         });
-        $('#patternId').html(html);
+        $('#selectPatternIds').html(html);
         // $('#patternId').change();
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
-    runAjax(url, method, {}, doneCallback, failCallback, false);
+    runAjax(url, method, {}, doneCallback, failCallback, null, false);
 }
 
 /**
@@ -440,6 +437,10 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
+    let url = !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area";
+
+    let method = "GET";
+
     let params = {
         new: !mode ? 1 : -1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
@@ -448,30 +449,21 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
         new_area_name: areaName,
         id: id
     };
-    let url = !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area";
-    $.ajax({
-        url: url,
-        type: "GET",
-        data: params,
-        async: false
-    })
-    .done(function (res) {
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
         if (mode) {
             $("#table-content tbody").empty();
-            $("#table-content tbody").append(res);
+            $("#table-content tbody").append(data);
         } else {
-            $("#table-content tbody").append(res);
+            $("#table-content tbody").append(data);
         }
+    };
 
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // show errors
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
-    })
-    .always(function () {
+    };
 
-    });
-    $("#modalAddInspectionPoint").modal('hide');
+    runAjax(url, method, params, doneCallback, failCallback, null, false);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -613,9 +605,9 @@ $(function () {
     $("#backPage").click(function () {
         $("#modalBackPage").modal('show');
     })
-    $('#patternId').change(function() {
-        let patternid = $('#patternId').find(':selected').val();
-        let isPattern = $('#patternId').find(':selected').attr("data-isPattern");
+    $('#selectPatternIds').change(function() {
+        let patternid = $('#selectPatternIds').find(':selected').val();
+        let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
         addAreaToTable('edit', patternid, isPattern);
     });
