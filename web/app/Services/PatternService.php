@@ -55,12 +55,12 @@ class PatternService extends BaseService
         $compId = $request->input('company_id');
         $limit = $request->input('limit');
 
-        // if ($compId == Constant::KAIZEN_BASE_COMPANY_ID) {
-        //     return $this->model::orderBy('id')->paginate($limit);
-        // } else {
-            $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
-            return DB::table('dept_patterns')->whereIn('id', $ids)->orderBy('id')->paginate($limit);
-        // }
+        $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
+        return DB::table('dept_patterns')
+        ->join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+        ->select('dept_patterns.*', 'departments.id as deptId')
+        ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
+
     }
 
     /**
