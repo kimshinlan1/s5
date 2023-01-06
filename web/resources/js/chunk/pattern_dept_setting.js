@@ -327,40 +327,6 @@ function cancelSaveData() {
 }
 
 /**
- * Add new area to table
- */
-function addAreaToTable(mode = null, id = null, isPattern = null) {
-    // Add Area
-    let locationNo = $('#locationNo').val();
-    let areaName = $('#rowArea').val();
-    let params = {
-        new: !mode ? 1 : -1, // case add new (remove in case edit)
-        selected_5s: JSON.stringify(selected_5s),
-        total_rows: $("#table-content tbody").find("tr").length,
-        new_location_no: locationNo,
-        new_area_name: areaName,
-        id: id
-    };
-
-    $.ajax({
-        url: !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area",
-        type: "GET",
-        data: params
-    })
-    .done(function (res) {
-        $("#table-content tbody").append(res);
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // show errors
-
-    })
-    .always(function () {
-
-    });
-    $("#modalAddInspectionPoint").modal('hide');
-}
-
-/**
  * Button cancel save data change
  */
 function cancelAddAreaToTable() {
@@ -387,7 +353,7 @@ function cancelRemoveLocation() {
  */
 function backPage() {
     $("#modalBackPage").modal('hide');
-    location.href = "/pattern_list";
+    location.href = "/pattern_list_customer";
 }
 
 /**
@@ -431,9 +397,11 @@ window.loadDeptList = function(id, mode = null) {
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
+    let alwaysCallback = function () {
+        //
+    };
 
-
-    runAjax(url, method, {}, doneCallback, failCallback, false);
+    runAjax(url, method, {}, doneCallback, failCallback, alwaysCallback, false);
 }
 
 /**
@@ -449,19 +417,61 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
         data.forEach(function callback(e, index) {
             if (isPattern) {
                 if(index != 0 && e.id == patternId ) {
-                    html += '<option value="' + e.id + '" selected>' + e.name + '</option>';
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" selected>' + e.name + '</option>';
                 }
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             } else {
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '">' + e.name + '</option>';
             }
         });
         $('#patternId').html(html);
+        // $('#patternId').change();
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
     runAjax(url, method, {}, doneCallback, failCallback, false);
+}
+
+/**
+ * Add new area to table
+ */
+function addAreaToTable(mode = null, id = null, isPattern = null) {
+    // Add Area
+    let locationNo = $('#locationNo').val();
+    let areaName = $('#rowArea').val();
+    let params = {
+        new: !mode ? 1 : -1, // case add new (remove in case edit)
+        selected_5s: JSON.stringify(selected_5s),
+        total_rows: $("#table-content tbody").find("tr").length,
+        new_location_no: locationNo,
+        new_area_name: areaName,
+        id: id
+    };
+    let url = !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area";
+    $.ajax({
+        url: url,
+        type: "GET",
+        data: params,
+        async: false
+    })
+    .done(function (res) {
+        if (mode) {
+            $("#table-content tbody").empty();
+            $("#table-content tbody").append(res);
+        } else {
+            $("#table-content tbody").append(res);
+        }
+
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // show errors
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    })
+    .always(function () {
+
+    });
+    $("#modalAddInspectionPoint").modal('hide');
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -603,8 +613,10 @@ $(function () {
     $("#backPage").click(function () {
         $("#modalBackPage").modal('show');
     })
-    // $('#patternId').change(function() {
-    //     let patternid = $('#patternId').find(':selected').val();
-    //     addAreaToTable('edit', patternid);
-    // });
+    $('#patternId').change(function() {
+        let patternid = $('#patternId').find(':selected').val();
+        let isPattern = $('#patternId').find(':selected').attr("data-isPattern");
+        isPattern = isPattern == "true" ? true : false;
+        addAreaToTable('edit', patternid, isPattern);
+    });
 });
