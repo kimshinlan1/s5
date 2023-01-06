@@ -44,7 +44,7 @@
                                 title="{{ __('Common_Click_To_Select_Date') }}">
                         </div>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Dept_Pattern_Detail_Name') }}</span>
                         </div>
