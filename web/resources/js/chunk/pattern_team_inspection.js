@@ -7,7 +7,7 @@ function loadData() {
     showLoading();
 
     let params = {
-        dept_id: 18, // todo: get from hidden id
+        dept_id: 19, // todo: get from hidden id
         team_id: 1, // todo: get from hidden id
     };
 
