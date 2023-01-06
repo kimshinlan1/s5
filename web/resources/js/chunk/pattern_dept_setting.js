@@ -498,6 +498,7 @@ $(function () {
         loadDeptList(id);
         loadPatternList(department_id);
         let patId = $('#selectPatternIds').find(':selected').val();
+        let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
         addAreaToTable('edit', patId, isPattern);
     }
