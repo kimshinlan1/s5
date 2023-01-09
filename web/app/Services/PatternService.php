@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Common\Constant;
-use App\Common\Utility;
 use App\Models\Department;
 use App\Models\Pattern;
 use App\Models\DeptPattern;
@@ -58,10 +57,11 @@ class PatternService extends BaseService
         $limit = $request->input('limit');
 
         $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
-        return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
-        ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
-        ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
-
+        if ($ids) {
+            return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+            ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
+            ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
+        }
     }
 
     /**

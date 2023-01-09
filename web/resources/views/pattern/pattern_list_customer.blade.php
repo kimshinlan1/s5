@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between">
-        <div class="h-title">{{ __('Pattern_List') }}</div>
+        <div class="h-title">{{ __('Pattern_List_Customer') }}</div>
         <!-- My Toast -->
         @include('layouts.success')
     </div>
@@ -26,7 +26,8 @@
     <table id="patternListTable" class="table table-sm table-striped">
         <thead class="table-light">
             <tr style="text-align: center;">
-                <th data-align="center" data-width="200" data-field="id">{{ __('Pattern_ID') }}</th>
+                <th data-align="center" data-width="200" data-field="id" data-visible="false">{{ __('Pattern_ID') }}</th>
+                <th data-align="center" data-width="200" data-field="no">{{ __('Pattern_ID') }}</th>
                 <th data-field="name" data-width="350" class="word-wrap">{{ __('Pattern_Name') }}</th>
                 <th data-field="note" class="word-wrap">{{ __('Pattern_Note') }}</th>
                 <th data-field="deptName" class="word-wrap">{{ __('Deparment_Name') }}</th>
