@@ -57,11 +57,12 @@ class PatternService extends BaseService
         $limit = $request->input('limit');
 
         $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
-        if ($ids) {
-            return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+        if (empty($ids)) {
+            return [];
+        }
+        return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
             ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
             ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
-        }
     }
 
     /**
@@ -101,7 +102,7 @@ class PatternService extends BaseService
     // compId mode check company
     public function destroyPatternByMode($id, $compId, $pageDest)
     {
-        if ($pageDest == Constant::PAGE_DEST) {
+        if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);
         } else {
             $data = $this->model::find($id);
