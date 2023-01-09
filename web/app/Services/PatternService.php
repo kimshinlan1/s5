@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Common\Constant;
+use App\Common\Utility;
 use App\Models\Department;
 use App\Models\Pattern;
 use App\Models\DeptPattern;
@@ -57,9 +58,8 @@ class PatternService extends BaseService
         $limit = $request->input('limit');
 
         $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
-        return DB::table('dept_patterns')
-        ->join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
-        ->select('dept_patterns.*', 'departments.id as deptId')
+        return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+        ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
         ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
 
     }
@@ -97,9 +97,11 @@ class PatternService extends BaseService
      *
      * @return object
      */
+    // pageDest mode check page list pattern and page list pattern customer
+    // compId mode check company
     public function destroyPatternByMode($id, $compId, $pageDest)
     {
-        if ($pageDest == '1') {
+        if ($pageDest == Constant::PAGE_DEST) {
             $data = DeptPattern::where('id', $id);
         } else {
             $data = $this->model::find($id);

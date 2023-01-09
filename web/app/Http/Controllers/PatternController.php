@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PatternService;
 use Illuminate\Http\Request;
-use App\Common\Constant;
+use App\Services\PatternService;
+use App\Services\PatternDetailService;
 
 class PatternController extends Controller
 {
@@ -94,9 +94,9 @@ class PatternController extends Controller
      */
     public function destroy($id)
     {
-        $compId = request()->all()['companyId'];
+        $compId = request()->get('companyId');
         // pageDest mode check page list pattern and page list pattern customer
-        $pageDest = request()->all()['pageDest'];
+        $pageDest = request()->get('pageDest');
         try {
             $data = $this->service->destroyPatternByMode($id, $compId, $pageDest);
             return response()->json($data);
@@ -105,5 +105,40 @@ class PatternController extends Controller
                 'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
             ], 500);
         }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function preview($id)
+    {
+        $info = (app()->get(PatternService::class))->getDataById($id);
+        if (empty($info)) {
+            return $this->responseException();
+        }
+
+        $data = [
+            'info' => $info,
+        ];
+        return view('pattern.pattern_preview', $data);
+    }
+
+    /**
+     * Generate area html
+     *
+     */
+    public function generateAreaHtml(Request $request)
+    {
+        // Get database for edit follow by below structure
+        $id = $request->get('id');
+        $data = app(PatternDetailService::class)->getData($id);
+        $data = json_decode(json_encode($data), true);
+        return view('pattern.partials.data_pattern_preview', [
+            "data" => $data,
+        ]);
     }
 }

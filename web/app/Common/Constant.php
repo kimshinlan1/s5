@@ -63,4 +63,9 @@ class Constant
     ];
     public const POINT_VALUE_5S = [0,1,2,3,4,5];
     public const INSPECTION_DEFAULT_COLUMN_NUMBER = 5;
+    public const PAGE_DEST = 1;
+    public const MODE_5S = [
+        '1'       => '有償契約',
+        '2'       => '無償契約'
+    ];
 }

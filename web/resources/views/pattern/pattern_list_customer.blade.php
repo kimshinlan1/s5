@@ -29,6 +29,7 @@
                 <th data-align="center" data-width="200" data-field="id">{{ __('Pattern_ID') }}</th>
                 <th data-field="name" data-width="350" class="word-wrap">{{ __('Pattern_Name') }}</th>
                 <th data-field="note" class="word-wrap">{{ __('Pattern_Note') }}</th>
+                <th data-field="deptName" class="word-wrap">{{ __('Deparment_Name') }}</th>
                 @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
                     <th data-width="120" data-formatter="patternListTableActions" data-cell-style="cellStyle"></th>
                 @endif

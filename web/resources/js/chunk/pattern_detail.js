@@ -131,33 +131,8 @@ function setValueTest() {
  */
 $(function () {
     // Trigger init page
-    $('#dateCreate').datepicker({
-        autoclose: true,
-        dateFormat: 'yy年mm月dd日',
-        language: 'ja',
-        changeYear: true
-    });
 
-    $('#dateUpdate').datepicker({
-        autoclose: true,
-        dateFormat: 'yy年mm月dd日',
-        language: 'ja',
-        changeYear: true,
-        onSelect: function(_dateText) {
-            updatedAtChanged = true;
-        }
-    });
-
-    let date_create = new Date();
-    let date_update = new Date();
-
-    if ($('#hidPatternId').val()) {
-        date_create = new Date(dateFormat($('#hidDateCreate').val()));
-        date_update = new Date(dateFormat($('#hidDateUpdate').val()));
-    }
-
-    $('#dateCreate').datepicker("setDate", date_create);
-    $("#dateUpdate").datepicker("setDate", date_update);
+    configCalendarPattern();
 
     select5S();
 
