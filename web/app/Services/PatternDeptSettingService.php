@@ -165,7 +165,7 @@ class PatternDeptSettingService extends BaseService
                 foreach ($location['rows'] as $key => $row) {
                     // Step: Insert new content of method
                     DeptPatternDetail::create([
-                        // 'area_id' => $areaId,
+                        'area_id' => $areaId,
                         'dept_pattern_id' => $deptPatternId,
                         'location_id' => $locationId,
                         'point' => $key,
