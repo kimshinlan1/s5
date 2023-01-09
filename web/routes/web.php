@@ -117,7 +117,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_list/getlist_by_department/{id}', [PatternController::class, 'listPattern']);
 
         // Dept pattern setting
-        Route::get('/pattern_dept_setting', [PatternDeptSettingController::class, 'index']);
+        Route::resource('/pattern_dept_setting', PatternDeptSettingController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/pattern_dept_setting/{id}', [PatternDeptSettingController::class, 'edit']);
         Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Constant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PatternService;
@@ -46,7 +47,7 @@ class PatternDeptSettingController extends Controller
         $id = $request->get('id');
         $mode = $request->get('mode');
         if ($mode == 'edit') {
-            $info = (app()->get(PatternService::class))->getDataById($id);
+            $info = (app()->get(PatternDeptSettingService::class))->getDataById($id);
         }
         if (!empty($info)) {
             $selected5s = json_decode($info['5s']);
@@ -101,7 +102,6 @@ class PatternDeptSettingController extends Controller
 
                 $l++;
             }
-
         } elseif ($request->get('remove')) {
             // Case: Delete rows
             // Get and re generate html after delete rows
@@ -139,5 +139,24 @@ class PatternDeptSettingController extends Controller
         }
         $data = $this->service->save($request);
         return response()->json($data);
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $data = $this->service->destroyPatternByMode($id);
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
+            ], 500);
+        }
     }
 }

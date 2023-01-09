@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Constant;
 use App\Services\PatternService;
 use Illuminate\Http\Request;
 
@@ -93,9 +94,8 @@ class PatternController extends Controller
      */
     public function destroy($id)
     {
-        $compId = request()->all()['companyId'];
         try {
-            $data = $this->service->destroyPatternByMode($id, $compId);
+            $data = $this->service->destroyPatternByMode($id);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([

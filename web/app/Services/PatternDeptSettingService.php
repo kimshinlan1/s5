@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Common\Constant;
 use App\Models\Area;
 use App\Models\Department;
 use App\Models\DeptPattern;
@@ -33,9 +34,7 @@ class PatternDeptSettingService extends BaseService
     public function deleteByPatternId($patternId)
     {
         // todo: Update => Call from DeptPatternService, use common. If diffence, update here
-
-
-        $data = $this->model::where("pattern_id", $patternId);
+        $data = $this->modelDetail::where("dept_pattern_id", $patternId);
         $data->delete();
         return $data;
     }
@@ -180,5 +179,30 @@ class PatternDeptSettingService extends BaseService
         }
 
         return $deptPattern;
+    }
+
+    /**
+     * Get list by conditions
+     *
+     * @param  $id
+     *
+     * @return array
+     */
+    public function getDataById($id)
+    {
+        return $this->model::where('id', $id)->get()->first()?->toArray();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function destroyPatternByMode($id)
+    {
+        $data = $this->model::find($id);
+        return $data->delete();
     }
 }

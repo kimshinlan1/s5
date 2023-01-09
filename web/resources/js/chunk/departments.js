@@ -111,7 +111,7 @@ window.buttonStyle = function(value, row, index) {
   *    Add classes / css for button column
 --------------------- */
 window.isIpad = function() {
-    var width = $(window).width();
+    let width = $(window).width();
     return width < 830;
 }
 
@@ -138,7 +138,7 @@ window.selectPattern = function(id) {
 window.openEditDeptPattern = function(id) {
     let dataId = $('#editPatternBtn' + id).attr("data-id");
     if(dataId != "-1") {
-        window.location = '/pattern_dept_setting/edit?id=' + dataId + '&departmentId=' + id;
+        window.location = '/pattern_dept_setting/edit?id=' + dataId + '&departmentId=' + id + '&mode=edit' ;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');

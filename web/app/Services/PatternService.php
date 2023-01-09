@@ -96,13 +96,9 @@ class PatternService extends BaseService
      *
      * @return object
      */
-    public function destroyPatternByMode($id, $compId)
+    public function destroyPatternByMode($id)
     {
-        if ($compId && $compId == Constant::KAIZEN_BASE_COMPANY_ID) {
-            $data = $this->model::find($id);
-        } else {
-            $data = DB::table('dept_patterns')->where('id', $id);
-        }
+        $data = $this->model::find($id);
         return $data->delete();
     }
 }

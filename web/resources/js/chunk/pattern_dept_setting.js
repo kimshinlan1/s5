@@ -437,7 +437,7 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
-    let url = !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area";
+    let url = "/pattern_dept_setting_generate_area";
 
     let method = "GET";
 
@@ -486,6 +486,7 @@ $(function () {
         loadDeptList(deptId, 'edit');
         loadPatternList(deptId, isPattern, patternId);
         $('#departmentId').prop( "disabled",true);
+        $('#selectPatternIds').prop( "disabled",true);
         let patId = $('#selectPatternIds').find(':selected').val();
         addAreaToTable('edit', patId, isPattern);
     }
@@ -577,21 +578,6 @@ $(function () {
             return;
         }
 
-        // todo: Validate data table (all rows) and generate submit params
-        // if (!areaName || areaName === '') {
-        //     showToast($('#areaNameErr'), 2000, true);
-        //     $('#area').focus();
-        //     $('#area').addClass('is-invalid');
-        //     return;
-        // }
-
-        // if (!locationName || locationName === '') {
-        //     showToast($('#locationNameErr'), 2000, true);
-        //     $('#location').focus();
-        //     $('#location').addClass('is-invalid');
-        //     return;
-        // }
-
         validateAndGetDataTable();
 
     });
@@ -617,5 +603,10 @@ $(function () {
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
         addAreaToTable('edit', patternid, isPattern);
+    });
+
+    $('#departmentId').change(function() {
+        let id = $('#departmentId').val();
+        loadPatternList(id);
     });
 });
