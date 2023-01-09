@@ -42,6 +42,7 @@
                             <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
                     <div class="input-group" style="margin-bottom: 0.5%;">
@@ -60,6 +61,7 @@
                             <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
                         </div>
                     </div>
 

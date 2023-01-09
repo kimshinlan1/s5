@@ -48,20 +48,14 @@ window.saveAjax = function(data) {
         // todo: notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
-            if (!$('#hidPatternId').val()) {
-                location.href = "/pattern_list_customer";
-            } else {
-                location.reload();
-            }
-        }, 2000);
+            location.href = "/pattern_list_customer";
+        }, 200);
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
         showToast($('#toast8'), 2000, true);
-
     })
     .always(function () {
-
     });
 }
 
@@ -78,46 +72,6 @@ function backPage() {
  */
 function cancelBackPage() {
     $("#modalBackPage").modal('hide');
-}
-
-/**
- * Add new area to table
- */
-function addAreaToTable(mode = null, id = null, isPattern = null) {
-    // Add Area
-    let locationNo = $('#locationNo').val();
-    let areaName = $('#rowArea').val();
-    let url = !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area";
-
-    let method = "GET";
-
-    let params = {
-        new: !mode ? 1 : -1, // case add new (remove in case edit)
-        selected_5s: JSON.stringify(selected_5s),
-        total_rows: $("#table-content tbody").find("tr").length,
-        new_location_no: locationNo,
-        new_area_name: areaName,
-        id: id
-    };
-
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        if (mode) {
-            $("#table-content tbody").empty();
-            $("#table-content tbody").append(data);
-        } else {
-            $("#table-content tbody").append(data);
-        }
-    };
-
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-    };
-
-    let alwaysCallback = function () {
-        $("#modalAddInspectionPoint").modal('hide');
-    };
-
-    runAjax(url, method, params, doneCallback, failCallback, alwaysCallback, false);
 }
 
 /**
@@ -261,28 +215,7 @@ $(function () {
         addAreaToTable('edit', patId, isPattern);
     }
 
-    // Trigger init page
-
-    $('#dateCreate').datepicker({
-        autoclose: true,
-        dateFormat: 'yy年mm月dd日',
-        language: 'ja',
-        changeYear: true
-    });
-
-    $('#dateUpdate').datepicker({
-        autoclose: true,
-        dateFormat: 'yy年mm月dd日',
-        language: 'ja',
-        changeYear: true,
-        onSelect: function(_dateText) {
-            updatedAtChanged = true;
-        }
-    });
-
-    let currentDate = new Date();
-    $('#dateCreate').datepicker("setDate", currentDate);
-    $("#dateUpdate").datepicker("setDate", currentDate);
+    configCalendarPattern();
 
     select5S();
 
