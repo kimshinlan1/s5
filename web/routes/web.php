@@ -122,6 +122,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);
 
+        // Pattern preview
+        Route::get('/pattern_preview/{id}', [PatternController::class, 'preview']);
+        Route::get('/pattern_preview_generate_area', [PatternController::class, 'generateAreaHtml']);
+
         // Team inspection by pattern
         Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);
         Route::get('/pattern_team_inspection/data', [PatternTeamInspectionController::class, 'generateDataHtml']);
