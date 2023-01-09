@@ -134,7 +134,7 @@ $(function () {
         let id = $("#deletePatternListId").val();
         let compID = $('#companyListID').val() ? $('#companyListID').val() : $('#userCompanyId').val();
         $.ajax({
-            url: "/pattern_list/" + id + "?companyId=" + compID,
+            url: "/pattern_list/" + id + "?companyId=" + compID + "&pageDest=1",
             type: "DELETE",
         })
             .done(function (_department, _textStatus, _jqXHR) {

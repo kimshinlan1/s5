@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\PatternService;
 use Illuminate\Http\Request;
+use App\Common\Constant;
 
 class PatternController extends Controller
 {
@@ -94,8 +95,10 @@ class PatternController extends Controller
     public function destroy($id)
     {
         $compId = request()->all()['companyId'];
+        // pageDest mode check page list pattern and page list pattern customer
+        $pageDest = request()->all()['pageDest'];
         try {
-            $data = $this->service->destroyPatternByMode($id, $compId);
+            $data = $this->service->destroyPatternByMode($id, $compId, $pageDest);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([

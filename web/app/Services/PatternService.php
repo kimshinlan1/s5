@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Common\Constant;
 use App\Models\Department;
 use App\Models\Pattern;
+use App\Models\DeptPattern;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -96,12 +97,12 @@ class PatternService extends BaseService
      *
      * @return object
      */
-    public function destroyPatternByMode($id, $compId)
+    public function destroyPatternByMode($id, $compId, $pageDest)
     {
-        if ($compId && $compId == Constant::KAIZEN_BASE_COMPANY_ID) {
-            $data = $this->model::find($id);
+        if ($pageDest == '1') {
+            $data = DeptPattern::where('id', $id);
         } else {
-            $data = DB::table('dept_patterns')->where('id', $id);
+            $data = $this->model::find($id);
         }
         return $data->delete();
     }
