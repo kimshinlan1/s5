@@ -100,7 +100,7 @@ window.zeroPad = function (num, digits = 0) {
     }
 });
 
-window.runAjax = function (url, method, data, donecallback, failcallback, alwayscallback, async) {
+window.runAjax = function (url, method, data, donecallback, failcallback, alwayscallback, async = true) {
     // run ajax
     $.ajax({
         url: url,
