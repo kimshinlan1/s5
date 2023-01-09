@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Common\Constant;
 use App\Services\PatternService;
 use App\Services\PatternDetailService;
 
