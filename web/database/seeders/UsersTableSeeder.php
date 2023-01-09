@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
     {
         $data = [
             [
-                'identifier' => "kaizenbaseadmin@nodomain.com",
+                'identifier' => "kaizenbaseadmin@domain.com",
                 'password' => Crypt::encryptString("Kaizenbaseadmin_12345"),
                 'name' => 'kaizenbaseadmin',
                 'role_id' => 1,
@@ -37,20 +37,20 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'identifier' => "user1@domain.com",
+                'identifier' => "paid_user@domain.com",
                 'password' => Crypt::encryptString("User_12345"),
-                'name' => 'user1',
+                'name' => 'paid_user',
                 'role_id' => 2,
-                'company_id' => 3,
+                'company_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'identifier' => "user2@domain.com",
+                'identifier' => "free_user@domain.com",
                 'password' => Crypt::encryptString("User_12345"),
-                'name' => 'user2',
+                'name' => 'free_user',
                 'role_id' => 2,
-                'company_id' => 2,
+                'company_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]
