@@ -18,7 +18,7 @@ class CompanyTableSeeder extends Seeder
         $data = [
             [
                 'no' => 'COMP00001',
-                'name' => 'カイゼンベース',
+                'name' => 'カイゼンベース', // owner
                 'mode' => 0,
                 'mode_5s' => 0,
                 'address' => 'Tokyou',
@@ -28,9 +28,9 @@ class CompanyTableSeeder extends Seeder
             ],
             [
                 'no' => 'COMP00002',
-                'name' => '会社A - 有償契約',
+                'name' => '会社A - 有償契約', // paid mode
                 'mode' => 1,
-                'mode_5s' => 2,
+                'mode_5s' => 1,
                 'address' => '',
                 'note' => '',
                 'created_at' => date('Y-m-d H:i:s'),
@@ -38,9 +38,9 @@ class CompanyTableSeeder extends Seeder
             ],
             [
                 'no' => 'COMP00003',
-                'name' => '会社B - 無償契約',
+                'name' => '会社B - 無償契約', // free mode
                 'mode' => 2,
-                'mode_5s' => 1,
+                'mode_5s' => 2,
                 'address' => '',
                 'note' => '',
                 'created_at' => date('Y-m-d H:i:s'),

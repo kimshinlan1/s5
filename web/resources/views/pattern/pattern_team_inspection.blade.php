@@ -30,7 +30,11 @@
     <div class="h-title">5S入力画面</div>
 
     <div class="d-flex justify-content-start mb-4">
-        Team Name
+        Department List
+    </div>
+
+    <div class="d-flex justify-content-start mb-4">
+        Team List / Team Name
     </div>
 
     <div id="content"></div>
