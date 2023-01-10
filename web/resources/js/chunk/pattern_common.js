@@ -463,16 +463,22 @@ window.loadDataPreview = function(pageDest) {
     runAjax(url, method, params, doneCallback);
 }
 
-$("#btnBackPage").click(function () {
-    let typeBackPage = $('#hidTypeBackPage').val();
-    if (typeBackPage == CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER")) {
-        location.href = "/pattern_list_customer";
-    } else {
-        location.href = "/pattern_list";
-    }  
-})
+/**
+ * Document Ready
+ */
+$(function () {
+    $("#btnEditPreview").click(function () {
+        let id = $('#hidPatternId').val();
+        window.location = '/pattern_dept_setting/' + id;
+        // todo: add params ?departmentId=xxx&pageDest=1
+    });
 
-$("#btnEdit").click(function () {
-    id = $('#hidPatternId').val(),
-    window.location = '/pattern_dept_setting/' + id; 
-})
+    $("#btnBackPagePreview").click(function () {
+        let typeBackPage = $('#hidTypeBackPage').val();
+        if (typeBackPage == CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER")) {
+            location.href = "/pattern_list_customer";
+        } else {
+            location.href = "/pattern_list";
+        }
+    });
+});

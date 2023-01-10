@@ -128,14 +128,14 @@
             <br />
             <div class="action-btn" style="justify-content: flex-start">
                 @if (!auth()->user()->is5SModeFree())
-                <button type="button" id="btnEdit" class="btn btn-primary" >
+                <button type="button" id="btnEditPreview" class="btn btn-primary" >
                     {{ __('Common_Edit') }}
                 </button>
                 @endif
-                <button type="button" id="btnBackPage" class="btn btn-secondary">
+                <button type="button" id="btnBackPagePreview" class="btn btn-secondary">
                     {{ __('Common_Back') }}
                 </button>
-            </div>  
+            </div>
         </div>
     </div>
     {{-- Hidden --}}
