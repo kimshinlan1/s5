@@ -126,9 +126,6 @@ class PatternController extends Controller
      */
     public function generateAreaHtml(Request $request)
     {
-       
-           
-        // dd($request->all());
         // Get database for edit follow by below structure
         $id = $request->get('id');
         $pageDest = $request->get('pageDest');

@@ -113,7 +113,7 @@ class PatternService extends BaseService
     /**
      * Get list by conditions
      *
-     * @param  $id (id of pattern)
+     * @param  $id (id of dept_pattern)
      *
      * @return array
      */
