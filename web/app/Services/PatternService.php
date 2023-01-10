@@ -95,11 +95,11 @@ class PatternService extends BaseService
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  $compId (compId mode check company)
+     * @param  $pageDest (pageDest mode check page list pattern and page list pattern customer)
      *
      * @return object
      */
-    // pageDest mode check page list pattern and page list pattern customer
-    // compId mode check company
     public function destroyPatternByMode($id, $compId, $pageDest)
     {
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
