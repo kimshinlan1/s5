@@ -336,7 +336,7 @@ $(function () {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
-        addAreaToTable('edit', patternid, isPattern);
+        addAreaToTable(null, patternid, isPattern);
     });
 
     // Department options change event

@@ -103,7 +103,6 @@ class PatternDeptSettingController extends Controller
                         "level_5" => "",
                     ];
                 }
-
                 $l++;
             }
         } elseif ($request->get('remove')) {
