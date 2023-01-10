@@ -111,7 +111,7 @@ $(function () {
     $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
         if (row !== undefined) {
-            window.location = '/pattern_preview/' + $el.id + "?pageDest=" + CONFIG.get("PAGE_PATTERN_LIST");
+            window.location = window.location = '/pattern_detail/' + $el.id;
         }
     })
 
