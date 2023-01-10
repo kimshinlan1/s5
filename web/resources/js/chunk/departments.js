@@ -36,7 +36,6 @@ window.department5SChecklistActions = function (_value, row, _index) {
     })
     .done(function (_data, _textStatus, _jqXHR) {
         _data.forEach(ele => {
-            options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
             if (!ele.isPattern) {
                 options = options.replace("<option> </option>", "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>");
             } else {
@@ -126,14 +125,21 @@ window.isIpad = function() {
 window.selectPattern = function(id) {
     let dataId = $("#checklist5sID" + id).find(":selected").val();
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
+    let hasDeptPattern = $("#checklist5sID" + id).find("option:first-child").val();
     $('#checklist5sID' + id).siblings().attr('data-id', dataId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
-    if (dataId && isPattern == "true") {
-        $('#confirmDialog3').modal('show');
-        $('.confirmMessage3').text($('#confirmMessage').val());
-        $('#okBtn').attr('data-deptid', id);
-        $('#okBtn').attr('data-patternid', dataId);
-        $('#okBtn').attr('data-isPattern', isPattern);
+    if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "") {
+        $('#errorDialog').modal('show');
+        $('#errorDialog .error-messages').text($('#confirmMessage2').val());
+        $('#checklist5sID' + id).prop("selectedIndex", 0).change();
+    } else {
+        if (dataId && isPattern == "true") {
+            $('#confirmDialog3').modal('show');
+            $('.confirmMessage3').text($('#confirmMessage').val());
+            $('#okBtn').attr('data-deptid', id);
+            $('#okBtn').attr('data-patternid', dataId);
+            $('#okBtn').attr('data-isPattern', isPattern);
+        }
     }
 }
 
@@ -407,7 +413,7 @@ window.saveDataEmployee = function () {
 
     $('#cancelBtn').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
-        $('#checklist5sID' + deptId).val("").change();
+        $('#checklist5sID' + deptId).prop("selectedIndex", 0).change();
 
     })
 
