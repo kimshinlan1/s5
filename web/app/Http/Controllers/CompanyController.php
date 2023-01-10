@@ -47,6 +47,18 @@ class CompanyController extends Controller
     }
 
     /**
+      * Returns resource as a list.
+      *
+      * @param \Illuminate\Http\Request $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function getAll(Request $request)
+    {
+        return $this->service->getAll($request);
+    }
+
+    /**
       * Store a newly created resource in storage.
       *
       * @param \App\Http\Requests\CompanyRequest $request

@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Company
         Route::resource('/company', CompanyController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/company/list', [CompanyController::class, 'list']);
+        Route::get('/company/get_companies', [CompanyController::class, 'getAll']);
 
         //Multiskill map list
         Route::get('/skillmaps_list', [SkillMapController::class, 'indexSkillMap'])->name('skillmap_list');
@@ -117,7 +118,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_list/getlist_by_department/{id}', [PatternController::class, 'listPattern']);
 
         // Dept pattern setting
-        Route::get('/pattern_dept_setting', [PatternDeptSettingController::class, 'index']);
+        Route::resource('/pattern_dept_setting', PatternDeptSettingController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/pattern_dept_setting/{id}', [PatternDeptSettingController::class, 'edit']);
         Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);

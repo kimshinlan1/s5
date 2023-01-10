@@ -17,7 +17,7 @@ window.patternListTableActions = function (_value, row, _index) {
     (
         '<button type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id +
-        '" onclick="redirectToEdit(' +row.id+ ')" id="patternListEdit">編集</button> ' +
+        '" onclick="redirectToEdit(' +row.id+ ',' + row.deptId +')" id="patternListEdit">編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
         row.id +
         '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
@@ -37,8 +37,8 @@ window.cellStyle = function (value, row, index) {
 /** ------------------
  *   Open Edit tab
  --------------------- */
- window.redirectToEdit = function (id) {
-    window.location = '/pattern_dept_setting/' + id;
+ window.redirectToEdit = function (id, deptId) {
+    window.location = '/pattern_dept_setting/edit?id=' + id + '&departmentId=' + deptId + '&mode=edit' ;
 }
 
 /** ------------------`
@@ -155,7 +155,7 @@ $(function () {
     $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
         if (row !== undefined) {
-            window.location = '/pattern_dept_setting/edit/?id=' + $el.id + '&departmentId=' + $el.deptId;
+            window.location =  '/pattern_dept_setting/edit?id=' + $el.id + '&departmentId=' + $el.deptId + '&mode=edit' ;
         }
     })
 

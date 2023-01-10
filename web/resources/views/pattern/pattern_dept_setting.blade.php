@@ -25,6 +25,30 @@
             {{-- Option --}}
             <div style="display: flex">
                 <div class="col-9">
+                    @if(auth()->user()->isAdmin())
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header">
+                            <span class="input-group-text">{{ __('Company') }}</span>
+                        </div>
+                        <div class="label_header_1">
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            aria-label="Company select" id="companyOptionId" >
+                                {{-- @foreach ($companyList as $comp)
+                                <option value="{{ $comp['id'] }}">{{ $comp['name'] }}</option>
+                                @endforeach --}}
+                            </select>
+                        </div>
+                        <div class="label_header">
+                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
+                        </div>
+                        <div class="date">
+                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
+                                title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
+                        </div>
+                    </div>
+                    @endif
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Pattern_Department_Label') }}</span>
@@ -35,6 +59,17 @@
                             </select>
 
                         </div>
+                        @if(auth()->user()->isAdmin())
+                        <div class="label_header">
+                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
+                        </div>
+                        <div class="date">
+                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
+                                title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
+                        </div>
+                        @else
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
@@ -42,7 +77,9 @@
                             <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
+                        @endif
                     </div>
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header">
@@ -53,6 +90,12 @@
                             aria-label="Pattern select" id="selectPatternIds" >
                             </select>
                         </div>
+                        @if(auth()->user()->isAdmin())
+                        <div class="label_header">
+                        </div>
+                        <div class="date">
+                        </div>
+                        @else
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
@@ -60,9 +103,10 @@
                             <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
                         </div>
+                        @endif
                     </div>
-
                     <div class="input-group">
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
