@@ -68,4 +68,6 @@ class Constant
         '1'       => '有償契約',
         '2'       => '無償契約'
     ];
+
+    public const INSPECTION_IMAGE_PATH = 'uploads/inspections/imgs';
 }

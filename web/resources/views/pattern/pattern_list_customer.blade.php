@@ -22,6 +22,7 @@
             </select>
         </div>
     @endif
+    <input type="hidden" id="hidLoginCompanyId" value="{{ auth()->user()->company()->first()->id }}"/>
 
     <table id="patternListTable" class="table table-sm table-striped">
         <thead class="table-light">

@@ -46,10 +46,10 @@ window.cellStyle = function (value, row, index) {
 --------------------- */
 window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / 10) + 1 : 1;
-    if($('#userMode').val() != CONFIG.get('ROLE_ADMIN_ID')) {
-        params.company_id = $('#userCompanyId').val();
-    } else {
+    if($('#companyListID').length) {
         params.company_id = $("#companyListID").find(":selected").val();
+    } else {
+        params.company_id = $('#hidLoginCompanyId').val();
     }
     return params;
 };
@@ -58,30 +58,36 @@ window.queryParams = function (params) {
     Document Ready
 ==============================*/
 $(function () {
-    $.ajax({
-        type: "GET",
-        url: "/company/list",
-        success: function (res) {
-            let html = "";
-            if (res.currentCompany.mode == 0) {
-                for (let e of res.rows) {
+
+    // Setting company list
+    if($('#companyListID').length) {
+        $.ajax({
+            type: "GET",
+            url: "/company/list",
+            success: function (res) {
+                let html = "";
+                if (res.currentCompany.mode == 0) {
+                    for (let e of res.rows) {
+                        html +=
+                            '<option value="' + e.id + '">' + e.name + "</option>";
+                    }
+                } else {
                     html +=
-                        '<option value="' + e.id + '">' + e.name + "</option>";
+                        '<option value="' +
+                        res.currentCompany.id +
+                        '" hidden>' +
+                        res.currentCompany.name +
+                        "</option>";
                 }
-            } else {
-                html +=
-                    '<option value="' +
-                    res.currentCompany.id +
-                    '" hidden>' +
-                    res.currentCompany.name +
-                    "</option>";
-            }
-            $("#companyListID").html(html);
+                $("#companyListID").html(html);
 
-            $("#companyListID").change();
-        },
-    });
+                $("#companyListID").change();
 
+            },
+        });
+    }
+
+    // Setting datatable
     $("#patternListTable").bootstrapTable({
         pagination: "true",
         paginationParts: "['pageList']",
@@ -94,6 +100,10 @@ $(function () {
         },
     });
 
+    $("#patternListTable").bootstrapTable("refresh", {
+        url: "/pattern_list/patern_list_by_company",
+    });
+
     if ($("#errorDialog .modal-body .error-messages").length) {
         $("#errorDialog .modal-body .error-messages").html("");
     }
@@ -102,6 +112,7 @@ $(function () {
             url: "/pattern_list/patern_list_by_company",
         });
     }
+
     $("#companyListID").on("change", function () {
         $("#patternListTable").bootstrapTable("refresh", {
             url: "/pattern_list/patern_list_by_company",

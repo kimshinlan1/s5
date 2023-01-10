@@ -1,5 +1,4 @@
 
-
 <?php
     $width_data = "50px";
     $areas = [];
@@ -135,7 +134,12 @@
         <tr>
             @foreach ($inspectionIds as $inspectionId)
             <td>
+                @if (is_int($inspectionId))
                 <input type="button" value="削除" onclick="removeColumn('{{ $inspectionId }}')"/>
+                @else
+                <input type="button" value="削除" disabled />
+                @endif
+
             </td>
             @endforeach
         </tr>
@@ -230,3 +234,5 @@
 
 </div>
 
+{{-- Hidden --}}
+<input type="hidden" id="hidCountInspection" value="{{ $countInspection }}"/>
