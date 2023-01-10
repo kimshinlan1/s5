@@ -289,18 +289,6 @@ $(function () {
         }
     });
 
-    $('#area').keyup(function () {
-        if ($('#area').val()) {
-            $('#area').removeClass('is-invalid');
-        }
-    });
-
-    $('#location').keyup(function () {
-        if ($('#location').val()) {
-            $('#location').removeClass('is-invalid');
-        }
-    });
-
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();

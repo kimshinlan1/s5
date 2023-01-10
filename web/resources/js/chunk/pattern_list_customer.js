@@ -155,10 +155,13 @@ $(function () {
     $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
         if (row !== undefined) {
-            window.location =  '/pattern_dept_setting/edit?id=' + $el.id + '&departmentId=' + $el.deptId + '&mode=edit' ;
+            if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+                window.location =  '/pattern_preview/' + $el.id;
+            } else {
+                window.location =  '/pattern_dept_setting/edit?id=' + $el.id + '&departmentId=' + $el.deptId + '&mode=edit' ;
+            }
         }
     })
-
     $('#patternListAdd').on('click', function() {
         window.location = '/pattern_dept_setting';
     });
