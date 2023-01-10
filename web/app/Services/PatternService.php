@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Common\Constant;
 use App\Models\Department;
 use App\Models\Pattern;
+use App\Models\DeptPattern;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,7 @@ class PatternService extends BaseService
     /**
      * Get list by conditions
      *
-     * @param  $id
+     * @param  $id (id of pattern)
      *
      * @return array
      */
@@ -56,17 +57,18 @@ class PatternService extends BaseService
         $limit = $request->input('limit');
 
         $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
-        return DB::table('dept_patterns')
-        ->join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
-        ->select('dept_patterns.*', 'departments.id as deptId')
-        ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
-
+        if (empty($ids)) {
+            return [];
+        }
+        return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+            ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
+            ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
     }
 
     /**
      * Get list
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $id (id of dept_patter_setting)
      *
      * @return array
      */
@@ -92,13 +94,19 @@ class PatternService extends BaseService
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $id (id of dept_patter_setting)
+     * @param  $compId (compId mode check company)
+     * @param  $pageDest (pageDest mode check page list pattern and page list pattern customer)
      *
      * @return object
      */
-    public function destroyPatternByMode($id)
+    public function destroyPatternByMode($id, $compId, $pageDest)
     {
-        $data = $this->model::find($id);
+        if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
+            $data = DeptPattern::where('id', $id);
+        } else {
+            $data = $this->model::find($id);
+        }
         return $data->delete();
     }
 }

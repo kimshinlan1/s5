@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Area;
 use App\Models\Pattern;
+use App\Common\Utility;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\PatternDetail;
@@ -87,7 +88,7 @@ class PatternDetailService extends BaseService
     public function save(Request $request)
     {
         $data = $request->get('data');
-
+        $no = Utility::generateUniqueId(new Pattern(), "no", "CKL", 5);
         /**
          * Step: Remove old data
          *
@@ -119,6 +120,7 @@ class PatternDetailService extends BaseService
                 'id' => $data['info']['pattern_id']
             ],
             [
+                'no' => $no,
                 'name' => $data['info']['pattern_name'],
                 'note' => $data['info']['pattern_note'],
                 '5s' => $data['info']['pattern_5s_selected'],

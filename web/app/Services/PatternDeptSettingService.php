@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
+use App\Common\Utility;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
@@ -99,6 +100,7 @@ class PatternDeptSettingService extends BaseService
 
 
         $data = $request->get('data');
+        $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
 
         /**
          * Step: Remove old data
@@ -131,6 +133,7 @@ class PatternDeptSettingService extends BaseService
                 'id' => $data['info']['pattern_id']
             ],
             [
+                'no' => $no,
                 'name' => $data['info']['pattern_name'],
                 '5s' => $data['info']['pattern_5s_selected'],
                 'created_at' => $data['info']['pattern_created_at'],

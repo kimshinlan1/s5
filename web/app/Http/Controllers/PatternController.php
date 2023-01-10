@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Common\Constant;
 use App\Services\PatternService;
-use Illuminate\Http\Request;
 use App\Services\PatternDetailService;
 
 class PatternController extends Controller
@@ -61,17 +61,11 @@ class PatternController extends Controller
      */
     public function getPatternByCompanyId(Request $request)
     {
-        try {
-            $data = $this->service->getPatternsByCompanyId($request);
-            return response()->json([
-                'total' => $data->total(),
-                'rows' => $data->getCollection(),
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
-            ], 500);
-        }
+        $data = $this->service->getPatternsByCompanyId($request);
+        return response()->json([
+            'total' => $data->total(),
+            'rows' => $data->getCollection(),
+        ]);
     }
 
     /**
@@ -95,14 +89,11 @@ class PatternController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $data = $this->service->destroyPatternByMode($id);
-            return response()->json($data);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
-            ], 500);
-        }
+        $compId = request()->get('companyId');
+        // pageDest mode check page list pattern and page list pattern customer
+        $pageDest = request()->get('pageDest');
+        $data = $this->service->destroyPatternByMode($id, $compId, $pageDest);
+        return response()->json($data);
     }
 
     /**
