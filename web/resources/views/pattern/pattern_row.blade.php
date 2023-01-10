@@ -22,9 +22,10 @@ $locations = [];
     @if (!in_array($row['area_id'], $areas))
     <td rowspan="{{ $row['area_rowspan'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
-        <button id="" class="btn btn-sm btn-info form-control btn-add-location"
+        {{-- <button id="" class="btn btn-sm btn-info form-control btn-add-location"
         onclick="addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )" >点検箇所を追加
-        </button>
+        </button> --}}
+        <a href="javascript:void(0)" onclick="addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )">点検箇所を追加</a>
     </td>
     <?php $areas[] = $row['area_id'] ?>
 

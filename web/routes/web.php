@@ -56,8 +56,8 @@ Route::group(['middleware' => ['auth']], function () {
         //Pattern detail
         Route::get('/pattern_detail', [PatternDetailController::class, 'index']);
         Route::get('/pattern_detail/{id}', [PatternDetailController::class, 'edit']);
-        Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
-        Route::post('/pattern_detail_remove', [PatternDetailController::class, 'removeLocation']);
+        // Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
+        // Route::post('/pattern_detail_remove', [PatternDetailController::class, 'removeLocation']);
         Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
 
     });
@@ -122,6 +122,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_dept_setting/{id}', [PatternDeptSettingController::class, 'edit']);
         Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);
+
+        // Pattern detail (all users)
+        Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
+        Route::post('/pattern_detail_remove', [PatternDetailController::class, 'removeLocation']);
 
         // Pattern preview
         Route::get('/pattern_preview/{id}', [PatternController::class, 'preview']);
