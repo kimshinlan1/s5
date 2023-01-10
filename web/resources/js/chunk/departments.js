@@ -125,7 +125,7 @@ window.selectPattern = function(id) {
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
     if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "") {
         $('#errorDialog').modal('show');
-        $('#errorDialog .error-messages').text($('#confirmMessage2').val());
+        $('#errorDialog .error-messages').text($('#errMessageUser1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0).change();
     } else {
         if (dataId && isPattern == "true") {

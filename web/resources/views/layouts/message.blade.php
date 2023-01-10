@@ -16,7 +16,7 @@
 <input type="hidden" id="messageCompanyFreeContract" name="messageCompanyFreeContract" value="{{ __('Company_Free_Contract') }}"/>
 <input type="hidden" id="messageCompanyPaidContract" name="messageCompanyPaidContract" value="{{ __('Company_Paid_Contract') }}"/>
 <input type="hidden" id="confirmMessage" name="confirmMessage" value="{{ __('Common_Confirm_Message') }}"/>
-<input type="hidden" id="confirmMessage2" name="confirmMessage2" value="{{ __('Common_Confirm_Message2') }}"/>
+<input type="hidden" id="errMessageUse1Pattern" name="errMessageUse1Pattern" value="{{ __('Pattern_Err_Use_Only_1_Pattern') }}"/>
 <input type="hidden" id="patternAtLeastOneVerificationPointMustBeConfigured" name="patternAtLeastOneVerificationPointMustBeConfigured" value="{{ __('Pattern_At_Least_One_Verification_Point_Must_Be_Configured') }}"/>
 <input type="hidden" id="messagePatternRequired" name="messagePatternRequired" value="{{ __('Pattern_Err_Required') }}"/>
 <input type="hidden" id="messagePatternFormatNumber" name="messagePatternFormatNumber" value="{{ __('Pattern_Err_FormatNumber') }}"/>
