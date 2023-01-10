@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Company
         Route::resource('/company', CompanyController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/company/list', [CompanyController::class, 'list']);
+        Route::get('/company/get_companies', [CompanyController::class, 'getAll']);
 
         //Multiskill map list
         Route::get('/skillmaps_list', [SkillMapController::class, 'indexSkillMap'])->name('skillmap_list');

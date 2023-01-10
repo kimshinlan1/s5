@@ -26,7 +26,7 @@ window.departmentTableActions = function (_value, row, _index) {
   *    5S Checklist Actions
   --------------------- */
 window.department5SChecklistActions = function (_value, row, _index) {
-    var options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
+    let options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
     options += '<option> </option>';
 
     $.ajax({
@@ -37,6 +37,11 @@ window.department5SChecklistActions = function (_value, row, _index) {
     .done(function (_data, _textStatus, _jqXHR) {
         _data.forEach(ele => {
             options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
+            if (!ele.isPattern) {
+                options = options.replace("<option> </option>", "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>");
+            } else {
+                options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
+            }
         });
         options += " </select>";
         let editButton = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY

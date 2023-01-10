@@ -103,7 +103,7 @@ window.loadDeptList = function(id, mode = null) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
             $('#departmentId').html(html);
-            department_id = $('#departmentId').val();
+            $('#departmentId').change();
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -133,7 +133,33 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
             }
         });
         $('#selectPatternIds').html(html);
-        // $('#patternId').change();
+        $('#selectPatternIds').change();
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+    runAjax(url, method, {}, doneCallback, failCallback, null, false);
+}
+
+/**
+ * Load Company
+ */
+window.loadCompany = function(id) {
+    let url = 'company/get_companies';
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+        data.forEach(function callback(e, index) {
+                if(e.id == id) {
+                    html += '<option value="' + e.id + '" selected>' + e.name + '</option>';
+                } else {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+
+        });
+        $('#companyOptionId').html(html);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -188,6 +214,10 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
  */
 $(function () {
     let id = $('#userCompanyId').val();
+
+    if (id == $('#kaizenbaseID').val()) {
+        loadCompany(id);
+    }
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     let deptId = urlParams.get('departmentId');
@@ -198,21 +228,35 @@ $(function () {
         loadPatternList(deptId, isPattern, patternId);
         $('#departmentId').prop( "disabled",true);
         $('#selectPatternIds').prop( "disabled",true);
+        $('#companyOptionId').prop( "disabled",true);
         let patId = $('#selectPatternIds').find(':selected').val();
-        addAreaToTable('edit', patId, isPattern);
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            loadDataPreview();
+        } else {
+            addAreaToTable('edit', patId, isPattern);
+        }
     }
     else {
-        if($('#userMode').val() == CONFIG.get('FREE')) {
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#departmentId').prop( "disabled",true);
+            $('#selectPatternIds').prop( "disabled",true);
+            $('#companyOptionId').prop( "disabled",true);
         } else {
             $('#departmentId').prop( "disabled",false);
+            $('#selectPatternIds').prop( "disabled",false);
+            $('#companyOptionId').prop( "disabled",false);
         }
         loadDeptList(id);
+        let department_id = $('#departmentId').find(':selected').val();
         loadPatternList(department_id);
         let patId = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
-        addAreaToTable('edit', patId, isPattern);
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            loadDataPreview();
+        } else {
+            addAreaToTable('edit', patId, isPattern);
+        }
     }
 
     configCalendarPattern();
@@ -295,8 +339,15 @@ $(function () {
         addAreaToTable('edit', patternid, isPattern);
     });
 
+    // Department options change event
     $('#departmentId').change(function() {
         let id = $('#departmentId').val();
         loadPatternList(id);
+    });
+
+    // Company options change event
+    $('#companyOptionId').change(function() {
+        let compID = $("#companyOptionId").find(":selected").val();
+        loadDeptList(compID);
     });
 });

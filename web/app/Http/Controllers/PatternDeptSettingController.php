@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Common\Constant;
 use App\Models\User;
+use App\Services\EmployeeService;
 use Illuminate\Http\Request;
-use App\Services\PatternService;
 use App\Services\PatternDeptSettingService;
 
 class PatternDeptSettingController extends Controller
 {
     /** @var patterndetailservice */
     private $service;
+    private $serviceEmployee;
 
     public function __construct(PatternDeptSettingService $service)
     {
         $this->service = $service;
+        $this->serviceEmployee = app(EmployeeService::class);
         $this->user = app(User::class);
     }
 
@@ -26,8 +28,10 @@ class PatternDeptSettingController extends Controller
      */
     public function index()
     {
+        $companyList = $this->serviceEmployee->getCompanyList();
         $data = [
-            'selected5s' => []
+            'selected5s' => [],
+            'companyList' => $companyList
         ];
 
         return view('pattern.pattern_dept_setting', $data);
