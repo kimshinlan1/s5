@@ -94,7 +94,7 @@ class PatternService extends BaseService
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $id (id of dept_patter_setting)
      * @param  $compId (compId mode check company)
      * @param  $pageDest (pageDest mode check page list pattern and page list pattern customer)
      *
