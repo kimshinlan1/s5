@@ -58,6 +58,10 @@ class PatternDeptSettingController extends Controller
             'info' => $info,
             'selected5s' => $selected5s
         ];
+        $is5SModeFree = $this->user->is5SModeFree();
+        if ($is5SModeFree) {
+            return view('pattern.pattern_preview', $data);
+        }
         return view('pattern.pattern_dept_setting', $data);
     }
 
