@@ -28,10 +28,8 @@ class PatternDeptSettingController extends Controller
      */
     public function index()
     {
-        $companyList = $this->serviceEmployee->getCompanyList();
         $data = [
-            'selected5s' => [],
-            'companyList' => $companyList
+            'selected5s' => []
         ];
 
         return view('pattern.pattern_dept_setting', $data);

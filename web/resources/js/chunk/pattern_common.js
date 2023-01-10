@@ -443,12 +443,13 @@ function configCalendarPattern() {
 /**
  * Load preview DB
  */
-window.loadDataPreview = function() {
+window.loadDataPreview = function(pageDest) {
     showLoading();
 
     let params = {
         // selected_5s: JSON.stringify(selected_5s),
-        id: $('#hidPatternId').val()
+        id: $('#hidPatternId').val(),
+        pageDest: pageDest,
     };
 
     let url = "/pattern_preview_generate_area";
@@ -461,3 +462,17 @@ window.loadDataPreview = function() {
 
     runAjax(url, method, params, doneCallback);
 }
+
+$("#btnBackPage").click(function () {
+    let typeBackPage = $('#hidTypeBackPage').val();
+    if (typeBackPage == CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER")) {
+        location.href = "/pattern_list_customer";
+    } else {
+        location.href = "/pattern_list";
+    }  
+})
+
+$("#btnEdit").click(function () {
+    id = $('#hidPatternId').val(),
+    window.location = '/pattern_dept_setting/' + id; 
+})
