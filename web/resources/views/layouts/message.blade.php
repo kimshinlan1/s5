@@ -20,3 +20,4 @@
 <input type="hidden" id="messagePatternRequired" name="messagePatternRequired" value="{{ __('Pattern_Err_Required') }}"/>
 <input type="hidden" id="messagePatternFormatNumber" name="messagePatternFormatNumber" value="{{ __('Pattern_Err_FormatNumber') }}"/>
 <input type="hidden" id="placeHolderPoint" name="placeHolderPoint" value="{{ __('Pattern_Detail_Num_Point') }}"/>
+<input type="hidden" id="kaizenbaseID" name="kaizenbaseID" value="{{Constant::KAIZEN_BASE_COMPANY_ID}}"/>

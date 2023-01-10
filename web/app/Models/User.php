@@ -70,7 +70,15 @@ class User extends Authenticatable
      */
     public function getModeUser()
     {
+
         return auth()->user()->company()->first()->mode;
+    }
+    /**
+     * Get the 5s mode of current account
+     */
+    public function get5sModeUser()
+    {
+        return auth()->user()->company()->first()->mode_5s;
     }
 
     /**

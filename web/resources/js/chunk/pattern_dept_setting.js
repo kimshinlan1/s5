@@ -48,20 +48,14 @@ window.saveAjax = function(data) {
         // todo: notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
-            if (!$('#hidPatternId').val()) {
-                location.href = "/pattern_list_customer";
-            } else {
-                location.reload();
-            }
-        }, 2000);
+            location.href = "/pattern_list_customer";
+        }, 200);
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // show errors
         showToast($('#toast8'), 2000, true);
-
     })
     .always(function () {
-
     });
 }
 
@@ -78,6 +72,99 @@ function backPage() {
  */
 function cancelBackPage() {
     $("#modalBackPage").modal('hide');
+}
+
+/**
+ * todo: Test => Remove when release
+ */
+function setValueTest() {
+    // Loop main area
+    $("#table-content tbody input[type=text]").each(function() {
+
+        $(this).val("test");
+    });
+
+    $("#table-content tbody textarea").each(function() {
+        $(this).val("level");
+    });
+}
+
+/**
+ * List department list
+ */
+window.loadDeptList = function(id, mode = null) {
+    let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+            for (let e of data) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#departmentId').html(html);
+            $('#departmentId').change();
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+
+    runAjax(url, method, {}, doneCallback, failCallback, null, false);
+}
+
+/**
+ * List pattern list
+ */
+window.loadPatternList = function(id, isPattern = null, patternId = null ) {
+    let url = '/pattern_list/getlist_by_department/' + id;
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+        data.forEach(function callback(e, index) {
+            if (isPattern) {
+                if(index != 0 && e.id == patternId ) {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" selected>' + e.name + '</option>';
+                }
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            } else {
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '">' + e.name + '</option>';
+            }
+        });
+        $('#selectPatternIds').html(html);
+        $('#selectPatternIds').change();
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+    runAjax(url, method, {}, doneCallback, failCallback, null, false);
+}
+
+/**
+ * Load Company
+ */
+window.loadCompany = function(id) {
+    let url = 'company/get_companies';
+
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        let html = '';
+        data.forEach(function callback(e, index) {
+                if(e.id == id) {
+                    html += '<option value="' + e.id + '" selected>' + e.name + '</option>';
+                } else {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+
+        });
+        $('#companyOptionId').html(html);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+    runAjax(url, method, {}, doneCallback, failCallback, null, false);
 }
 
 /**
@@ -120,73 +207,6 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     runAjax(url, method, params, doneCallback, failCallback, alwaysCallback, false);
 }
 
-/**
- * todo: Test => Remove when release
- */
-function setValueTest() {
-    // Loop main area
-    $("#table-content tbody input[type=text]").each(function() {
-
-        $(this).val("test");
-    });
-
-    $("#table-content tbody textarea").each(function() {
-        $(this).val("level");
-    });
-}
-
-/**
- * List department list
- */
-window.loadDeptList = function(id, mode = null) {
-    let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
-
-    let method = "GET";
-
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        let html = '';
-            for (let e of data) {
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
-            }
-            $('#departmentId').html(html);
-            department_id = $('#departmentId').val();
-    };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-    };
-
-    runAjax(url, method, {}, doneCallback, failCallback, null, false);
-}
-
-/**
- * List pattern list
- */
-window.loadPatternList = function(id, isPattern = null, patternId = null ) {
-    let url = '/pattern_list/getlist_by_department/' + id;
-
-    let method = "GET";
-
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        let html = '';
-        data.forEach(function callback(e, index) {
-            if (isPattern) {
-                if(index != 0 && e.id == patternId ) {
-                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" selected>' + e.name + '</option>';
-                }
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
-            } else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '">' + e.name + '</option>';
-            }
-        });
-        $('#selectPatternIds').html(html);
-        // $('#patternId').change();
-    };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-    };
-    runAjax(url, method, {}, doneCallback, failCallback, null, false);
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -194,6 +214,10 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
  */
 $(function () {
     let id = $('#userCompanyId').val();
+
+    if (id == $('#kaizenbaseID').val()) {
+        loadCompany(id);
+    }
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     let deptId = urlParams.get('departmentId');
@@ -203,45 +227,39 @@ $(function () {
         loadDeptList(deptId, 'edit');
         loadPatternList(deptId, isPattern, patternId);
         $('#departmentId').prop( "disabled",true);
+        $('#selectPatternIds').prop( "disabled",true);
+        $('#companyOptionId').prop( "disabled",true);
         let patId = $('#selectPatternIds').find(':selected').val();
-        addAreaToTable('edit', patId, isPattern);
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            loadDataPreview();
+        } else {
+            addAreaToTable('edit', patId, isPattern);
+        }
     }
     else {
-        if($('#userMode').val() == CONFIG.get('FREE')) {
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#departmentId').prop( "disabled",true);
+            $('#selectPatternIds').prop( "disabled",true);
+            $('#companyOptionId').prop( "disabled",true);
         } else {
             $('#departmentId').prop( "disabled",false);
+            $('#selectPatternIds').prop( "disabled",false);
+            $('#companyOptionId').prop( "disabled",false);
         }
         loadDeptList(id);
+        let department_id = $('#departmentId').find(':selected').val();
         loadPatternList(department_id);
         let patId = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
-        addAreaToTable('edit', patId, isPattern);
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            loadDataPreview();
+        } else {
+            addAreaToTable('edit', patId, isPattern);
+        }
     }
 
-    // Trigger init page
-
-    $('#dateCreate').datepicker({
-        autoclose: true,
-        dateFormat: 'yy年mm月dd日',
-        language: 'ja',
-        changeYear: true
-    });
-
-    $('#dateUpdate').datepicker({
-        autoclose: true,
-        dateFormat: 'yy年mm月dd日',
-        language: 'ja',
-        changeYear: true,
-        onSelect: function(_dateText) {
-            updatedAtChanged = true;
-        }
-    });
-
-    let currentDate = new Date();
-    $('#dateCreate').datepicker("setDate", currentDate);
-    $("#dateUpdate").datepicker("setDate", currentDate);
+    configCalendarPattern();
 
     select5S();
 
@@ -294,21 +312,6 @@ $(function () {
             return;
         }
 
-        // todo: Validate data table (all rows) and generate submit params
-        // if (!areaName || areaName === '') {
-        //     showToast($('#areaNameErr'), 2000, true);
-        //     $('#area').focus();
-        //     $('#area').addClass('is-invalid');
-        //     return;
-        // }
-
-        // if (!locationName || locationName === '') {
-        //     showToast($('#locationNameErr'), 2000, true);
-        //     $('#location').focus();
-        //     $('#location').addClass('is-invalid');
-        //     return;
-        // }
-
         validateAndGetDataTable();
 
     });
@@ -334,5 +337,17 @@ $(function () {
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
         addAreaToTable('edit', patternid, isPattern);
+    });
+
+    // Department options change event
+    $('#departmentId').change(function() {
+        let id = $('#departmentId').val();
+        loadPatternList(id);
+    });
+
+    // Company options change event
+    $('#companyOptionId').change(function() {
+        let compID = $("#companyOptionId").find(":selected").val();
+        loadDeptList(compID);
     });
 });

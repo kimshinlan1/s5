@@ -38,11 +38,7 @@ window.saveAjax = function(data) {
         // Notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
-            if (!$('#hidPatternId').val()) {
-                location.href = "/pattern_list";
-            } else {
-                location.reload();
-            }
+            location.href = "/pattern_list";
         },500);
     };
 
