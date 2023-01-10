@@ -186,7 +186,7 @@
                         {{ __('Common_button_save') }}
                     </div>
                 </button>
-
+                @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
                 <button type="button" id="openModal" class="btn btn-primary btn-ripple" data-toggle="modal"
                     style="margin-right: 1%;">{{ __('Pattern_Add_Inspection_Point') }}
                 </button>
@@ -194,9 +194,9 @@
                 <button type="button" id="removeLocation" class="btn btn-danger btn-ripple" data-toggle="modal"
                     style="margin-right: 1%;">{{ __('Common_button_delete') }}
                 </button>
-
+                @endif
                 <button type="button" id="backPage" class="btn btn-secondary" data-toggle="modal">
-                    {{ __('Common_button_cancel') }}
+                    {{ __('Common_Back') }}
                 </button>
             </div>
         </div>

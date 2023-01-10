@@ -243,5 +243,6 @@
     "Pattern_Dept_Name": "パターン名",
     "Pattern_Err_Required": "このフィールドを記入してください",
     "Pattern_Err_FormatNumber": "要求された形式に一致してください",
+    "Pattern_Err_Use_Only_1_Pattern": "あなたのアカウントは1つのパターンのみを使用しています",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }

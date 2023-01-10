@@ -35,25 +35,20 @@ window.department5SChecklistActions = function (_value, row, _index) {
         async: false
     })
     .done(function (_data, _textStatus, _jqXHR) {
+        let dataId = -1;
         _data.forEach(ele => {
             if (!ele.isPattern) {
                 options = options.replace("<option> </option>", "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>");
+                dataId = 1;
             } else {
                 options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
             }
         });
         options += " </select>";
-        let editButton = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
-        || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
-        (
-            '<button type="button" id="editPatternBtn' + row.id
-            + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="-1" data-isPattern="" onClick="openEditDeptPattern(' + row.id
-            + ')">編集</button> '
-        ) :
-            '<button type="button" id="editPatternBtn' + row.id
-            + '" class="btn btn-secondary btn-sm disabled" style="width: 55px;" data-id="-1" onClick="openEditDeptPattern(' + row.id
-            + ')">編集</button> ';
-        options += editButton;
+
+        options += '<button type="button" id="editPatternBtn' + row.id
+        + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" onClick="openEditDeptPattern(' + row.id
+        + ')">編集</button> ';
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
@@ -130,7 +125,7 @@ window.selectPattern = function(id) {
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
     if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "") {
         $('#errorDialog').modal('show');
-        $('#errorDialog .error-messages').text($('#confirmMessage2').val());
+        $('#errorDialog .error-messages').text($('#errMessageUser1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0).change();
     } else {
         if (dataId && isPattern == "true") {
