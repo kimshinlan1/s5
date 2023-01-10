@@ -14,7 +14,7 @@
 
     <script type="text/javascript">
         $(function () {
-            loadDataPreview({{ $pageDest }});
+            loadDataPreview('{{ $pageDest }}');
         });
     </script>
 @endpush
