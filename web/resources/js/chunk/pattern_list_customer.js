@@ -158,7 +158,6 @@ $(function () {
             window.location = '/pattern_preview/' + $el.id + '?departmentId=' + $el.deptId + "&pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER");
         }
     })
-
     $('#patternListAdd').on('click', function() {
         window.location = '/pattern_dept_setting';
     });

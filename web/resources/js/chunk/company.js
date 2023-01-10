@@ -113,16 +113,16 @@ window.saveData = function () {
 
     if (isSetMode) {
         if ($('#companyMode_isCharge').is(':checked')) {
-            mode = 1;
+            mode = CONFIG.get('TECHMAP_MODE').IS_CHARGE;
         } else {
-            mode = 2;
+            mode = CONFIG.get('TECHMAP_MODE').FREE;
         }
     }
     if (isSetMode5s) {
         if ($('#5sMode_isCharge').is(':checked')) {
-            mode_5s = 1;
+            mode_5s = CONFIG.get('5S_MODE').IS_CHARGE;
         } else {
-            mode_5s = 2;
+            mode_5s = CONFIG.get('5S_MODE').FREE;
         }
     }
     let data = {
