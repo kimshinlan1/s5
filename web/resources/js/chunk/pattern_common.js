@@ -469,8 +469,12 @@ window.loadDataPreview = function(pageDest) {
 $(function () {
     $("#btnEditPreview").click(function () {
         let id = $('#hidPatternId').val();
-        window.location = '/pattern_dept_setting/' + id;
-        // todo: add params ?departmentId=xxx&pageDest=1
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let deptId = urlParams.get('departmentId');
+        let pageDest = urlParams.get('pageDest');
+
+        window.location = '/pattern_dept_setting/edit?id=' + id + '&departmentId='+deptId+'&pageDest='+pageDest;
     });
 
     $("#btnBackPagePreview").click(function () {
