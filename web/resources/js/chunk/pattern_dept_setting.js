@@ -174,7 +174,7 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
-    let url = "/pattern_dept_setting_generate_area";
+    let url = !isPattern ? "/pattern_dept_setting_generate_area" : "/pattern_detail_generate_area";
 
     let method = "GET";
 
@@ -336,7 +336,7 @@ $(function () {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         isPattern = isPattern == "true" ? true : false;
-        addAreaToTable(null, patternid, isPattern);
+        addAreaToTable('edit', patternid, isPattern);
     });
 
     // Department options change event

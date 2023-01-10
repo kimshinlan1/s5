@@ -33,9 +33,6 @@
                         <div class="label_header_1">
                             <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
                             aria-label="Company select" id="companyOptionId" >
-                                {{-- @foreach ($companyList as $comp)
-                                <option value="{{ $comp['id'] }}">{{ $comp['name'] }}</option>
-                                @endforeach --}}
                             </select>
                         </div>
                         <div class="label_header">
