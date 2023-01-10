@@ -259,7 +259,7 @@
                     <div><span style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveData()"
+                    <button type="button" onclick="saveDataPattern()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                     <button type="button" class="btn btn-secondary" onclick="cancelSaveData()">
                         {{ __('Common_button_cancel') }}</button>

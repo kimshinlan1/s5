@@ -372,7 +372,7 @@ function openCalendar(name) {
 /**
  * Accept save
  */
-function saveData() {
+function saveDataPattern() {
     $("#modalSaveData").modal('hide');
     showLoading();
     saveAjax(params);

@@ -49,6 +49,8 @@ window.CONFIG = (function () {
         'PLACE_HOLDER_POINT' : $('#placeHolderPoint').val(),
         'PATTERN_REQUIRED': $('#messagePatternRequired').val(),
         'PATTERN_FORMAT_NUMBER': $('#messagePatternFormatNumber').val(),
+        'PAGE_PATTERN_LIST': 0,
+        'PAGE_PATTERN_LIST_CUSTOMER': 1,
     };
     return {
         get: function (name) { return private_const[name]; }
