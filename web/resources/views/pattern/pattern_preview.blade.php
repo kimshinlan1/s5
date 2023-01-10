@@ -14,7 +14,7 @@
 
     <script type="text/javascript">
         $(function () {
-            loadDataPreview();
+            loadDataPreview({{ $pageDest }});
         });
     </script>
 @endpush
@@ -30,7 +30,7 @@
         }
     </style>
 
-    <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</div>
+    <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Preview') }}</div>
     <div class="row">
         <div class="col-12">
             {{-- Option --}}
@@ -125,20 +125,22 @@
                     </div>
                 </div>
             </div>
+            <br />
             <div class="action-btn" style="justify-content: flex-start">
+                @if (!auth()->user()->is5SModeFree())
                 <button type="button" id="btnEdit" class="btn btn-primary" >
-                    {{ __('Edit_編集') }}
+                    {{ __('Common_Edit') }}
                 </button>
-                <button type="button" id="btnBackPage" class="btn btn-secondary" data-toggle="modal">
+                @endif
+                <button type="button" id="btnBackPage" class="btn btn-secondary">
                     {{ __('Common_Back') }}
                 </button>
-            </div>
+            </div>  
         </div>
     </div>
-
     {{-- Hidden --}}
     <input type="hidden" id="hidPatternId" value="{{ isset($info['id']) ? $info['id'] : '' }}" />
-
+    <input type="hidden" id="hidTypeBackPage" value="{{ $pageDest }}" />
 
 
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Common\Constant;
 use App\Services\PatternService;
 use App\Services\PatternDetailService;
+use App\Services\PatternDeptSettingService;
 
 class PatternController extends Controller
 {
@@ -105,13 +106,16 @@ class PatternController extends Controller
      */
     public function preview($id)
     {
-        $info = (app()->get(PatternService::class))->getDataById($id);
+        $strUrl = $_GET;
+        $pageDest = $strUrl['pageDest'];
+        $info = (app()->get(PatternService::class))->getDataDeptPatternById($id);
         if (empty($info)) {
             return $this->responseException();
         }
 
         $data = [
             'info' => $info,
+            'pageDest' => $pageDest
         ];
         return view('pattern.pattern_preview', $data);
     }
@@ -122,9 +126,18 @@ class PatternController extends Controller
      */
     public function generateAreaHtml(Request $request)
     {
+       
+           
+        // dd($request->all());
         // Get database for edit follow by below structure
         $id = $request->get('id');
-        $data = app(PatternDetailService::class)->getData($id);
+        $pageDest = $request->get('pageDest');
+       
+        if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER){
+            $data = app(PatternDeptSettingService::class)->getData($id);
+        } else {
+            $data = app(PatternDetailService::class)->getData($id);
+        }
         $data = json_decode(json_encode($data), true);
         return view('pattern.partials.data_pattern_preview', [
             "data" => $data,

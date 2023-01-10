@@ -15,10 +15,10 @@ window.patternListTableActions = function (_value, row, _index) {
     let buttons = ( $('#mode5S').val() == CONFIG.get('5S_MODE').OWNER_COMPANY
     || $('#mode5S').val() == CONFIG.get('5S_MODE').IS_CHARGE ) ?
     (
-        '<button type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button type="button" style="margin-left: 6px;" class="btn btn-primary btn-sm" data-id="' +
         row.id +
         '" onclick="redirectToEdit(' +row.id+ ',' + row.deptId +')" id="patternListEdit">編集</button> ' +
-        '<button type="button" class="btn btn-danger btn-sm" data-id="' +
+        '<button type="button" style="margin-left: 6px;" class="btn btn-danger btn-sm" data-id="' +
         row.id +
         '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
     ) : ''
@@ -30,7 +30,7 @@ window.patternListTableActions = function (_value, row, _index) {
  --------------------- */
 window.cellStyle = function (value, row, index) {
     return {
-        classes: 'd-flex justify-content-around',
+        classes: 'justify-content-around',
     }
 }
 
@@ -154,8 +154,8 @@ $(function () {
     // Handle click on row event
     $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
-        if (row !== undefined) {
-            window.location =  '/pattern_dept_setting/edit?id=' + $el.id + '&departmentId=' + $el.deptId + '&mode=edit' ;
+        if (row) {
+            window.location = '/pattern_preview/' + $el.id + '?departmentId=' + $el.deptId + "&pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER");
         }
     })
 

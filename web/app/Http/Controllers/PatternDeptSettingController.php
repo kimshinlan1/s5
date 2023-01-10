@@ -28,10 +28,8 @@ class PatternDeptSettingController extends Controller
      */
     public function index()
     {
-        $companyList = $this->serviceEmployee->getCompanyList();
         $data = [
-            'selected5s' => [],
-            'companyList' => $companyList
+            'selected5s' => []
         ];
 
         return view('pattern.pattern_dept_setting', $data);
@@ -63,10 +61,6 @@ class PatternDeptSettingController extends Controller
             'info' => $info,
             'selected5s' => $selected5s
         ];
-        $is5SModeFree = $this->user->is5SModeFree();
-        if ($is5SModeFree) {
-            return view('pattern.pattern_preview', $data);
-        }
         return view('pattern.pattern_dept_setting', $data);
     }
 
