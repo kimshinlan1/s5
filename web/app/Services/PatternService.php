@@ -23,7 +23,7 @@ class PatternService extends BaseService
     /**
      * Get list by conditions
      *
-     * @param  $id
+     * @param  $id (id of pattern)
      *
      * @return array
      */
@@ -68,7 +68,7 @@ class PatternService extends BaseService
     /**
      * Get list
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $id (id of dept_patter_setting)
      *
      * @return array
      */
