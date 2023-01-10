@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('inspections_id');
+            $table->integer('inspection_id');
             $table->integer('block')->length(2); // 1 bock inlcude before/after images
             $table->string('img_before_path', 255);
             $table->string('img_after_path', 255);

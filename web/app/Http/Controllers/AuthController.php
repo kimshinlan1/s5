@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Crypt;
 
 class AuthController extends Controller
 {
@@ -50,7 +51,6 @@ class AuthController extends Controller
      */
     public function authenticate(LoginRequest $request)
     {
-
         $identifier = $request->get('identifier');
         $password = $request->get('password');
 
@@ -82,6 +82,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        Cache::flush();
         return redirect('login');
     }
 }

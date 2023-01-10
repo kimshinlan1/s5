@@ -109,4 +109,17 @@ class PatternService extends BaseService
         }
         return $data->delete();
     }
+
+    /**
+     * Get list by conditions
+     *
+     * @param  $id (id of dept_pattern)
+     *
+     * @return array
+     */
+    public function getDataDeptPatternById($id)
+    {
+        return DeptPattern::where('id', $id)->get()->first()?->toArray();
+    }
+
 }

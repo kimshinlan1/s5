@@ -3,18 +3,24 @@
 /**
  * Load data
  */
-function loadData() {
+function loadInspectionData(is_new = '') {
     showLoading();
 
     let params = {
-        dept_id: 19, // todo: get from hidden id
-        team_id: 1, // todo: get from hidden id
+        dept_id: 4, // todo: get from selectbox or hidden id
+        team_id: 1, // todo: get from selectbox or hidden id
     };
+
+    if (is_new) {
+        let count = $('#hidCountInspection').val();
+        params['new_total_column'] = parseInt(count) + 1;
+    }
 
     let url = "/pattern_team_inspection/data";
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
+        $("#content").html("");
         $("#content").append(data);
 
         // todo:
@@ -70,16 +76,34 @@ function initBarChart(dept_id) {
  * Add column (new inspection)
  */
 function addColumn() {
-    // todo:
-    alert("add");
+    loadInspectionData(true);
 }
 
 /**
  * Remove column
  */
 function removeColumn(inspection_id) {
-    // todo: submit to backend and reload page (check column from DB and new column)
-    alert("remove");
+    // todo: confirm ??
+    if (!confirm("Do you want to delete?")) {
+        return;
+    }
+
+    showLoading();
+
+    let params = {};
+    let url = "/pattern_team_inspection/destroy/" + inspection_id;
+    let method = "DELETE";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        loadInspectionData();
+    };
+
+    let failcallback = function (jqXHR, _textStatus, _jqXHR) {
+        // todo:
+        alert(CONFIG.get('SYSTEM_ERROR'));
+    };
+
+    runAjax(url, method, params, doneCallback, failcallback);
 }
 
 /**
@@ -93,7 +117,7 @@ function saveData() {
 /**
  * Open Evidence
  */
-function openEvidenceDialog() {
+function openEvidenceDialog(inspection_id) {
     // todo:
     alert("open evidence");
 }
@@ -108,7 +132,7 @@ function openEvidenceDialog() {
 $(function () {
 
     // Load data
-    loadData();
+    loadInspectionData();
 
     // Save click
     $("#btnSave").click(function () {
@@ -116,8 +140,8 @@ $(function () {
     });
 
     // Add column click
-    $("#btnAddColumn").click(function () {
-        // todo:
+    $("#btnAdd").click(function () {
+        addColumn();
     });
 
 
