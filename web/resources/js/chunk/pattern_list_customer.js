@@ -38,7 +38,7 @@ window.cellStyle = function (value, row, index) {
  *   Open Edit tab
  --------------------- */
  window.redirectToEdit = function (id, deptId) {
-    window.location = '/pattern_dept_setting/edit?id=' + id + '&departmentId=' + deptId + '&mode=edit' ;
+    window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId;
 }
 
 /** ------------------`
