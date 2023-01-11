@@ -146,10 +146,10 @@ window.selectPattern = function(id) {
   *    Redirect to dept pattern edit
 --------------------- */
 window.openEditDeptPattern = function(id) {
-    let dataId = $('#editPatternBtn' + id).attr("data-id");
-    let ids = $('#checklist5sID' + id).find(':selected').val();
-    if(dataId != "-1") {
-        window.location = '/pattern_dept_setting/' + ids + '&departmentId=' + dataId;
+    let deptID = $('#editPatternBtn' + id).attr("data-id");
+    let checklistId = $('#checklist5sID' + id).find(':selected').val();
+    if(deptID != "-1") {
+        window.location = '/pattern_dept_setting/' + checklistId + '&departmentId=' + deptID;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
