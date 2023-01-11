@@ -139,6 +139,20 @@ class PatternDeptSettingController extends Controller
             return $this->responseException();
         }
         $data = $this->service->save($request);
+
+        return response()->json($data);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveDeptPatternForFree(Request $request)
+    {
+        // todo: Check not exist data
+        $data = $this->service->saveForFree($request);
         return response()->json($data);
     }
 

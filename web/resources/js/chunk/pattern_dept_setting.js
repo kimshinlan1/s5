@@ -33,30 +33,31 @@ window.loadData = function() {
 }
 
 // Save
-window.saveAjax = function(data) {
-    // todo:
-    let params = {
-        data: data
-    };
 
-    $.ajax({
-        url: "/pattern_dept_setting/save",
-        type: "POST",
-        data: params
-    })
-    .done(function (res) {
-        // todo: notify
+window.saveAjax = function(data, patId=null, ispattern=null) {
+    let url = patId ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
+    let method = "POST";
+    let name = $('#patternName').val();
+    let compId = $('#userCompanyId').val();
+    let freeData = {
+        pattern_id: patId,
+        name: name,
+        ispattern: ispattern ? ispattern : -1,
+        department_id: $('#departmentId').find(':selected').val(),
+        company_id: compId,
+    }
+    let params = patId ? freeData : {data: data} ;
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             location.href = "/pattern_list_customer";
         }, 200);
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // show errors
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         showToast($('#toast8'), 2000, true);
-    })
-    .always(function () {
-    });
+    };
+    runAjax(url, method, params, doneCallback, failCallback, null, true);
 }
 
 /**
@@ -145,7 +146,7 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
  * Load Company
  */
 window.loadCompany = function(id) {
-    let url = 'company/get_companies';
+    let url = '/company/get_companies';
 
     let method = "GET";
 
@@ -239,7 +240,6 @@ $(function () {
     else {
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#departmentId').prop( "disabled",true);
-            $('#selectPatternIds').prop( "disabled",true);
             $('#companyOptionId').prop( "disabled",true);
         } else {
             $('#departmentId').prop( "disabled",false);
@@ -300,7 +300,13 @@ $(function () {
             return;
         }
 
-        validateAndGetDataTable();
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            let patId = $('#selectPatternIds').val();
+            let ispattern = $('#selectPatternIds').find(':selected').data('ispattern');
+            saveAjax(null, patId, ispattern);
+        } else {
+            validateAndGetDataTable();
+        }
 
     });
 

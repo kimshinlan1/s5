@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/pattern_dept_setting', PatternDeptSettingController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('/pattern_dept_setting/{id}', [PatternDeptSettingController::class, 'edit']);
         Route::post('/pattern_dept_setting/save', [PatternDeptSettingController::class, 'saveDeptPattern']);
+        Route::post('/pattern_dept_setting/freeUserSave', [PatternDeptSettingController::class, 'saveDeptPatternForFree']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);
 
         // Pattern detail (all users)

@@ -125,7 +125,7 @@ window.selectPattern = function(id) {
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
     if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "") {
         $('#errorDialog').modal('show');
-        $('#errorDialog .error-messages').text($('#errMessageUser1Pattern').val());
+        $('#errorDialog .error-messages').text($('#errMessageUse1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0).change();
     } else {
         if (dataId && isPattern == "true") {
@@ -143,8 +143,9 @@ window.selectPattern = function(id) {
 --------------------- */
 window.openEditDeptPattern = function(id) {
     let dataId = $('#editPatternBtn' + id).attr("data-id");
+    let ids = $('#checklist5sID' + id).find(':selected').val();
     if(dataId != "-1") {
-        window.location = '/pattern_dept_setting/edit?id=' + dataId + '&departmentId=' + id + '&mode=edit' ;
+        window.location = '/pattern_dept_setting/edit?id=' + dataId + '&departmentId=' + ids + '&mode=edit' ;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
