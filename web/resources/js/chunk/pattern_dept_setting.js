@@ -124,13 +124,18 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
     let doneCallback = function (data, _textStatus, _jqXHR) {
         let html = '';
         data.forEach(function callback(e, index) {
+            if (patternId == null && index == 0) {
+                $('#patternNote').val(e.note);
+            }
+
             if (isPattern) {
                 if(index != 0 && e.id == patternId ) {
-                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" selected>' + e.name + '</option>';
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '" selected>' + e.name + '</option>';
+                    $('#patternNote').val(e.note);
                 }
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             } else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '">' + e.name + '</option>';
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '">' + e.name + '</option>';
             }
         });
         $('#selectPatternIds').html(html);
@@ -225,6 +230,8 @@ $(function () {
     let isPattern = urlParams.get('isPattern');
     let patternId = urlParams.get('patternId');
     if (deptId) {
+        // set seleted value for company
+        $('#companyOptionId').val(deptId);
         loadDeptList(deptId, 'edit');
         loadPatternList(deptId, isPattern, patternId);
         $('#departmentId').prop( "disabled",true);
@@ -329,6 +336,8 @@ $(function () {
     $('#selectPatternIds').change(function() {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
+        let note = $('#selectPatternIds').find(':selected').attr("data-note");
+        $('#patternNote').val(note);
         isPattern = isPattern == "true" ? true : false;
         addAreaToTable('edit', patternid, isPattern);
     });
