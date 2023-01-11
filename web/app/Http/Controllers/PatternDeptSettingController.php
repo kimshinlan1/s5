@@ -47,7 +47,7 @@ class PatternDeptSettingController extends Controller
         $selected5s = null;
         $info = null;
         $mode = $request->get('mode');
-        if ($mode == 'edit') {
+        if ($id) {
             $info = (app()->get(PatternDeptSettingService::class))->getDataById($id);
         }
         if (!empty($info)) {
