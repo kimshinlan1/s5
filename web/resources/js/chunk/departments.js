@@ -145,7 +145,7 @@ window.openEditDeptPattern = function(id) {
     let dataId = $('#editPatternBtn' + id).attr("data-id");
     let ids = $('#checklist5sID' + id).find(':selected').val();
     if(dataId != "-1") {
-        window.location = '/pattern_dept_setting/edit?id=' + dataId + '&departmentId=' + ids + '&mode=edit' ;
+        window.location = '/pattern_dept_setting?id=' + ids + '&departmentId=' + dataId;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -404,7 +404,7 @@ window.saveDataEmployee = function () {
         let deptId = $('#okBtn').attr('data-deptid');
         let patternId = $('#okBtn').attr('data-patternid');
         let isPattern = $('#okBtn').attr('data-isPattern');
-        window.location = '/pattern_dept_setting/edit?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
+        window.location = '/pattern_dept_setting?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
     })
 
     $('#cancelBtn').on('click', function() {

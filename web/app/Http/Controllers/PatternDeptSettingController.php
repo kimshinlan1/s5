@@ -42,11 +42,10 @@ class PatternDeptSettingController extends Controller
       *
       * @return \Illuminate\Http\Response
     */
-    public function edit(Request $request)
+    public function edit($id = null, Request $request)
     {
         $selected5s = null;
         $info = null;
-        $id = $request->get('id');
         $mode = $request->get('mode');
         if ($mode == 'edit') {
             $info = (app()->get(PatternDeptSettingService::class))->getDataById($id);
