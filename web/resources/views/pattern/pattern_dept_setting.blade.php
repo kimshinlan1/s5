@@ -87,6 +87,9 @@
                             aria-label="Pattern select" id="selectPatternIds" >
                             </select>
                         </div>
+                        <div class="label_header_1" hidden>
+                            <input type="text" class="form-control" id="patternNote" value="">
+                        </div>
                         @if(auth()->user()->isAdmin())
                         <div class="label_header">
                         </div>
