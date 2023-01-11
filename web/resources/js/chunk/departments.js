@@ -149,7 +149,7 @@ window.openEditDeptPattern = function(id) {
     let dataId = $('#editPatternBtn' + id).attr("data-id");
     let ids = $('#checklist5sID' + id).find(':selected').val();
     if(dataId != "-1") {
-        window.location = '/pattern_dept_setting?id=' + ids + '&departmentId=' + dataId;
+        window.location = '/pattern_dept_setting/' + ids + '&departmentId=' + dataId;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');

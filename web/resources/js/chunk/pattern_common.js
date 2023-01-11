@@ -474,7 +474,7 @@ $(function () {
         let deptId = urlParams.get('departmentId');
         let pageDest = urlParams.get('pageDest');
 
-        window.location = '/pattern_dept_setting?id=' + id + '&departmentId='+deptId+'&pageDest='+pageDest;
+        window.location = '/pattern_dept_setting/' + id + '?departmentId='+deptId+'&pageDest='+pageDest;
     });
 
     $("#btnBackPagePreview").click(function () {
