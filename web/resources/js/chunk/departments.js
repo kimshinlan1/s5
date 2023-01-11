@@ -7,7 +7,7 @@
  /* ==============================
      Global Functions
  ============================== */
-
+var checkPatternOnly = false;
 /** ------------------
   *    Actions
   --------------------- */
@@ -26,9 +26,12 @@ window.departmentTableActions = function (_value, row, _index) {
   *    5S Checklist Actions
   --------------------- */
 window.department5SChecklistActions = function (_value, row, _index) {
-    let options = '<select class=" form-select px-4" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
+    let options = '<select class=" form-select px-2" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
     options += '<option> </option>';
 
+    if (row.dept_pattern_id) {
+        checkPatternOnly = true;
+    }
     $.ajax({
         url: '/pattern_list/getlist_by_department/' + row.id,
         type: 'GET',
@@ -123,7 +126,8 @@ window.selectPattern = function(id) {
     let hasDeptPattern = $("#checklist5sID" + id).find("option:first-child").val();
     $('#checklist5sID' + id).siblings().attr('data-id', dataId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
-    if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "") {
+    if (($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "")
+        || ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly == true)) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#errMessageUse1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0).change();
