@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Common\Constant;
 use App\Models\Area;
 use App\Models\Department;
 use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
+use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
@@ -49,8 +49,6 @@ class PatternDeptSettingService extends BaseService
     public function getData($id)
     {
         // todo: Update => Call from DeptPatternService, use common. If diffence, update here
-
-
         $sql = DB::table('dept_patterns_details')
         ->select([
             'areas.id as area_id',
@@ -97,8 +95,6 @@ class PatternDeptSettingService extends BaseService
     {
         // todo: Update => Call from DeptPatternService, use common. If diffence, update here
         // use:  dept_patterns, dept_patterns_details
-
-
         $data = $request->get('data');
         $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
 
@@ -179,6 +175,84 @@ class PatternDeptSettingService extends BaseService
                     ]);
                 }
             }
+        }
+
+        return $deptPattern;
+    }
+
+    /**
+     * Save pattern full info for free User
+     *
+     * @param  \App\Http\Requests  $request
+     * @return object
+     */
+    public function saveForFree(Request $request)
+    {
+        $patternId = $request->get('pattern_id');
+        $companyId = $request->get('company_id');
+
+        $isPattern = $request->get('ispattern');
+        if ($isPattern != '-1') {
+            $pattern  = Pattern::find($patternId)->toArray();
+            $data = (app()->get(PatternDetailService::class))->getData((int)$patternId);
+        } else {
+            $pattern  = DeptPattern::find($patternId)->toArray();
+            $data = $this->getData((int)$patternId);
+        }
+
+        // Check if free account has dept pattern or not. Delete old dept pattern if existed
+        $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)->whereNotNull('dept_pattern_id')->get()->toArray();
+        if (count($checkPattern) > 0) {
+            $this->modelDetail::where("dept_pattern_id", $checkPattern[0]['dept_pattern_id'])->delete();
+            $this->model::where("id", $checkPattern[0]['dept_pattern_id'])->delete();
+        }
+        Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
+        $pattern['id'] = null;
+        $pattern['name'] = $request->get('name');
+        $deptPattern = $this->model::create($pattern);
+
+        $deptPatternId = $deptPattern->id;
+        $dept = Department::find((int)$request->get('department_id'));
+        $dept->dept_pattern_id = $deptPatternId;
+        $dept->save();
+
+        // Loop to insert Areas
+        $trackLocationId = -1;
+        $trackAreaId = -1;
+        $locationId = -1;
+        foreach ($data as $area) {
+            $area = json_decode(json_encode($area, true), true);
+            // Step: Insert new Area
+            if ($area['area_id'] != $trackAreaId) {
+                $areaId = Area::create([
+                    'name' => $area['area_name'],
+                    'pattern_id' => $deptPatternId
+                ]);
+                $areaId = $areaId->id;
+                $trackAreaId = $area['area_id'];
+
+            }
+
+            // Loop to insert Locations
+            if ($area['location_id'] != $trackLocationId) {
+                $locationId = Location::create([
+                    'name' => $area['location_name'],
+                    'area_id' => $areaId
+                ]);
+                $trackLocationId = $area['location_id'];
+                $locationId = $locationId->id;
+            }
+            DeptPatternDetail::create([
+                'area_id' => $areaId,
+                'dept_pattern_id' => $deptPatternId,
+                'location_id' => $locationId,
+                'point' => $area['5s'],
+                'level_1' => $area['level_1'],
+                'level_2' => $area['level_2'],
+                'level_3' => $area['level_3'],
+                'level_4' => $area['level_4'],
+                'level_5' => $area['level_5'],
+            ]);
         }
 
         return $deptPattern;
