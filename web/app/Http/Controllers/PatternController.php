@@ -78,7 +78,19 @@ class PatternController extends Controller
      */
     public function listPattern($id)
     {
-        return $this->service->listPatternbyDept($id);
+        return $this->service->listPatternbyComp($id);
+    }
+
+    /**
+     * Check if free company has a dept pattern
+     *
+     * @param $id company id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkDeptPatternExist($id)
+    {
+        return $this->service->checkDeptPatternExist($id);
     }
 
     /**
@@ -129,7 +141,7 @@ class PatternController extends Controller
         // Get database for edit follow by below structure
         $id = $request->get('id');
         $pageDest = $request->get('pageDest');
-       
+
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER){
             $data = app(PatternDeptSettingService::class)->getData($id);
         } else {

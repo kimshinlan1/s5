@@ -113,6 +113,8 @@
                         </div>
                         <div class="label_header_1">
                             <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="label_header">
                         </div>

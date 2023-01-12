@@ -97,7 +97,12 @@ class PatternDeptSettingService extends BaseService
         // use:  dept_patterns, dept_patterns_details
         $data = $request->get('data');
         $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
-
+        $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name']);
+        if (!$isUnique) {
+            return [
+                'invalid' => true,
+            ];
+        }
         /**
          * Step: Remove old data
          *
@@ -182,6 +187,24 @@ class PatternDeptSettingService extends BaseService
     }
 
     /**
+     * Check if pattern name is unique
+     *
+     * @param  \App\Http\Requests  $deptId, $patternName
+     * @return boolean
+     */
+    public function checkUniqueName($deptId, $deptPatternName) {
+        $compId = Department::find($deptId)->company_id;
+        $deptPatternIds = Department::select('dept_pattern_id')->where('company_id', $compId)->whereNotNull('dept_pattern_id')->get()->toArray();
+        foreach ($deptPatternIds as $ele) {
+            $deptPat = DeptPattern::find($ele['dept_pattern_id']);
+            if ($deptPat && $deptPatternName === $deptPat->name) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Save pattern full info for free User
      *
      * @param  \App\Http\Requests  $request
@@ -191,6 +214,15 @@ class PatternDeptSettingService extends BaseService
     {
         $patternId = $request->get('pattern_id');
         $companyId = $request->get('company_id');
+        $deptPatternName = $request->get('name');
+        $deptId = $request->get('department_id');
+
+        $isUnique = $this->checkUniqueName($deptId, $deptPatternName);
+        if (!$isUnique) {
+            return [
+                'invalid' => true,
+            ];
+        }
 
         $isPattern = $request->get('ispattern');
         if ($isPattern != '-1') {
@@ -209,11 +241,11 @@ class PatternDeptSettingService extends BaseService
         }
         Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $pattern['id'] = null;
-        $pattern['name'] = $request->get('name');
+        $pattern['name'] = $deptPatternName;
         $deptPattern = $this->model::create($pattern);
 
         $deptPatternId = $deptPattern->id;
-        $dept = Department::find((int)$request->get('department_id'));
+        $dept = Department::find((int)$deptId);
         $dept->dept_pattern_id = $deptPatternId;
         $dept->save();
 

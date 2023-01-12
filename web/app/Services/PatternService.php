@@ -72,22 +72,41 @@ class PatternService extends BaseService
      *
      * @return array
      */
-    public function listPatternbyDept($id)
+    public function listPatternbyComp($id)
     {
         $data = [];
-        $deptPatternId = Department::where('id', $id)->first()->dept_pattern_id;
-        if ($deptPatternId) {
-            $data = DB::table('dept_patterns')->where('id', $deptPatternId)->get()->toArray();
+        $ids = Department::select('dept_pattern_id')->where('company_id', $id)->get()->toArray();
+        if (empty($ids)) {
+            return [];
         }
-        if (count($data) > 0) {
-            // isPattern is used for checking if the pattern belongs to customer or kaizenbase
-            $data[0]->isPattern = false;
+        $deptPatterns = DB::table('dept_patterns')->whereIn('id', $ids)->get()->toArray();
+
+        foreach ($deptPatterns as $deptPattern) {
+            $deptPattern->isPattern = false;
         }
         $patterns = DB::table('patterns')->orderBy('id')->get()->toArray();
         foreach ($patterns as $pattern) {
             $pattern->isPattern = true;
         }
-        $data = array_merge($data, $patterns);
+        $data = array_merge($deptPatterns, $patterns);
+        return $data;
+    }
+
+    /**
+     * Get list
+     *
+     * @param  $id (id of dept_patter_setting)
+     *
+     * @return array
+     */
+    public function checkDeptPatternExist($id)
+    {
+        $ids = Department::select('dept_pattern_id')->where('company_id', $id)
+        ->whereNotNull('dept_pattern_id')->get()->toArray();
+        $checkDeptPatternExist = DeptPattern::whereIn('id', $ids)->exists();
+        $data = [
+            'isExisted' => $checkDeptPatternExist,
+        ];
         return $data;
     }
 
