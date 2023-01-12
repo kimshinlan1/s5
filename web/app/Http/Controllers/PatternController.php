@@ -112,7 +112,7 @@ class PatternController extends Controller
     public function preview($id, Request $request)
     {
         $pageDest = $request->get('pageDest');
-        $info = (app()->get(PatternService::class))->getDataDeptPatternById($id);
+        $info = app(PatternService::class)->getDataDeptPatternById($id);
         if (empty($info)) {
             return $this->responseException();
         }
