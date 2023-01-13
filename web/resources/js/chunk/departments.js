@@ -170,7 +170,7 @@ window.openEditDeptPattern = function(id) {
     let deptID = $('#editPatternBtn' + id).attr("data-id");
     let checklistId = $('#checklist5sID' + id).find(':selected').val();
     if (checklistId.length != 0) {
-        window.location = '/pattern_dept_setting/' + checklistId + '&departmentId=' + deptID;
+        window.location = '/pattern_dept_setting/' + checklistId + '?departmentId=' + deptID;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -437,6 +437,10 @@ window.saveDataEmployee = function () {
         let oldPatternSelected = $(this).attr('data-deptid-old');
         // $('#checklist5sID' + deptId).prop("selectedIndex", 0).change();
         $("#checklist5sID" + deptId).val(oldPatternSelected);
+        if (oldPatternSelected == '') {
+            checkPatternOnly = false;
+            checkDeptPattern = '';
+        }
     })
 
     /** ------------------
