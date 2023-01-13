@@ -49,15 +49,8 @@ class PatternTeamInspectionController extends Controller
         }
 
         // Get Columns: Inspection detail and render structure todo:
-        $inspectionDetails = [];
         $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
-        dd($inspectionDetails);
-        // if (!Cache::has('inspection_detail')) {
-        //     $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
-        //     Cache::put('inspection_detail', $inspectionDetails);
-        // } else {
-        //     $inspectionDetails = Cache::get('inspection_detail');
-        // }
+        $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
 
         // Get Rows: patterns
         $data = [];
@@ -71,84 +64,24 @@ class PatternTeamInspectionController extends Controller
 
 
 
-        // todo: Check existed
+        // todo: Check empty
         // if (empty($inspectionDetails) || empty($data)) {
         //     // todo:
         //     return;
         // }
 
-        // dd($inspectionDetails);
-
-        // Test
-        // $inspectionDetails = [
-        //     0 => [
-        //         'inspections_id' => 1,
-        //         'inspection_date' => '1/1/2023',
-        //         'area_id' => 1,
-        //         'location_id' => 1,
-        //         '5s' => 's1',
-        //         'point_value' => '1',
-        //         'count_evidence' => '10',
-        //     ],
-        //     1 => [
-        //         'inspections_id' => 1,
-        //         'inspection_date' => '1/1/2023',
-        //         'area_id' => 1,
-        //         'location_id' => 1,
-        //         '5s' => 's2',
-        //         'point_value' => '2',
-        //         'count_evidence' => '10',
-        //     ],
-        //     2 => [
-        //         'inspections_id' => 1,
-        //         'inspection_date' => '1/1/2023',
-        //         'area_id' => 1,
-        //         'location_id' => 1,
-        //         '5s' => 's3',
-        //         'point_value' => '3',
-        //         'count_evidence' => '10',
-        //     ],
-        //     3 => [
-        //         'inspections_id' => 2,
-        //         'inspection_date' => '2/1/2023',
-        //         'area_id' => 1,
-        //         'location_id' => 1,
-        //         '5s' => 's1',
-        //         'point_value' => '0',
-        //         'count_evidence' => '10',
-        //     ],
-        //     4 => [
-        //         'inspections_id' => 2,
-        //         'inspection_date' => '2/1/2023',
-        //         'area_id' => 1,
-        //         'location_id' => 1,
-        //         '5s' => 's2',
-        //         'point_value' => '1',
-        //         'count_evidence' => '10',
-        //     ],
-        //     5 => [
-        //         'inspections_id' => 2,
-        //         'inspection_date' => '2/1/2023',
-        //         'area_id' => 1,
-        //         'location_id' => 1,
-        //         '5s' => 's3',
-        //         'point_value' => '4',
-        //         'count_evidence' => '10',
-        //     ],
-        // ];
-
         // Rebuild structure to render
         $inspectionData = [];
         foreach ($inspectionDetails as $inspection) {
             $index = $inspection['area_id'] . "_" . $inspection['location_id'] . "_" . $inspection['5s'];
-            $inspectionData[$inspection['inspections_id']]['inspection_date'] = $inspection['inspection_date'];
-            $inspectionData[$inspection['inspections_id']]['count_evidence'] = $inspection['count_evidence'] ?: 0;
-            $inspectionData[$inspection['inspections_id']][$index] = $inspection['point_value'];
+            $inspectionData[$inspection['inspection_id']]['inspection_date'] = $inspection['inspection_date'];
+            $inspectionData[$inspection['inspection_id']]['count_evidence'] = $inspection['count_evidence'] ?: 0;
+            $inspectionData[$inspection['inspection_id']][$index] = $inspection['point_value'];
         }
 
         // Sample Structure
         // $structure = [
-        //     'inspections_id' => [ // 1 inspections_id = 1 column
+        //     'inspection_id' => [ // 1 inspection_id = 1 column
         //         'inspection_date' => '',
         //         'count_evidence' => '',
         //         'area_id_location_id_5s' => 'point_value'
@@ -162,10 +95,6 @@ class PatternTeamInspectionController extends Controller
             $inspectionIds[] = "new_" . time() . $i;
             $i++;
         }
-
-        // dd($inspectionIds);
-        // $inspectionData = [];
-
 
         $params = [
             'new' => empty($inspectionData),

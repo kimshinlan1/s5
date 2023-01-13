@@ -9,6 +9,7 @@ use App\Models\Location;
 use App\Models\Inspection;
 use Illuminate\Http\Request;
 use App\Models\PatternDetail;
+use App\Models\InspectionImage;
 use App\Models\InspectionDetail;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
@@ -119,21 +120,19 @@ class PatternTeamInspectionService extends BaseService
     public function destroyInspections($inspectionId)
     {
         // Remove inspection
-        $data = DB::table("inspection")->find($inspectionId);
-        $data?->delete();
+        $data = Inspection::find($inspectionId)->delete();
 
         // Remove Inspection details
-        DB::table("inspection_details")->where('inspection_id', $inspectionId)?->delete();
+        InspectionDetail::where('inspection_id', $inspectionId)->delete();
 
-        // Remove Inspection images
-        DB::table("inspection_images")->where('inspection_id', $inspectionId)?->delete();
+        // todo: Remove Inspection images
+        // InspectionImage::where('inspection_id', $inspectionId)->delete();
 
-        // todo: Remove all images
+        // todo: Remove all images on disk
         if ($data) {
             // todo: Check exists img in inspectionId (ex: public/uploads/inspections/imgs/{inspectionId}/*)
             // $this->inspectionImagePath;
         }
-
 
         return $data;
     }

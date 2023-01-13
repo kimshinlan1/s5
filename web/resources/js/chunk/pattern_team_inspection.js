@@ -3,7 +3,7 @@
  */
 const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
-const TEST_TEAM_ID = 1;
+const TEST_TEAM_ID = 1; // todo: get from selectbox or hidden / just for test
 
 
 //////////////////////////////////////////////////////////////////
@@ -59,14 +59,17 @@ function loadInspectionData(mode = '') {
             $(this).datepicker({
                 autoclose: true,
                 dateFormat: 'yy年mm月dd日',
-                // timeFormat:  "hh:mm:ss",
                 language: 'ja',
                 changeYear: true
             });
 
-            // todo: Check and get from DB
+            // Check and get from DB
+            let date_value = "";
+            if ($(this).next().val()) {
+                date_value = new Date(dateFormat($(this).next().val()));
+            }
 
-            // $(this).datepicker("setDate", date_value);
+            $(this).datepicker("setDate", date_value);
         });
     };
 
@@ -148,11 +151,8 @@ function validateAndGetData() {
     let params = [];
 
     $('input[id^=hidInspectionId]').each(function() {
-        // console.log($(this).val());
-
         let id = $(this).val();
         let inspection_date = $.datepicker.formatDate("yy-mm-dd", $('#txtInspectionDate_'+id).datepicker("getDate"));
-        inspection_date += " 0:0:0";
         if (id && inspection_date) {
 
             let inspection = {
@@ -189,7 +189,7 @@ function validateAndGetData() {
 
     });
 
-    // console.log(params);
+    console.log(params);
 
     return params;
 }
