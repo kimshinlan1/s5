@@ -8,6 +8,8 @@
      Global Functions
  ============================== */
 var checkPatternOnly = false;
+var patternOldSelectedValue = '';
+var checkDeptPattern = '';
 /** ------------------
   *    Actions
   --------------------- */
@@ -31,7 +33,9 @@ window.department5SChecklistActions = function (_value, row, _index) {
 
     if (row.dept_pattern_id) {
         checkPatternOnly = true;
+        checkDeptPattern = row.id;
     }
+
     $.ajax({
         url: '/pattern_list/getlist_by_department/' + row.id,
         type: 'GET',
@@ -41,7 +45,7 @@ window.department5SChecklistActions = function (_value, row, _index) {
         let dataId = -1;
         _data.forEach(ele => {
             if (!ele.isPattern) {
-                options = options.replace("<option> </option>", "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>");
+                options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " selected >" + ele.name + "</option>";
                 dataId = 1;
             } else {
                 options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
@@ -123,14 +127,23 @@ window.isIpad = function() {
 window.selectPattern = function(id) {
     let dataId = $("#checklist5sID" + id).find(":selected").val();
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
-    let hasDeptPattern = $("#checklist5sID" + id).find("option:first-child").val();
+    let patternFirstLoadValue = '';
     $('#checklist5sID' + id).siblings().attr('data-id', dataId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
-    if (($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && isPattern == "true" && hasDeptPattern != "")
-        || ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly == true)) {
+    $("#checklist5sID" + id + " > option").each(function() {
+        if (this.dataset.ispattern == 'false') {
+            patternFirstLoadValue = this.value;
+        }
+    });
+    if (checkDeptPattern == id) {
+        checkPatternOnly = false;
+        checkDeptPattern = '';
+    }
+    if ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly == true) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#errMessageUse1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0).change();
+        $("#checklist5sID" + id).val(patternOldSelectedValue);
     } else {
         if (dataId && isPattern == "true") {
             $('#confirmDialog3').modal('show');
@@ -138,7 +151,15 @@ window.selectPattern = function(id) {
             $('#okBtn').attr('data-deptid', id);
             $('#okBtn').attr('data-patternid', dataId);
             $('#okBtn').attr('data-isPattern', isPattern);
+            $('#cancelBtn').attr('data-deptid-old', patternFirstLoadValue);
+
         }
+
+        if (dataId && checkDeptPattern == '') {
+            checkPatternOnly = true;
+            checkDeptPattern = id;
+        }
+
     }
 }
 
@@ -148,8 +169,8 @@ window.selectPattern = function(id) {
 window.openEditDeptPattern = function(id) {
     let deptID = $('#editPatternBtn' + id).attr("data-id");
     let checklistId = $('#checklist5sID' + id).find(':selected').val();
-    if(deptID != "-1") {
-        window.location = '/pattern_dept_setting/' + checklistId + '&departmentId=' + deptID;
+    if (checklistId.length != 0) {
+        window.location = '/pattern_dept_setting/' + checklistId + '?departmentId=' + deptID;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -413,8 +434,13 @@ window.saveDataEmployee = function () {
 
     $('#cancelBtn').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
-        $('#checklist5sID' + deptId).prop("selectedIndex", 0).change();
-
+        let oldPatternSelected = $(this).attr('data-deptid-old');
+        // $('#checklist5sID' + deptId).prop("selectedIndex", 0).change();
+        $("#checklist5sID" + deptId).val(oldPatternSelected);
+        if (oldPatternSelected == '') {
+            checkPatternOnly = false;
+            checkDeptPattern = '';
+        }
     })
 
     /** ------------------
@@ -560,4 +586,11 @@ window.saveDataEmployee = function () {
             window.saveDataEmployee();
         }
     });
- });
+
+    /** ------------------
+    *    Event click row on table department.
+    --------------------- */
+    $("#departmentTable").on("click", "tr", function (row, $el, _field) {
+        patternOldSelectedValue = $(this).find('td:nth-child(3) option:selected').val();
+    });
+});

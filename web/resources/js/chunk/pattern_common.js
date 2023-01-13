@@ -338,12 +338,12 @@ function validateAndGetDataTable() {
                     let levelName = $(e).find("#level_"  + cnt).val();
                     // if level is empty
                     if (levelName.trim().length === 0) {
-                        valid = false;
+                        // valid = false;
                         row["level_" + cnt] = "";
-                        $(e).find("#level_"  + cnt).addClass('is-invalid');
+                        // $(e).find("#level_"  + cnt).addClass('is-invalid');
                     } else {
                         row["level_" + cnt] = levelName;
-                        $(e).find("#level_"  + cnt).removeClass('is-invalid');
+                        // $(e).find("#level_"  + cnt).removeClass('is-invalid');
                     }
                 }
                 location['rows'][$(e).find("#hid5S").val()] = row;
@@ -475,9 +475,8 @@ $(function () {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         let deptId = urlParams.get('departmentId');
-        let pageDest = urlParams.get('pageDest');
 
-        window.location = '/pattern_dept_setting/' + id + '?departmentId='+deptId+'&pageDest='+pageDest;
+        window.location = '/pattern_dept_setting/' + id + '?departmentId='+ deptId;
     });
 
     $("#btnBackPagePreview").click(function () {

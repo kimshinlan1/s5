@@ -7,6 +7,7 @@ use App\Common\Constant;
 use App\Services\PatternService;
 use App\Services\PatternDetailService;
 use App\Services\PatternDeptSettingService;
+use Illuminate\Support\Facades\Auth;
 
 class PatternController extends Controller
 {
@@ -50,7 +51,11 @@ class PatternController extends Controller
      */
     public function indexCustomer()
     {
-        return view('pattern.pattern_list_customer');
+        /** @var User */
+        $user = Auth::user();
+        if (!$user->is5SModeFree()) {
+            return view('pattern.pattern_list_customer');
+        }
     }
 
     /**
@@ -116,11 +121,10 @@ class PatternController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function preview($id)
+    public function preview($id, Request $request)
     {
-        $strUrl = $_GET;
-        $pageDest = $strUrl['pageDest'];
-        $info = (app()->get(PatternService::class))->getDataDeptPatternById($id);
+        $pageDest = $request->get('pageDest');
+        $info = app(PatternService::class)->getDataDeptPatternById($id);
         if (empty($info)) {
             return $this->responseException();
         }
