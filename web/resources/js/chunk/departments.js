@@ -127,9 +127,15 @@ window.isIpad = function() {
 window.selectPattern = function(id) {
     let dataId = $("#checklist5sID" + id).find(":selected").val();
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
+    let patternFirstLoadValue = '';
     $('#checklist5sID' + id).siblings().attr('data-id', dataId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
-    if (!dataId && checkDeptPattern == id) {
+    $("#checklist5sID" + id + " > option").each(function() {
+        if (this.dataset.ispattern == 'false') {
+            patternFirstLoadValue = this.value;
+        }
+    });
+    if (checkDeptPattern == id) {
         checkPatternOnly = false;
         checkDeptPattern = '';
     }
@@ -145,6 +151,7 @@ window.selectPattern = function(id) {
             $('#okBtn').attr('data-deptid', id);
             $('#okBtn').attr('data-patternid', dataId);
             $('#okBtn').attr('data-isPattern', isPattern);
+            $('#cancelBtn').attr('data-deptid-old', patternFirstLoadValue);
 
         }
 
@@ -162,8 +169,8 @@ window.selectPattern = function(id) {
 window.openEditDeptPattern = function(id) {
     let deptID = $('#editPatternBtn' + id).attr("data-id");
     let checklistId = $('#checklist5sID' + id).find(':selected').val();
-    if(deptID != "-1") {
-        window.location = '/pattern_dept_setting/' + checklistId + '&departmentId=' + deptID;
+    if (checklistId.length != 0) {
+        window.location = '/pattern_dept_setting/' + checklistId + '?departmentId=' + deptID;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -427,8 +434,13 @@ window.saveDataEmployee = function () {
 
     $('#cancelBtn').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
-        $('#checklist5sID' + deptId).prop("selectedIndex", 0).change();
-
+        let oldPatternSelected = $(this).attr('data-deptid-old');
+        // $('#checklist5sID' + deptId).prop("selectedIndex", 0).change();
+        $("#checklist5sID" + deptId).val(oldPatternSelected);
+        if (oldPatternSelected == '') {
+            checkPatternOnly = false;
+            checkDeptPattern = '';
+        }
     })
 
     /** ------------------
