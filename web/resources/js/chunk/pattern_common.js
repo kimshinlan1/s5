@@ -285,9 +285,11 @@ function validateAndGetDataTable() {
     params['old_areas'] = [];
     params['old_locations'] = [];
     params['department'] = [];
+    params['company'] = [];
 
     // get department id
     params['department'] = $('#departmentId').find(':selected').val();
+    params['company'] = $('#companyOptionId').find(':selected').val();
 
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {
@@ -443,12 +445,12 @@ function configCalendarPattern() {
 /**
  * Load preview DB
  */
-window.loadDataPreview = function(pageDest) {
+window.loadDataPreview = function(pageDest, id=null) {
     showLoading();
 
     let params = {
         // selected_5s: JSON.stringify(selected_5s),
-        id: $('#hidPatternId').val(),
+        id: (id) ? id : $('#hidPatternId').val(),
         pageDest: pageDest,
     };
 
@@ -456,6 +458,7 @@ window.loadDataPreview = function(pageDest) {
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
+        $("#table-content tbody").empty();
         $("#table-content tbody").append(data);
         configCalendarPattern();
     };

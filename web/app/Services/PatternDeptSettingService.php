@@ -8,6 +8,7 @@ use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
+use App\Models\Company;
 use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
@@ -97,7 +98,12 @@ class PatternDeptSettingService extends BaseService
         // use:  dept_patterns, dept_patterns_details
         $data = $request->get('data');
         $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
-
+        $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name']);
+        if (!$isUnique) {
+            return [
+                'invalid' => true,
+            ];
+        }
         /**
          * Step: Remove old data
          *
@@ -129,6 +135,7 @@ class PatternDeptSettingService extends BaseService
                 'id' => $data['info']['pattern_id']
             ],
             [
+                'company_id' => $request->data['company'],
                 'no' => $no,
                 'name' => $data['info']['pattern_name'],
                 'note' => $data['info']['pattern_note'],
@@ -147,7 +154,7 @@ class PatternDeptSettingService extends BaseService
             // Step: Insert new Area
             $areaId = Area::create([
                 'name' => $area['area_name'],
-                'pattern_id' => $deptPatternId
+                'dept_pattern_id' => $deptPatternId
             ]);
             $areaId = $areaId->id;
 
@@ -182,6 +189,23 @@ class PatternDeptSettingService extends BaseService
     }
 
     /**
+     * Check if pattern name is unique
+     *
+     * @param $deptId
+     * @param $patternName
+     * @return boolean
+     */
+    public function checkUniqueName($deptId, $deptPatternName) {
+        $compId = Department::find($deptId)->company_id;
+        $dept_pattern = null;
+        $deptPatternIds = Department::where('company_id', $compId)->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+        if (!empty($deptPatternIds)) {
+            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)->where('name', $deptPatternName)->exists();
+        }
+        return $dept_pattern ? false: true;
+    }
+
+    /**
      * Save pattern full info for free User
      *
      * @param  \App\Http\Requests  $request
@@ -191,6 +215,15 @@ class PatternDeptSettingService extends BaseService
     {
         $patternId = $request->get('pattern_id');
         $companyId = $request->get('company_id');
+        $deptPatternName = $request->get('name');
+        $deptId = $request->get('department_id');
+
+        $isUnique = $this->checkUniqueName($deptId, $deptPatternName);
+        if (!$isUnique) {
+            return [
+                'invalid' => true,
+            ];
+        }
 
         $isPattern = $request->get('ispattern');
         if ($isPattern != '-1') {
@@ -202,18 +235,19 @@ class PatternDeptSettingService extends BaseService
         }
 
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
-        $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)->whereNotNull('dept_pattern_id')->get()->toArray();
+        $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)
+        ->whereNotNull('dept_pattern_id')->get()->toArray();
         if (count($checkPattern) > 0) {
             $this->modelDetail::where("dept_pattern_id", $checkPattern[0]['dept_pattern_id'])->delete();
             $this->model::where("id", $checkPattern[0]['dept_pattern_id'])->delete();
         }
         Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $pattern['id'] = null;
-        $pattern['name'] = $request->get('name');
+        $pattern['name'] = $deptPatternName;
         $deptPattern = $this->model::create($pattern);
 
         $deptPatternId = $deptPattern->id;
-        $dept = Department::find((int)$request->get('department_id'));
+        $dept = Department::find((int)$deptId);
         $dept->dept_pattern_id = $deptPatternId;
         $dept->save();
 

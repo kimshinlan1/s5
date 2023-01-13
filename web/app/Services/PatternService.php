@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Common\Constant;
+use App\Models\Area;
 use App\Models\Department;
 use App\Models\Pattern;
 use App\Models\DeptPattern;
+use App\Models\DeptPatternDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,22 +74,39 @@ class PatternService extends BaseService
      *
      * @return array
      */
-    public function listPatternbyDept($id)
+    public function listPatternbyComp($id)
     {
         $data = [];
-        $deptPatternId = Department::where('id', $id)->first()->dept_pattern_id;
-        if ($deptPatternId) {
-            $data = DB::table('dept_patterns')->where('id', $deptPatternId)->get()->toArray();
-        }
-        if (count($data) > 0) {
-            // isPattern is used for checking if the pattern belongs to customer or kaizenbase
-            $data[0]->isPattern = false;
+
+        $deptPatterns = DB::table('dept_patterns')->where('company_id', $id)->get()->toArray();
+        if (!empty($deptPatterns)) {
+            foreach ($deptPatterns as $deptPattern) {
+                $deptPattern->isPattern = false;
+            }
         }
         $patterns = DB::table('patterns')->orderBy('id')->get()->toArray();
         foreach ($patterns as $pattern) {
             $pattern->isPattern = true;
         }
-        $data = array_merge($data, $patterns);
+        $data = array_merge($deptPatterns, $patterns);
+        return $data;
+    }
+
+    /**
+     * Get list
+     *
+     * @param  $id (id of dept_patter_setting)
+     *
+     * @return array
+     */
+    public function checkDeptPatternExist($id)
+    {
+        $ids = Department::select('dept_pattern_id')->where('company_id', $id)
+        ->whereNotNull('dept_pattern_id')->get()->toArray();
+        $checkDeptPatternExist = DeptPattern::whereIn('id', $ids)->exists();
+        $data = [
+            'isExisted' => $checkDeptPatternExist,
+        ];
         return $data;
     }
 
@@ -104,6 +123,12 @@ class PatternService extends BaseService
     {
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);
+            if ($data->delete()) {
+                Area::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
+                Department::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
+                $deptDetails = DeptPatternDetail::where('dept_pattern_id', $id)->pluck('dept_pattern_id')->toArray();
+                DeptPatternDetail::whereIn('dept_pattern_id', $deptDetails)->delete();
+            }
         } else {
             $data = $this->model::find($id);
         }

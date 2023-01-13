@@ -138,6 +138,9 @@ class PatternDeptSettingController extends Controller
             return $this->responseException();
         }
         $data = $this->service->save($request);
+        if ($data['invalid']) {
+            return $this->responseException(Constant::MESSAGES['UNIQUE_PATTERN_NAME'], 422);
+        }
 
         return response()->json($data);
     }

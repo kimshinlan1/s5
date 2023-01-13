@@ -15,7 +15,8 @@ class Constant
         "SYSTEM_ERROR" => "SYSTEM ERROR",
         "SQL_ERROR" => "Query error, Please check again",
         "404" => "NOT FOUND",
-        "MAX_EMP_ERROR" => "Deparment_Count_Employee"
+        "MAX_EMP_ERROR" => "Deparment_Count_Employee",
+        "UNIQUE_PATTERN_NAME" => "パターン名は社内で一意である必要があります",
     ];
 
     public const ROLE = [
