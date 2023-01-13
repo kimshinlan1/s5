@@ -101,9 +101,13 @@ window.zeroPad = function (num, digits = 0) {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
+// run ajax
 window.runAjax = function (url, method, data, donecallback, failcallback, alwayscallback, async = true) {
-    // run ajax
+    // Check and convert array to json object
+    if ($.isArray(data)) {
+        data = {data};
+    }
+
     $.ajax({
         url: url,
         type: method,

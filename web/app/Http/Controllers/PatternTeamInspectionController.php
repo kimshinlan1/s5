@@ -50,6 +50,8 @@ class PatternTeamInspectionController extends Controller
 
         // Get Columns: Inspection detail and render structure todo:
         $inspectionDetails = [];
+        $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
+        dd($inspectionDetails);
         // if (!Cache::has('inspection_detail')) {
         //     $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
         //     Cache::put('inspection_detail', $inspectionDetails);
@@ -155,8 +157,10 @@ class PatternTeamInspectionController extends Controller
 
         // Get ids to render columns
         $inspectionIds = array_keys($inspectionData);
+        $i = 0;
         while (count($inspectionIds) < $totalColumn) {
-            $inspectionIds[] = "new_" . time();
+            $inspectionIds[] = "new_" . time() . $i;
+            $i++;
         }
 
         // dd($inspectionIds);
@@ -183,6 +187,22 @@ class PatternTeamInspectionController extends Controller
     public function destroy($inspectionId)
     {
         $data = $this->service->destroyInspections($inspectionId);
+        return response()->json($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveInspection(Request $request)
+    {
+        if (!$request->get('data') || !count($request->get('data'))) {
+            return $this->responseException();
+        }
+        $data = $this->service->saveInspection($request);
         return response()->json($data);
     }
 }

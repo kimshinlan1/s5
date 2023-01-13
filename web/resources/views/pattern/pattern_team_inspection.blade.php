@@ -31,11 +31,16 @@
 
     <div class="d-flex justify-content-start mb-4">
         Department List
+        {{-- Add selectbox --}}
     </div>
 
     <div class="d-flex justify-content-start mb-4">
         Team List / Team Name
+        {{-- Add selectbox --}}
     </div>
+
+    <input type="hidden" id="hidDeptId" value=""/>
+    <input type="hidden" id="hidTeamId" value=""/>
 
     <div id="content"></div>
 

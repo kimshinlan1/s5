@@ -11,6 +11,23 @@
 
     <table id="" class="table table-bordered" style="width: fit-content;">
 
+        {{-- Remove Button --}}
+        <tr>
+            <td colspan="3">
+
+            </td>
+            @foreach ($inspectionIds as $inspectionId)
+            <td>
+                @if (is_int($inspectionId))
+                <input type="button" value="削除" onclick="removeColumn('{{ $inspectionId }}')"/>
+                @else
+                <input type="button" value="削除" onclick="removeColumn(-1)"/>
+                @endif
+
+            </td>
+            @endforeach
+        </tr>
+
         {{-- Radar Chart --}}
         <tr>
             <td colspan="3">
@@ -110,9 +127,9 @@
 
         {{-- 点検実施日 --}}
         <tr>
-            <td rowspan="3">No</td>
-            <td rowspan="3">点検箇所</td>
-            <td rowspan="3">ポイント</td>
+            <td rowspan="2">No</td>
+            <td rowspan="2">点検箇所</td>
+            <td rowspan="2">ポイント</td>
             @for ($i = 0; $i < $countInspection; $i++)
             <td>
                 点検実施日
@@ -125,21 +142,11 @@
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";
-                ?>
-                <input type="text" placeholder="年月日" style="width: 100px" value="{{ $date }}" />
-                <input type="hidden" id="" value="{{ $date }}"/>
-            </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach ($inspectionIds as $inspectionId)
-            <td>
-                @if (is_int($inspectionId))
-                <input type="button" value="削除" onclick="removeColumn('{{ $inspectionId }}')"/>
-                @else
-                <input type="button" value="削除" disabled />
-                @endif
 
+                ?>
+                <input type="text" placeholder="年月日" style="width: 100px" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
+                <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
+                <input type="hidden" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
             </td>
             @endforeach
         </tr>
@@ -150,6 +157,7 @@
             <?php
                 $locaitonIdToCheck = $row['area_id'] . $row['location_id'];
                 $index = $row['area_id'] . "_" . $row['location_id'] . "_" . $row['5s'];
+                $areaLocationIndex = $row['area_id'] . "_" . $row['location_id'];
             ?>
 
             @if (!in_array($row['area_id'], $areas))
@@ -169,7 +177,6 @@
 
                 {{-- Hidden --}}
                 <input type="hidden" id="hidAreaId" value="{{ $row['area_id'] }}"/>
-
                 @endif
 
                 {{-- Locations --}}
@@ -180,13 +187,15 @@
                 <?php $locations[] = $locaitonIdToCheck ?>
 
                 {{-- Hidden --}}
-                <input type="hidden" id="hidLocationId" value="{{ $row['location_id'] }}"/>
+                <input type="hidden" id="hidLocationId_{{ $row['location_id'] }}" value="{{ $row['location_id'] }}"/>
+                <input type="hidden" id="hidAreaLocationIndex_{{ $row['location_id'] }}" value="{{ $areaLocationIndex }}"/>
                 @endif
 
                 {{-- Point --}}
                 <td id="level_tooltip" style="">
                     {{ Constant::NAME_5S[$row['5s']] }}
 
+                    {{-- Tooltip --}}
                     <div id="level" class="" style="display: none; width: 300px">
                         <div>
                             <span>最悪(ﾚﾍﾞﾙ1): </span>
@@ -211,9 +220,10 @@
                     </div>
                 </td>
 
+                {{-- Point Value --}}
                 @foreach ($inspectionIds as $inspectionId)
                 <td>
-                    <select class="form-select">
+                    <select class="form-select" id="selPointValue-{{ $inspectionId .'-'. $index }}"  data-5s="{{ $row['5s'] }}">
                         @foreach ($pointValues as $value)
                         <?php
                             $selected = (isset($inspectionData[$inspectionId][$index])

@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
-use App\Common\Constant;
 use App\Models\Area;
 use App\Models\Pattern;
+use App\Common\Constant;
 use App\Models\Location;
+use App\Models\Inspection;
 use Illuminate\Http\Request;
 use App\Models\PatternDetail;
+use App\Models\InspectionDetail;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
 
@@ -126,7 +128,7 @@ class PatternTeamInspectionService extends BaseService
         // Remove Inspection images
         DB::table("inspection_images")->where('inspection_id', $inspectionId)?->delete();
 
-        // Remove all images
+        // todo: Remove all images
         if ($data) {
             // todo: Check exists img in inspectionId (ex: public/uploads/inspections/imgs/{inspectionId}/*)
             // $this->inspectionImagePath;
@@ -134,5 +136,92 @@ class PatternTeamInspectionService extends BaseService
 
 
         return $data;
+    }
+
+    /**
+     * Save data
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return object
+     */
+    public function saveInspection(Request $request)
+    {
+        $dataList = $request->get('data');
+
+        // Sample
+        // $data = [
+        //     0 => [
+        //         'info' => [
+        //             'team_id' => '',
+        //             'inspection_id' => '',
+        //             'inspection_date' => '',
+        //         ],
+        //         'data' => [
+        //             '1' => [ // location_id
+        //                 's1' => 1,
+        //                 's2' => 1,
+        //                 's3' => 1
+        //             ],
+        //             '2' => [ // location_id
+        //                 's1' => 1,
+        //                 's2' => 1,
+        //                 's3' => 1
+        //             ],
+        //         ]
+        //     ]
+        // ];
+
+
+        /**
+         * Step: Remove old data
+         *
+         * Loop data:
+         *    Step: Insert new inspection
+         *    Step: Insert new inspection_details
+         *
+         *    Note: array data must be created in valid structure
+         *
+         */
+
+        foreach ($dataList as $data) {
+            $id = is_int($data['info']['inspection_id']) ? $data['info']['inspection_id'] : null;
+
+            // Step: todo: Remove old data
+            if ($data['info']['inspection_id']) {
+                // Remove inspection_details
+                InspectionDetail::where('inspection_id', $data['info']['inspection_id'])->delete();
+
+                // Note: Inspection Images doesn't need to remove
+            }
+
+            // Step: todo: Insert new
+            // $inspectionDate = strtotime($data['info']['inspection_date']);
+            // $inspectionDateTime = date('Y-m-d h:i:s', $inspectionDate);
+
+            $inspectionId = Inspection::updateOrCreate(
+                [
+                    'id' => $id
+                ],
+                [
+                    'team_id' => $data['info']['team_id'],
+                    'inspection_date' => $data['info']['inspection_date'],
+                ]
+            );
+            $inspectionId = $inspectionId->id;
+
+            // Loop to insert details rows
+            foreach ($data['data'] as $locationId => $points) {
+                foreach ($points as $key => $val) {
+                    InspectionDetail::create([
+                        'inspection_id' => $inspectionId,
+                        'location_id' => $locationId,
+                        'point' => $key,
+                        'point_value' => $val,
+                    ]);
+                }
+            }
+        }
+
+        return true;
     }
 }
