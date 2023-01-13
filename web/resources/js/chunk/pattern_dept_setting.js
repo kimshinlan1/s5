@@ -300,11 +300,7 @@ $(function () {
         ispattern = ispattern == "true" ? true : false;
         let pageDest = ispattern ? null : 1;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            if (!ispattern) {
-                loadDataPreview(pageDest, patId);
-            } else {
-                loadDataPreview();
-            }
+            loadDataPreview(pageDest, patId);
         } else {
             addAreaToTable('edit', patId, ispattern);
         }
@@ -386,10 +382,7 @@ $(function () {
         isPattern = isPattern == "true" ? true : false;
         let pageDest = isPattern ? null : 1;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            if (!isPattern) {
-                loadDataPreview(pageDest, patternid);
-            } else {                loadDataPreview();
-            }
+            loadDataPreview(pageDest, patternid);
         } else {
             addAreaToTable('edit', patternid, isPattern);
         }
