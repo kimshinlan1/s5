@@ -237,13 +237,14 @@ class PatternDeptSettingService extends BaseService
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
         $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)
         ->whereNotNull('dept_pattern_id')->get()->toArray();
-        if (count($checkPattern) > 0) {
+        if (count($checkPattern)) {
             $this->modelDetail::where("dept_pattern_id", $checkPattern[0]['dept_pattern_id'])->delete();
             $this->model::where("id", $checkPattern[0]['dept_pattern_id'])->delete();
         }
-        Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $pattern['id'] = null;
         $pattern['name'] = $deptPatternName;
+        $pattern['company_id'] = $companyId;
+        $pattern['no'] = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $deptPattern = $this->model::create($pattern);
 
         $deptPatternId = $deptPattern->id;
