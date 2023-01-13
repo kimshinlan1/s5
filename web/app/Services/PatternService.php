@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Common\Constant;
+use App\Models\Area;
 use App\Models\Department;
 use App\Models\Pattern;
 use App\Models\DeptPattern;
+use App\Models\DeptPatternDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -75,14 +77,12 @@ class PatternService extends BaseService
     public function listPatternbyComp($id)
     {
         $data = [];
-        $ids = Department::select('dept_pattern_id')->where('company_id', $id)->get()->toArray();
-        if (empty($ids)) {
-            return [];
-        }
-        $deptPatterns = DB::table('dept_patterns')->whereIn('id', $ids)->get()->toArray();
 
-        foreach ($deptPatterns as $deptPattern) {
-            $deptPattern->isPattern = false;
+        $deptPatterns = DB::table('dept_patterns')->where('company_id', $id)->get()->toArray();
+        if (!empty($deptPatterns)) {
+            foreach ($deptPatterns as $deptPattern) {
+                $deptPattern->isPattern = false;
+            }
         }
         $patterns = DB::table('patterns')->orderBy('id')->get()->toArray();
         foreach ($patterns as $pattern) {
@@ -123,6 +123,12 @@ class PatternService extends BaseService
     {
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);
+            if ($data->delete()) {
+                Area::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
+                Department::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
+                $deptDetails = DeptPatternDetail::where('dept_pattern_id', $id)->pluck('dept_pattern_id')->toArray();
+                DeptPatternDetail::whereIn('dept_pattern_id', $deptDetails)->delete();
+            }
         } else {
             $data = $this->model::find($id);
         }

@@ -142,7 +142,7 @@ class PatternController extends Controller
         $id = $request->get('id');
         $pageDest = $request->get('pageDest');
 
-        if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER){
+        if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = app(PatternDeptSettingService::class)->getData($id);
         } else {
             $data = app(PatternDetailService::class)->getData($id);

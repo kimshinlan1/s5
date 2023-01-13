@@ -239,6 +239,10 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     runAjax(url, method, params, doneCallback, failCallback, alwaysCallback, false);
 }
 
+window.getCompanyId = function() {
+        return ( $('#userCompanyId').val() == $('#kaizenbaseID').val() ) ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -270,7 +274,12 @@ $(function () {
         $('#companyOptionId').prop( "disabled",true);
         let patId = $('#selectPatternIds').find(':selected').val();
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            loadDataPreview();
+            if (!isPattern) {
+                let pageDest = isPattern ? null : 1;
+                loadDataPreview(pageDest, patId);
+            } else {
+                loadDataPreview();
+            }
         } else {
             addAreaToTable('edit', patId, isPattern);
         }
@@ -287,12 +296,17 @@ $(function () {
         loadDeptList(loginCompid);
         loadPatternList(selectedCompId);
         let patId = $('#selectPatternIds').find(':selected').val();
-        let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
-        isPattern = isPattern == "true" ? true : false;
+        let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
+        ispattern = ispattern == "true" ? true : false;
+        let pageDest = ispattern ? null : 1;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            loadDataPreview();
+            if (!ispattern) {
+                loadDataPreview(pageDest, patId);
+            } else {
+                loadDataPreview();
+            }
         } else {
-            addAreaToTable('edit', patId, isPattern);
+            addAreaToTable('edit', patId, ispattern);
         }
     }
 
@@ -360,7 +374,7 @@ $(function () {
         $("#modalDelectLocation").modal('show');
     });
 
-    //Back page
+    // Back page
     $("#backPage").click(function () {
         $("#modalBackPage").modal('show');
     })
@@ -370,13 +384,20 @@ $(function () {
         let note = $('#selectPatternIds').find(':selected').attr("data-note");
         $('#patternNote').val(note);
         isPattern = isPattern == "true" ? true : false;
-        addAreaToTable('edit', patternid, isPattern);
+        let pageDest = isPattern ? null : 1;
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            if (!isPattern) {
+                loadDataPreview(pageDest, patternid);
+            } else {                loadDataPreview();
+            }
+        } else {
+            addAreaToTable('edit', patternid, isPattern);
+        }
     });
 
     // Department options change event
     $('#departmentId').change(function() {
-        let id = $('#departmentId').val();
-        let selectedCompId = loginCompid == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+        let selectedCompId = getCompanyId();
         loadPatternList(selectedCompId);
     });
 

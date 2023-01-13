@@ -8,6 +8,7 @@ use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
+use App\Models\Company;
 use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
@@ -134,6 +135,7 @@ class PatternDeptSettingService extends BaseService
                 'id' => $data['info']['pattern_id']
             ],
             [
+                'company_id' => $request->data['company'],
                 'no' => $no,
                 'name' => $data['info']['pattern_name'],
                 'note' => $data['info']['pattern_note'],
@@ -152,7 +154,7 @@ class PatternDeptSettingService extends BaseService
             // Step: Insert new Area
             $areaId = Area::create([
                 'name' => $area['area_name'],
-                'pattern_id' => $deptPatternId
+                'dept_pattern_id' => $deptPatternId
             ]);
             $areaId = $areaId->id;
 
@@ -189,19 +191,18 @@ class PatternDeptSettingService extends BaseService
     /**
      * Check if pattern name is unique
      *
-     * @param  \App\Http\Requests  $deptId, $patternName
+     * @param $deptId
+     * @param $patternName
      * @return boolean
      */
     public function checkUniqueName($deptId, $deptPatternName) {
         $compId = Department::find($deptId)->company_id;
-        $deptPatternIds = Department::select('dept_pattern_id')->where('company_id', $compId)->whereNotNull('dept_pattern_id')->get()->toArray();
-        foreach ($deptPatternIds as $ele) {
-            $deptPat = DeptPattern::find($ele['dept_pattern_id']);
-            if ($deptPat && $deptPatternName === $deptPat->name) {
-                return false;
-            }
+        $dept_pattern = null;
+        $deptPatternIds = Department::where('company_id', $compId)->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+        if (!empty($deptPatternIds)) {
+            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)->where('name', $deptPatternName)->exists();
         }
-        return true;
+        return $dept_pattern ? false: true;
     }
 
     /**
@@ -234,7 +235,8 @@ class PatternDeptSettingService extends BaseService
         }
 
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
-        $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)->whereNotNull('dept_pattern_id')->get()->toArray();
+        $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)
+        ->whereNotNull('dept_pattern_id')->get()->toArray();
         if (count($checkPattern) > 0) {
             $this->modelDetail::where("dept_pattern_id", $checkPattern[0]['dept_pattern_id'])->delete();
             $this->model::where("id", $checkPattern[0]['dept_pattern_id'])->delete();

@@ -18,7 +18,8 @@ return new class extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255);
-            $table->integer('pattern_id');
+            $table->integer('pattern_id')->nullable();
+            $table->integer('dept_pattern_id')->nullable();
             $table->timestamps();
         });
     }
