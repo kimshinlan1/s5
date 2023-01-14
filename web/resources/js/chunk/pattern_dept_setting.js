@@ -15,7 +15,8 @@ window.loadData = function() {
     $.ajax({
         url: "/pattern_detail_generate_area/",
         type: "GET",
-        data: params
+        data: params,
+        async: false
     })
     .done(function (res) {
         $("#table-content tbody").append(res);
@@ -102,8 +103,8 @@ function setValueTest() {
 /**
  * List department list
  */
-window.loadDeptList = function(id, mode = null) {
-    let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
+window.loadDeptList = function(id) {
+    let url = '/departments/list/' + id;
 
     let method = "GET";
 
@@ -139,12 +140,13 @@ window.loadPatternList = function(id, patternId = null ) {
                 $('#patternNote').val(e.note);
             }
 
-            if(index != 0 && e.id == patternId ) {
+            if(e.id == patternId && !e.isPattern) {
                 html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '" selected>' + e.name + '</option>';
                 $('#patternNote').val(e.note);
             }
-            html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '">' + e.name + '</option>';
-
+            else {
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '">' + e.name + '</option>';
+            }
         });
         $('#selectPatternIds').html(html);
         $('#selectPatternIds').change();
@@ -255,6 +257,7 @@ window.initLoadPage = function() {
     let hidPatternId = $('#hidPatternId').val()
     let deptId = urlParams.get('departmentId');
     let pageDept = urlParams.get('pageDept');
+    let targetDept = urlParams.get('targetDept');
     let compId = urlParams.get('compId');
     let selectedPatId = urlParams.get('patternId');
     let isPatternSelection = urlParams.get('isPattern');
@@ -270,10 +273,13 @@ window.initLoadPage = function() {
         let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         ispattern = ispattern == "true" ? true : false;
         // set seleted value for company
-        loadDeptList(deptId, 'edit');
+        selectedCompId = compId ? compId : selectedCompId;
+        loadDeptList(selectedCompId);
         loadPatternList(selectedCompId, hidPatternId);
+        $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
         if (pageDept) {
             $('#departmentId').prop("disabled",false);
+            $('#departmentId  option[value=' + targetDept + ']').attr('selected','selected');
         } else {
             $('#departmentId').prop("disabled",true);
         }
@@ -289,36 +295,45 @@ window.initLoadPage = function() {
     }
     // Add new mode
     else {
-        loadDeptList(loginCompid);
-        loadPatternList(selectedCompId);
+        if (compId) {
+            loadDeptList(compId);
+            loadPatternList(compId);
+        } else {
+            loadDeptList(loginCompid);
+            loadPatternList(selectedCompId);
+        }
         let patId = $('#selectPatternIds').find(':selected').val();
         let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         ispattern = ispattern == "true" ? true : false;
         let pageDest = ispattern ? null : 1;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            loadDataPreview(pageDest, patId);
+
+            // edit from department
             if (isPatternSelection) {
                 $('#departmentId').prop( "disabled",true);
                 $('#selectPatternIds').prop( "disabled",true);
                 $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
                 $('#selectPatternIds  option[value=' + selectedPatId + ']').attr('selected','selected');
+                loadDataPreview(null, selectedPatId);
             } else {
                 $('#departmentId').prop( "disabled",false);
+                loadDataPreview(pageDest, patId);
             }
         } else {
-            addAreaToTable('edit', patId, ispattern);
-
+            // edit from department
             if (isPatternSelection) {
                 $('#companyOptionId').prop( "disabled",true);
                 $('#departmentId').prop( "disabled",true);
                 $('#selectPatternIds').prop( "disabled",true);
+                $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
                 $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
                 $('#selectPatternIds  option[value=' + selectedPatId + ']').attr('selected','selected');
-                $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
+                addAreaToTable('edit', selectedPatId, true);
             } else {
                 $('#departmentId').prop( "disabled",false);
                 $('#selectPatternIds').prop( "disabled",false);
                 $('#companyOptionId').prop( "disabled",false);
+                addAreaToTable('edit', patId, ispattern);
             }
         }
     }
@@ -343,7 +358,7 @@ $(function () {
 
     // Load data for edit
     if ($('#hidPatternId').val()) {
-        loadData();
+        // loadData();
     }
 
     // Add New Area

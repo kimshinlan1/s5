@@ -177,7 +177,7 @@ window.openEditDeptPattern = function(id) {
     let compId = $('#editPatternBtn' + id).attr("data-companyId");
     let checklistId = $('#checklist5sID' + id).find(':selected').val();
     if (checklistId.length != 0) {
-        window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&pageDept=1';
+        window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&pageDept=1' + '&targetDept=' + id;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
