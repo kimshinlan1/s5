@@ -264,7 +264,7 @@ function InvalidMsgMyForm(textbox) {
 /**
  * Get data from table
  */
-function validateAndGetDataTable() {
+function validateAndGetDataTable(isSelectedFree=null) {
     //Validate all rows and Get param to submit
     let valid = true;
 
@@ -286,6 +286,7 @@ function validateAndGetDataTable() {
     params['old_locations'] = [];
     params['department'] = [];
     params['company'] = [];
+    params['isSelectedFree'] = isSelectedFree ? 'free' : 'paid';
 
     // get department id
     params['department'] = $('#departmentId').find(':selected').val();

@@ -30,32 +30,35 @@ window.departmentTableActions = function (_value, row, _index) {
 window.department5SChecklistActions = function (_value, row, _index) {
     let options = '<select class=" form-select px-2" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
     options += '<option> </option>';
-
+    let selectedDeptPatternId = row.dept_pattern_id;
     if (row.dept_pattern_id) {
         checkPatternOnly = true;
         checkDeptPattern = row.id;
     }
 
     $.ajax({
-        url: '/pattern_list/getlist_by_department/' + row.id,
+        url: '/pattern_list/getlist_by_department/' + row.company_id,
         type: 'GET',
         async: false
     })
     .done(function (_data, _textStatus, _jqXHR) {
         let dataId = -1;
+        let btn = '';
         _data.forEach(ele => {
-            if (!ele.isPattern) {
-                options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " selected >" + ele.name + "</option>";
+            if (!ele.isPattern && ele.id == selectedDeptPatternId) {
+                options += "<option value=" + ele.id + " data-deptId=" + ele.deptId + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
                 dataId = 1;
+                btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
+                +'" data-companyId="'+ row.company_id +'" data-deptId="'+ ele.deptId +'" data-patternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
             } else {
-                options += "<option value=" + ele.id + " data-isPattern=" + ele.isPattern + " >" + ele.name + "</option>";
+                options += "<option value=" + ele.id + " data-deptId=" + ele.deptId + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
             }
         });
+            btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+
         options += " </select>";
 
-        options += '<button type="button" id="editPatternBtn' + row.id
-        + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" onClick="openEditDeptPattern(' + row.id
-        + ')">編集</button> ';
+        options += btn;
     })
     .fail(function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
@@ -126,9 +129,13 @@ window.isIpad = function() {
 --------------------- */
 window.selectPattern = function(id) {
     let dataId = $("#checklist5sID" + id).find(":selected").val();
+    let deptId = $("#checklist5sID" + id).find(":selected").attr('data-deptId');
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
+    let companyId = $("#checklist5sID" + id).find(":selected").attr('data-companyId');
     let patternFirstLoadValue = '';
-    $('#checklist5sID' + id).siblings().attr('data-id', dataId);
+    $('#checklist5sID' + id).siblings().attr('data-patternId', dataId);
+    $('#checklist5sID' + id).siblings().attr('data-companyId', companyId);
+    $('#checklist5sID' + id).siblings().attr('data-deptId', deptId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
     $("#checklist5sID" + id + " > option").each(function() {
         if (this.dataset.ispattern == 'false') {
@@ -148,18 +155,16 @@ window.selectPattern = function(id) {
         if (dataId && isPattern == "true") {
             $('#confirmDialog3').modal('show');
             $('.confirmMessage3').text($('#confirmMessage').val());
+            $('#okBtn').attr('data-compId', companyId);
             $('#okBtn').attr('data-deptid', id);
             $('#okBtn').attr('data-patternid', dataId);
             $('#okBtn').attr('data-isPattern', isPattern);
             $('#cancelBtn').attr('data-deptid-old', patternFirstLoadValue);
-
         }
-
         if (dataId && checkDeptPattern == '') {
             checkPatternOnly = true;
             checkDeptPattern = id;
         }
-
     }
 }
 
@@ -167,10 +172,12 @@ window.selectPattern = function(id) {
   *    Redirect to dept pattern edit
 --------------------- */
 window.openEditDeptPattern = function(id) {
-    let deptID = $('#editPatternBtn' + id).attr("data-id");
+    let deparmentId = $('#editPatternBtn' + id).attr("data-deptId");
+    let patId = $('#editPatternBtn' + id).attr("data-patternId");
+    let compId = $('#editPatternBtn' + id).attr("data-companyId");
     let checklistId = $('#checklist5sID' + id).find(':selected').val();
     if (checklistId.length != 0) {
-        window.location = '/pattern_dept_setting/' + checklistId + '?departmentId=' + deptID;
+        window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&pageDept=1';
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -426,10 +433,11 @@ window.saveDataEmployee = function () {
     reloadDataDepartment();
 
     $('#okBtn').on('click', function() {
+        let compId = $('#okBtn').attr('data-compId');
         let deptId = $('#okBtn').attr('data-deptid');
         let patternId = $('#okBtn').attr('data-patternid');
         let isPattern = $('#okBtn').attr('data-isPattern');
-        window.location = '/pattern_dept_setting?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern;
+        window.location = '/pattern_dept_setting?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
     })
 
     $('#cancelBtn').on('click', function() {
