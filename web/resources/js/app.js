@@ -484,7 +484,7 @@ window.addTestValue = function (parent_class){
             let html = '';
             if(res.currentCompany.mode == CONFIG.get("KAIZENBASE_MODE")) {
                 for (let e of res.rows) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                    html += '<option value="' + e.id + '" data-mode="' + e.mode + '">' + e.name + '</option>';
                 }
             }
             else {

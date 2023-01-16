@@ -128,6 +128,7 @@ window.isIpad = function() {
   *    Handle onchange pattern selection
 --------------------- */
 window.selectPattern = function(id) {
+    let mode = $('#companyListID').find(":selected").attr('data-mode');
     let dataId = $("#checklist5sID" + id).find(":selected").val();
     let deptId = $("#checklist5sID" + id).find(":selected").attr('data-deptId');
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
@@ -146,7 +147,7 @@ window.selectPattern = function(id) {
         checkPatternOnly = false;
         checkDeptPattern = '';
     }
-    if ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly == true) {
+    if (($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly) || (mode == CONFIG.get('5S_MODE').FREE  && checkPatternOnly)) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#errMessageUse1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0).change();
