@@ -17,7 +17,7 @@ window.patternListTableActions = function (_value, row, _index) {
     (
         '<button type="button" style="margin-left: 6px;" class="btn btn-primary btn-sm" data-id="' +
         row.id +
-        '" onclick="redirectToEdit(' +row.id+ ',' + row.deptId +')" id="patternListEdit">編集</button> ' +
+        '" onclick="redirectToEdit(' +row.id+ ',' + row.deptId +',' + row.company_id +')" id="patternListEdit">編集</button> ' +
         '<button type="button" style="margin-left: 6px;" class="btn btn-danger btn-sm" data-id="' +
         row.id +
         '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
@@ -37,8 +37,8 @@ window.cellStyle = function (value, row, index) {
 /** ------------------
  *   Open Edit tab
  --------------------- */
- window.redirectToEdit = function (id, deptId) {
-    window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId;
+ window.redirectToEdit = function (id, deptId, compId) {
+    window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId  + '&companyId=' + compId;
 }
 
 /** ------------------`

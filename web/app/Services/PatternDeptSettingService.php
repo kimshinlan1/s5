@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Common\Constant;
 use App\Models\Area;
 use App\Models\Department;
 use App\Models\DeptPattern;
@@ -97,6 +98,7 @@ class PatternDeptSettingService extends BaseService
         // todo: Update => Call from DeptPatternService, use common. If diffence, update here
         // use:  dept_patterns, dept_patterns_details
         $data = $request->get('data');
+        $companyId = $request->data['company'];
         $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name']);
         if (!$isUnique) {
@@ -127,6 +129,16 @@ class PatternDeptSettingService extends BaseService
 
             // Remove Area
             (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
+        }
+
+        if ($request->data['isSelectedFree'] == 'free') {
+            $depPatternIds = Department::where('company_id', $companyId)
+            ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+            if (count($depPatternIds)) {
+                foreach ($depPatternIds as $depPatternId) {
+                    app()->get(PatternService::class)->destroyPatternByMode($depPatternId, null, Constant::PAGE_PATTERN_LIST_CUSTOMER);
+                }
+            }
         }
 
         // Step: Insert new pattern
@@ -235,11 +247,12 @@ class PatternDeptSettingService extends BaseService
         }
 
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
-        $checkPattern = Department::select('dept_pattern_id')->where('company_id', $companyId)
-        ->whereNotNull('dept_pattern_id')->get()->toArray();
-        if (count($checkPattern)) {
-            $this->modelDetail::where("dept_pattern_id", $checkPattern[0]['dept_pattern_id'])->delete();
-            $this->model::where("id", $checkPattern[0]['dept_pattern_id'])->delete();
+        $depPatternIds = Department::where('company_id', $companyId)
+        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+        if (count($depPatternIds)) {
+            foreach ($depPatternIds as $depPatternId) {
+                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, null, Constant::PAGE_PATTERN_LIST_CUSTOMER);
+            }
         }
         $pattern['id'] = null;
         $pattern['name'] = $deptPatternName;
@@ -257,12 +270,13 @@ class PatternDeptSettingService extends BaseService
         $trackAreaId = -1;
         $locationId = -1;
         foreach ($data as $area) {
+
             $area = json_decode(json_encode($area, true), true);
             // Step: Insert new Area
             if ($area['area_id'] != $trackAreaId) {
                 $areaId = Area::create([
                     'name' => $area['area_name'],
-                    'pattern_id' => $deptPatternId
+                    'dept_pattern_id' => $deptPatternId
                 ]);
                 $areaId = $areaId->id;
                 $trackAreaId = $area['area_id'];

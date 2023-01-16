@@ -4,7 +4,7 @@ var selected_5s = [];
 var params = {};
 var select_location_to_delete = [];
 var department_id = null;
-
+var loginCompid = null;
 // Onchange 5S methods 改善ポイントの選択
 window.loadData = function() {
     let params = {
@@ -15,7 +15,8 @@ window.loadData = function() {
     $.ajax({
         url: "/pattern_detail_generate_area/",
         type: "GET",
-        data: params
+        data: params,
+        async: false
     })
     .done(function (res) {
         $("#table-content tbody").append(res);
@@ -34,8 +35,8 @@ window.loadData = function() {
 
 // Save
 
-window.saveAjax = function(data, patId=null, ispattern=null) {
-    let url = patId ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
+window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
+    let url = isFree ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
     let method = "POST";
     let name = $('#patternName').val();
     let compId = $('#userCompanyId').val() == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
@@ -46,12 +47,16 @@ window.saveAjax = function(data, patId=null, ispattern=null) {
         department_id: $('#departmentId').find(':selected').val(),
         company_id: compId,
     }
-    let params = patId ? freeData : {data: data} ;
+    let params = isFree ? freeData : {data: data} ;
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
-            location.href = "/pattern_list_customer";
+            if (isFree) {
+                location.reload();
+            } else {
+                location.href = "/pattern_list_customer";
+            }
         }, 200);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -98,8 +103,8 @@ function setValueTest() {
 /**
  * List department list
  */
-window.loadDeptList = function(id, mode = null) {
-    let url = mode == 'edit' ? '/departments/getDepartment/' + id :  '/departments/list/' + id;
+window.loadDeptList = function(id) {
+    let url = '/departments/list/' + id;
 
     let method = "GET";
 
@@ -120,8 +125,10 @@ window.loadDeptList = function(id, mode = null) {
 
 /**
  * List pattern list
+ * @param id company id
+ * @param patternId dept pattern id
  */
-window.loadPatternList = function(id, isPattern = null, patternId = null ) {
+window.loadPatternList = function(id, patternId = null ) {
     let url = '/pattern_list/getlist_by_department/' + id;
 
     let method = "GET";
@@ -133,13 +140,11 @@ window.loadPatternList = function(id, isPattern = null, patternId = null ) {
                 $('#patternNote').val(e.note);
             }
 
-            if (isPattern) {
-                if(index != 0 && e.id == patternId ) {
-                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '" selected>' + e.name + '</option>';
-                    $('#patternNote').val(e.note);
-                }
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
-            } else {
+            if(e.id == patternId && !e.isPattern) {
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '" selected>' + e.name + '</option>';
+                $('#patternNote').val(e.note);
+            }
+            else {
                 html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '">' + e.name + '</option>';
             }
         });
@@ -243,68 +248,109 @@ window.getCompanyId = function() {
         return ( $('#userCompanyId').val() == $('#kaizenbaseID').val() ) ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
 }
 
+window.initLoadPage = function() {
+    if (loginCompid == $('#kaizenbaseID').val()) {
+        loadCompany(loginCompid);
+    }
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let hidPatternId = $('#hidPatternId').val()
+    let deptId = urlParams.get('departmentId');
+    let pageDept = urlParams.get('pageDept');
+    let targetDept = urlParams.get('targetDept');
+    let compId = urlParams.get('compId');
+    let selectedPatId = urlParams.get('patternId');
+    let isPatternSelection = urlParams.get('isPattern');
+    isPatternSelection = !isPatternSelection ? false : true;
+    let companyId = urlParams.get('companyId');
+    if (companyId) {
+        $('#companyOptionId option[value='+companyId+']').prop("selected", true);
+    }
+    // let patternId = urlParams.get('patternId');
+    let selectedCompId = loginCompid == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+    // Edit mode
+    if (hidPatternId) {
+        let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
+        ispattern = ispattern == "true" ? true : false;
+        // set seleted value for company
+        selectedCompId = compId ? compId : selectedCompId;
+        loadDeptList(selectedCompId);
+        loadPatternList(selectedCompId, hidPatternId);
+        $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+        if (pageDept) {
+            $('#departmentId').prop("disabled",false);
+            $('#departmentId  option[value=' + targetDept + ']').attr('selected','selected');
+        } else {
+            $('#departmentId').prop("disabled",true);
+        }
+        $('#selectPatternIds').prop("disabled",false);
+        $('#companyOptionId').prop("disabled",true);
+        // let patId = $('#selectPatternIds').find(':selected').val();
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            let pageDest = ispattern ? null : 1;
+            loadDataPreview(pageDest, hidPatternId);
+        } else {
+            addAreaToTable('edit', hidPatternId, ispattern);
+        }
+    }
+    // Add new mode
+    else {
+        if (compId) {
+            loadDeptList(compId);
+            loadPatternList(compId);
+        } else {
+            loadDeptList(loginCompid);
+            loadPatternList(selectedCompId);
+        }
+        let patId = $('#selectPatternIds').find(':selected').val();
+        let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
+        ispattern = ispattern == "true" ? true : false;
+        let pageDest = ispattern ? null : 1;
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+
+            // edit from department
+            if (isPatternSelection) {
+                $('#departmentId').prop( "disabled",true);
+                $('#selectPatternIds').prop( "disabled",true);
+                $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+                $('#selectPatternIds  option[value=' + selectedPatId + ']').attr('selected','selected');
+                loadDataPreview(null, selectedPatId);
+            } else {
+                $('#departmentId').prop( "disabled",false);
+                loadDataPreview(pageDest, patId);
+            }
+        } else {
+            // edit from department
+            if (isPatternSelection) {
+                $('#companyOptionId').prop( "disabled",true);
+                $('#departmentId').prop( "disabled",true);
+                $('#selectPatternIds').prop( "disabled",true);
+                $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
+                $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+                $('#selectPatternIds  option[value=' + selectedPatId + ']').attr('selected','selected');
+                addAreaToTable('edit', selectedPatId, true);
+            } else {
+                $('#departmentId').prop( "disabled",false);
+                $('#selectPatternIds').prop( "disabled",false);
+                $('#companyOptionId').prop( "disabled",false);
+                addAreaToTable('edit', patId, ispattern);
+            }
+        }
+    }
+}
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Document Ready
  */
 $(function () {
-    let loginCompid = $('#userCompanyId').val();
+    loginCompid = $('#userCompanyId').val();
 
     if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
         checkDeptPatternExist(loginCompid);
     }
 
-    if (loginCompid == $('#kaizenbaseID').val()) {
-        loadCompany(loginCompid);
-    }
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    let deptId = urlParams.get('departmentId');
-    let isPattern = urlParams.get('isPattern');
-    let patternId = urlParams.get('patternId');
-    let selectedCompId = loginCompid == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
-    if (deptId) {
-        // set seleted value for company
-        $('#companyOptionId').val(deptId);
-        loadDeptList(deptId, 'edit');
-        loadPatternList(selectedCompId, isPattern, patternId);
-        $('#departmentId').prop( "disabled",true);
-        $('#selectPatternIds').prop( "disabled",false);
-        $('#companyOptionId').prop( "disabled",true);
-        let patId = $('#selectPatternIds').find(':selected').val();
-        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            if (!isPattern) {
-                let pageDest = isPattern ? null : 1;
-                loadDataPreview(pageDest, patId);
-            } else {
-                loadDataPreview();
-            }
-        } else {
-            addAreaToTable('edit', patId, isPattern);
-        }
-    }
-    else {
-        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            $('#departmentId').prop( "disabled",true);
-            $('#companyOptionId').prop( "disabled",true);
-        } else {
-            $('#departmentId').prop( "disabled",false);
-            $('#selectPatternIds').prop( "disabled",false);
-            $('#companyOptionId').prop( "disabled",false);
-        }
-        loadDeptList(loginCompid);
-        loadPatternList(selectedCompId);
-        let patId = $('#selectPatternIds').find(':selected').val();
-        let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
-        ispattern = ispattern == "true" ? true : false;
-        let pageDest = ispattern ? null : 1;
-        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            loadDataPreview(pageDest, patId);
-        } else {
-            addAreaToTable('edit', patId, ispattern);
-        }
-    }
+    initLoadPage();
 
     configCalendarPattern();
 
@@ -312,7 +358,7 @@ $(function () {
 
     // Load data for edit
     if ($('#hidPatternId').val()) {
-        loadData();
+        // loadData();
     }
 
     // Add New Area
@@ -348,12 +394,12 @@ $(function () {
         }
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
-        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] || isSelectedFree) {
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             let patId = $('#selectPatternIds').val();
             let ispattern = $('#selectPatternIds').find(':selected').data('ispattern');
-            saveAjax(null, patId, ispattern);
+            saveAjax(null, patId, ispattern, true);
         } else {
-            validateAndGetDataTable();
+            validateAndGetDataTable(isSelectedFree);
         }
 
     });
