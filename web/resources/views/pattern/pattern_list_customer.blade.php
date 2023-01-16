@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('css')
+    <link href="{{ mix('/css/pattern_list_customer.css') }}" rel="stylesheet"/>
+@endpush
+
 @push('scripts')
     <script src="{{ mix('/js/pattern_list_customer.js') }}"></script>
 @endpush
@@ -27,13 +31,13 @@
     <table id="patternListTable" class="table table-sm table-striped">
         <thead class="table-light">
             <tr style="text-align: center;">
-                <th data-align="center" data-width="200" data-field="id" data-visible="false">{{ __('Pattern_ID') }}</th>
-                <th data-align="center" data-width="200" data-field="no">{{ __('Pattern_ID') }}</th>
-                <th data-field="name" data-width="350" class="word-wrap">{{ __('Pattern_Name') }}</th>
-                <th data-field="note" class="word-wrap">{{ __('Pattern_Note') }}</th>
-                <th data-field="deptName" class="word-wrap">{{ __('Deparment_Name') }}</th>
+                <th data-field="id" data-visible="false">{{ __('Pattern_ID') }}</th>
+                <th data-align="center" data-field="no">{{ __('Pattern_ID') }}</th>
+                <th data-field="name">{{ __('Pattern_Name') }}</th>
+                <th data-field="note">{{ __('Pattern_Note') }}</th>
+                <th data-field="deptName">{{ __('Deparment_Name') }}</th>
                 @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
-                    <th data-width="120" data-formatter="patternListTableActions" data-cell-style="cellStyle"></th>
+                    <th data-width="120" class="th-action" data-formatter="patternListTableActions" data-cell-style="cellStyle"></th>
                 @endif
             </tr>
         </thead>
