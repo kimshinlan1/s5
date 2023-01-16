@@ -10,6 +10,8 @@
 var checkPatternOnly = false;
 var patternOldSelectedValue = '';
 var checkDeptPattern = '';
+var isEmptyOption = false;
+var isExistedOption = false;
 /** ------------------
   *    Actions
   --------------------- */
@@ -49,12 +51,12 @@ window.department5SChecklistActions = function (_value, row, _index) {
                 options += "<option value=" + ele.id + " data-deptId=" + ele.deptId + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
                 dataId = 1;
                 btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
-                +'" data-companyId="'+ row.company_id +'" data-deptId="'+ ele.deptId +'" data-patternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+                +'" data-companyId="'+ row.company_id +'" data-deptId="'+ ele.deptId +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
             } else {
                 options += "<option value=" + ele.id + " data-deptId=" + ele.deptId + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
             }
         });
-            btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+            btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
 
         options += " </select>";
 
@@ -125,16 +127,91 @@ window.isIpad = function() {
 }
 
 /** ------------------
+  *   Unbind dept pattern
+  * @param patternId
+  * @param deptId
+  *
+--------------------- */
+window.unbindDeptPattern = function(patternId, deptId) {
+    let url = 'departments/unbind_deptpattern';
+
+    let method = "POST";
+
+    let data = {
+        id: deptId,
+        pattern_id: patternId
+    };
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        showToast($("#successUpdateDialog"), 2000, true);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+}
+
+/** ------------------
+  *   Bind dept pattern
+  * @param patternId
+  * @param deptId
+  *
+--------------------- */
+window.bindDeptPattern = function(patternId, deptId, oldId) {
+    let url = 'departments/bind_deptpattern';
+
+    let method = "POST";
+
+    let data = {
+        id: deptId,
+        pattern_id: patternId,
+        company_id: $('#companyListID').find(':selected').val()
+    };
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        showToast($("#successUpdateDialog"), 2000, true);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+        // $("#checklist5sID" + deptId + " option[value=" + oldId + "]").attr('selected','selected');
+        setTimeout(() => {
+            location.reload();
+        }, 200);
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+}
+
+/** ------------------
   *    Handle onchange pattern selection
 --------------------- */
 window.selectPattern = function(id) {
-    let mode = $('#companyListID').find(":selected").attr('data-mode');
     let dataId = $("#checklist5sID" + id).find(":selected").val();
-    let deptId = $("#checklist5sID" + id).find(":selected").attr('data-deptId');
+    let targetPatId =  $('#checklist5sID' + id).siblings().attr('data-patternId');
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
+    let mode = $('#companyListID').find(":selected").attr('data-mode');
+    let deptId = $("#checklist5sID" + id).find(":selected").attr('data-deptId');
     let companyId = $("#checklist5sID" + id).find(":selected").attr('data-companyId');
+    if (dataId == "") {
+        $('#confirmDialog3').modal('show');
+        $('.confirmMessage3').text($('#unBindDeptPatternMsg').val());
+        $('#okBtn').attr('data-deptid', id);
+        $('#okBtn').attr('data-patternid', dataId);
+        isEmptyOption = true;
+        return;
+    }
+
+    if (isPattern == "false") {
+        $('#confirmDialog3').modal('show');
+        $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
+        $('#okBtn').attr('data-deptid', id);
+        $('#okBtn').attr('data-patternid', dataId);
+        $('#okBtn').val(targetPatId);
+        isExistedOption = true;
+        return;
+    }
+
     let patternFirstLoadValue = '';
-    $('#checklist5sID' + id).siblings().attr('data-patternId', dataId);
+    $('#checklist5sID' + id).siblings().attr('data-selectedPatternId', dataId);
     $('#checklist5sID' + id).siblings().attr('data-companyId', companyId);
     $('#checklist5sID' + id).siblings().attr('data-deptId', deptId);
     $('#checklist5sID' + id).siblings().attr('data-isPattern', isPattern);
@@ -154,12 +231,15 @@ window.selectPattern = function(id) {
         $("#checklist5sID" + id).val(patternOldSelectedValue);
     } else {
         if (dataId && isPattern == "true") {
+            isEmptyOption = false;
+            isExistedOption = false;
             $('#confirmDialog3').modal('show');
             $('.confirmMessage3').text($('#confirmMessage').val());
             $('#okBtn').attr('data-compId', companyId);
             $('#okBtn').attr('data-deptid', id);
             $('#okBtn').attr('data-patternid', dataId);
             $('#okBtn').attr('data-isPattern', isPattern);
+            $('#okBtn').val(targetPatId);
             $('#cancelBtn').attr('data-deptid-old', patternFirstLoadValue);
         }
         if (dataId && checkDeptPattern == '') {
@@ -175,10 +255,11 @@ window.selectPattern = function(id) {
 window.openEditDeptPattern = function(id) {
     let deparmentId = $('#editPatternBtn' + id).attr("data-deptId");
     let patId = $('#editPatternBtn' + id).attr("data-patternId");
+    let selectedPatId = $('#editPatternBtn' + id).attr("data-selectedPatternId");
     let compId = $('#editPatternBtn' + id).attr("data-companyId");
     let checklistId = $('#checklist5sID' + id).find(':selected').val();
     if (checklistId.length != 0) {
-        window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&pageDept=1' + '&targetDept=' + id;
+        window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&patternId=' + selectedPatId + '&pageDept=1' + '&targetDept=' + id;
     } else {
         $('.error-messages').text($('#messageNoSelectedData').val());
         $('#errorDialog').modal('show');
@@ -438,7 +519,16 @@ window.saveDataEmployee = function () {
         let deptId = $('#okBtn').attr('data-deptid');
         let patternId = $('#okBtn').attr('data-patternid');
         let isPattern = $('#okBtn').attr('data-isPattern');
-        window.location = '/pattern_dept_setting?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
+        let id = $('#okBtn').val();
+        if (isEmptyOption) {
+            unbindDeptPattern(patternId, deptId);
+        }
+        else if (isExistedOption) {
+            bindDeptPattern(patternId, deptId, id);
+        } else {
+            window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
+        }
+
     })
 
     $('#cancelBtn').on('click', function() {

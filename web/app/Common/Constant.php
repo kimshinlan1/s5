@@ -17,6 +17,7 @@ class Constant
         "404" => "NOT FOUND",
         "MAX_EMP_ERROR" => "Deparment_Count_Employee",
         "UNIQUE_PATTERN_NAME" => "パターン名は社内で一意である必要があります",
+        "DUPLICATED_PATTERN" => "このパターンはすでに使用されています",
     ];
 
     public const ROLE = [

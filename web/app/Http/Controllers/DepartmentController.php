@@ -181,4 +181,33 @@ class DepartmentController extends Controller
     {
         return $this->service->getDeptBtId($id);
     }
+
+    /**
+     * Unbind deptpattern from department
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function unbindDeptPattern(Request $request)
+    {
+        $data = $this->service->unbindDeptPatternFromDept($request);
+        return response()->json($data);
+    }
+
+    /**
+     * Bind deptpattern from department
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function bindDeptPattern(Request $request)
+    {
+        $data = $this->service->bindDeptPatternFromDept($request);
+        if (!$data) {
+            return response()->json([
+                'errors' => __(Constant::MESSAGES['DUPLICATED_PATTERN'])
+            ], 500);
+        }
+        return response()->json($data);
+    }
 }

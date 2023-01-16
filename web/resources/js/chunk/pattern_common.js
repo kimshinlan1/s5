@@ -271,7 +271,7 @@ window.getCompanyId = function() {
 /**
  * Get data from table
  */
-function validateAndGetDataTable(isSelectedFree=null) {
+function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
     //Validate all rows and Get param to submit
     let valid = true;
 
@@ -280,7 +280,7 @@ function validateAndGetDataTable(isSelectedFree=null) {
     }
 
     let info = {
-        'pattern_id': $('#hidPatternId').val(),
+        'pattern_id': selectedPatId ? selectedPatId : $('#hidPatternId').val(),
         'pattern_name': $('#patternName').val(),
         'pattern_note': $('#patternNote').val(),
         'pattern_5s_selected': JSON.stringify(selected_5s),
