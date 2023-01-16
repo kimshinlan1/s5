@@ -262,6 +262,13 @@ function InvalidMsgMyForm(textbox) {
 }
 
 /**
+ * Get targeted company id
+ */
+window.getCompanyId = function() {
+    return ( $('#userCompanyId').val() == $('#kaizenbaseID').val() ) ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+}
+
+/**
  * Get data from table
  */
 function validateAndGetDataTable(isSelectedFree=null) {
@@ -290,7 +297,7 @@ function validateAndGetDataTable(isSelectedFree=null) {
 
     // get department id
     params['department'] = $('#departmentId').find(':selected').val();
-    params['company'] = $('#companyOptionId').find(':selected').val();
+    params['company'] = getCompanyId();
 
     // Loop main area
     $("#table-content tbody").find("tr.main_area").each(function() {

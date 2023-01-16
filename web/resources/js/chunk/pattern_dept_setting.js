@@ -244,10 +244,6 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     runAjax(url, method, params, doneCallback, failCallback, alwaysCallback, false);
 }
 
-window.getCompanyId = function() {
-        return ( $('#userCompanyId').val() == $('#kaizenbaseID').val() ) ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
-}
-
 window.initLoadPage = function() {
     if (loginCompid == $('#kaizenbaseID').val()) {
         loadCompany(loginCompid);
