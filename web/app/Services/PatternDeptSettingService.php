@@ -100,7 +100,7 @@ class PatternDeptSettingService extends BaseService
         $data = $request->get('data');
         $companyId = $request->data['company'];
         $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
-        $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name']);
+        $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
         if (!$isUnique) {
             return [
                 'invalid' => true,
@@ -132,13 +132,7 @@ class PatternDeptSettingService extends BaseService
         }
 
         if ($request->data['isSelectedFree'] == 'free') {
-            $depPatternIds = Department::where('company_id', $companyId)
-            ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
-            if (count($depPatternIds)) {
-                foreach ($depPatternIds as $depPatternId) {
-                    app()->get(PatternService::class)->destroyPatternByMode($depPatternId, null, Constant::PAGE_PATTERN_LIST_CUSTOMER);
-                }
-            }
+            $this->deleteOldDeptPattern($companyId);
         }
 
         // Step: Insert new pattern
@@ -207,12 +201,12 @@ class PatternDeptSettingService extends BaseService
      * @param $patternName
      * @return boolean
      */
-    public function checkUniqueName($deptId, $deptPatternName) {
+    public function checkUniqueName($deptId, $deptPatternName, $currentPatternId = null) {
         $compId = Department::find($deptId)->company_id;
         $dept_pattern = null;
         $deptPatternIds = Department::where('company_id', $compId)->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (!empty($deptPatternIds)) {
-            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)->where('name', $deptPatternName)->exists();
+            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
         }
         return $dept_pattern ? false: true;
     }
@@ -228,9 +222,10 @@ class PatternDeptSettingService extends BaseService
         $patternId = $request->get('pattern_id');
         $companyId = $request->get('company_id');
         $deptPatternName = $request->get('name');
+        $deptPatternId = $request->get('deptPatternId');
         $deptId = $request->get('department_id');
 
-        $isUnique = $this->checkUniqueName($deptId, $deptPatternName);
+        $isUnique = $this->checkUniqueName($deptId, $deptPatternId);
         if (!$isUnique) {
             return [
                 'invalid' => true,
@@ -247,13 +242,9 @@ class PatternDeptSettingService extends BaseService
         }
 
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
-        $depPatternIds = Department::where('company_id', $companyId)
-        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
-        if (count($depPatternIds)) {
-            foreach ($depPatternIds as $depPatternId) {
-                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, null, Constant::PAGE_PATTERN_LIST_CUSTOMER);
-            }
-        }
+        $this->deleteOldDeptPattern($companyId);
+
+
         $pattern['id'] = null;
         $pattern['name'] = $deptPatternName;
         $pattern['company_id'] = $companyId;
@@ -331,5 +322,23 @@ class PatternDeptSettingService extends BaseService
     {
         $data = $this->model::find($id);
         return $data->delete();
+    }
+
+    /**
+     * Remove old dept-pattern
+     *
+     * @param  $companyId
+     *
+     * @return void
+     */
+    public function deleteOldDeptPattern($companyId)
+    {
+        $depPatternIds = Department::where('company_id', $companyId)
+        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+        if (count($depPatternIds)) {
+            foreach ($depPatternIds as $depPatternId) {
+                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, null, Constant::PAGE_PATTERN_LIST_CUSTOMER);
+            }
+        }
     }
 }

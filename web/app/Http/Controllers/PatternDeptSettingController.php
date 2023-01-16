@@ -155,6 +155,9 @@ class PatternDeptSettingController extends Controller
     {
         // todo: Check not exist data
         $data = $this->service->saveForFree($request);
+        if ($data['invalid']) {
+            return $this->responseException(Constant::MESSAGES['UNIQUE_PATTERN_NAME'], 422);
+        }
         return response()->json($data);
     }
 
