@@ -195,10 +195,6 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
   *    Handle onchange pattern selection
 --------------------- */
 window.selectPattern = function(id) {
-    if (checkDeptPattern == id) {
-        checkPatternOnly = false;
-        checkDeptPattern = '';
-    }
     let dataId = $("#checklist5sID" + id).find(":selected").val();
     let targetPatId =  $('#checklist5sID' + id).siblings().attr('data-patternId');
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
@@ -216,7 +212,7 @@ window.selectPattern = function(id) {
         return;
     }
     // Bind dept pattern case
-    if ((isPattern == "false" && mode != CONFIG.get('5S_MODE').FREE) ||  (isPattern == "false" && mode == CONFIG.get('5S_MODE').FREE && !checkPatternOnly)) {
+    if (isPattern == "false" && !checkPatternOnly) {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
         $('#okBtn').attr('data-deptid', id);
@@ -261,6 +257,10 @@ window.selectPattern = function(id) {
             checkDeptPattern = id;
         }
     }
+    // if (checkDeptPattern == id) {
+    //     checkPatternOnly = false;
+    //     checkDeptPattern = '';
+    // }
 }
 
 /** ------------------
