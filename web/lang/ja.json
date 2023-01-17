@@ -33,6 +33,8 @@
     "Common_Save_Success": "保存しました。",
     "Common_Delete_Success": "削除しました",
     "Common_Confirm_Message": "本気ですか？",
+    "Unbind_Pattern_Confirm_Message": "このパターンのバインドを解除しますか?",
+    "Bind_Pattern_Confirm_Message": "Dこのパターンをバインドしますか?",
     "Common_Click_To_Select_Date": "クリックして日付を選択してください",
     "Common_Created_Date": "作成日",
     "Common_Last_Update_Date": "最終更新日",

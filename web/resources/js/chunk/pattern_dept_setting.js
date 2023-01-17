@@ -273,21 +273,36 @@ window.initLoadPage = function() {
         loadDeptList(selectedCompId);
         loadPatternList(selectedCompId, hidPatternId);
         $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
-        if (pageDept) {
-            $('#departmentId').prop("disabled",false);
-            $('#departmentId  option[value=' + targetDept + ']').attr('selected','selected');
-        } else {
-            $('#departmentId').prop("disabled",true);
-        }
-        $('#selectPatternIds').prop("disabled",false);
-        $('#companyOptionId').prop("disabled",true);
         // let patId = $('#selectPatternIds').find(':selected').val();
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            let pageDest = ispattern ? null : 1;
-            loadDataPreview(pageDest, hidPatternId);
+            let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
+            ispattern = ispattern == "true" ? true : false;
+            let isDept = ispattern ? null : 1;
+            if (selectedPatId) {
+                loadDataPreview(isDept, selectedPatId);
+                $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
+                $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+                $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
+            } else {
+                loadDataPreview(isDept, hidPatternId);
+            }
         } else {
-            addAreaToTable('edit', hidPatternId, ispattern);
+            if (selectedPatId) {
+                addAreaToTable('edit', selectedPatId, isPatternSelection);
+                $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
+                $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+                $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
+            } else {
+                addAreaToTable('edit', hidPatternId, ispattern);
+            }
         }
+        if (pageDept) {
+            $('#departmentId  option[value=' + targetDept + ']').attr('selected','selected');
+        }
+        $('#companyOptionId').prop( "disabled",true);
+        $('#departmentId').prop( "disabled",true);
+        $('#selectPatternIds').prop( "disabled",true);
+
     }
     // Add new mode
     else {
@@ -303,34 +318,9 @@ window.initLoadPage = function() {
         ispattern = ispattern == "true" ? true : false;
         let pageDest = ispattern ? null : 1;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-
-            // edit from department
-            if (isPatternSelection) {
-                $('#departmentId').prop( "disabled",true);
-                $('#selectPatternIds').prop( "disabled",true);
-                $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
-                $('#selectPatternIds  option[value=' + selectedPatId + ']').attr('selected','selected');
-                loadDataPreview(null, selectedPatId);
-            } else {
-                $('#departmentId').prop( "disabled",false);
-                loadDataPreview(pageDest, patId);
-            }
+            loadDataPreview(pageDest, patId);
         } else {
-            // edit from department
-            if (isPatternSelection) {
-                $('#companyOptionId').prop( "disabled",true);
-                $('#departmentId').prop( "disabled",true);
-                $('#selectPatternIds').prop( "disabled",true);
-                $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
-                $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
-                $('#selectPatternIds  option[value=' + selectedPatId + ']').attr('selected','selected');
-                addAreaToTable('edit', selectedPatId, true);
-            } else {
-                $('#departmentId').prop( "disabled",false);
-                $('#selectPatternIds').prop( "disabled",false);
-                $('#companyOptionId').prop( "disabled",false);
-                addAreaToTable('edit', patId, ispattern);
-            }
+            addAreaToTable('edit', patId, ispattern);
         }
     }
 }
@@ -381,6 +371,9 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();
+        // const queryString = window.location.search;
+        // const urlParams = new URLSearchParams(queryString);
+        // let selectedPatId = urlParams.get('patternId');
         // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);

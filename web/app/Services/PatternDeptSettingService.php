@@ -123,13 +123,14 @@ class PatternDeptSettingService extends BaseService
         if ($data['info']['pattern_id']) {
             // Remove Pattern Detail
             $this->deleteByPatternId($data['info']['pattern_id']);
-
-            // Remove Location
-            (app()->get(LocationService::class))->deleteByAreaId($data['old_areas']);
-
-            // Remove Area
-            (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
         }
+
+        //     // Remove Location
+        //     (app()->get(LocationService::class))->deleteByAreaId($data['old_areas']);
+
+        //     // Remove Area
+        //     (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
+        // }
 
         if ($request->data['isSelectedFree'] == 'free') {
             $this->deleteOldDeptPattern($companyId);
