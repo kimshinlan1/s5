@@ -212,7 +212,7 @@ window.selectPattern = function(id) {
         return;
     }
     // Bind dept pattern case
-    if (isPattern == "false" && !checkPatternOnly) {
+    if ((isPattern == "false" && mode != CONFIG.get('5S_MODE').FREE) || (isPattern == "false" && mode == CONFIG.get('5S_MODE').FREE  && !checkPatternOnly)) {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
         $('#okBtn').attr('data-deptid', id);
