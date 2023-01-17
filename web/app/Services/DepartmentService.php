@@ -193,18 +193,25 @@ class DepartmentService extends BaseService
     public function bindDeptPatternFromDept(Request $request)
     {
         $id = $request->get('id');
-        $pattern_id = $request->get('pattern_id');
-        $company_id = $request->get('company_id');
-        $existValues = $this->model->where('company_id', $company_id)->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
-        if (in_array($pattern_id, $existValues)) {
+        $patternId = $request->get('pattern_id');
+        $companyId = $request->get('company_id');
+        $existValues = $this->model->where('company_id', $companyId)
+        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+
+        if (in_array($patternId, $existValues)) {
             return false;
         }
+
         $unbindOldData = $this->unbindDeptPatternFromDept($request);
-        if ($unbindOldData) {
-            $data = $this->model::find($id);
-            if ($data) {
-                $data->dept_pattern_id =  $pattern_id;
-            }
+        if (empty($unbindOldData)) {
+            return [
+                'invalid' => true,
+            ];
+        }
+
+        $data = $this->model::find($id);
+        if ($data) {
+            $data->dept_pattern_id =  $patternId;
         } else {
             return [
                 'invalid' => true,
