@@ -176,7 +176,7 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
         // $("#checklist5sID" + deptId + " option[value=" + oldId + "]").attr('selected','selected');
         setTimeout(() => {
             location.reload();
-        }, 200);
+        }, 1000);
     };
     runAjax(url, method, data, doneCallback, failCallback, null, false);
 }

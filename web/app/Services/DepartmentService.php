@@ -205,6 +205,10 @@ class DepartmentService extends BaseService
             if ($data) {
                 $data->dept_pattern_id =  $pattern_id;
             }
+        } else {
+            return [
+                'invalid' => true,
+            ];
         }
 
         return $data->save();

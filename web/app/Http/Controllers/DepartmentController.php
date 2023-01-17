@@ -208,6 +208,9 @@ class DepartmentController extends Controller
                 'errors' => __(Constant::MESSAGES['DUPLICATED_PATTERN'])
             ], 500);
         }
+        if (isset($data['invalid'])) {
+            return $this->responseException(Constant::MESSAGES['SYSTEM_ERROR'], 500);
+        }
         return response()->json($data);
     }
 }

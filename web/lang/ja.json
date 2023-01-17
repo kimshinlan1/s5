@@ -33,8 +33,8 @@
     "Common_Save_Success": "保存しました。",
     "Common_Delete_Success": "削除しました",
     "Common_Confirm_Message": "本気ですか？",
-    "Unbind_Pattern_Confirm_Message": "Do you want to unbind this pattern?",
-    "Bind_Pattern_Confirm_Message": "Do you want to bind this pattern?",
+    "Unbind_Pattern_Confirm_Message": "このパターンのバインドを解除しますか?",
+    "Bind_Pattern_Confirm_Message": "Dこのパターンをバインドしますか?",
     "Common_Click_To_Select_Date": "クリックして日付を選択してください",
     "Common_Created_Date": "作成日",
     "Common_Last_Update_Date": "最終更新日",
@@ -245,6 +245,6 @@
     "Pattern_Dept_Name": "パターン名",
     "Pattern_Err_Required": "このフィールドを記入してください",
     "Pattern_Err_FormatNumber": "要求された形式に一致してください",
-    "Pattern_Err_Use_Only_1_Pattern": "Duplicated Pattern",
+    "Pattern_Err_Use_Only_1_Pattern": "あなたのアカウントは1つのパターンのみを使用しています",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }
