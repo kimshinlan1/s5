@@ -12,6 +12,7 @@ var patternOldSelectedValue = '';
 var checkDeptPattern = '';
 var isEmptyOption = false;
 var isExistedOption = false;
+var isFreeWarning = false;
 /** ------------------
   *    Actions
   --------------------- */
@@ -144,9 +145,15 @@ window.unbindDeptPattern = function(patternId, deptId) {
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($("#successUpdateDialog"), 2000, true);
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
+        // setTimeout(() => {
+        //     location.reload();
+        // }, 1000);
     };
     runAjax(url, method, data, doneCallback, failCallback, null, false);
 }
@@ -170,13 +177,16 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($("#successUpdateDialog"), 2000, true);
-    };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-        // $("#checklist5sID" + deptId + " option[value=" + oldId + "]").attr('selected','selected');
         setTimeout(() => {
             location.reload();
         }, 1000);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+        $("#checklist5sID" + deptId).val(oldId);
+        // setTimeout(() => {
+        //     location.reload();
+        // }, 1000);
     };
     runAjax(url, method, data, doneCallback, failCallback, null, false);
 }
@@ -185,12 +195,18 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
   *    Handle onchange pattern selection
 --------------------- */
 window.selectPattern = function(id) {
+    if (checkDeptPattern == id) {
+        checkPatternOnly = false;
+        checkDeptPattern = '';
+    }
     let dataId = $("#checklist5sID" + id).find(":selected").val();
     let targetPatId =  $('#checklist5sID' + id).siblings().attr('data-patternId');
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
     let mode = $('#companyListID').find(":selected").attr('data-mode');
     let deptId = $("#checklist5sID" + id).find(":selected").attr('data-deptId');
     let companyId = $("#checklist5sID" + id).find(":selected").attr('data-companyId');
+
+    // Unbind pattern case
     if (dataId == "") {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#unBindDeptPatternMsg').val());
@@ -199,8 +215,8 @@ window.selectPattern = function(id) {
         isEmptyOption = true;
         return;
     }
-
-    if (isPattern == "false") {
+    // Bind dept pattern case
+    if ((isPattern == "false" && mode != CONFIG.get('5S_MODE').FREE) ||  (isPattern == "false" && mode == CONFIG.get('5S_MODE').FREE && !checkPatternOnly)) {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
         $('#okBtn').attr('data-deptid', id);
@@ -220,14 +236,12 @@ window.selectPattern = function(id) {
             patternFirstLoadValue = this.value;
         }
     });
-    if (checkDeptPattern == id) {
-        checkPatternOnly = false;
-        checkDeptPattern = '';
-    }
+
+    // Free mode case
     if (($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly) || (mode == CONFIG.get('5S_MODE').FREE  && checkPatternOnly)) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#errMessageUse1Pattern').val());
-        $('#checklist5sID' + id).prop("selectedIndex", 0).change();
+        $('#checklist5sID' + id).prop("selectedIndex", 0);
         $("#checklist5sID" + id).val(patternOldSelectedValue);
     } else {
         if (dataId && isPattern == "true") {
@@ -504,6 +518,8 @@ window.saveDataEmployee = function () {
     }
 
     $('#companyListID').on('change',function () {
+        checkDeptPattern = '';
+        checkPatternOnly = false;
         $('#departmentTable').bootstrapTable('refresh', {url:'/departments/comp_list'});
         $('#departmentTable').on('load-success.bs.table.bs.table', function (_e, _result, _status, _jqXHR) {
             // hide loading modal
@@ -646,6 +662,8 @@ window.saveDataEmployee = function () {
         })
             .done(function (_department, _textStatus, _jqXHR) {
                 reloadDataDepartment();
+                checkDeptPattern = '';
+                checkPatternOnly = false;
                 $("#departmentTable").bootstrapTable("refresh");
                 showToast($('#toast2'), 3000, true);
             })

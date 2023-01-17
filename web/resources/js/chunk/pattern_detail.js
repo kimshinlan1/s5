@@ -187,7 +187,7 @@ $(function () {
     });
 
     //Back page
-    $("#backPage").click(function () {
-        $("#modalBackPage").modal('show');
-    })
+    // $("#backPage").click(function () {
+    //     $("#modalBackPage").modal('show');
+    // })
 });
