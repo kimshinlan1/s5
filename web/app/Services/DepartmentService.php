@@ -194,13 +194,6 @@ class DepartmentService extends BaseService
     {
         $id = $request->get('id');
         $patternId = $request->get('pattern_id');
-        $companyId = $request->get('company_id');
-        $existValues = $this->model->where('company_id', $companyId)
-        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
-
-        if (in_array($patternId, $existValues)) {
-            return false;
-        }
 
         $unbindOldData = $this->unbindDeptPatternFromDept($request);
         if (empty($unbindOldData)) {

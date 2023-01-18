@@ -166,7 +166,7 @@ $(function () {
     $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
         // Redirect to 5S pattern preview page
         if (row) {
-            window.location = '/pattern_preview/' + $el.id + '?departmentId=' + $el.deptId + "&pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER");
+            window.location = '/pattern_preview/' + $el.id + '?departmentId=' + $el.deptId + '&companyId=' + $el.company_id + "&pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER");
         }
     })
     $('#patternListAdd').on('click', function() {
