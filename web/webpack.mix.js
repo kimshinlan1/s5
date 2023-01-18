@@ -21,6 +21,7 @@ const glob = require("glob");
     .sass('resources/sass/app.scss', 'public/css')
     .css('resources/css/pattern.css','public/css')
     .css('resources/css/pattern_list_customer.css','public/css')
+    .css('resources/css/pattern_team_inspection.css','public/css')
     .sourceMaps()
     .version();
 

@@ -3,7 +3,7 @@
 @push('css')
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
         type="text/css"/>
-    {{-- <link href="{{ mix('/css/pattern.css') }}" rel="stylesheet"/> --}}
+    <link href="{{ mix('/css/pattern_team_inspection.css') }}" rel="stylesheet"/>
 @endpush
 
 @push('scripts')
@@ -29,14 +29,20 @@
 
     <div class="h-title">5S入力画面</div>
 
-    <div class="d-flex justify-content-start mb-4">
-        Department List
+    <div class="d-flex justify-content-start mb-4" style="width: 55%;">
+        {{-- Department List --}}
         {{-- Add selectbox --}}
+        <div class="mt-1 fs-5" style="padding-right: 50px;">{{ __('Department') }}</div>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Department select" id="selectDeptList" >
+        </select>
     </div>
 
-    <div class="d-flex justify-content-start mb-4">
-        Team List / Team Name
+    <div class="d-flex justify-content-start mb-4" style="width: 55%;">
+        {{-- Team List / Team Name --}}
         {{-- Add selectbox --}}
+        <div class="mt-1 fs-5" style="padding-right: 15px;">{{ __('Team_Management') }}</div>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
+        </select>
     </div>
 
     <input type="hidden" id="hidDeptId" value=""/>

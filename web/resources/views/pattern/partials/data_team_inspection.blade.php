@@ -1,4 +1,8 @@
 
+<script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script>
+<script type="text/javascript">
+    var inspIds = {{ Js::from($inspectionIds ?? []) }};
+</script>
 <?php
     $width_data = "50px";
     $areas = [];
@@ -8,20 +12,21 @@
 ?>
 
 <div style="width: 100%; height: auto; overflow: auto; ">
-
-    <table id="" class="table table-bordered" style="width: fit-content;">
+  <form id="formFormsInput">
+    {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
+    <table id="" class="table table-bordered">
 
         {{-- Remove Button --}}
-        <tr>
+        <tr style="border-color: transparent;">
             <td colspan="3">
 
             </td>
             @foreach ($inspectionIds as $inspectionId)
-            <td>
+            <td style="text-align: center">
                 @if (is_int($inspectionId))
-                <input type="button" value="削除" onclick="removeColumn('{{ $inspectionId }}')"/>
+                <input style="border-color: transparent; width: 30%; background-color: red; color: aliceblue;" type="button" value="削除" onclick="removeColumn('{{ $inspectionId }}')"/>
                 @else
-                <input type="button" value="削除" onclick="removeColumn(-1)"/>
+                <input style="border-color: transparent; width: 30%; background-color: red; color: aliceblue;" type="button" value="削除" onclick="removeColumn(-1)"/>
                 @endif
 
             </td>
@@ -29,31 +34,33 @@
         </tr>
 
         {{-- Radar Chart --}}
-        <tr>
-            <td colspan="3">
+        <tr style="height: 200px; border-color: transparent;">
+            <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #DAEEF3;">
                 ここにイラスト
             </td>
             @for ($i = 0; $i < $countInspection; $i++)
             <td style="width: {{ $width_data }}">
-                Radar Chart
-                <div id="radarchart_{{ $i }}"></div>
+                {{-- Radar Chart
+                <div id="radarchart_{{ $i }}"></div> --}}
+                <canvas id="myChart"></canvas>
             </td>
             @endfor
         </tr>
 
         {{-- Bar Chart --}}
-        <tr>
-            <td colspan="3">
+        <tr style="height: 200px; border-color: transparent;">
+            <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #FDE9D9;">
                 ここにイラスト
             </td>
             <td colspan="{{ $countInspection }}">
-                Bar Chart
-                <div id="barchart"></div>
+                {{-- Bar Chart
+                <div id="barchart"></div> --}}
+                <canvas style="width: 15px; height: 10px;" id="myBarChart"></canvas>
             </td>
         </tr>
 
         {{-- 改善結果を見る --}}
-        <tr>
+        <tr style="text-align: center; border-left-color: transparent; border-right-color: transparent;">
             <td colspan="3">
 
             </td>
@@ -64,36 +71,38 @@
             @endphp
             <td>
                 @if (strpos($inspectionId, "new"))
-                <input type="button" class="btn-success" value="改善結果を見る" onclick=""/>
+                <input style="width: 100%; border-color: transparent; background-color: #FDE9D9;" type="button" class="btn-success" value="改善結果を見る" onclick=""/>
                 @else
-                <input type="button" class="" value="改善結果を見る" onclick=""/>
+                <input style="width: 100%; border-color: transparent; background-color: deepskyblue; color: aliceblue" type="button" class="" value="改善結果を見る" onclick=""/>
                 @endif
 
                 <br>
-                <a href="">{{ $countImgs }}件登録済</a>
+                <a style="color: black;" href="">{{ $countImgs }}件登録済</a>
                 <br>
-                <a href="">新しく登録する</a>
+                <a style="color: black;" href="">新しく登録する</a>
             </td>
             @endforeach
         </tr>
 
         {{-- 平均 --}}
         <tr>
+          <form id="point_avg_1s">
             <td rowspan="5" style="width: 20px">平均</td>
             <td style="width: 50px">整理</td>
             <td style="width: 50px">1S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <span id="point_avg_1s_{{ $inspectionId }}">Point avg</span>
+                <label id="point_avg_1s_{{ $inspectionId }}">Point avg</label>
             </td>
             @endforeach
+          </form>
         </tr>
         <tr>
             <td>整頓</td>
             <td>2S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <span id="point_avg_2s_{{ $inspectionId }}">Point avg</span>
+                <label id="point_avg_2s_{{ $inspectionId }}">Point avg</label>
             </td>
             @endforeach
         </tr>
@@ -102,7 +111,7 @@
             <td>3S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <span id="point_avg_3s_{{ $inspectionId }}">Point avg</span>
+                <label id="point_avg_3s_{{ $inspectionId }}">Point avg</label>
             </td>
             @endforeach
         </tr>
@@ -111,7 +120,7 @@
             <td>4S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <span id="point_avg_4s_{{ $inspectionId }}">Point avg</span>
+                <label id="point_avg_4s_{{ $inspectionId }}">Point avg</label>
             </td>
             @endforeach
         </tr>
@@ -120,7 +129,7 @@
             <td>5S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <span id="point_avg_5s_{{ $inspectionId }}">Point avg</span>
+                <label id="point_avg_5s_{{ $inspectionId }}">Point avg</label>
             </td>
             @endforeach
         </tr>
@@ -223,7 +232,7 @@
                 {{-- Point Value --}}
                 @foreach ($inspectionIds as $inspectionId)
                 <td>
-                    <select class="form-select" id="selPointValue-{{ $inspectionId .'-'. $index }}"  data-5s="{{ $row['5s'] }}">
+                    <select class="form-select selPointValue" id="selPointValue-{{ $inspectionId .'-'. $index }}" data-5s="{{ $row['5s'] }}" data-inspection_id="{{ $inspectionId }}">
                         @foreach ($pointValues as $value)
                         <?php
                             $selected = (isset($inspectionData[$inspectionId][$index])
@@ -241,7 +250,7 @@
 
 
     </table>
-
+  </form>
 </div>
 
 {{-- Hidden --}}
