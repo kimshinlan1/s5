@@ -71,14 +71,6 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
 }
 
 /**
- * Button back page
- */
-function backPage() {
-    $("#modalBackPage").modal('hide');
-    location.href = "/pattern_list_customer";
-}
-
-/**
  * Button cancel back page
  */
 function cancelBackPage() {
@@ -128,10 +120,12 @@ window.loadDeptList = function(id) {
  * @param id company id
  * @param patternId dept pattern id
  */
-window.loadPatternList = function(id, patternId = null ) {
+window.loadPatternList = function(id, patternId = null, isPattern = null ) {
     let url = '/pattern_list/getlist_by_department/' + id;
 
     let method = "GET";
+
+    isPattern = isPattern ? true : false;
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         let html = '';
@@ -140,7 +134,7 @@ window.loadPatternList = function(id, patternId = null ) {
                 $('#patternNote').val(e.note);
             }
 
-            if(e.id == patternId && !e.isPattern) {
+            if(e.id == patternId && e.isPattern == isPattern) {
                 html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '" selected>' + e.name + '</option>';
                 $('#patternNote').val(e.note);
             }
@@ -308,7 +302,9 @@ window.initLoadPage = function() {
     else {
         if (compId) {
             loadDeptList(compId);
-            loadPatternList(compId);
+            loadPatternList(compId, selectedPatId, true);
+            $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
+            $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
         } else {
             loadDeptList(loginCompid);
             loadPatternList(selectedCompId);
@@ -371,10 +367,6 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();
-        // const queryString = window.location.search;
-        // const urlParams = new URLSearchParams(queryString);
-        // let selectedPatId = urlParams.get('patternId');
-        // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
             $('#patternName').focus();
@@ -406,9 +398,9 @@ $(function () {
     });
 
     // Back page
-    $("#backPage").click(function () {
-        $("#modalBackPage").modal('show');
-    })
+    // $("#backPage").click(function () {
+    //     $("#modalBackPage").modal('show');
+    // })
     $('#selectPatternIds').change(function() {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");

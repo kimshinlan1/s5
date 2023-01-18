@@ -186,8 +186,4 @@ $(function () {
         $("#modalDelectLocation").modal('show');
     });
 
-    //Back page
-    $("#backPage").click(function () {
-        $("#modalBackPage").modal('show');
-    })
 });

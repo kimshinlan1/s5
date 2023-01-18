@@ -138,7 +138,7 @@
                     style="margin-right: 1%;">{{ __('Common_button_delete') }}
                 </button>
 
-                <button type="button" id="backPage" class="btn btn-secondary" data-toggle="modal">
+                <button type="button" id="backPage" onclick="history.back()" class="btn btn-secondary" data-toggle="modal">
                     {{ __('Common_Back') }}
                 </button>
             </div>
