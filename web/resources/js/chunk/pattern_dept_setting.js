@@ -71,14 +71,6 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
 }
 
 /**
- * Button back page
- */
-// function backPage() {
-//     $("#modalBackPage").modal('hide');
-//     location.href = "/pattern_list_customer";
-// }
-
-/**
  * Button cancel back page
  */
 function cancelBackPage() {
@@ -375,10 +367,6 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let patternName = $('#patternName').val();
-        // const queryString = window.location.search;
-        // const urlParams = new URLSearchParams(queryString);
-        // let selectedPatId = urlParams.get('patternId');
-        // todo: Validate required field (pattern_name, create_date, update_date)
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
             $('#patternName').focus();
