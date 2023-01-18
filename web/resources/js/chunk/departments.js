@@ -151,9 +151,9 @@ window.unbindDeptPattern = function(patternId, deptId) {
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
-        // setTimeout(() => {
-        //     location.reload();
-        // }, 1000);
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     };
     runAjax(url, method, data, doneCallback, failCallback, null, false);
 }
@@ -184,9 +184,9 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
         $("#checklist5sID" + deptId).val(oldId);
-        // setTimeout(() => {
-        //     location.reload();
-        // }, 1000);
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     };
     runAjax(url, method, data, doneCallback, failCallback, null, false);
 }
@@ -257,10 +257,6 @@ window.selectPattern = function(id) {
             checkDeptPattern = id;
         }
     }
-    // if (checkDeptPattern == id) {
-    //     checkPatternOnly = false;
-    //     checkDeptPattern = '';
-    // }
 }
 
 /** ------------------
