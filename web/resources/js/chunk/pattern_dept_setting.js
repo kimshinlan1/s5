@@ -122,14 +122,21 @@ window.loadDeptList = function(id) {
  * @param id company id
  * @param patternId dept pattern id
  */
+var pattern_list_data = null;
 window.loadPatternList = function(id, patternId = null, isPattern = null ) {
+
+    // Check existed data
+    if (pattern_list_data) {
+        return;
+    }
+
     let url = '/pattern_list/getlist_by_department/' + id;
-
     let method = "GET";
-
     isPattern = isPattern ? true : false;
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
+        pattern_list_data = data;
+
         let html = '';
         data.forEach(function callback(e, index) {
             if (patternId == null && index == 0) {
@@ -147,9 +154,11 @@ window.loadPatternList = function(id, patternId = null, isPattern = null ) {
         $('#selectPatternIds').html(html);
         $('#selectPatternIds').change();
     };
+
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
+
     runAjax(url, method, {}, doneCallback, failCallback, null, false);
 }
 
