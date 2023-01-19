@@ -243,8 +243,8 @@
     "Pattern_Err_Required": "このフィールドを記入してください。",
     "Pattern_Err_FormatNumber": "数字形式を記入してください。",
     "Pattern_Err_Use_Only_1_Pattern": "あなたのアカウントは1つのパターンのみを使用できます。",
-    "Pattern_Confirm_Message": "本気ですか？",
-    "Pattern_Unbind_Confirm_Message": "このパターンのバインドを解除しますか?",
-    "Pattern_Bind_Confirm_Message": "このパターンをバインドしますか?",
+    "Pattern_Confirm_Message": "５Sパターンを設定してもよろしいでしょうか。",
+    "Pattern_Unbind_Confirm_Message": "このパターンの連携を解除してもよろしいでしょうか。",
+    "Pattern_Bind_Confirm_Message": "このパターンに連携しますか。",
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }
