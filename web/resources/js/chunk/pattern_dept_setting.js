@@ -53,9 +53,10 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             if (isFree) {
-                history.back(1);
+                location.replace(document.referrer);
+
             } else {
-                history.back(1);
+                location.replace(document.referrer);
             }
         }, 200);
     };
@@ -269,6 +270,7 @@ window.initLoadPage = function() {
         loadPatternList(selectedCompId, hidPatternId);
         $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
             ispattern = ispattern == "true" ? true : false;
             let isDept = ispattern ? null : 1;
@@ -276,7 +278,6 @@ window.initLoadPage = function() {
                 loadDataPreview(isDept, selectedPatId);
                 $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
                 $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
-                $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             } else {
                 loadDataPreview(isDept, hidPatternId);
             }
