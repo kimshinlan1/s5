@@ -220,7 +220,8 @@ window.selectPattern = function(id) {
     }
     // Bind dept pattern case
     if ((isPattern == "false" && mode && mode != CONFIG.get('5S_MODE').FREE)
-    || (isPattern == "false" && mode == CONFIG.get('5S_MODE')['FREE'] && patternOldSelectedValue != "" && checkPatternOnly)) {
+    || (isPattern == "false" && mode == CONFIG.get('5S_MODE')['FREE'] && patternOldSelectedValue != "" && checkPatternOnly)
+    || (isPattern == "false" && mode == CONFIG.get('5S_MODE')['FREE'] && patternOldSelectedValue == "" && !checkPatternOnly)) {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
         $('#okBtn').attr('data-deptid', id);
