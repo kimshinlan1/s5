@@ -55,6 +55,8 @@ window.department5SChecklistActions = function (_value, row, _index) {
         });
     }
 
+    console.log(pattern_list_data);
+
     let dataId = -1;
     let btn = '';
     pattern_list_data.forEach(ele => {
@@ -529,6 +531,11 @@ window.saveDataEmployee = function () {
             $('.md-loading').modal('hide');
         });
         $('#departmentTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
+
+        // Reset for next loop
+        if (pattern_list_data) {
+            pattern_list_data = null;
+        }
     });
 
     reloadDataDepartment();

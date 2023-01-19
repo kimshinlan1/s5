@@ -81,11 +81,11 @@ $(function () {
                 }
                 $("#companyListID").html(html);
 
-                $("#companyListID").change();
-
             },
         });
     }
+
+    console.log($("#companyListID").find(":selected").val());
 
     // Setting datatable
     $("#patternListTable").bootstrapTable({
@@ -100,17 +100,17 @@ $(function () {
         },
     });
 
-    $("#patternListTable").bootstrapTable("refresh", {
-        url: "/pattern_list/patern_list_by_company",
-    });
+    // Load data after config datatable (get queryParams)
+    setTimeout(() => {
+        if ($('#hidLoginCompanyId').val() || $("#companyListID").length) {
+            $("#patternListTable").bootstrapTable("refresh", {
+                url: "/pattern_list/patern_list_by_company",
+            });
+        }
+    }, 100);
 
     if ($("#errorDialog .modal-body .error-messages").length) {
         $("#errorDialog .modal-body .error-messages").html("");
-    }
-    if($('#userMode').val() != CONFIG.get('ROLE_ADMIN_ID')) {
-        $("#patternListTable").bootstrapTable("refresh", {
-            url: "/pattern_list/patern_list_by_company",
-        });
     }
 
     $("#companyListID").on("change", function () {
