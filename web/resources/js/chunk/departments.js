@@ -199,6 +199,7 @@ window.selectPattern = function(id) {
     let targetPatId =  $('#checklist5sID' + id).siblings().attr('data-patternId');
     let isPattern = $("#checklist5sID" + id).find(":selected").attr('data-isPattern');
     let mode = $('#companyListID').find(":selected").attr('data-mode');
+    mode = mode ? mode : $('#mode5S').val();
     let deptId = $("#checklist5sID" + id).find(":selected").attr('data-deptId');
     let companyId = $("#checklist5sID" + id).find(":selected").attr('data-companyId');
 
