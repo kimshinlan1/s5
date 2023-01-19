@@ -64,7 +64,7 @@ class PatternService extends BaseService
         }
         return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
             ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
-            ->whereIn('dept_patterns.id', $ids)->orderBy('dept_patterns.id')->paginate($limit);
+            ->whereIn('dept_patterns.id', $ids)->orderBy('departments.id')->paginate($limit);
     }
 
     /**
