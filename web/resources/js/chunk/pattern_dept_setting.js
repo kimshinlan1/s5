@@ -106,7 +106,8 @@ window.loadDeptList = function(id) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
             $('#departmentId').html(html);
-            $('#departmentId').change();
+            let selectedCompId = getCompanyId();
+            loadPatternList(selectedCompId);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
