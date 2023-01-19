@@ -77,10 +77,9 @@ class PatternService extends BaseService
     public function listPatternbyComp($id)
     {
         $data = [];
-        // $deptPatterns = DB::table('dept_patterns')->where('company_id', $id)->get()->toArray();
         $deptPatterns = DB::table('dept_patterns')->leftJoin('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
         ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
-        ->where('dept_patterns.company_id', $id)->get()->toArray();
+        ->where('dept_patterns.company_id', $id)->distinct()->get()->toArray();
         if (!empty($deptPatterns)) {
             foreach ($deptPatterns as $deptPattern) {
                 $deptPattern->isPattern = false;

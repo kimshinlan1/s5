@@ -483,8 +483,9 @@ $(function () {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         let deptId = urlParams.get('departmentId');
+        let compId = urlParams.get('companyId');
 
-        window.location = '/pattern_dept_setting/' + id + '?departmentId='+ deptId;
+        window.location = '/pattern_dept_setting/' + id + '?departmentId='+ deptId + '&companyId='+ compId;
     });
 
     $("#btnBackPagePreview").click(function () {

@@ -53,7 +53,7 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             if (isFree) {
-                location.reload();
+                location.href = "/pattern_top_page";
             } else {
                 location.href = "/pattern_list_customer";
             }
@@ -413,12 +413,6 @@ $(function () {
         } else {
             addAreaToTable('edit', patternid, isPattern);
         }
-    });
-
-    // Department options change event
-    $('#departmentId').change(function() {
-        let selectedCompId = getCompanyId();
-        loadPatternList(selectedCompId);
     });
 
     // Company options change event
