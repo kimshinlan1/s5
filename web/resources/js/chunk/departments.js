@@ -30,6 +30,7 @@ window.departmentTableActions = function (_value, row, _index) {
 /** ------------------
   *    5S Checklist Actions
   --------------------- */
+var pattern_list_data = null;
 window.department5SChecklistActions = function (_value, row, _index) {
     let options = '<select class=" form-select px-2" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
     options += '<option> </option>';
@@ -39,36 +40,43 @@ window.department5SChecklistActions = function (_value, row, _index) {
         checkDeptPattern = row.id;
     }
 
-    $.ajax({
-        url: '/pattern_list/getlist_by_department/' + row.company_id,
-        type: 'GET',
-        async: false
-    })
-    .done(function (_data, _textStatus, _jqXHR) {
-        let dataId = -1;
-        let btn = '';
-        _data.forEach(ele => {
-            if (!ele.isPattern && ele.id == selectedDeptPatternId) {
-                options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
-                dataId = 1;
-                btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
-                +'" data-companyId="'+ row.company_id +'" data-deptId="'+ row.id +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
-            } else {
-                options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
-            }
+    if (!pattern_list_data) {
+        $.ajax({
+            url: '/pattern_list/getlist_by_department/' + row.company_id,
+            type: 'GET',
+            async: false
+        })
+        .done(function (_data, _textStatus, _jqXHR) {
+            pattern_list_data = _data;
+        })
+        .fail(function (jqXHR, _textStatus, _errorThrown) {
+            // SHOW ERRORS
+            // failAjax(jqXHR, _textStatus, _errorThrown);
         });
-            btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+    }
 
-        options += " </select>";
-
-        options += btn;
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
-        // SHOW ERRORS
-        failAjax(jqXHR, _textStatus, _errorThrown);
+    let dataId = -1;
+    let btn = '';
+    pattern_list_data.forEach(ele => {
+        if (!ele.isPattern && ele.id == selectedDeptPatternId) {
+            options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
+            dataId = 1;
+            btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
+            +'" data-companyId="'+ row.company_id +'" data-deptId="'+ row.id +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+        } else {
+            options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
+        }
     });
+    btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+    options += " </select>";
+    options += btn;
+
     return options;
 };
+
+function initPatternListData() {
+
+}
 
 /** ------------------
   *    Add classes / css for 5s pattern checklist column
