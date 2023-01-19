@@ -49,12 +49,12 @@ window.department5SChecklistActions = function (_value, row, _index) {
         let btn = '';
         _data.forEach(ele => {
             if (!ele.isPattern && ele.id == selectedDeptPatternId) {
-                options += "<option value=" + ele.id + " data-deptId=" + ele.deptId + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
+                options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
                 dataId = 1;
                 btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
-                +'" data-companyId="'+ row.company_id +'" data-deptId="'+ ele.deptId +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+                +'" data-companyId="'+ row.company_id +'" data-deptId="'+ row.id +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
             } else {
-                options += "<option value=" + ele.id + " data-deptId=" + ele.deptId + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
+                options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
             }
         });
             btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
