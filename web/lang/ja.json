@@ -240,17 +240,11 @@
     "Pattern_Team_Inspection": "入力画面",
     "Pattern_Dept_Setting": "５Sチェックリスト設定",
     "Pattern_Dept_Name": "パターン名",
-<<<<<<< HEAD
     "Pattern_Err_Required": "このフィールドを記入してください",
     "Pattern_Err_FormatNumber": "要求された形式に一致してください",
     "Pattern_Err_Use_Only_1_Pattern": "あなたのアカウントは1つのパターンのみを使用しています",
     "Pattern_Confirm_Message": "本気ですか？",
     "Pattern_Unbind_Confirm_Message": "このパターンのバインドを解除しますか?",
     "Pattern_Bind_Confirm_Message": "このパターンをバインドしますか?",
-=======
-    "Pattern_Err_Required": "このフィールドを記入してください。",
-    "Pattern_Err_FormatNumber": "数字形式を記入してください。",
-    "Pattern_Err_Use_Only_1_Pattern": "あなたのアカウントは1つのパターンのみを使用できます。",
->>>>>>> 8b439ca2bd21db75e530cfccf08ea93c06e7daea
     "=====  BLOCK_PATTERN_DETAIL_END =====": ""
 }
