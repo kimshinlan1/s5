@@ -219,7 +219,8 @@ window.selectPattern = function(id) {
         return;
     }
     // Bind dept pattern case
-    if ((isPattern == "false" && mode && mode != CONFIG.get('5S_MODE').FREE) || (isPattern == "false" && mode && mode == CONFIG.get('5S_MODE').FREE  && !checkPatternOnly) || ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && patternOldSelectedValue == "")) {
+    if ((isPattern == "false" && mode && mode != CONFIG.get('5S_MODE').FREE)
+    || (isPattern == "false" && mode == CONFIG.get('5S_MODE')['FREE'] && patternOldSelectedValue != "" && checkPatternOnly)) {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
         $('#okBtn').attr('data-deptid', id);
@@ -231,7 +232,7 @@ window.selectPattern = function(id) {
     }
 
     // Free mode case
-    if (($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && checkPatternOnly) || (mode == CONFIG.get('5S_MODE').FREE  && checkPatternOnly)) {
+    if ((mode == CONFIG.get('5S_MODE').FREE  && checkPatternOnly && patternOldSelectedValue == "")) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#errMessageUse1Pattern').val());
         $('#checklist5sID' + id).prop("selectedIndex", 0);
