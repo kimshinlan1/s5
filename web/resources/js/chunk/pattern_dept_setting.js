@@ -53,9 +53,9 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             if (isFree) {
-                location.href = "/pattern_top_page";
+                history.back(1);
             } else {
-                location.href = "/pattern_list_customer";
+                history.back(1);
             }
         }, 200);
     };
@@ -268,7 +268,6 @@ window.initLoadPage = function() {
         loadDeptList(selectedCompId);
         loadPatternList(selectedCompId, hidPatternId);
         $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
-        // let patId = $('#selectPatternIds').find(':selected').val();
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
             ispattern = ispattern == "true" ? true : false;
