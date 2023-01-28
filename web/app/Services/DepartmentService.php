@@ -148,6 +148,7 @@ class DepartmentService extends BaseService
         }
         return false;
     }
+
     /**
      * Returns department list.
      *
@@ -212,5 +213,19 @@ class DepartmentService extends BaseService
         }
 
         return $data->save();
+    }
+
+    /**
+     * Returns department list with full information.
+     *
+     * @param int companyId
+     * @return array
+     */
+    public function getFullDataByCompanyId($companyId)
+    {
+        return $this->model->where('company_id', $companyId)
+        ->with('company:id,name')
+        ->with('teams:department_id,id,no,name')
+        ->orderBy('id')->get()->toArray();
     }
 }

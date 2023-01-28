@@ -88,6 +88,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class);
     }
+
     /**
      * Get the User associated with the company.
      */
