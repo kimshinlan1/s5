@@ -38,6 +38,8 @@ class PatternTopPageController extends Controller
     {
         // todo:
         $companyId = 1;//$request->get('company_id');
+        $count = 0;
+        $totalDeptPointArr = [0, 0, 0, 0, 0];
         $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
 
         if (empty($companyId)) {
@@ -57,6 +59,7 @@ class PatternTopPageController extends Controller
                 'dept_id' => $dept['id'],
                 'dept_no' => $dept['no'],
                 'dept_name' => $dept['name'],
+                'dept_avgPoint' => '',
                 'teams' => []
             ];
 
@@ -64,6 +67,7 @@ class PatternTopPageController extends Controller
             foreach ($dept['teams'] as $team) {
                 $inspectionDetails = app(PatternTopPageService::class)->getInspectionsByTeam($team['id']);
                 $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
+                $count += count($inspectionDetails);
 
                 // Build struture
                 $inspectionData[$key]['teams'][] = [
@@ -73,11 +77,22 @@ class PatternTopPageController extends Controller
                     'inspections' => $inspectionDetails
                 ];
 
+                foreach ($inspectionDetails as $inspectionDetail) {
+                    $tempArr = explode('|', $inspectionDetail['avg_point']);
+                    $totalDeptPointArr = array_map(function () {
+                        return array_sum(func_get_args());
+                    }, $totalDeptPointArr, $tempArr);
+                }
+
                 if (count($inspectionDetails) > $maxColumn) {
                     $maxColumn = count($inspectionDetails);
                 }
             }
-
+            $avgDeptPointArr = array_map(function ($val) {
+                return $val / 5;
+            }, $totalDeptPointArr);
+            $avgDeptPointArr = implode('|', $avgDeptPointArr);
+            $inspectionData[$key]['dept_avgPoint'] = $avgDeptPointArr;
             // dd($inspectionData);
         }
 

@@ -11,6 +11,7 @@
     <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script>
     <script src="{{ mix('/js/pattern_top_page.js') }}"></script>
 @endpush
 
@@ -37,7 +38,7 @@
                 </td>
 
                 {{-- Hidden --}}
-                <input type="hidden" id="hidDeptId_{{ $inspection['dept_id'] }}" value="{{ $inspection['dept_id'] }}"/>
+                <input type="hidden" id="hidDeptId_{{ $inspection['dept_id'] }}" value="{{ $inspection['dept_id'] }}"  data-avgPoint="{{ $inspection['dept_avgPoint'] }}"/>
             </tr>
 
             {{-- Radar Chart --}}
@@ -90,7 +91,7 @@
                     @for ($i = 0; $i < $countInspection; $i++)
                     <td style="width: {{ $width_data }}">
                         Radar chart
-                        <canvas id="radarchart_team-{{ $i }}"></canvas>
+                        <canvas id="radarchart_team_{{ $team['team_id'] }}-{{ $i }}"></canvas>
                     </td>
                     @endfor
                 </tr>
@@ -99,7 +100,8 @@
                 <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart" style="display: none">
                     <td colspan="{{ $countInspection }}">
                         Bar chart
-                        <canvas style="width: 15px; height: 10px;" id="barchart_team-{{ $i }}"></canvas>
+                        {{-- <canvas style="width: 15px; height: 10px;" id="barchart_team-{{ $i }}"></canvas> --}}
+                        <canvas style="width: 15px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
                     </td>
                 </tr>
 
