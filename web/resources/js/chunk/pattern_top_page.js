@@ -38,10 +38,20 @@ function renderAvgChart(dept_id, team_id) {
     });
 
 
+
+    // todo: Calculate avg point of Dept from teams and Render chart
+
+
 }
 
+/**
+ * Calculate avg point of Dept from teams and Render chart for dept
+ */
+var avgPointOfDept = {};
 function getAvgPointOfDept(dept_id) {
-    // todo:
+    // todo: update avgPointOfDept
+
+    // avgPointOfDept = {};
 
 }
 
@@ -52,10 +62,24 @@ function getAvgPointOfDept(dept_id) {
  */
 $(function () {
 
-    $("input[id*=hidDeptId_]").each(function(i,d){
-        // console.log($(d).val());
-        let dept_id = $(d).val();
+    /**
+     * Flow:
+     *   Get data and init layout
+     *   Loop all Depts and Teams
+     *     Render chart with teams inspection data (by columns)
+     *       use $('#hidAvgPoint_')
+     *     Calculate avg point of Dept from teams
+     *     Render chart for Dept
+     *
+     *
+     */
 
+
+
+    // Loop all Depts
+    $("input[id*=hidDeptId_]").each(function(i,d){
+        let dept_id = $(d).val();
+        // Loop all Teams in 1 Dept
         $("input[id^=hid_deptId_"+dept_id+"_teamId_]").each(function(i,t){
             let team_id = $(t).val();
 
