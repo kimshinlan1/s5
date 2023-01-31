@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
+use App\Services\CompanyService;
 use Illuminate\Http\Request;
 use App\Services\PatternService;
 use App\Services\DepartmentService;
@@ -27,7 +28,11 @@ class PatternTopPageController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->generateDataHtml($request);
+        $companies = app()->get(CompanyService::class)->getAll()->toArray();
+        $params = [
+            'companies' => $companies
+        ];
+        return view('pattern.pattern_top_page', $params)->render();
     }
 
     /**
@@ -37,10 +42,11 @@ class PatternTopPageController extends Controller
     public function generateDataHtml(Request $request)
     {
         // todo:
-        $companyId = 1;//$request->get('company_id');
+        $companyId = $request->get('company_id') ? $request->get('company_id') : 1;
         $count = 0;
         $totalDeptPointArr = [0, 0, 0, 0, 0];
-        $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
+        $avgDeptPointArr = null;
+        // $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
 
         if (empty($companyId)) {
             // todo:
@@ -67,7 +73,6 @@ class PatternTopPageController extends Controller
             foreach ($dept['teams'] as $team) {
                 $inspectionDetails = app(PatternTopPageService::class)->getInspectionsByTeam($team['id']);
                 $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
-                $count += count($inspectionDetails);
 
                 // Build struture
                 $inspectionData[$key]['teams'][] = [
@@ -78,6 +83,7 @@ class PatternTopPageController extends Controller
                 ];
 
                 foreach ($inspectionDetails as $inspectionDetail) {
+                    $count += 1;
                     $tempArr = explode('|', $inspectionDetail['avg_point']);
                     $totalDeptPointArr = array_map(function () {
                         return array_sum(func_get_args());
@@ -88,18 +94,17 @@ class PatternTopPageController extends Controller
                     $maxColumn = count($inspectionDetails);
                 }
             }
-            $avgDeptPointArr = array_map(function ($val) {
-                return $val / 5;
-            }, $totalDeptPointArr);
+            if ($count != 0) {
+                $avgDeptPointArr = array_map(function ($val) use ($count) {
+                    return round($val / $count, 2);
+                }, $totalDeptPointArr);
+            }
+
             $avgDeptPointArr = implode('|', $avgDeptPointArr);
             $inspectionData[$key]['dept_avgPoint'] = $avgDeptPointArr;
             // dd($inspectionData);
         }
-
         // dd($deptList);
-
-
-
         // Get ids to render columns
         // $inspectionIds = array_keys($inspectionData);
         // $i = 0;
@@ -108,14 +113,16 @@ class PatternTopPageController extends Controller
         //     $i++;
         // }
 
+        $companies = app()->get(CompanyService::class)->getAll()->toArray();
         $params = [
             'countInspection' => $maxColumn,
             // 'inspectionIds' => $inspectionIds,
             'inspectionData' => $inspectionData,
+            'companies' => $companies
         ];
 
         // dd($params);
 
-        return view('pattern.pattern_top_page', $params);
+        return view('pattern.pattern_top_page_table', $params)->render();
     }
 }

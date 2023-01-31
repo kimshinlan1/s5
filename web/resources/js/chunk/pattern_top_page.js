@@ -9,6 +9,8 @@ const labels = [
     'S4',
     'S5',
 ];
+const DEPT_CHART_COLOR = '#ffa500';
+const TEAM_CHART_COLOR = 'rgb(54, 162, 235)';
 
 //////////////////////////////////////////////////////////////////
 
@@ -30,16 +32,16 @@ function gotoInspectionPage(team_id) {
 /**
  * Load radar chart
  */
-function loadRadarChart(id, avgPointArr) {
+function loadRadarChart(id, avgPointArr, isDept) {
     const data = {
         labels: labels,
         datasets: [{
           label: "The Radar Chart illustrates the average value of 5S methods",
           data: avgPointArr,
           fill: true,
-          backgroundColor: 'rgb(54, 162, 235)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
+          backgroundColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
+          borderColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
+          pointBackgroundColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgb(54, 162, 235)'
@@ -49,6 +51,7 @@ function loadRadarChart(id, avgPointArr) {
         type: 'radar',
         data: data,
         options: {
+          responsive: true,
           elements: {
             line: {
               borderWidth: 3
@@ -58,22 +61,20 @@ function loadRadarChart(id, avgPointArr) {
       };
       const ctx = document.getElementById(id);
 
-      new Chart(ctx, config);
+      let myChart = new Chart(ctx, config);
+      myChart.resize(200, 300);
 }
 
 /**
  * Init bar chart
  */
-function loadBarChart(id, mapObj) {
+function loadBarChart(id, mapObj, count) {
     // todo:
     // alert("init chart");
-    const labels = [
-        '',
-        '',
-        '',
-        '',
-        '',
-    ];
+    const labels = [];
+    for (let index = 0; index < count; index++) {
+      labels.push('Inspection' + index);
+    }
     const data = {
       labels: labels,
       datasets: [
@@ -125,17 +126,7 @@ function loadBarChart(id, mapObj) {
         }
       }
     };
-    const actions = [
-      {
-        name: 'Randomize',
-        handler(chart) {
-          chart.data.datasets.forEach(dataset => {
-            dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-          });
-          chart.update();
-        }
-      },
-    ];
+
     const ctx = document.getElementById(id);
     ctx.height = 2;
     new Chart(ctx, config);
@@ -151,6 +142,7 @@ function renderAvgChart(dept_id, team_id) {
     // If have data: render chart with data avg
 
     // Else: render empty chart
+    let count = $('#hidCountInspection').val();
     var mapObj = new Map();
     mapObj.set("s1", []);
     mapObj.set("s2", []);
@@ -164,18 +156,16 @@ function renderAvgChart(dept_id, team_id) {
             let avgPointArr = $(e).val().split('|');
             avgPointArr.forEach(function (value, i) {
                 let key = "s" + (i+1).toString();
-                let dd = mapObj.get(key)
                 mapObj.get(key).push(parseInt(value));
             });
 
             let id = 'radarchart_team_' + team_id + '-' + i;
-            loadRadarChart(id, avgPointArr);
+            loadRadarChart(id, avgPointArr, 0);
         }
     });
     let barChartId = 'barchart_team_' + team_id;
-    loadBarChart(barChartId, mapObj);
+    loadBarChart(barChartId, mapObj, count);
     // todo: Calculate avg point of Dept from teams and Render chart
-
 
 }
 
@@ -190,41 +180,89 @@ function getAvgPointOfDept(dept_id) {
 
 }
 
+/**
+ * Redirect to pattern_team_inspection
+ */
+function redirectToInspection(teamId) {
+    window.location = '/pattern_team_inspection/' + teamId;
+
+}
+
+function loadCharts() {
+  // Loop all Depts
+  $("input[id*=hidDeptId_]").each(function(i,d){
+    let dept_id = $(d).val();
+    // Load overall dept chart
+    let deptAvgPoints = $('#hidDeptId_' + dept_id).attr('data-avgPoint');
+    let count = $('#hidCountInspection').val();
+    if(deptAvgPoints) {
+      deptAvgPoints = deptAvgPoints.split('|');
+      // Load dept radar chart
+      let radarchartId = 'radarchart_dept_' + dept_id + '-' + i;
+      loadRadarChart(radarchartId, deptAvgPoints, 1);
+
+      // Load dept bar chart
+      var mapObj = new Map();
+      mapObj.set("s1", [deptAvgPoints[0]]);
+      mapObj.set("s2", [deptAvgPoints[1]]);
+      mapObj.set("s3", [deptAvgPoints[2]]);
+      mapObj.set("s4", [deptAvgPoints[3]]);
+      mapObj.set("s5", [deptAvgPoints[4]]);
+    }
+    let barChartId = 'barchart_dept_' + dept_id;
+    loadBarChart(barChartId, mapObj, count);
+    // Loop all Teams in 1 Dept
+    $("input[id^=hid_deptId_"+dept_id+"_teamId_]").each(function(i,t){
+        let team_id = $(t).val();
+
+        renderAvgChart(dept_id, team_id);
+
+    });
+
+    console.log('=========');
+
+});
+}
+
+/**
+ * Redirect to pattern_team_inspection
+ */
+function renderView(compId) {
+    let url = '/pattern_top_page/load';
+
+    let method = "GET";
+
+    let data = {company_id : compId}
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+
+        $('#topPageChart').html(data);
+        loadCharts();
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Document Ready
  */
 $(function () {
-
-    /**
-     * Flow:
-     *   Get data and init layout
-     *   Loop all Depts and Teams
-     *     Render chart with teams inspection data (by columns)
-     *       use $('#hidAvgPoint_')
-     *     Calculate avg point of Dept from teams
-     *     Render chart for Dept
-     *
-     *
-     */
-
-
-
-    // Loop all Depts
-    $("input[id*=hidDeptId_]").each(function(i,d){
-        let dept_id = $(d).val();
-        // Loop all Teams in 1 Dept
-        $("input[id^=hid_deptId_"+dept_id+"_teamId_]").each(function(i,t){
-            let team_id = $(t).val();
-
-            renderAvgChart(dept_id, team_id);
-
-
-        });
-
-        console.log('=========');
-
-    });
-
+    // Company Onchange Event
+    $('#companyOptionId').change(function() {
+      let compId = $('#companyOptionId').find(':selected').val();
+      renderView(compId);
+    })
+    let compId = $('#companyOptionId').val();
+    if (!compId) {
+      compId = $('#userCompanyId').val();
+      renderView(compId);
+    } else {
+      $('#companyOptionId').change();
+    }
 });

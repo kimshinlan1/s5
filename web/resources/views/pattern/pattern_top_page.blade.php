@@ -4,6 +4,7 @@
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
         type="text/css"/>
     {{-- <link href="{{ mix('/css/pattern.css') }}" rel="stylesheet"/> --}}
+    <link href="{{ mix('/css/top_page.css') }}" rel="stylesheet"/>
 @endpush
 
 @push('scripts')
@@ -22,128 +23,23 @@
 @section('content')
     <div class="h-title">5Sトップページ</div>
 
-    <?php
-        $width_data = "50px";
-    ?>
-
-    <div style="width: 100%; height: auto; overflow: auto; ">
-        <table id="" class="table table-bordered">
-
-            @foreach ($inspectionData as $inspection)
-
-            {{-- Dept Name --}}
-            <tr>
-                <td colspan="{{ $countInspection }}">
-                    <strong>DEPT: {{ $inspection['dept_name'] }}</strong>
-                </td>
-
-                {{-- Hidden --}}
-                <input type="hidden" id="hidDeptId_{{ $inspection['dept_id'] }}" value="{{ $inspection['dept_id'] }}"  data-avgPoint="{{ $inspection['dept_avgPoint'] }}"/>
-            </tr>
-
-            {{-- Radar Chart --}}
-            <tr style="">
-                @for ($i = 0; $i < $countInspection; $i++)
-                <td style="width: {{ $width_data }}">
-                    Radar chart
-                    <canvas id="radarchart_dept_{{ $inspection['dept_id'] }}-{{ $i }}"></canvas>
-                </td>
-                @endfor
-            </tr>
-
-            {{-- Bar Chart --}}
-            <tr style="">
-                <td colspan="{{ $countInspection }}">
-                    Bar chart
-                    <canvas style="width: 15px; height: 10px;" id="barchart_dept_{{ $inspection['dept_id'] }}-{{ $i }}"></canvas>
-                </td>
-            </tr>
-
-            {{-- Check toggle team inspection chart --}}
-            @if (count($inspection['teams']))
-                <tr style="">
-                    <td colspan="{{ $countInspection }}">
-                        <input style="" type="button" class="btn-danger" id="btnTeamInspection" value="各係のグラフを見る" onclick="showHideTeam('{{ $inspection['dept_id'] }}')"/>
-                    </td>
-                </tr>
-
-                @foreach ($inspection['teams'] as $team)
-
-                @php
-                    $inspections = $team['inspections'];
-                @endphp
-
-                {{-- Hidden --}}
-                <input type="hidden" id="hid_deptId_{{ $inspection['dept_id'] }}_teamId_{{ $team['team_id'] }}" value="{{ $team['team_id'] }}"/>
-
-                {{-- Team Name --}}
-                <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}" style="display: none">
-                    <td colspan="{{ $countInspection }}">
-                        <strong style="">TEAM: {{ $team['team_name'] }}</strong>
-
-                        <input style="" type="button" class="btn-info" id="btnInput" value="入力画面へ進む" onclick="gotoInspectionPage('{{ $team['team_id'] }}')"/>
-                    </td>
-
-                </tr>
-
-                {{-- Radar Chart --}}
-                <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-radarchart" style="display: none">
-                    @for ($i = 0; $i < $countInspection; $i++)
-                    <td style="width: {{ $width_data }}">
-                        Radar chart
-                        <canvas id="radarchart_team_{{ $team['team_id'] }}-{{ $i }}"></canvas>
-                    </td>
-                    @endfor
-                </tr>
-
-                {{-- Bar Chart --}}
-                <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart" style="display: none">
-                    <td colspan="{{ $countInspection }}">
-                        Bar chart
-                        {{-- <canvas style="width: 15px; height: 10px;" id="barchart_team-{{ $i }}"></canvas> --}}
-                        <canvas style="width: 15px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
-                    </td>
-                </tr>
-
-                {{-- 改善結果を見る --}}
-                <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-info" style="display: none">
-                    @for ($i = 0; $i < $countInspection; $i++)
-
-                    @php
-                        $countImgs = isset($inspections[$i]['count_evidence'])
-                        ? $inspections[$i]['count_evidence'] : 0;
-
-                        $avgPoint = isset($inspections[$i]['avg_point']) ? $inspections[$i]['avg_point'] : '';
-                    @endphp
-
-                    <td>
-                        @if ($countImgs)
-                        <input style="" type="button" class="btn-primary" value="改善結果を見る" onclick=""/>
-                        @else
-                        <input style="" type="button" class="btn-secondary" value="改善結果を見る" onclick=""/>
-                        @endif
-                    </td>
-
-                    {{-- Hidden AVG Point (use for render chart) --}}
-                    <input type="hidden" id="hidAvgPoint_{{ $i }}" value="{{ $avgPoint }}"/>
-
-                    @endfor
-                </tr>
-
-
-                @endforeach
-
-            @endif
-
-
-
-
+@if(auth()->user()->isAdmin())
+<div class="input-group" style="margin-bottom: 0.5%;">
+    <div class="label_header_1">
+        <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+        aria-label="Company select" id="companyOptionId" >
+            @foreach ($companies as $company )
+                <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
             @endforeach
-
-        </table>
+        </select>
     </div>
+</div>
+@endif
 
+<div id="topPageChart">
 
+</div>
 
+    {{-- @include('pattern.pattern_top_page_table') --}}
 
 @endsection

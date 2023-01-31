@@ -20,6 +20,7 @@ const glob = require("glob");
     .css('resources/css/my_page.css','public/css')
     .sass('resources/sass/app.scss', 'public/css')
     .css('resources/css/pattern.css','public/css')
+    .css('resources/css/top_page.css','public/css')
     .css('resources/css/pattern_list_customer.css','public/css')
     .css('resources/css/pattern_team_inspection.css','public/css')
     .sourceMaps()
