@@ -4,7 +4,7 @@
 const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
 const TEST_TEAM_ID = 1; // todo: get from selectbox or hidden / just for test
-
+var ChartArray = [];
 //////////////////////////////////////////////////////////////////
 /**
  * Load data
@@ -33,8 +33,8 @@ function loadInspectionData(data, mode = '', getDataCanvas) {
 
         // todo:
         // calculateAvgPoint();
-        initRadarChart();
-        initBarChart();
+        // initRadarChart();
+        // initBarChart();
 
         // Tooltip level
         $('td[id=level_tooltip]').each(function () {
@@ -69,7 +69,6 @@ function loadInspectionData(data, mode = '', getDataCanvas) {
 
             $(this).datepicker("setDate", date_value);
         });
-        console.log('2');
         if (getDataCanvas) {
             getDataCanvas();
         }
@@ -89,9 +88,51 @@ function calculateAvgPoint() {
 /**
  * Init radar chart
  */
-function initRadarChart(id) {
-    // todo:
-    // alert("init chart");
+function initRadarChart(array5s) {
+    console.log(array5s);
+
+    for (let e of inspIds) {
+        const data = {
+            labels: [
+              'S1',
+              'S2',
+              'S3',
+              'S4',
+              'S5',
+            ],
+            datasets: [{
+              label: '',
+              data: array5s[e],
+              fill: true,
+              backgroundColor: 'rgb(54, 162, 235)',
+              borderColor: 'rgb(54, 162, 235)',
+              pointBackgroundColor: 'rgb(54, 162, 235)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgb(54, 162, 235)'
+            }]
+          };
+          const config = {
+            type: 'radar',
+            data: data,
+            options: {
+              elements: {
+                line: {
+                  borderWidth: 3
+                }
+              }
+            },
+          };
+          const ctx = document.getElementById('myChart_'+ e);
+          let myChart = new Chart(ctx, config);
+          ChartArray[e] = myChart;
+    }
+}
+
+/**
+ * Create radar chart
+ */
+window.createNewChart = function (dataset, canvas, img, divC, divF, labelTitle) {
     const data = {
         labels: [
           'S1',
@@ -101,7 +142,7 @@ function initRadarChart(id) {
           'S5',
         ],
         datasets: [{
-          label: 'My Second Dataset',
+          label: '',
           data: [0, 4, 2, 3, 5],
           fill: true,
           backgroundColor: 'rgb(54, 162, 235)',
@@ -402,6 +443,12 @@ $(function () {
             getDataElement();
 
             $('.selPointValue').change(function() {
+                console.log(window.ChartArray);
+
+                for (let e of inspIds) {
+                    ChartArray[e].destroy();
+                }
+
                 getDataElement();
             });
         };
@@ -424,14 +471,7 @@ $(function () {
         let countS4 = [];
         let countS5 = [];
 
-        let avgS1 = [];
-        let avgS2 = [];
-        let avgS3 = [];
-        let avgS4 = [];
-        let avgS5 = [];
-
         Array.from(formInput.elements).forEach(element => {
-            console.log(element);
             switch (element.dataset['5s']) {
                 case 's1':
                     sumS1[element.dataset['inspection_id']] = (sumS1[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
@@ -453,10 +493,14 @@ $(function () {
                     sumS5[element.dataset['inspection_id']] = (sumS5[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                     countS5[element.dataset['inspection_id']] = (countS5[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                     break;
-
             }
         });
 
+        let avgS1 = [];
+        let avgS2 = [];
+        let avgS3 = [];
+        let avgS4 = [];
+        let avgS5 = [];
         let pointAvg = 0;
         for (let key in sumS1) {
             pointAvg = 0;
@@ -510,7 +554,6 @@ $(function () {
         for (let id_inspec of inspIds) {
             let arrayInspection = [];
 
-
             arrayInspection.push(avgS1[id_inspec]);
             arrayInspection.push(avgS2[id_inspec]);
             arrayInspection.push(avgS3[id_inspec]);
@@ -519,10 +562,9 @@ $(function () {
 
             array5s[id_inspec] = arrayInspection;
         }
-
-        console.log(array5s);
+        initRadarChart(array5s);
+        validateAndGetData();
     }
-
 
     // Save click
     $("#btnSave").click(function () {
