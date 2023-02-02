@@ -51,6 +51,8 @@ window.CONFIG = (function () {
         'PATTERN_FORMAT_NUMBER': $('#messagePatternFormatNumber').val(),
         'PAGE_PATTERN_LIST': 0,
         'PAGE_PATTERN_LIST_CUSTOMER': 1,
+        'RADAR_CHART_LABEL': $('#radarLabel').val(),
+
     };
     return {
         get: function (name) { return private_const[name]; }

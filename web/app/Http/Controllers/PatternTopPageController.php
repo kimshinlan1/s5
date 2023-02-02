@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
+use App\Services\CompanyService;
 use Illuminate\Http\Request;
-use App\Services\PatternService;
 use App\Services\DepartmentService;
 use Illuminate\Support\Facades\Cache;
 use App\Services\PatternTopPageService;
-use App\Services\PatternTeamInspectionService;
 
 class PatternTopPageController extends Controller
 {
@@ -27,7 +26,11 @@ class PatternTopPageController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->generateDataHtml($request);
+        $companies = app()->get(CompanyService::class)->getAll()->toArray();
+        $params = [
+            'companies' => $companies
+        ];
+        return view('pattern.pattern_top_page', $params)->render();
     }
 
     /**
@@ -37,8 +40,10 @@ class PatternTopPageController extends Controller
     public function generateDataHtml(Request $request)
     {
         // todo:
-        $companyId = 1;//$request->get('company_id');
-        $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
+        $companyId = $request->get('company_id');
+        $totalDeptPointArr = [0, 0, 0, 0, 0];
+        $avgDeptPointArr = null;
+        // $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
 
         if (empty($companyId)) {
             // todo:
@@ -51,12 +56,15 @@ class PatternTopPageController extends Controller
         $deptList = app(DepartmentService::class)->getFullDataByCompanyId($companyId);
         $maxColumn = 0;
         foreach ($deptList as $key => $dept) {
-
+            $count = 0;
+            $totalDeptPointArr = [0, 0, 0, 0, 0];
+            $avgDeptPointArr = null;
             // Build struture
             $inspectionData[$key] = [
                 'dept_id' => $dept['id'],
                 'dept_no' => $dept['no'],
                 'dept_name' => $dept['name'],
+                'dept_avgPoint' => '',
                 'teams' => []
             ];
 
@@ -73,18 +81,32 @@ class PatternTopPageController extends Controller
                     'inspections' => $inspectionDetails
                 ];
 
+                foreach ($inspectionDetails as $inspectionDetail) {
+                    $count += 1;
+                    $tempArr = explode('|', $inspectionDetail['avg_point']);
+                    $totalDeptPointArr = array_map(function () {
+                        return array_sum(func_get_args());
+                    }, $totalDeptPointArr, $tempArr);
+                }
+
                 if (count($inspectionDetails) > $maxColumn) {
                     $maxColumn = count($inspectionDetails);
                 }
             }
+            if ($count != 0) {
+                $avgDeptPointArr = array_map(function ($val) use ($count) {
+                    return round($val / $count, 2);
+                }, $totalDeptPointArr);
+            }
+
+            if ($avgDeptPointArr) {
+                $avgDeptPointArr = implode('|', $avgDeptPointArr);
+                $inspectionData[$key]['dept_avgPoint'] = $avgDeptPointArr;
+            }
 
             // dd($inspectionData);
         }
-
         // dd($deptList);
-
-
-
         // Get ids to render columns
         // $inspectionIds = array_keys($inspectionData);
         // $i = 0;
@@ -93,14 +115,16 @@ class PatternTopPageController extends Controller
         //     $i++;
         // }
 
+        $companies = app()->get(CompanyService::class)->getAll()->toArray();
+        Cache::put('companies', $companies, 10);
         $params = [
-            'countInspection' => $maxColumn,
+            'countInspection' => $maxColumn > Constant::INSPECTION_DEFAULT_COLUMN_NUMBER ? $maxColumn : Constant::INSPECTION_DEFAULT_COLUMN_NUMBER,
             // 'inspectionIds' => $inspectionIds,
             'inspectionData' => $inspectionData,
+            'companies' => Cache::get('companies')
         ];
 
         // dd($params);
-
-        return view('pattern.pattern_top_page', $params);
+        return view('pattern.pattern_top_page_table', $params)->render();
     }
 }

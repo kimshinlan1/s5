@@ -145,7 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Pattern top page
         Route::get('/pattern_top_page', [PatternTopPageController::class, 'index']);
 
-
+        Route::get('/pattern_top_page/load', [PatternTopPageController::class, 'generateDataHtml']);
 
         // Show log
         Route::get('/show_log', [Controller::class, 'showLog']);

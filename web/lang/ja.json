@@ -246,5 +246,12 @@
     "Pattern_Confirm_Message": "５Sパターンを設定してもよろしいでしょうか。",
     "Pattern_Unbind_Confirm_Message": "このパターンの連携を解除してもよろしいでしょうか。",
     "Pattern_Bind_Confirm_Message": "このパターンに連携しますか。",
-    "=====  BLOCK_PATTERN_DETAIL_END =====": ""
+    "=====  BLOCK_PATTERN_DETAIL_END =====": "",
+
+    "=====  BLOCK_TOPPAGE_START =====": "",
+    "TopPage_Redirect_Inspection_Button": "改善結果を見る",
+    "TopPage_Evidence_Button": "入力画面へ進む",
+    "TopPage_Expand_Button": "各係のグラフを見る",
+    "TopPage_Radar_Label": "レーダーチャート",
+    "=====  BLOCK_TOPPAGE_END =====": ""
 }
