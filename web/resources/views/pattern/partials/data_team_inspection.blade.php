@@ -38,13 +38,11 @@
             <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #DAEEF3;">
                 ここにイラスト
             </td>
-            @for ($i = 0; $i < $countInspection; $i++)
-            <td style="width: {{ $width_data }}">
-                {{-- Radar Chart
-                <div id="radarchart_{{ $i }}"></div> --}}
-                <canvas id="myChart"></canvas>
+            @foreach ($inspectionIds as $inspectionId)
+            <td>
+                <canvas id="myChart_{{ $inspectionId }}"></canvas>
             </td>
-            @endfor
+            @endforeach
         </tr>
 
         {{-- Bar Chart --}}
@@ -52,11 +50,13 @@
             <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #FDE9D9;">
                 ここにイラスト
             </td>
-            <td colspan="{{ $countInspection }}">
-                {{-- Bar Chart
-                <div id="barchart"></div> --}}
-                <canvas style="width: 15px; height: 10px;" id="myBarChart"></canvas>
-            </td>
+            @foreach ($inspectionIds as $inspectionId)
+                <td colspan="{{ $countInspection }}">
+                    {{-- Bar Chart
+                    <div id="barchart"></div> --}}
+                    <canvas style="width: 15px; height: 10px;" id="myBarChart"></canvas>
+                </td>
+            @endforeach
         </tr>
 
         {{-- 改善結果を見る --}}
@@ -86,7 +86,6 @@
 
         {{-- 平均 --}}
         <tr>
-          <form id="point_avg_1s">
             <td rowspan="5" style="width: 20px">平均</td>
             <td style="width: 50px">整理</td>
             <td style="width: 50px">1S</td>
@@ -95,7 +94,6 @@
                 <label id="point_avg_1s_{{ $inspectionId }}">Point avg</label>
             </td>
             @endforeach
-          </form>
         </tr>
         <tr>
             <td>整頓</td>
