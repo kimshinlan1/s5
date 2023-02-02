@@ -370,6 +370,13 @@ function onChangeDataDepartment() {
     });
 }
 
+/**
+ * evidenceDialog from each column
+ */
+function evidenceDialog(inspectionId) {
+    $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val( inspectionId );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
