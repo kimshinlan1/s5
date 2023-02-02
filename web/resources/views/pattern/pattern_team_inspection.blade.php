@@ -3,15 +3,29 @@
 @push('css')
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
         type="text/css"/>
+
+    {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> --}}
+
     <link href="{{ mix('/css/pattern_team_inspection.css') }}" rel="stylesheet"/>
+
+
 @endpush
 
 @push('scripts')
-    <script src="{!! url('assets/jquery/jquery-3.2.1.slim.min.js') !!}" type="text/javascript"></script>
+    {{-- <script src="{!! url('assets/jquery/jquery-3.2.1.slim.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script> --}}
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
+
+
+    {{-- <script src="{!! url('assets/jquery/intense.min.js') !!}"></script> --}}
+
+
     <script src="{{ mix('/js/pattern_team_inspection.js') }}"></script>
+    <script src="{{ mix('/js/pattern_team_inspection_evidence.js') }}"></script>
 @endpush
 
 @section('sidebar')
@@ -55,6 +69,8 @@
     <button type="button" class="btn btn-success" id="btnSave">保存</button>
 
     <button type="button" class="btn btn-primary" id="btnAdd">点検箇所の追加</button>
+
+    @include('pattern.partials.evidence_dialog')
 
 
 @endsection

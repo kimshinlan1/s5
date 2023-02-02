@@ -4,7 +4,8 @@
 const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
 const TEST_TEAM_ID = 1; // todo: get from selectbox or hidden / just for test
-
+var RenderRadarChart = [];
+var RenderBarChart = [];
 //////////////////////////////////////////////////////////////////
 /**
  * Load data
@@ -33,8 +34,8 @@ function loadInspectionData(data, mode = '', getDataCanvas) {
 
         // todo:
         // calculateAvgPoint();
-        initRadarChart();
-        initBarChart();
+        // initRadarChart();
+        // initBarChart();
 
         // Tooltip level
         $('td[id=level_tooltip]').each(function () {
@@ -69,7 +70,6 @@ function loadInspectionData(data, mode = '', getDataCanvas) {
 
             $(this).datepicker("setDate", date_value);
         });
-        console.log('2');
         if (getDataCanvas) {
             getDataCanvas();
         }
@@ -89,48 +89,50 @@ function calculateAvgPoint() {
 /**
  * Init radar chart
  */
-function initRadarChart(id) {
-    // todo:
-    // alert("init chart");
-    const data = {
-        labels: [
-          'S1',
-          'S2',
-          'S3',
-          'S4',
-          'S5',
-        ],
-        datasets: [{
-          label: 'My Second Dataset',
-          data: [0, 4, 2, 3, 5],
-          fill: true,
-          backgroundColor: 'rgb(54, 162, 235)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
-        }]
-      };
-      const config = {
-        type: 'radar',
-        data: data,
-        options: {
-          elements: {
-            line: {
-              borderWidth: 3
-            }
-          }
-        },
-      };
-      const ctx = document.getElementById('myChart');
-      new Chart(ctx, config);
+function initRadarChart(array5s) {
+
+    for (let e of inspIds) {
+        const data = {
+            labels: [
+              'S1',
+              'S2',
+              'S3',
+              'S4',
+              'S5',
+            ],
+            datasets: [{
+              label: '',
+              data: array5s[e],
+              fill: true,
+              backgroundColor: 'rgb(54, 162, 235)',
+              borderColor: 'rgb(54, 162, 235)',
+              pointBackgroundColor: 'rgb(54, 162, 235)',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgb(54, 162, 235)'
+            }]
+          };
+          const config = {
+            type: 'radar',
+            data: data,
+            options: {
+              elements: {
+                line: {
+                  borderWidth: 3
+                }
+              }
+            },
+          };
+          const ctx = document.getElementById('myChart_'+ e);
+          let myChart = new Chart(ctx, config);
+          RenderRadarChart[e] = myChart;
+    }
 }
 
 /**
  * Init bar chart
  */
-function initBarChart(dept_id) {
+function initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5) {
     // todo:
     // alert("init chart");
     const labels = [
@@ -141,71 +143,72 @@ function initBarChart(dept_id) {
         '',
     ];
     const data = {
-      labels: labels,
-      datasets: [
+    labels: labels,
+    datasets: [
         {
-          label: 'S1',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'blue',
+        label: 'S1',
+        data: arrayS1,
+        backgroundColor: 'blue',
         },
         {
-          label: 'S2',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'red',
+        label: 'S2',
+        data: arrayS2,
+        backgroundColor: 'red',
         },
         {
-          label: 'S3',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'green',
+        label: 'S3',
+        data: arrayS3,
+        backgroundColor: 'green',
         },
         {
-          label: 'S4',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'purple',
+        label: 'S4',
+        data: arrayS4,
+        backgroundColor: 'purple',
         },
         {
-          label: 'S5',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'yellow',
+        label: 'S5',
+        data: arrayS5,
+        backgroundColor: 'yellow',
         },
-      ]
+    ]
     };
     const config = {
-      type: 'bar',
-      data: data,
-      options: {
+    type: 'bar',
+    data: data,
+    options: {
         plugins: {
-          title: {
+        title: {
             display: true,
             text: ''
-          },
+        },
         },
         responsive: true,
         scales: {
-          x: {
+        x: {
             stacked: true,
-          },
-          y: {
+        },
+        y: {
             stacked: true
-          }
         }
-      }
+        }
+    }
     };
     const actions = [
-      {
+    {
         name: 'Randomize',
         handler(chart) {
-          chart.data.datasets.forEach(dataset => {
+        chart.data.datasets.forEach(dataset => {
             dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-          });
-          chart.update();
+        });
+        chart.update();
         }
-      },
+    },
     ];
     const ctx = document.getElementById('myBarChart');
-    ctx.height = 3;
-    new Chart(ctx, config);
+    let myChart = new Chart(ctx, config);
+    RenderBarChart = myChart;
 }
+
 
 /**
  * Add column (new inspection)
@@ -367,6 +370,13 @@ function onChangeDataDepartment() {
     });
 }
 
+/**
+ * evidenceDialog from each column
+ */
+function evidenceDialog(inspectionId) {
+    $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val( inspectionId );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -402,6 +412,10 @@ $(function () {
             getDataElement();
 
             $('.selPointValue').change(function() {
+                for (let e of inspIds) {
+                    RenderRadarChart[e].destroy();
+                }
+                RenderBarChart.destroy();
                 getDataElement();
             });
         };
@@ -424,14 +438,7 @@ $(function () {
         let countS4 = [];
         let countS5 = [];
 
-        let avgS1 = [];
-        let avgS2 = [];
-        let avgS3 = [];
-        let avgS4 = [];
-        let avgS5 = [];
-
         Array.from(formInput.elements).forEach(element => {
-            console.log(element);
             switch (element.dataset['5s']) {
                 case 's1':
                     sumS1[element.dataset['inspection_id']] = (sumS1[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
@@ -453,10 +460,14 @@ $(function () {
                     sumS5[element.dataset['inspection_id']] = (sumS5[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                     countS5[element.dataset['inspection_id']] = (countS5[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                     break;
-
             }
         });
 
+        let avgS1 = [];
+        let avgS2 = [];
+        let avgS3 = [];
+        let avgS4 = [];
+        let avgS5 = [];
         let pointAvg = 0;
         for (let key in sumS1) {
             pointAvg = 0;
@@ -510,7 +521,6 @@ $(function () {
         for (let id_inspec of inspIds) {
             let arrayInspection = [];
 
-
             arrayInspection.push(avgS1[id_inspec]);
             arrayInspection.push(avgS2[id_inspec]);
             arrayInspection.push(avgS3[id_inspec]);
@@ -519,10 +529,42 @@ $(function () {
 
             array5s[id_inspec] = arrayInspection;
         }
-
-        console.log(array5s);
+        initRadarChart(array5s);
+        getDataBarChart(array5s);
+        validateAndGetData();
     }
 
+    function getDataBarChart(array5s) {
+        let arrayS1 = [];
+        let arrayS2 = [];
+        let arrayS3 = [];
+        let arrayS4 = [];
+        let arrayS5 = [];
+        for (let e of inspIds) {
+            arrayS1 = array5s[e][0];
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS2 = [];
+            arrayInspectionS2.push(array5s[e][1]);
+            arrayS2[e] = arrayInspectionS2;
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS3 = [];
+            arrayInspectionS3.push(array5s[e][2]);
+            arrayS3[e] = arrayInspectionS3;
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS4 = [];
+            arrayInspectionS4.push(array5s[e][3]);
+            arrayS4[e] = arrayInspectionS4;
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS5 = [];
+            arrayInspectionS5.push(array5s[e][4]);
+            arrayS5[e] = arrayInspectionS5;
+        }
+        initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5);
+    }
 
     // Save click
     $("#btnSave").click(function () {

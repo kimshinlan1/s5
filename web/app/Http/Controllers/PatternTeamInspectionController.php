@@ -135,4 +135,76 @@ class PatternTeamInspectionController extends Controller
         $data = $this->service->saveInspection($request);
         return response()->json($data);
     }
+
+    /**
+     * getEvidence
+     *
+     */
+    public function getEvidence(Request $request)
+    {
+        // todo:
+        $inspectionId = $request->get('inspection_id');
+
+
+        if (empty($inspectionId)) {
+            // todo:
+        }
+
+        // Get data and format structure
+        // $evidences = $this->service->getEvidenceByInspectionId($inspectionId);
+        // $evidences = json_decode(json_encode($evidences), true);
+
+
+        // Sample Structure
+        $evidences = [
+            '1' => [ // block_id
+                'problem_before' => 'problem_before',
+                'problem_after' => 'problem_after',
+                'images' => [
+                    0 => [ // image
+                        'img_path' => '/assets/img/skill-1.png',
+                        'img_name' => 'skill-1.png',
+                        'is_before' => 1,
+                    ],
+                    1 => [ // image
+                        'img_path' => '/assets/img/skill-2.png',
+                        'img_name' => 'skill-2.png',
+                        'is_before' => 1,
+                    ],
+                    2 => [ // image
+                        'img_path' => '/assets/img/skill-3.png',
+                        'img_name' => 'skill-3.png',
+                        'is_before' => '',
+                    ],
+                    3 => [ // image
+                        'img_path' => '/assets/img/skill-4.png',
+                        'img_name' => 'skill-4.png',
+                        'is_before' => '',
+                    ],
+                ]
+            ],
+            '2' => [ // block_id
+                'problem_before' => 'problem_before',
+                'problem_after' => 'problem_after',
+                'images' => [
+                    0 => [ // image
+                        'img_path' => '/assets/img/skill-1.png',
+                        'img_name' => 'skill-1.png',
+                        'is_before' => 1,
+                    ],
+                    1 => [ // image
+                        'img_path' => '/assets/img/skill-2.png',
+                        'img_name' => 'skill-2.png',
+                        'is_before' => 1,
+                    ],
+
+                ]
+            ],
+        ];
+
+        $params = [
+            'evidences' => $evidences,
+        ];
+        return view('pattern.partials.evidence_block', $params);
+    }
 }
