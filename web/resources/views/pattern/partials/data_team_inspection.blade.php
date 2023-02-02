@@ -79,7 +79,9 @@
                 <br>
                 <a style="color: black;" href="">{{ $countImgs }}件登録済</a>
                 <br>
-                <a style="color: black;" href="">新しく登録する</a>
+                {{-- <a style="color: black;" href="javascript:evidenceDialog('{{ is_int($inspectionId) ? $inspectionId : null }}')" >新しく登録する</a> --}}
+                <a style="color: black;" href="javascript:void(0)" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" >新しく登録する</a>
+
             </td>
             @endforeach
         </tr>
