@@ -28,7 +28,6 @@
         {{-- Bar Chart --}}
         <tr style="">
             <td colspan="{{ $countInspection }}">
-                Bar chart
                 <canvas style="width: 15px; height: 10px;" id="barchart_dept_{{ $inspection['dept_id'] }}"></canvas>
             </td>
         </tr>
@@ -57,14 +56,12 @@
 
                     <input style="" type="button" class="btn-info rounded-3" id="btnInput" value="{{ __('TopPage_Evidence_Button') }}" onclick="gotoInspectionPage('{{ $team['team_id'] }}')"/>
                 </td>
-
             </tr>
 
             {{-- Radar Chart --}}
             <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-radarchart" style="display: none">
                 @for ($i = 0; $i < $countInspection; $i++)
                 <td style="width: {{ $width_data }}">
-                    Radar chart
                     <canvas class="radarChart" id="radarchart_team_{{ $team['team_id'] }}-{{ $i }}"></canvas>
                 </td>
                 @endfor
@@ -73,7 +70,6 @@
             {{-- Bar Chart --}}
             <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart" style="display: none; border-bottom-color: transparent;">
                 <td colspan="{{ $countInspection }}">
-                    Bar chart
                     <canvas style="width: 15px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
                 </td>
             </tr>
@@ -85,7 +81,6 @@
                 @php
                     $countImgs = isset($inspections[$i]['count_evidence'])
                     ? $inspections[$i]['count_evidence'] : 0;
-
                     $avgPoint = isset($inspections[$i]['avg_point']) ? $inspections[$i]['avg_point'] : '';
                 @endphp
 
@@ -103,15 +98,13 @@
 
                 @endfor
             </tr>
-
-
             @endforeach
 
         @endif
-
-
-
-
+        <tr style="">
+            <td colspan="{{ $countInspection }}" style="height: 3rem; border-color: transparent;">
+            </td>
+        </tr>
         @endforeach
 
     </table>
