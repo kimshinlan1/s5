@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('team_id');
+            $table->string('avg_point', 50)->nullable();
             $table->timestamp('inspection_date')->nullable();
             $table->timestamps();
         });

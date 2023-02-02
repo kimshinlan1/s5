@@ -253,11 +253,11 @@ function validateAndGetData() {
         let id = $(this).val();
         let inspection_date = "";
         let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
-        if (getdate && typeof getdate !== 'object') {
+        if (getdate && getdate instanceof Date) {
             inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
         }
-        if (id && inspection_date) {
 
+        if (id && inspection_date) {
             let inspection = {
                 'info': {},
                 'data': {}
