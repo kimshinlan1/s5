@@ -71,7 +71,7 @@
             </tr>
 
             {{-- Bar Chart --}}
-            <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart" style="display: none">
+            <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart" style="display: none; border-bottom-color: transparent;">
                 <td colspan="{{ $countInspection }}">
                     Bar chart
                     <canvas style="width: 15px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>

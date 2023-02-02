@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Constant;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
 use App\Services\DepartmentService;
@@ -117,7 +118,7 @@ class PatternTopPageController extends Controller
         $companies = app()->get(CompanyService::class)->getAll()->toArray();
         Cache::put('companies', $companies, 10);
         $params = [
-            'countInspection' => $maxColumn,
+            'countInspection' => $maxColumn > Constant::INSPECTION_DEFAULT_COLUMN_NUMBER ? $maxColumn : Constant::INSPECTION_DEFAULT_COLUMN_NUMBER,
             // 'inspectionIds' => $inspectionIds,
             'inspectionData' => $inspectionData,
             'companies' => Cache::get('companies')

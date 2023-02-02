@@ -191,35 +191,30 @@ function loadCharts() {
   // Loop all Depts
   $("input[id*=hidDeptId_]").each(function(i,d){
     let dept_id = $(d).val();
+    let radarchartId = 'radarchart_dept_' + dept_id;
+    let barChartId = 'barchart_dept_' + dept_id;
+
     // Load overall dept chart
     let deptAvgPoints = $('#hidDeptId_' + dept_id).attr('data-avgPoint');
     let count = $('#hidCountInspection').val();
+    var mapObj = new Map();
     if(deptAvgPoints) {
       deptAvgPoints = deptAvgPoints.split('|');
-      // Load dept radar chart
-      let radarchartId = 'radarchart_dept_' + dept_id;
-      loadRadarChart(radarchartId, deptAvgPoints, 1);
-
-      // Load dept bar chart
-      var mapObj = new Map();
       mapObj.set("s1", [deptAvgPoints[0]]);
       mapObj.set("s2", [deptAvgPoints[1]]);
       mapObj.set("s3", [deptAvgPoints[2]]);
       mapObj.set("s4", [deptAvgPoints[3]]);
       mapObj.set("s5", [deptAvgPoints[4]]);
     }
-    let barChartId = 'barchart_dept_' + dept_id;
+    // Load dept radar chart
+    loadRadarChart(radarchartId, deptAvgPoints, 1);
+    // Load dept bar chart
     loadBarChart(barChartId, mapObj, count);
     // Loop all Teams in 1 Dept
     $("input[id^=hid_deptId_"+dept_id+"_teamId_]").each(function(i,t){
         let team_id = $(t).val();
-
         renderAvgChart(dept_id, team_id);
-
     });
-
-    console.log('=========');
-
 });
 }
 
