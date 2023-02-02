@@ -50,11 +50,13 @@
             <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #FDE9D9;">
                 ここにイラスト
             </td>
-            <td colspan="{{ $countInspection }}">
-                {{-- Bar Chart
-                <div id="barchart"></div> --}}
-                <canvas style="width: 15px; height: 10px;" id="myBarChart"></canvas>
-            </td>
+            @foreach ($inspectionIds as $inspectionId)
+                <td colspan="{{ $countInspection }}">
+                    {{-- Bar Chart
+                    <div id="barchart"></div> --}}
+                    <canvas style="width: 15px; height: 10px;" id="myBarChart"></canvas>
+                </td>
+            @endforeach
         </tr>
 
         {{-- 改善結果を見る --}}

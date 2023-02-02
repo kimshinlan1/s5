@@ -4,7 +4,8 @@
 const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
 const TEST_TEAM_ID = 1; // todo: get from selectbox or hidden / just for test
-var ChartArray = [];
+var RenderRadarChart = [];
+var RenderBarChart = [];
 //////////////////////////////////////////////////////////////////
 /**
  * Load data
@@ -89,7 +90,6 @@ function calculateAvgPoint() {
  * Init radar chart
  */
 function initRadarChart(array5s) {
-    console.log(array5s);
 
     for (let e of inspIds) {
         const data = {
@@ -125,53 +125,14 @@ function initRadarChart(array5s) {
           };
           const ctx = document.getElementById('myChart_'+ e);
           let myChart = new Chart(ctx, config);
-          ChartArray[e] = myChart;
+          RenderRadarChart[e] = myChart;
     }
-}
-
-/**
- * Create radar chart
- */
-window.createNewChart = function (dataset, canvas, img, divC, divF, labelTitle) {
-    const data = {
-        labels: [
-          'S1',
-          'S2',
-          'S3',
-          'S4',
-          'S5',
-        ],
-        datasets: [{
-          label: '',
-          data: [0, 4, 2, 3, 5],
-          fill: true,
-          backgroundColor: 'rgb(54, 162, 235)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
-        }]
-      };
-      const config = {
-        type: 'radar',
-        data: data,
-        options: {
-          elements: {
-            line: {
-              borderWidth: 3
-            }
-          }
-        },
-      };
-      const ctx = document.getElementById('myChart');
-      new Chart(ctx, config);
 }
 
 /**
  * Init bar chart
  */
-function initBarChart(dept_id) {
+function initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5) {
     // todo:
     // alert("init chart");
     const labels = [
@@ -182,71 +143,72 @@ function initBarChart(dept_id) {
         '',
     ];
     const data = {
-      labels: labels,
-      datasets: [
+    labels: labels,
+    datasets: [
         {
-          label: 'S1',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'blue',
+        label: 'S1',
+        data: arrayS1,
+        backgroundColor: 'blue',
         },
         {
-          label: 'S2',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'red',
+        label: 'S2',
+        data: arrayS2,
+        backgroundColor: 'red',
         },
         {
-          label: 'S3',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'green',
+        label: 'S3',
+        data: arrayS3,
+        backgroundColor: 'green',
         },
         {
-          label: 'S4',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'purple',
+        label: 'S4',
+        data: arrayS4,
+        backgroundColor: 'purple',
         },
         {
-          label: 'S5',
-          data: [2, 3, 4, 2, 4],
-          backgroundColor: 'yellow',
+        label: 'S5',
+        data: arrayS5,
+        backgroundColor: 'yellow',
         },
-      ]
+    ]
     };
     const config = {
-      type: 'bar',
-      data: data,
-      options: {
+    type: 'bar',
+    data: data,
+    options: {
         plugins: {
-          title: {
+        title: {
             display: true,
             text: ''
-          },
+        },
         },
         responsive: true,
         scales: {
-          x: {
+        x: {
             stacked: true,
-          },
-          y: {
+        },
+        y: {
             stacked: true
-          }
         }
-      }
+        }
+    }
     };
     const actions = [
-      {
+    {
         name: 'Randomize',
         handler(chart) {
-          chart.data.datasets.forEach(dataset => {
+        chart.data.datasets.forEach(dataset => {
             dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-          });
-          chart.update();
+        });
+        chart.update();
         }
-      },
+    },
     ];
     const ctx = document.getElementById('myBarChart');
-    ctx.height = 3;
-    new Chart(ctx, config);
+    let myChart = new Chart(ctx, config);
+    RenderBarChart = myChart;
 }
+
 
 /**
  * Add column (new inspection)
@@ -443,12 +405,10 @@ $(function () {
             getDataElement();
 
             $('.selPointValue').change(function() {
-                console.log(window.ChartArray);
-
                 for (let e of inspIds) {
-                    ChartArray[e].destroy();
+                    RenderRadarChart[e].destroy();
                 }
-
+                RenderBarChart.destroy();
                 getDataElement();
             });
         };
@@ -563,7 +523,40 @@ $(function () {
             array5s[id_inspec] = arrayInspection;
         }
         initRadarChart(array5s);
+        getDataBarChart(array5s);
         validateAndGetData();
+    }
+
+    function getDataBarChart(array5s) {
+        let arrayS1 = [];
+        let arrayS2 = [];
+        let arrayS3 = [];
+        let arrayS4 = [];
+        let arrayS5 = [];
+        for (let e of inspIds) {
+            arrayS1 = array5s[e][0];
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS2 = [];
+            arrayInspectionS2.push(array5s[e][1]);
+            arrayS2[e] = arrayInspectionS2;
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS3 = [];
+            arrayInspectionS3.push(array5s[e][2]);
+            arrayS3[e] = arrayInspectionS3;
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS4 = [];
+            arrayInspectionS4.push(array5s[e][3]);
+            arrayS4[e] = arrayInspectionS4;
+        }
+        for (let e of inspIds) {
+            let arrayInspectionS5 = [];
+            arrayInspectionS5.push(array5s[e][4]);
+            arrayS5[e] = arrayInspectionS5;
+        }
+        initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5);
     }
 
     // Save click
