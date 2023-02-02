@@ -198,7 +198,7 @@ function loadCharts() {
     if(deptAvgPoints) {
       deptAvgPoints = deptAvgPoints.split('|');
       // Load dept radar chart
-      let radarchartId = 'radarchart_dept_' + dept_id + '-' + i;
+      let radarchartId = 'radarchart_dept_' + dept_id;
       loadRadarChart(radarchartId, deptAvgPoints, 1);
 
       // Load dept bar chart

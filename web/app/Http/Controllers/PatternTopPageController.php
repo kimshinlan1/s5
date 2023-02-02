@@ -43,7 +43,6 @@ class PatternTopPageController extends Controller
     {
         // todo:
         $companyId = $request->get('company_id') ? $request->get('company_id') : 1;
-        $count = 0;
         $totalDeptPointArr = [0, 0, 0, 0, 0];
         $avgDeptPointArr = null;
         // $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
@@ -59,7 +58,9 @@ class PatternTopPageController extends Controller
         $deptList = app(DepartmentService::class)->getFullDataByCompanyId($companyId);
         $maxColumn = 0;
         foreach ($deptList as $key => $dept) {
-
+            $count = 0;
+            $totalDeptPointArr = [0, 0, 0, 0, 0];
+            $avgDeptPointArr = null;
             // Build struture
             $inspectionData[$key] = [
                 'dept_id' => $dept['id'],
@@ -100,8 +101,11 @@ class PatternTopPageController extends Controller
                 }, $totalDeptPointArr);
             }
 
-            $avgDeptPointArr = implode('|', $avgDeptPointArr);
-            $inspectionData[$key]['dept_avgPoint'] = $avgDeptPointArr;
+            if ($avgDeptPointArr) {
+                $avgDeptPointArr = implode('|', $avgDeptPointArr);
+                $inspectionData[$key]['dept_avgPoint'] = $avgDeptPointArr;
+            }
+
             // dd($inspectionData);
         }
         // dd($deptList);
