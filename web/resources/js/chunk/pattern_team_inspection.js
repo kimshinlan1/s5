@@ -531,7 +531,7 @@ $(function () {
         }
         initRadarChart(array5s);
         getDataBarChart(array5s);
-        validateAndGetData();
+        // validateAndGetData();
     }
 
     function getDataBarChart(array5s) {
