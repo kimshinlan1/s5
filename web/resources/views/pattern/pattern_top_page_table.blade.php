@@ -89,7 +89,7 @@
                     $avgPoint = isset($inspections[$i]['avg_point']) ? $inspections[$i]['avg_point'] : '';
                 @endphp
 
-                <td>
+                <td style="text-align: center;">
                     @if ($countImgs)
                     <input style="" type="button" class="btn-primary rounded-3" value="{{ __('TopPage_Redirect_Inspection_Button') }}" onclick="redirectToInspection({{ $team['team_id'] }})"/>
                     @else
