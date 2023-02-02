@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Common\Constant;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
-use App\Services\PatternService;
 use App\Services\DepartmentService;
 use Illuminate\Support\Facades\Cache;
 use App\Services\PatternTopPageService;
-use App\Services\PatternTeamInspectionService;
 
 class PatternTopPageController extends Controller
 {
@@ -42,7 +39,7 @@ class PatternTopPageController extends Controller
     public function generateDataHtml(Request $request)
     {
         // todo:
-        $companyId = $request->get('company_id') ? $request->get('company_id') : 1;
+        $companyId = $request->get('company_id');
         $totalDeptPointArr = [0, 0, 0, 0, 0];
         $avgDeptPointArr = null;
         // $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
@@ -118,15 +115,15 @@ class PatternTopPageController extends Controller
         // }
 
         $companies = app()->get(CompanyService::class)->getAll()->toArray();
+        Cache::put('companies', $companies, 10);
         $params = [
             'countInspection' => $maxColumn,
             // 'inspectionIds' => $inspectionIds,
             'inspectionData' => $inspectionData,
-            'companies' => $companies
+            'companies' => Cache::get('companies')
         ];
 
         // dd($params);
-
         return view('pattern.pattern_top_page_table', $params)->render();
     }
 }

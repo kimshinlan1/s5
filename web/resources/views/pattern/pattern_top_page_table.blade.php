@@ -20,7 +20,6 @@
         <tr style="">
             @for ($i = 0; $i < $countInspection; $i++)
             <td style="width: {{ $width_data }}">
-                Radar chart
                 <canvas class="radarChart" id="radarchart_dept_{{ $inspection['dept_id'] }}"></canvas>
             </td>
             @endfor

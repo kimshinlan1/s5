@@ -36,7 +36,7 @@ function loadRadarChart(id, avgPointArr, isDept) {
     const data = {
         labels: labels,
         datasets: [{
-          label: "The Radar Chart illustrates the average value of 5S methods",
+          label: CONFIG.get("RADAR_CHART_LABEL"),
           data: avgPointArr,
           fill: true,
           backgroundColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
@@ -61,8 +61,7 @@ function loadRadarChart(id, avgPointArr, isDept) {
       };
       const ctx = document.getElementById(id);
 
-      let myChart = new Chart(ctx, config);
-      myChart.resize(200, 300);
+      new Chart(ctx, config);
 }
 
 /**
