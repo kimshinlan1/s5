@@ -132,9 +132,7 @@ function initRadarChart(array5s) {
 /**
  * Init bar chart
  */
-function initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5) {
-    // todo:
-    // alert("init chart");
+function initBarChart(arrayPoint) {
     const labels = [
         '',
         '',
@@ -142,71 +140,62 @@ function initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5) {
         '',
         '',
     ];
+
     const data = {
-    labels: labels,
-    datasets: [
-        {
-        label: 'S1',
-        data: arrayS1,
-        backgroundColor: 'blue',
-        },
-        {
-        label: 'S2',
-        data: arrayS2,
-        backgroundColor: 'red',
-        },
-        {
-        label: 'S3',
-        data: arrayS3,
-        backgroundColor: 'green',
-        },
-        {
-        label: 'S4',
-        data: arrayS4,
-        backgroundColor: 'purple',
-        },
-        {
-        label: 'S5',
-        data: arrayS5,
-        backgroundColor: 'yellow',
-        },
-    ]
+        labels: labels,
+        datasets: [
+            {
+            label: 'S1',
+            data: arrayPoint['S1'],
+            backgroundColor: 'blue',
+            },
+            {
+            label: 'S2',
+            data: arrayPoint['S2'],
+            backgroundColor: 'red',
+            },
+            {
+            label: 'S3',
+            data: arrayPoint['S3'],
+            backgroundColor: 'green',
+            },
+            {
+            label: 'S4',
+            data: arrayPoint['S4'],
+            backgroundColor: 'purple',
+            },
+            {
+            label: 'S5',
+            data: arrayPoint['S5'],
+            backgroundColor: 'yellow',
+            },
+        ]
     };
+
     const config = {
-    type: 'bar',
-    data: data,
-    options: {
-        plugins: {
-        title: {
-            display: true,
-            text: ''
-        },
-        },
-        responsive: true,
-        scales: {
-        x: {
-            stacked: true,
-        },
-        y: {
-            stacked: true
+        type: 'bar',
+        data: data,
+        options: {
+            plugins: {
+            title: {
+                display: true,
+                text: ''
+            },
+            },
+            responsive: true,
+            scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+            }
         }
-        }
-    }
     };
-    const actions = [
-    {
-        name: 'Randomize',
-        handler(chart) {
-        chart.data.datasets.forEach(dataset => {
-            dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-        });
-        chart.update();
-        }
-    },
-    ];
+
     const ctx = document.getElementById('myBarChart');
-    let myChart = new Chart(ctx, config);
-    RenderBarChart = myChart;
+    RenderBarChart = new Chart(ctx, config);
 }
 
 
@@ -262,7 +251,11 @@ function validateAndGetData() {
 
     $('input[id^=hidInspectionId]').each(function() {
         let id = $(this).val();
-        let inspection_date = $.datepicker.formatDate("yy-mm-dd", $('#txtInspectionDate_'+id).datepicker("getDate"));
+        let inspection_date = "";
+        let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
+        if (getdate && typeof getdate !== 'object') {
+            inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
+        }
         if (id && inspection_date) {
 
             let inspection = {
@@ -535,35 +528,17 @@ $(function () {
     }
 
     function getDataBarChart(array5s) {
-        let arrayS1 = [];
-        let arrayS2 = [];
-        let arrayS3 = [];
-        let arrayS4 = [];
-        let arrayS5 = [];
-        for (let e of inspIds) {
-            arrayS1 = array5s[e][0];
+        let arrayPoint = [];
+        for (let id of inspIds) {
+            ['S1', 'S2', 'S3', 'S4', 'S5'].forEach(function (val, index) {
+                if (!arrayPoint[val]) {
+                    arrayPoint[val] = [];
+                }
+                arrayPoint[val].push(array5s[id][index] ? array5s[id][index] : 0);
+            });
         }
-        for (let e of inspIds) {
-            let arrayInspectionS2 = [];
-            arrayInspectionS2.push(array5s[e][1]);
-            arrayS2[e] = arrayInspectionS2;
-        }
-        for (let e of inspIds) {
-            let arrayInspectionS3 = [];
-            arrayInspectionS3.push(array5s[e][2]);
-            arrayS3[e] = arrayInspectionS3;
-        }
-        for (let e of inspIds) {
-            let arrayInspectionS4 = [];
-            arrayInspectionS4.push(array5s[e][3]);
-            arrayS4[e] = arrayInspectionS4;
-        }
-        for (let e of inspIds) {
-            let arrayInspectionS5 = [];
-            arrayInspectionS5.push(array5s[e][4]);
-            arrayS5[e] = arrayInspectionS5;
-        }
-        initBarChart(arrayS1, arrayS2, arrayS3, arrayS4, arrayS5);
+
+        initBarChart(arrayPoint)
     }
 
     // Save click
