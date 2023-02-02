@@ -52,7 +52,6 @@ class PatternTeamInspectionController extends Controller
         $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
         $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
 
-
         // Get Rows: patterns
         $data = [];
         if (!Cache::get('pattern_data')) {
