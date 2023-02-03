@@ -143,7 +143,6 @@ class PatternDeptSettingService extends BaseService
             ],
             [
                 'company_id' => $request->data['company'],
-                'no' => $no,
                 'name' => $data['info']['pattern_name'],
                 'note' => $data['info']['pattern_note'],
                 '5s' => $data['info']['pattern_5s_selected'],
@@ -151,6 +150,10 @@ class PatternDeptSettingService extends BaseService
                 'updated_at' => $data['info']['pattern_updated_at'],
             ]
         );
+        if (!$data['info']['pattern_id']) {
+            $deptPattern->no = $no;
+            $deptPattern->save();
+        }
         $deptPatternId = $deptPattern->id;
         $dept = Department::find($request->data['department']);
         $dept->dept_pattern_id = $deptPatternId;

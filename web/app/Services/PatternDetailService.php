@@ -120,7 +120,6 @@ class PatternDetailService extends BaseService
                 'id' => $data['info']['pattern_id']
             ],
             [
-                'no' => $no,
                 'name' => $data['info']['pattern_name'],
                 'note' => $data['info']['pattern_note'],
                 '5s' => $data['info']['pattern_5s_selected'],
@@ -128,6 +127,10 @@ class PatternDetailService extends BaseService
                 'updated_at' => $data['info']['pattern_updated_at'],
             ]
         );
+        if (!$data['info']['pattern_id']) {
+            $patternId->no = $no;
+            $patternId->save();
+        }
         $patternId = $patternId->id;
 
         // Loop to insert Areas
