@@ -3,7 +3,7 @@
 @push('css')
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
         type="text/css"/>
-    {{-- <link href="{{ mix('/css/pattern.css') }}" rel="stylesheet"/> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ mix('/css/top_page.css') }}" rel="stylesheet"/>
 @endpush
 

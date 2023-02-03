@@ -1,5 +1,64 @@
 .radarChart {
-    width: 120px !important;
-    height: 120px !important;
+    width: 220px !important;
+    height: 220px !important;
+    max-width: 220px !important;
+    max-height: 220px !important;
     margin: 0 auto;
+}
+
+#emptyRow {
+    height: 3rem;
+    border-color: transparent;
+}
+
+#scrolling {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height:82vh;
+}
+
+#deptRadarChart td:first-child {
+    padding-left: 3rem !important;
+    width: 268px !important;
+    max-width: 268px !important;
+}
+
+.teamRadarChart:first-child {
+    padding-left: 3rem !important;
+    width: 268px !important;
+    max-width: 268px !important;
+}
+
+table tr {
+    border-color: transparent;
+}
+
+.rows {
+    border-right: 3px solid red;
+    border-left: 3px solid red;
+}
+
+tr.radarChartRow > td:not(:last-child) {
+    border-right-color: transparent;
+}
+
+tr.btn-row > td:not(:last-child) {
+    border-right-color: transparent;
+    border-bottom: 1px solid red;
+}
+
+.toggle-btn >{
+    border-bottom: 1px solid red;
+}
+
+tr.team-name-row {
+    display: none;
+    border-bottom-color: transparent;
+    border-top: 2px solid red;
+}
+
+tr.team-name-row ~ .team-name-row {
+    display: none;
+    border-bottom-color: transparent;
+    border-top: 2px solid transparent;
 }
