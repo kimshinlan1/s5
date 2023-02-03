@@ -35,12 +35,11 @@
 
             {{-- Check toggle team inspection chart --}}
             @if (count($inspection['teams']))
-                <tr class="toggle-btn" style="text-align: center">
+                <tr class="toggle-btn">
                     <td colspan="{{ $countInspection }}">
                         <button style="" class="btn-danger rounded-3" id="btnTeamInspection" value="{{ __('TopPage_Expand_Button') }}" onclick="showHideTeam('{{ $inspection['dept_id'] }}')">
                         <i class="fa fa-plus" aria-hidden="true"></i>   {{ __('TopPage_Expand_Button') }}
                         </button>
-
                     </td>
                 </tr>
                 @foreach ($inspection['teams'] as $team)
