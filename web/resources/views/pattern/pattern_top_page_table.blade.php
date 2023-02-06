@@ -90,7 +90,7 @@ $width_data = '250px';
 
                             {{-- 改善結果を見る --}}
                             <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-info"
-                                style="display: none;" class="rows btn-row">
+                                style="display: none; height: 3rem;" class="rows btn-row">
                                 @for ($i = 0; $i < $countInspection; $i++)
                                     @php
                                         $countImgs = isset($inspections[$i]['count_evidence']) ? $inspections[$i]['count_evidence'] : 0;
