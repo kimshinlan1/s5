@@ -3,6 +3,7 @@
  *
 ****************************************************/
 "use strict";
+var click  = 1;
 
 /* ==============================
 	Global Functions
@@ -149,6 +150,14 @@ window.getUserTableList = function (params) {
     });
  }
 
+function detailFormatter(index, row) {
+    var html = "";
+    $.each(row, function (key, value) {
+      html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+    })
+    return html.join('')
+}
+
 /* ==============================
 	jQuery
 ============================== */
@@ -161,6 +170,8 @@ $(function(){
         sidePagination: "server",
         uniqueId:"id",
         escape:"true",
+        detailView:"true",
+        detailFormatter:"detailFormatter",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $('#userTable'))
         },
@@ -231,7 +242,7 @@ $(function(){
         $('#userEditDialog .modal-title.add').show();
         $('#userEditDialog .modal-title.edit').hide();
 
-        $('#departmentId').val($("#departmentId option:first").val());   
+        $('#departmentId').val($("#departmentId option:first").val());
     });
 
     /** ------------------
@@ -310,5 +321,21 @@ $(function(){
             window.saveData();
         }
     });
+
+    $('#userTable').on("click-cell.bs.table", function (field, value, row, $element) {
+        console.log("TCL: $element", $element);
+        console.log("TCL: value", value);
+        console.log("TCL: field", field);
+        console.log("TCL: row", row);
+        if (click) {
+            $('#userTable').bootstrapTable('expandRow', $element.id - 1);
+            click = 0;
+        } else {
+            $('#userTable').bootstrapTable('collapseRow', $element.id - 1);
+            click = 1;
+        }
+
+    });
+
 });
 
