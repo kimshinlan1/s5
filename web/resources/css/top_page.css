@@ -23,7 +23,7 @@
     max-width: 268px !important;
 }
 
-.teamRadarChart:first-child {
+.teamRadarChart td:first-child {
     padding-left: 3rem !important;
     width: 268px !important;
     max-width: 268px !important;
@@ -33,32 +33,32 @@ table tr {
     border-color: transparent;
 }
 
-.rows {
-    border-right: 3px solid red;
-    border-left: 3px solid red;
-}
-
 tr.radarChartRow > td:not(:last-child) {
     border-right-color: transparent;
 }
 
-tr.btn-row > td:not(:last-child) {
-    border-right-color: transparent;
-    border-bottom: 1px solid red;
+.border-expand {
+    border: 3px solid red !important;
 }
 
-.toggle-btn >{
-    border-bottom: 1px solid red;
+.border-collapse {
+    border: 0px solid transparent !important;
 }
 
-tr.team-name-row {
-    display: none;
-    border-bottom-color: transparent;
-    border-top: 2px solid red;
+#fiestSetId {
+    margin-bottom: 50px;
+    min-width: fit-content !important;
+    width: max-content;
 }
 
-tr.team-name-row ~ .team-name-row {
-    display: none;
-    border-bottom-color: transparent;
-    border-top: 2px solid transparent;
+table#topPageTable {
+    width: max-content;
+}
+
+legend {
+    margin-left: 1rem;
+}
+
+tr.team-name-row td {
+    padding: 2rem 0rem 1rem;
 }

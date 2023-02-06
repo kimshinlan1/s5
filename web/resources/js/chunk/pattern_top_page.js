@@ -18,7 +18,7 @@ const TEAM_CHART_COLOR = 'rgb(54, 162, 235)';
  * Show hide team inspection chart
  */
 function showHideTeam(dept_id) {
-    $("tr[id^=dept_"+dept_id+"-team]").slideToggle();
+    $("tr[id^=dept_"+dept_id+"-team]").toggle();
 }
 
 /**
@@ -56,7 +56,7 @@ function loadRadarChart(id, avgPointArr, isDept) {
           elements: {
             line: {
               borderWidth: 3
-            }
+            },
           }
         },
       };
@@ -114,21 +114,35 @@ function loadBarChart(id, mapObj, count) {
             display: true,
             text: ''
           },
+          legend: {
+            position: "top",
+            align: "start",
+            labels: {
+              boxWidth: 20
+            }
+          },
         },
         responsive: true,
         scales: {
           x: {
-            stacked: true,
-          },
+                  stacked: true,
+              },
           y: {
-            stacked: true
+              suggestedMin: 0,
+              suggestedMax: 25,
+              beginAtZero: true,
+              stacked: true,
+              ticks: {
+                  stepSize: 5
+              },
           }
-        }
+        },
       }
     };
 
     const ctx = document.getElementById(id);
     ctx.height = 2;
+    // ctx.width = 1;
     new Chart(ctx, config);
 }
 
@@ -224,7 +238,7 @@ function renderView(compId) {
     let data = {company_id : compId}
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
-
+        $('#topPageChart').empty();
         $('#topPageChart').html(data);
         loadCharts();
     };
@@ -256,7 +270,8 @@ $(function () {
     }
 
     // Change expand/collapse icon
-    $("#btnTeamInspection").click(function(){
+    $(".btnTeamInspection").click(function(){
       $(this).children('.fa-minus, .fa-plus').toggleClass("fa-minus fa-plus");
+      $(this).parents().parents().toggleClass("border-expand border-collapse");
     });
 });
