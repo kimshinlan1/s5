@@ -18,7 +18,7 @@ const TEAM_CHART_COLOR = 'rgb(54, 162, 235)';
  * Show hide team inspection chart
  */
 function showHideTeam(dept_id) {
-    $("tr[id^=dept_"+dept_id+"-team]").toggle();
+    $("tr[id^=dept_"+dept_id+"-team]").slideToggle();
 }
 
 /**
@@ -52,6 +52,7 @@ function loadRadarChart(id, avgPointArr, isDept) {
         data: data,
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           elements: {
             line: {
               borderWidth: 3
@@ -136,11 +137,6 @@ function loadBarChart(id, mapObj, count) {
  * Render avg chart from teams in dept
  */
 function renderAvgChart(dept_id, team_id) {
-    // todo:
-
-    // If have data: render chart with data avg
-
-    // Else: render empty chart
     let count = $('#hidCountInspection').val();
     var mapObj = new Map();
     mapObj.set("s1", []);
@@ -150,22 +146,19 @@ function renderAvgChart(dept_id, team_id) {
     mapObj.set("s5", []);
     $('#dept_'+dept_id+'-team_'+team_id+'-info').find('input[id^=hidAvgPoint]').each(function(i,e){
         let avtPoints = $(e).val();
-
+        let avgPointArr = '';
         if (avtPoints) {
-            let avgPointArr = $(e).val().split('|');
+            avgPointArr = $(e).val().split('|');
             avgPointArr.forEach(function (value, i) {
                 let key = "s" + (i+1).toString();
                 mapObj.get(key).push(parseInt(value));
             });
-
-            let id = 'radarchart_team_' + team_id + '-' + i;
-            loadRadarChart(id, avgPointArr, 0);
         }
+        let id = 'radarchart_team_' + team_id + '-' + i;
+        loadRadarChart(id, avgPointArr, 0);
     });
     let barChartId = 'barchart_team_' + team_id;
     loadBarChart(barChartId, mapObj, count);
-    // todo: Calculate avg point of Dept from teams and Render chart
-
 }
 
 /**
@@ -176,7 +169,6 @@ function getAvgPointOfDept(dept_id) {
     // todo: update avgPointOfDept
 
     // avgPointOfDept = {};
-
 }
 
 /**
@@ -184,14 +176,12 @@ function getAvgPointOfDept(dept_id) {
  */
 function redirectToInspection(teamId) {
     window.location = '/pattern_team_inspection/' + teamId;
-
 }
 
 function loadCharts() {
   // Loop all Depts
   $("input[id*=hidDeptId_]").each(function(i,d){
     let dept_id = $(d).val();
-    let radarchartId = 'radarchart_dept_' + dept_id;
     let barChartId = 'barchart_dept_' + dept_id;
 
     // Load overall dept chart
@@ -207,7 +197,12 @@ function loadCharts() {
       mapObj.set("s5", [deptAvgPoints[4]]);
     }
     // Load dept radar chart
+    let radarchartId = 'radarchart_dept_' + dept_id + '-0';
     loadRadarChart(radarchartId, deptAvgPoints, 1);
+    for (let index = 1; index < count; index++) {
+      let radarchartId = 'radarchart_dept_' + dept_id + '-' + index ;
+      loadRadarChart(radarchartId, '', 1);
+    }
     // Load dept bar chart
     loadBarChart(barChartId, mapObj, count);
     // Loop all Teams in 1 Dept
@@ -259,4 +254,9 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
+
+    // Change expand/collapse icon
+    $("#btnTeamInspection").click(function(){
+      $(this).children('.fa-minus, .fa-plus').toggleClass("fa-minus fa-plus");
+    });
 });
