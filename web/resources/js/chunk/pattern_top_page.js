@@ -57,7 +57,23 @@ function loadRadarChart(id, avgPointArr, isDept) {
             line: {
               borderWidth: 3
             },
-          }
+          },
+          scales: {
+            r: {
+                angleLines: {
+                    display: false
+                },
+                suggestedMin: 0,
+                suggestedMax: 5,
+                beginAtZero: true,
+                ticks: {
+                    backdropPadding: {
+                        y: 1
+                    },
+                    stepSize: 1
+                },
+            }
+          },
         },
       };
       const ctx = document.getElementById(id);
