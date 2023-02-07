@@ -53,13 +53,18 @@ class PatternTeamInspectionController extends Controller
         $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
 
         // Get Rows: patterns
+        // $data = $this->service->getPatternDataByDept($deptId);
+        // $data = json_decode(json_encode($data), true);
+
+
         $data = [];
-        if (!Cache::get('pattern_data')) {
+        $key = "pattern_data_{$deptId}_{$teamId}";
+        if (!Cache::get($key)) {
             $data = $this->service->getPatternDataByDept($deptId);
             $data = json_decode(json_encode($data), true);
-            Cache::put('pattern_data', $data);
+            Cache::put($key, $data);
         } else {
-            $data = Cache::get('pattern_data');
+            $data = Cache::get($key);
         }
 
 
