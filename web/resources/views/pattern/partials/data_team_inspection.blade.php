@@ -24,9 +24,9 @@
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: center">
                 @if (is_int($inspectionId))
-                <input style="border-color: transparent; width: 30%; background-color: red; color: aliceblue;" type="button" value="削除" onclick="removeColumn('{{ $inspectionId }}')"/>
+                <input class="btn-remove-column" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"/>
                 @else
-                <input style="border-color: transparent; width: 30%; background-color: red; color: aliceblue;" type="button" value="削除" onclick="removeColumn(-1)"/>
+                <input class="btn-remove-column" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn(-1)"/>
                 @endif
 
             </td>
@@ -34,33 +34,29 @@
         </tr>
 
         {{-- Radar Chart --}}
-        <tr style="height: 200px; border-color: transparent;">
-            <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #DAEEF3;">
-                ここにイラスト
+        <tr style="border-color: transparent;">
+            <td colspan="3" class="title-chart" style="background-color: #DAEEF3; padding-top: 90px;">
+                {{ __('TeamInspection_Illustration_Here') }}
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <canvas id="myChart_{{ $inspectionId }}"></canvas>
+                <canvas id="myChart_{{ $inspectionId }}" height= "200px" width= "300px"></canvas>
             </td>
             @endforeach
         </tr>
 
         {{-- Bar Chart --}}
-        <tr style="height: 200px; border-color: transparent;">
-            <td colspan="3" style="text-align: center; padding-top: 77px; font-size: 2rem; background-color: #FDE9D9;">
-                ここにイラスト
+        <tr style="height: 215px; border-color: transparent;">
+            <td colspan="3" class="title-chart" style="background-color: #FDE9D9; padding-top: 90px;">
+                {{ __('TeamInspection_Illustration_Here') }}
             </td>
-            @foreach ($inspectionIds as $inspectionId)
-                <td colspan="{{ $countInspection }}">
-                    {{-- Bar Chart
-                    <div id="barchart"></div> --}}
-                    <canvas style="width: 15px; height: 10px;" id="myBarChart"></canvas>
-                </td>
-            @endforeach
+            <td style="padding: 0px;" colspan="{{ $countInspection }}">
+                <canvas id="myBarChart"></canvas>
+            </td>
         </tr>
 
         {{-- 改善結果を見る --}}
-        <tr style="text-align: center; border-left-color: transparent; border-right-color: transparent;">
+        <tr class="tr-row-evidence">
             <td colspan="3">
 
             </td>
@@ -71,16 +67,16 @@
             @endphp
             <td>
                 @if (strpos($inspectionId, "new"))
-                <input style="width: 100%; border-color: transparent; background-color: #FDE9D9;" type="button" class="btn-success" value="改善結果を見る" onclick=""/>
+                <input style="background-color: #FDE9D9;" type="button" class="btn-success btn-evidence" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""/>
                 @else
-                <input style="width: 100%; border-color: transparent; background-color: deepskyblue; color: aliceblue" type="button" class="" value="改善結果を見る" onclick=""/>
+                <input style="background-color: deepskyblue; color: aliceblue" type="button" class="btn-evidence" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""/>
                 @endif
 
                 <br>
-                <a style="color: black;" href="">{{ $countImgs }}件登録済</a>
+                <a style="color: black;" href="">{{ $countImgs }}{{ __('TeamInspection_Registered') }}</a>
                 <br>
                 {{-- <a style="color: black;" href="javascript:evidenceDialog('{{ is_int($inspectionId) ? $inspectionId : null }}')" >新しく登録する</a> --}}
-                <a style="color: black;" href="javascript:void(0)" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" >新しく登録する</a>
+                <a style="color: black;" href="javascript:void(0)" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" >{{ __('TeamInspection_Register_New') }}</a>
 
             </td>
             @endforeach
@@ -140,20 +136,20 @@
             <td rowspan="2">点検箇所</td>
             <td rowspan="2">ポイント</td>
             @for ($i = 0; $i < $countInspection; $i++)
-            <td>
-                点検実施日
+            <td style="text-align: center;">
+                <strong>点検実施日</strong>
             </td>
             @endfor
         </tr>
         <tr>
             @foreach ($inspectionIds as $inspectionId)
-            <td>
+            <td style="text-align: center;">
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";
 
                 ?>
-                <input type="text" placeholder="年月日" style="width: 100px" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
+                <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
                 <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
                 <input type="hidden" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
             </td>

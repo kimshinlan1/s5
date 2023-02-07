@@ -4,3 +4,31 @@
     max-width: calc(100% - 13.5%);
     padding-bottom: 1.5rem;
 }
+
+.btn-remove-column {
+    border-color: transparent;
+    width: 30%;
+    background-color: red;
+    color: aliceblue;
+    border: 0rem;
+    border-radius: 6px;
+}
+
+.title-chart {
+    text-align: center;
+    font-size: 1rem;
+    background-color: #DAEEF3;
+    min-width: 130px;
+}
+
+.tr-row-evidence {
+    text-align: center;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.btn-evidence {
+    border-radius: 6px;
+    width: 100%;
+    border-color: transparent;
+}
