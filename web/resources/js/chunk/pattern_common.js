@@ -68,7 +68,7 @@ window.addLocation = function (area_id, location_id, area_index) {
         // Update rowspan area
         tr.find("td:first").attr('rowspan', new_total_rows);
 
-        // todo: Loop all tr with id => Update info and Insert location
+        // Loop all tr with id => Update info and Insert location
         let count_location_delete = "";
         $("[id*=area_"+area_id+"]").each(function(i) {
             $(this).find("#hidCountLocation").val(new_count_current_location);
@@ -115,6 +115,9 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
                 // Reset high-light
                 $(this).find('td').css('background-color', 'white');
+
+                // todo: Remove CLASS_DELETE
+                $(this).find('.point').removeClass(CLASS_DELETE);
             }
         });
     } else {
@@ -127,9 +130,83 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
                 // high-light
                 $(this).find('td').not('.area').css('background-color', highlight);
+
+                // todo: Remove CLASS_DELETE
+                $(this).find('.td_point').removeClass(CLASS_DELETE);
             }
         });
     }
+}
+
+// todo: Select method and high-light
+const CLASS_DELETE = "delete";
+var count_method_delete = 0;
+window.selectMethodToDelete = function(ele, area_id, location_id, index) {
+    /**
+     * Steps:
+     *   Remove existed item from {select_location_to_delete}
+     *   Reset high-light location
+     *   High-light this method
+     *   Add class "delete" to tr
+     *
+     */
+
+
+    let id = "area_"+area_id+"_location_"+location_id;
+    let row_id = "area_"+area_id+"_location_"+location_id+"_row_"+index;
+
+    // Loop all rows in area
+    $("[id*=area_"+area_id+"]").each(function() {
+
+        if ($(this).attr('id').includes(id)) {
+            // Remove existed item
+            select_location_to_delete = removeExistId(select_location_to_delete, $(this).attr('id'));
+
+            // Reset high-light
+            $(this).find('td').css('background-color', 'white');
+
+            // if: selected
+            // else: unselected
+            if ($(this).attr('id') === row_id) {
+
+                // if: Selected => Unselected
+                // else: Unselected => Selected
+                if ($(this).find('.td_point').hasClass(CLASS_DELETE)) {
+                    $(this).find('td').css('background-color', 'white');
+                    $(this).find('.td_point').removeClass(CLASS_DELETE);
+
+                    // Increase all rowspan of location
+                    $("[id*="+id+"]").each(function(i, r) {
+                        let hidLocationRowspan = parseInt($(r).find('#hidLocationRowspan').val());
+                        $(r).find('#hidLocationRowspan').val(hidLocationRowspan + 1);
+                    });
+
+                    count_method_delete--;
+
+
+                } else {
+                    $(this).find('td').not('.area').css('background-color', 'red');
+                    $(this).find('.td_point').addClass(CLASS_DELETE);
+
+                    // Decrease all rowspan of location
+                    $("[id*="+id+"]").each(function(i, r) {
+                        let hidLocationRowspan = parseInt($(r).find('#hidLocationRowspan').val());
+                        $(r).find('#hidLocationRowspan').val(hidLocationRowspan - 1);
+                    });
+
+                    count_method_delete++;
+                }
+            } else {
+                if ($(this).find('.td_point').hasClass(CLASS_DELETE)) {
+                    $(this).find('td').not('.area').css('background-color', 'red');
+                } else {
+                    $(this).find('td').css('background-color', 'white');
+                    $(this).find('.td_point').removeClass(CLASS_DELETE);
+                }
+            }
+        }
+    });
+
 }
 
 // Get data to re-render after delete
@@ -144,10 +221,17 @@ window.getValidRows = function() {
         let area_name = $(this).find("#area").val();
         let delete_rows = 0;
         $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
+            // if: selected to delete
             if ($.inArray($(ele).attr("id"), select_location_to_delete) >= 0) {
                 delete_rows = delete_rows + parseInt($(ele).find("#hidLocationRowspan").val());
             }
         });
+
+        // todo: count selected method to delete
+        let len = $('[id*='+trid+']').find("."+CLASS_DELETE).length;
+        if (len) {
+            delete_rows = delete_rows + parseInt(len);
+        }
 
         // Loop all valid locations
         $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
@@ -156,25 +240,30 @@ window.getValidRows = function() {
                 // Loop all rows in location
                 let trid_location = $(ele).attr("id").split('_row_')[0];
                 $('[id*='+trid_location+']').each(function(i, e) {
-                    let id = $(e).attr("id").split("_");
-                    let area_id = id[1];
-                    let location_id = id[3];
-                    let row = {};
-                    row["area_id"] = area_id ? area_id : "";
-                    row["area_name"] = area_name;
-                    row["location_id"] = location_id ? location_id : "";
-                    row["location_name"] = $(e).find("#location").val() ? $(e).find("#location").val() : "";
-                    row["5s"] = $(e).find("#hid5S").val() ? $(e).find("#hid5S").val() : "";
-                    row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
-                    row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
-                    row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
-                    row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
-                    row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
-                    row["count_locations"] = parseInt($(e).find("#hidCountLocation").val()) - parseInt($(e).find("#hidCountLocationDelete").val());
-                    row["location_rowspan"] = $(e).find("#hidLocationRowspan").val() ? $(e).find("#hidLocationRowspan").val() : "";
-                    row["area_rowspan"] = $(e).find("#hidAreaRowspan").val() - delete_rows;
 
-                    params.push(row);
+                    // todo: Check if not selected method to delete (!= class "delete")
+                    if (!$(e).find('.td_point').hasClass(CLASS_DELETE)) {
+
+                        let id = $(e).attr("id").split("_");
+                        let area_id = id[1];
+                        let location_id = id[3];
+                        let row = {};
+                        row["area_id"] = area_id ? area_id : "";
+                        row["area_name"] = area_name;
+                        row["location_id"] = location_id ? location_id : "";
+                        row["location_name"] = $(e).find("#location").val() ? $(e).find("#location").val() : "";
+                        row["5s"] = $(e).find("#hid5S").val() ? $(e).find("#hid5S").val() : "";
+                        row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
+                        row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
+                        row["level_3"] = $(e).find("#level_3").val() ? $(e).find("#level_3").val() : "";
+                        row["level_4"] = $(e).find("#level_4").val() ? $(e).find("#level_4").val() : "";
+                        row["level_5"] = $(e).find("#level_5").val() ? $(e).find("#level_5").val() : "";
+                        row["count_locations"] = parseInt($(e).find("#hidCountLocation").val()) - parseInt($(e).find("#hidCountLocationDelete").val());
+                        row["location_rowspan"] = $(e).find("#hidLocationRowspan").val() ? $(e).find("#hidLocationRowspan").val() : "";
+                        row["area_rowspan"] = $(e).find("#hidAreaRowspan").val() - delete_rows;
+
+                        params.push(row);
+                    }
                 });
             }
         });
@@ -184,7 +273,7 @@ window.getValidRows = function() {
 
 // Remove Location and re generate html (not save)
 window.removeLocation = function() {
-    if (select_location_to_delete.length == 0) {
+    if (select_location_to_delete.length == 0 && count_method_delete == 0) {
         //Show warning no item to delete
         $("#confirmDialog2").modal("show");
         $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
