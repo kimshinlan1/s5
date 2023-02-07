@@ -3,7 +3,6 @@
  *
 ****************************************************/
 "use strict";
-var click  = 1;
 
 /* ==============================
 	Global Functions
@@ -70,7 +69,13 @@ window.getUserTableList = function (params) {
         return '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
             '<button type="button" class="btn btn-danger btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog">削除</button>';
     }
+}
 
+/** ------------------
+ *    customCell
+ --------------------- */
+ window.customCell = function (_value, row, _index) {
+    return '<a href="#" data-toggle="popover" data-placement="bottom" data-placement="" data-content="Content" title="Department" data-content="Some content inside the popover" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
 }
 
 /** ------------------
@@ -150,12 +155,17 @@ window.getUserTableList = function (params) {
     });
  }
 
-function detailFormatter(index, row) {
-    var html = "";
-    $.each(row, function (key, value) {
-      html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-    })
-    return html.join('')
+/** ------------------
+ *    rowAttributes
+ --------------------- */
+function rowAttributes(row, index) {
+    return {
+      'data-toggle': 'tooltip',
+      'data-placement': 'bottom',
+      'data-trigger': 'hover',
+      'data-container': 'hover',
+      'data-content': 'aaaa',
+    }
 }
 
 /* ==============================
@@ -171,7 +181,6 @@ $(function(){
         uniqueId:"id",
         escape:"true",
         detailView:"true",
-        detailFormatter:"detailFormatter",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $('#userTable'))
         },
@@ -323,19 +332,16 @@ $(function(){
     });
 
     $('#userTable').on("click-cell.bs.table", function (field, value, row, $element) {
-        console.log("TCL: $element", $element);
-        console.log("TCL: value", value);
-        console.log("TCL: field", field);
-        console.log("TCL: row", row);
-        if (click) {
-            $('#userTable').bootstrapTable('expandRow', $element.id - 1);
-            click = 0;
-        } else {
-            $('#userTable').bootstrapTable('collapseRow', $element.id - 1);
-            click = 1;
-        }
-
+        $element['company']['departments'].forEach(element => {
+            let html = '<li class="list-group-item">' + element.name + '</li>';
+            $('#popover-content ul').append(html);
+        });
+        $('[data-toggle="popover"]').popover({
+            html: true,
+            content: function() {
+                return $('#popover-content').html();
+            }
+        });
     });
-
 });
 

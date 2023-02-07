@@ -7,6 +7,7 @@ use App\Common\Constant;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
+use App\Services\DepartmentService;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Crypt;
 
@@ -51,9 +52,11 @@ class UserController extends Controller
         $userCollection = $data->toArray()['data'];
 
         for ($x = 0; $x < count($userCollection); $x++) {
+            $deptList = app()->get(DepartmentService::class)->getDataByCompany($userCollection[$x]['company_id']);
             $pwd = $userCollection[$x]['password'];
             $descript = Crypt::decryptString($pwd);
             $userCollection[$x]['password'] = $descript;
+            $userCollection[$x]['company']['departments'] = $deptList;
         }
 
         return response()->json([
