@@ -24,9 +24,10 @@
     <div class="h-title">5Sトップページ</div>
 
 @if(auth()->user()->isAdmin())
-<div class="input-group" style="margin-bottom: 0.5%;">
-    <div class="label_header_1">
-        <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+<div class="" style="margin-bottom: 0.5%;">
+    <div class="d-flex justify-content-start mb-4">
+        <div class="mt-1 fs-5">{{ __('Company_List') }}</div>
+        <select style="text-align-last: center;" class="form-select form-select-arrow w-25 mx-3"
         aria-label="Company select" id="companyOptionId" >
             @foreach ($companies as $company )
                 <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
