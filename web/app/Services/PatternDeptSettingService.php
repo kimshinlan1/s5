@@ -99,7 +99,6 @@ class PatternDeptSettingService extends BaseService
         // use:  dept_patterns, dept_patterns_details
         $data = $request->get('data');
         $companyId = $request->data['company'];
-        $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
         if (!$isUnique) {
             return [
@@ -151,6 +150,7 @@ class PatternDeptSettingService extends BaseService
             ]
         );
         if (!$data['info']['pattern_id']) {
+            $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
             $deptPattern->no = $no;
             $deptPattern->save();
         }

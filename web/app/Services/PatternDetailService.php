@@ -88,7 +88,6 @@ class PatternDetailService extends BaseService
     public function save(Request $request)
     {
         $data = $request->get('data');
-        $no = Utility::generateUniqueId(new Pattern(), "no", "CKL", 5);
         /**
          * Step: Remove old data
          *
@@ -128,6 +127,7 @@ class PatternDetailService extends BaseService
             ]
         );
         if (!$data['info']['pattern_id']) {
+            $no = Utility::generateUniqueId(new Pattern(), "no", "CKL", 5);
             $patternId->no = $no;
             $patternId->save();
         }
