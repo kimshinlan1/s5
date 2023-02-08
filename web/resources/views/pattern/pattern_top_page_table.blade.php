@@ -8,7 +8,7 @@ $width_data = '250px';
                 {{-- Dept Name --}}
                 <tr>
                     <td colspan="{{ $countInspection }}">
-                        <strong>DEPT: {{ $inspection['dept_name'] }}</strong>
+                        <strong>{{ __('Department') }}: {{ $inspection['dept_name'] }}</strong>
                     </td>
 
                     {{-- Hidden --}}
@@ -59,8 +59,8 @@ $width_data = '250px';
                             <tr class="rows team-name-row"
                                 id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}"
                                 style="display:none">
-                                <td colspan="{{ $countInspection }}" style="padding-left: 1rem; font-size: 18px;">
-                                    <strong style="">TEAM: {{ $team['team_name'] }}</strong>
+                                <td colspan="{{ $countInspection }}" style="padding-left: 1rem;">
+                                    <strong style="">{{ __('Team') }}: {{ $team['team_name'] }}</strong>
                                     <input style="" type="button" class="btn-info rounded-3" id="btnInput"
                                         value="{{ __('TopPage_Evidence_Button') }}"
                                         onclick="gotoInspectionPage('{{ $team['team_id'] }}')" />
