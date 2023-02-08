@@ -177,7 +177,7 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        if (select_location_to_delete.length == 0) {
+        if (select_location_to_delete.length == 0 && count_method_delete == 0) {
             //Show warning no item to delete
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));

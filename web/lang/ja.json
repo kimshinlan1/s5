@@ -248,6 +248,15 @@
     "Pattern_Bind_Confirm_Message": "このパターンに連携しますか。",
     "=====  BLOCK_PATTERN_DETAIL_END =====": "",
 
+    "=====  BLOCK_PATTERN_TEAM_INSPECTION_START =====": "",
+    "TeamInspection_Illustration_Here": "ここにイラスト",
+    "TeamInspection_Input": "5S入力画面",
+    "TeamInspection_Add_Inspection_Point": "点検箇所の追加",
+    "TeamInspection_Redirect_Inspection_Button": "改善結果を見る",
+    "TeamInspection_Registered": "件登録済",
+    "TeamInspection_Register_New": "新しく登録する",
+    "=====  BLOCK_PATTERN_TEAM_INSPECTION_END =====": "",
+
     "=====  BLOCK_TOPPAGE_START =====": "",
     "TopPage_Redirect_Inspection_Button": "改善結果を見る",
     "TopPage_Evidence_Button": "入力画面へ進む",

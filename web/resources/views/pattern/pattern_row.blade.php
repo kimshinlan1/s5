@@ -46,7 +46,7 @@ $locations = [];
     @endif
 
     {{-- Point --}}
-    <td>
+    <td class="td_point" onclick="selectMethodToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', '{{ $index }}')">
         {{ Constant::NAME_5S[$row['5s']] }}
         <input type="hidden" id="hid5S" value="{{ $row['5s'] }}"/>
         <input type="hidden" id="hidCountLocation" value="{{ $row['count_locations'] }}"/>

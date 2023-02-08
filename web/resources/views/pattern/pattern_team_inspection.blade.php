@@ -3,27 +3,12 @@
 @push('css')
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
         type="text/css"/>
-
-    {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> --}}
-
     <link href="{{ mix('/css/pattern_team_inspection.css') }}" rel="stylesheet"/>
-
-
 @endpush
 
 @push('scripts')
-    {{-- <script src="{!! url('assets/jquery/jquery-3.2.1.slim.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script> --}}
-
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
-
-
-    {{-- <script src="{!! url('assets/jquery/intense.min.js') !!}"></script> --}}
-
-
     <script src="{{ mix('/js/pattern_team_inspection.js') }}"></script>
     <script src="{{ mix('/js/pattern_team_inspection_evidence.js') }}"></script>
 @endpush
@@ -38,10 +23,9 @@
     body {
         overflow-x: unset;
     }
-
 </style>
 
-    <div class="h-title">5S入力画面</div>
+    <div class="h-title">{{ __('TeamInspection_Input') }}</div>
 
     <div class="d-flex justify-content-start mb-4" style="width: 55%;">
         {{-- Department List --}}
@@ -59,18 +43,11 @@
         </select>
     </div>
 
-    <input type="hidden" id="hidDeptId" value=""/>
-    <input type="hidden" id="hidTeamId" value=""/>
-
     <div id="content"></div>
-
     <br>
 
-    <button type="button" class="btn btn-success" id="btnSave">保存</button>
-
-    <button type="button" class="btn btn-primary" id="btnAdd">点検箇所の追加</button>
+    <button type="button" class="btn btn-success" id="btnSave">{{ __('Common_button_save') }}</button>
+    <button type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
 
     @include('pattern.partials.evidence_dialog')
-
-
 @endsection
