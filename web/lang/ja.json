@@ -53,6 +53,7 @@
     "Message_Alarm_Empty_Table": "1つ以上のスキルマップを設定する必要があります。",
     "Confirm_Delete": "のデータを削除してよろしいですか。",
     "Confirm_Copy": "コピーしますか？",
+    "Confirm_Message_Save_Data": "データを保存しますか。",
     "===== BLOCK_ERROR_MESSAGE_END =====": "",
 
     "===== BLOCK_PAGE_SAMPLE_START =====": "",
