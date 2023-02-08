@@ -22,16 +22,16 @@ window.addLocation = function (area_id, location_id, area_index) {
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
         let count_current_location = tr.find("#hidCountLocation").val();
         let current_total_rows = $("[id*=area_"+area_id+"]").length;
-        let new_location_index = $.now();
+        let new_location_index = 'new'+$.now();
         let new_count_current_location = parseInt(count_current_location) + 1;
         let new_total_rows = selected_5s.length + current_total_rows;
 
         // Set new row info from 5S 改善ポイントの選択
         let row = ``;
         for(let i=0; i < selected_5s.length; i++) {
-            let new_index = parseInt(current_total_rows) + i;
+            let new_index = 'new_' + parseInt(current_total_rows) + i;
             let rows = `
-                <td>
+                <td class="td_point" onclick="selectMethodToDelete(this, '`+area_id+`', '`+new_location_index+`', '`+new_index+`')">
                     `+ name_5s[selected_5s[i]] +`
                     <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
                     <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
@@ -48,8 +48,8 @@ window.addLocation = function (area_id, location_id, area_index) {
             if (i == 0) {
                 // row: main location
                 row += `
-                <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`' class='main_location'>
-                    <td rowspan='`+selected_5s.length+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new`+new_location_index+`')">
+                <tr id='area_`+area_id+`_location_`+new_location_index+`_row_`+new_index+`' class='main_location'>
+                    <td rowspan='`+selected_5s.length+`' onclick="selectLocationToDelete(this, '`+area_id+`', '`+new_location_index+`')">
                         <input type='text' class='form-control' id='location' value=''/>
                         <input type="hidden" id="hidLocationId" value=''/>
                     </td>
@@ -58,7 +58,7 @@ window.addLocation = function (area_id, location_id, area_index) {
                 `;
             } else {
                 row += `
-                <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`'>
+                <tr id='area_`+area_id+`_location_`+new_location_index+`_row_`+new_index+`'>
                     `+ rows +`
                 </tr>
                 `;
@@ -140,7 +140,6 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
 // todo: Select method and high-light
 const CLASS_DELETE = "delete";
-var count_method_delete = 0;
 window.selectMethodToDelete = function(ele, area_id, location_id, index) {
     /**
      * Steps:

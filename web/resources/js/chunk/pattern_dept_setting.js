@@ -3,6 +3,7 @@
 var selected_5s = [];
 var params = {};
 var select_location_to_delete = [];
+var count_method_delete = 0;
 var department_id = null;
 var loginCompid = null;
 // Onchange 5S methods 改善ポイントの選択
