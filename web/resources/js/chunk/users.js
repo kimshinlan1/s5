@@ -69,7 +69,13 @@ window.getUserTableList = function (params) {
         return '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
             '<button type="button" class="btn btn-danger btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog">削除</button>';
     }
+}
 
+/** ------------------
+ *    customCell
+ --------------------- */
+ window.customCell = function (_value, row, _index) {
+    return '<a id="alinkId'+_index+'" href="#" data-toggle="popover" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
 }
 
 /** ------------------
@@ -147,13 +153,12 @@ window.getUserTableList = function (params) {
         // hide loading
         hideLoading();
     });
- }
+}
 
 /* ==============================
 	jQuery
 ============================== */
 $(function(){
-
     $('#userTable').bootstrapTable({
         ajax: "getUserTableList",
         pagination: "true",
@@ -163,6 +168,23 @@ $(function(){
         escape:"true",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $('#userTable'))
+            $('#userTable > tbody > tr').each(function(index, tr) {
+                let depts = data.rows[index]['company']['departments'];
+                let style = depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
+                let html = '<div id="popover-content" style="' + style + '"><ul class="list-group custom-popover">';
+                depts.forEach(element => {
+                    html += '<li class="list-group-item">' + element.name + '</li>';
+                });
+                html += '</ul></div>'
+                $('#alinkId' + index).popover({
+                    html: true,
+                    sanitize: false,
+                    placement: 'bottom',
+                    title : $('#commonDepartment').val(),
+                    trigger: 'click',
+                    content: html,
+                });
+            });
         },
     });
 
@@ -231,7 +253,7 @@ $(function(){
         $('#userEditDialog .modal-title.add').show();
         $('#userEditDialog .modal-title.edit').hide();
 
-        $('#departmentId').val($("#departmentId option:first").val());   
+        $('#departmentId').val($("#departmentId option:first").val());
     });
 
     /** ------------------
@@ -310,5 +332,6 @@ $(function(){
             window.saveData();
         }
     });
+
 });
 

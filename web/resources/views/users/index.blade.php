@@ -30,7 +30,7 @@
             <th data-field="company_id" data-visible="false">CompanyId</th>
             <th data-field="identifier" data-width="270" data-width="310" class="word-wrap">{{ __('User_Login_ID') }}</th>
             <th data-field="name" data-width="270" class="word-wrap">{{ __('User_Name') }}</th>
-            <th data-width="180" data-field="company.name" class="word-wrap">{{ __('Company') }}</th>
+            <th data-width="180" data-field="company.name" class="word-wrap" data-formatter="customCell">{{ __('Company') }}</th>
             <th data-width="180" data-field="updated_at" data-formatter="dateFormatter">{{ __('User_Update_Date') }}</th>
             <th data-width="130" data-formatter="userTableActions"></th>
         </tr>

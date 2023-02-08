@@ -17,6 +17,7 @@ use App\Http\Controllers\PatternDetailController;
 use App\Http\Controllers\PatternTopPageController;
 use App\Http\Controllers\PatternDeptSettingController;
 use App\Http\Controllers\PatternTeamInspectionController;
+use App\Http\Controllers\TopPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,6 +147,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_top_page', [PatternTopPageController::class, 'index']);
 
         Route::get('/pattern_top_page/load', [PatternTopPageController::class, 'generateDataHtml']);
+
+        // Top page
+        Route::resource('/top_page', TopPageController::class)->only(['index', 'store', 'update', 'destroy']);
 
         // Show log
         Route::get('/show_log', [Controller::class, 'showLog']);

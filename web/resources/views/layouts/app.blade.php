@@ -34,9 +34,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
     <link rel="stylesheet" href="{!! url('assets/bootstrap/css/bootstrap-table.min.css') !!}">
+    <link rel="stylesheet" href="{!! url('assets/font-awesome-4.7.0/css/font-awesome.min.css') !!}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @stack('css')
 </head>
