@@ -22,9 +22,6 @@ $locations = [];
     @if (!in_array($row['area_id'], $areas))
     <td rowspan="{{ $row['area_rowspan'] }}" class="area">
         <input type="text" class="form-control" id="area" value="{{ $row['area_name'] }}"/>
-        {{-- <button id="" class="btn btn-sm btn-info form-control btn-add-location"
-        onclick="addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )" >点検箇所を追加
-        </button> --}}
         <a href="javascript:void(0)" onclick="addLocation( '{{ $row['area_id'] }}', '{{ $row['location_id'] }}', {{ $index }} )">点検箇所を追加</a>
     </td>
     <?php $areas[] = $row['area_id'] ?>
@@ -37,7 +34,7 @@ $locations = [];
     {{-- Locations --}}
     @if (!in_array($locaitonIdToCheck, $locations))
     <td rowspan="{{ $row['location_rowspan'] }}" onclick="selectLocationToDelete(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')" class="location">
-        <input type="text" class="form-control" id="location" value="{{ $row['location_name'] }}"/>
+        <input type="text" class="form-control" id="location" value="{{ $row['location_name'] }}" onchange="updateLocationName(this, '{{ $row['area_id'] }}', '{{ $row['location_id'] }}')"/>
     </td>
     <?php $locations[] = $locaitonIdToCheck ?>
 
@@ -54,6 +51,10 @@ $locations = [];
 
         <input type="hidden" id="hidAreaRowspan" value="{{ $row['area_rowspan'] }}"/>
         <input type="hidden" id="hidLocationRowspan" value="{{ $row['location_rowspan'] }}"/>
+
+        {{-- <input type="hidden" id="hidAreaId" value="{{ $row['area_id'] }}"/> --}}
+        <input type="hidden" id="hidAreaName" value="{{ $row['area_name'] }}"/>
+        <input type="hidden" id="hidLocationName" value="{{ $row['location_name'] }}"/>
     </td>
 
     {{-- Levels --}}

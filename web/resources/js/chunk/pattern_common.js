@@ -22,22 +22,24 @@ window.addLocation = function (area_id, location_id, area_index) {
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
         let count_current_location = tr.find("#hidCountLocation").val();
         let current_total_rows = $("[id*=area_"+area_id+"]").length;
-        let new_location_index = $.now();
+        let new_location_index = 'new'+$.now();
         let new_count_current_location = parseInt(count_current_location) + 1;
         let new_total_rows = selected_5s.length + current_total_rows;
 
         // Set new row info from 5S 改善ポイントの選択
         let row = ``;
         for(let i=0; i < selected_5s.length; i++) {
-            let new_index = parseInt(current_total_rows) + i;
-            let rows = `
-                <td>
+            let new_index = 'new_' + parseInt(current_total_rows) + i;
+            let td = `
+                <td class="td_point" onclick="selectMethodToDelete(this, '`+area_id+`', '`+new_location_index+`', '`+new_index+`')">
                     `+ name_5s[selected_5s[i]] +`
                     <input type="hidden" id="hid5S" value="`+ selected_5s[i] +`"/>
                     <input type="hidden" id="hidCountLocation" value="`+new_count_current_location+`"/>
                     <input type="hidden" id="hidCountLocationDelete" value="count_location_delete"/>
                     <input type="hidden" id="hidAreaRowspan" value="`+new_total_rows+`"/>
                     <input type="hidden" id="hidLocationRowspan" value="`+selected_5s.length+`"/>
+                    <input type="hidden" id="hidAreaName" value=""/>
+                    <input type="hidden" id="hidLocationName" value=""/>
                 </td>
                 <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_1' rows='1'></textarea></td>
                 <td><textarea style="resize: none; overflow: hidden; max-height: 100px;" class='form-control' id='level_2' rows='1'></textarea></td>
@@ -48,18 +50,18 @@ window.addLocation = function (area_id, location_id, area_index) {
             if (i == 0) {
                 // row: main location
                 row += `
-                <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`' class='main_location'>
-                    <td rowspan='`+selected_5s.length+`' onclick="selectLocationToDelete(this, '`+area_id+`', 'new`+new_location_index+`')">
+                <tr id='area_`+area_id+`_location_`+new_location_index+`_row_`+new_index+`' class='main_location'>
+                    <td rowspan='`+selected_5s.length+`' onclick="selectLocationToDelete(this, '`+area_id+`', '`+new_location_index+`')" class="location">
                         <input type='text' class='form-control' id='location' value=''/>
                         <input type="hidden" id="hidLocationId" value=''/>
                     </td>
-                    `+ rows +`
+                    `+ td +`
                 </tr>
                 `;
             } else {
                 row += `
-                <tr id='area_`+area_id+`_location_new`+new_location_index+`_row_new_`+new_index+`'>
-                    `+ rows +`
+                <tr id='area_`+area_id+`_location_`+new_location_index+`_row_`+new_index+`'>
+                    `+ td +`
                 </tr>
                 `;
             }
@@ -89,6 +91,16 @@ window.addLocation = function (area_id, location_id, area_index) {
     }, 10);
 }
 
+// Update location name
+window.updateLocationName = function(ele, area_id, location_id) {
+    let id = "area_"+area_id+"_location_"+location_id;
+    $("[id*="+id+"]").each(function() {
+        if ($(this).attr('id').includes(id)) {
+            $(this).find('#hidLocationName').val($(ele).val());
+        }
+    });
+}
+
 // Select location and high-light
 window.selectLocationToDelete = function(ele, area_id, location_id) {
 
@@ -109,6 +121,7 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
         $("[id*=area_"+area_id+"]").each(function() {
             $(this).find("#hidCountLocationDelete").val(new_count);
 
+            // Check rows in selected location
             if ($(this).attr('id').includes(id)) {
                 // Remove existed item
                 select_location_to_delete = removeExistId(select_location_to_delete, $(this).attr('id'));
@@ -124,6 +137,8 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
         // Loop all rows in area
         $("[id*=area_"+area_id+"]").each(function() {
             $(this).find("#hidCountLocationDelete").val(new_count);
+
+            // Check rows in selected location
             if ($(this).attr('id').includes(id)) {
                 // Add item
                 select_location_to_delete.push($(this).attr('id'));
@@ -140,7 +155,6 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
 // todo: Select method and high-light
 const CLASS_DELETE = "delete";
-var count_method_delete = 0;
 window.selectMethodToDelete = function(ele, area_id, location_id, index) {
     /**
      * Steps:
@@ -151,22 +165,24 @@ window.selectMethodToDelete = function(ele, area_id, location_id, index) {
      *
      */
 
-
     let id = "area_"+area_id+"_location_"+location_id;
     let row_id = "area_"+area_id+"_location_"+location_id+"_row_"+index;
 
     // Loop all rows in area
     $("[id*=area_"+area_id+"]").each(function() {
 
+        // Check rows in selected location
         if ($(this).attr('id').includes(id)) {
             // Remove existed item
-            select_location_to_delete = removeExistId(select_location_to_delete, $(this).attr('id'));
+            if (checkExistId(select_location_to_delete, id) === true) {
+                select_location_to_delete = removeExistId(select_location_to_delete, $(this).attr('id'));
+            }
 
             // Reset high-light
             $(this).find('td').css('background-color', 'white');
 
-            // if: selected
-            // else: unselected
+            // if: Check selected items
+            // else: Check unselected items
             if ($(this).attr('id') === row_id) {
 
                 // if: Selected => Unselected
@@ -174,37 +190,29 @@ window.selectMethodToDelete = function(ele, area_id, location_id, index) {
                 if ($(this).find('.td_point').hasClass(CLASS_DELETE)) {
                     $(this).find('td').css('background-color', 'white');
                     $(this).find('.td_point').removeClass(CLASS_DELETE);
-
-                    // Increase all rowspan of location
-                    $("[id*="+id+"]").each(function(i, r) {
-                        let hidLocationRowspan = parseInt($(r).find('#hidLocationRowspan').val());
-                        $(r).find('#hidLocationRowspan').val(hidLocationRowspan + 1);
-                    });
-
                     count_method_delete--;
-
-
                 } else {
-                    $(this).find('td').not('.area').css('background-color', 'red');
+                    $(this).find('td').not('.area').not('.location').css('background-color', highlight);
                     $(this).find('.td_point').addClass(CLASS_DELETE);
-
-                    // Decrease all rowspan of location
-                    $("[id*="+id+"]").each(function(i, r) {
-                        let hidLocationRowspan = parseInt($(r).find('#hidLocationRowspan').val());
-                        $(r).find('#hidLocationRowspan').val(hidLocationRowspan - 1);
-                    });
-
                     count_method_delete++;
                 }
             } else {
                 if ($(this).find('.td_point').hasClass(CLASS_DELETE)) {
-                    $(this).find('td').not('.area').css('background-color', 'red');
+                    // Keep selected
+                    $(this).find('td').not('.area').not('.location').css('background-color', highlight);
                 } else {
+                    // Reset
                     $(this).find('td').css('background-color', 'white');
-                    $(this).find('.td_point').removeClass(CLASS_DELETE);
                 }
             }
         }
+    });
+
+    // Update rowspan (current - selected)
+    let delete_rows = $('[id*='+id+']').find("."+CLASS_DELETE).length;
+    let current_rows = $('[id*='+id+']').find('.td_point').length;
+    $("[id*="+id+"]").each(function(i, r) {
+        $(r).find('#hidLocationRowspan').val(current_rows - delete_rows);
     });
 
 }
@@ -218,7 +226,7 @@ window.getValidRows = function() {
 
         // Loop all locations and get rows will be deleted
         let trid = $(this).attr("id").split('_location_')[0];
-        let area_name = $(this).find("#area").val();
+        let area_name = $(this).find("#area").val() ? $(this).find("#area").val() : $(this).find("#hidAreaName").val();
         let delete_rows = 0;
         $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
             // if: selected to delete
@@ -247,11 +255,13 @@ window.getValidRows = function() {
                         let id = $(e).attr("id").split("_");
                         let area_id = id[1];
                         let location_id = id[3];
+                        let location_name = $(e).find("#location").val() ? $(e).find("#location").val() : $(e).find("#hidLocationName").val();
+
                         let row = {};
                         row["area_id"] = area_id ? area_id : "";
                         row["area_name"] = area_name;
                         row["location_id"] = location_id ? location_id : "";
-                        row["location_name"] = $(e).find("#location").val() ? $(e).find("#location").val() : "";
+                        row["location_name"] = location_name;
                         row["5s"] = $(e).find("#hid5S").val() ? $(e).find("#hid5S").val() : "";
                         row["level_1"] = $(e).find("#level_1").val() ? $(e).find("#level_1").val() : "";
                         row["level_2"] = $(e).find("#level_2").val() ? $(e).find("#level_2").val() : "";
@@ -272,13 +282,20 @@ window.getValidRows = function() {
 }
 
 // Remove Location and re generate html (not save)
-window.removeLocation = function() {
+window.checkNoSelected = function() {
     if (select_location_to_delete.length == 0 && count_method_delete == 0) {
         //Show warning no item to delete
         $("#confirmDialog2").modal("show");
         $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
         return;
+    } else {
+        $("#modalDelectLocation").modal('show');
     }
+}
+
+// Remove Location and re generate html (not save)
+window.removeLocation = function() {
+    checkNoSelected();
 
     let params = {
         remove: 1, // case remove
@@ -293,6 +310,7 @@ window.removeLocation = function() {
         $("#table-content tbody").html("");
         $("#table-content tbody").append(data);
         select_location_to_delete = [];
+        count_method_delete = 0;
     };
 
     runAjax(url, method, params, doneCallback);
