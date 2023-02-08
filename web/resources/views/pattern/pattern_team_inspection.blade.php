@@ -24,30 +24,86 @@
         overflow-x: unset;
     }
 </style>
-
+<div class="d-flex justify-content-between">
     <div class="h-title">{{ __('TeamInspection_Input') }}</div>
 
-    <div class="d-flex justify-content-start mb-4" style="width: 55%;">
-        {{-- Department List --}}
-        {{-- Add selectbox --}}
-        <div class="mt-1 fs-5" style="padding-right: 50px;">{{ __('Department') }}</div>
-        <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Department select" id="selectDeptList" >
-        </select>
+    <!-- My Toast -->
+    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ __('Message_Save_Success') }}
+            </div>
+        </div>
     </div>
-
-    <div class="d-flex justify-content-start mb-4" style="width: 55%;">
-        {{-- Team List / Team Name --}}
-        {{-- Add selectbox --}}
-        <div class="mt-1 fs-5" style="padding-right: 15px;">{{ __('Team_Management') }}</div>
-        <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
-        </select>
+    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast2">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ __('Message_Delete_Success') }}
+            </div>
+        </div>
     </div>
+</div>
+<div class="d-flex justify-content-start mb-4" style="width: 55%;">
+    {{-- Department List --}}
+    {{-- Add selectbox --}}
+    <div class="mt-1 fs-5" style="padding-right: 50px;">{{ __('Department') }}</div>
+    <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Department select" id="selectDeptList" >
+    </select>
+</div>
 
-    <div id="content"></div>
-    <br>
+<div class="d-flex justify-content-start mb-4" style="width: 55%;">
+    {{-- Team List / Team Name --}}
+    {{-- Add selectbox --}}
+    <div class="mt-1 fs-5" style="padding-right: 15px;">{{ __('Team_Management') }}</div>
+    <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
+    </select>
+</div>
 
-    <button type="button" class="btn btn-success" id="btnSave">{{ __('Common_button_save') }}</button>
-    <button type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
+<div id="content"></div>
+<br>
 
-    @include('pattern.partials.evidence_dialog')
+<button type="button" class="btn btn-success" id="btnSave">{{ __('Common_button_save') }}</button>
+<button type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
+
+<!-- Modal confirm save data -->
+<div class="modal fade" id="modalSaveInspectionData" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+            </div>
+            <div class="modal-body">
+                <div><span style="font-size: 0.9rem;">{{ __('Confirm_Message_Save_Data') }}</span></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="saveInspectionData()"
+                    class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelSaveInspectionData()">
+                    {{ __('Common_button_cancel') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal confirm remove column -->
+<div class="modal fade" id="modalRemoveColumn" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+            </div>
+            <div class="modal-body">
+                <div><span style="font-size: 0.9rem;">{{ __('Confirm_Delete') }}</span></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="acceptRemoveColumn()"
+                    class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelRemoveColumn()">
+                    {{ __('Common_button_cancel') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@include('pattern.partials.evidence_dialog')
 @endsection

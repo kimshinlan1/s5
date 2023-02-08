@@ -5,6 +5,7 @@ const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
 var RenderRadarChart = [];
 var RenderBarChart = [];
+var inspectionIdBtnRemove = [];
 
 //*********************************************************************************//
 //**********************//---DOCUMENT---FUNCTION---START---//**********************//
@@ -72,15 +73,20 @@ function loadInspectionData(data, mode = '') {
  * Remove column
  ***************/
 function removeColumn(inspection_id) {
+    $("#modalRemoveColumn").modal('show');
+    inspectionIdBtnRemove = inspection_id;
+}
+
+/**********************
+ * Accept remove column
+ **********************/
+function acceptRemoveColumn() {
+    $("#modalRemoveColumn").modal('hide');
     let param = {
         department_id: $('#selectDeptList').val(),
         team_id: $('#selectTeamList').val(),
-    }
-
-    // todo: confirm ??
-    if (!confirm("Do you want to delete?")) {
-        return;
-    }
+    };
+    let inspection_id = inspectionIdBtnRemove;
 
     showLoading();
 
@@ -95,58 +101,74 @@ function removeColumn(inspection_id) {
     let method = "DELETE";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
+        showToast($('#toast2'), 2000, true);
         loadInspectionData(param);
     };
 
     let failCallback = function (jqXHR, _textStatus, _jqXHR) {
-        // todo:
-        alert(CONFIG.get('SYSTEM_ERROR'));
+        $('#errorDialog').modal('show');
+        $('#errorDialog .error-messages').text($('#messageSystemError').val());
     };
 
     runAjax(url, method, params, doneCallback, failCallback);
+}
+
+/**********************
+ * Cancel remove column
+ **********************/
+function cancelRemoveColumn() {
+    $("#modalRemoveColumn").modal('hide');
 }
 
 /***********
  * Save data
  ***********/
 function saveInspectionData() {
-    // todo: validate + get data
+    $("#modalSaveInspectionData").modal('hide');
+    // Validate + get data
     let params = validateAndGetData();
 
-    // todo: Check empty
+    // Check empty
     if (!params || params.length <= 0) {
-        alert("no data");
+        $('#errorDialog').modal('show');
+        $('#errorDialog .error-messages').text($('#messageNoSelectedData').val());
         return;
     }
 
-    // todo: save
+    // Save
     showLoading();
 
     let url = "/pattern_team_inspection/save";
     let method = "POST";
-
+    let param = {
+        department_id: $('#selectDeptList').val(),
+        team_id: $('#selectTeamList').val(),
+    }
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        // todo:
-        alert("save ok");
-        location.reload();
+        showToast($('#toast1'), 2000, true);
+        // Load data
+        loadInspectionData(param);
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        // todo:
-        console.log(jqXHR);
-        alert("err");
+        $('#errorDialog').modal('show');
+        $('#errorDialog .error-messages').text($('#messageSystemError').val());
     };
 
     runAjax(url, method, params, doneCallback, failCallback);
+}
+
+/**
+ * Button cancel save data
+ */
+function cancelSaveInspectionData() {
+    $("#modalSaveInspectionData").modal('hide');
 }
 
 /*****************************
  * Check validate and get data
  *****************************/
 function validateAndGetData() {
-    // todo: validate
-
-
     // Get valid details
     let params = [];
 
@@ -548,7 +570,8 @@ $(function () {
 
     // Save click
     $("#btnSave").click(function () {
-        saveInspectionData();
+        $("#modalSaveInspectionData").modal("show");
+        // saveInspectionData();
     });
 
     // Add column click

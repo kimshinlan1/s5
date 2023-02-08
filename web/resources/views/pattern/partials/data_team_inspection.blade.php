@@ -8,7 +8,6 @@
     $areas = [];
     $locations = [];
     $pointValues = Constant::POINT_VALUE_5S;
-
 ?>
 
 <div style="width: 100%; height: auto; overflow: auto; ">
@@ -89,7 +88,7 @@
             <td style="width: 50px">1S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <label id="point_avg_1s_{{ $inspectionId }}">Point avg</label>
+                <label id="point_avg_1s_{{ $inspectionId }}">0</label>
             </td>
             @endforeach
         </tr>
@@ -98,7 +97,7 @@
             <td>2S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <label id="point_avg_2s_{{ $inspectionId }}">Point avg</label>
+                <label id="point_avg_2s_{{ $inspectionId }}">0</label>
             </td>
             @endforeach
         </tr>
@@ -107,7 +106,7 @@
             <td>3S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <label id="point_avg_3s_{{ $inspectionId }}">Point avg</label>
+                <label id="point_avg_3s_{{ $inspectionId }}">0</label>
             </td>
             @endforeach
         </tr>
@@ -116,7 +115,7 @@
             <td>4S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <label id="point_avg_4s_{{ $inspectionId }}">Point avg</label>
+                <label id="point_avg_4s_{{ $inspectionId }}">0</label>
             </td>
             @endforeach
         </tr>
@@ -125,7 +124,7 @@
             <td>5S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
-                <label id="point_avg_5s_{{ $inspectionId }}">Point avg</label>
+                <label id="point_avg_5s_{{ $inspectionId }}">0</label>
             </td>
             @endforeach
         </tr>
@@ -199,32 +198,7 @@
                 {{-- Point --}}
                 <td id="level_tooltip" style="">
                     {{ Constant::NAME_5S[$row['5s']] }}
-
-                    {{-- Tooltip --}}
-                    <div id="level" class="" style="display: none; width: 300px">
-                        <div>
-                            <span>最悪(ﾚﾍﾞﾙ1): </span>
-                            <span>{{ $row['level_1'] }}</span>
-                        </div>
-                        <div>
-                            <span>悪い(ﾚﾍﾞﾙ2): </span>
-                            <span>{{ $row['level_2'] }}</span>
-                        </div>
-                        <div>
-                            <span>普通(ﾚﾍﾞﾙ3): </span>
-                            <span>{{ $row['level_3'] }}</span>
-                        </div>
-                        <div>
-                            <span>良い(ﾚﾍﾞﾙ4): </span>
-                            <span>{{ $row['level_4'] }}</span>
-                        </div>
-                        <div>
-                            <span>大変良い(ﾚﾍﾞﾙ5): </span>
-                            <span>{{ $row['level_5'] }}</span>
-                        </div>
-                    </div>
                 </td>
-
                 {{-- Point Value --}}
                 @foreach ($inspectionIds as $inspectionId)
                 <td>
@@ -235,7 +209,19 @@
                                         && $inspectionData[$inspectionId][$index] == $value)
                                         ? 'selected' : '';
                         ?>
-                        <option value="{{ $value }}" {{ $selected }} >{{ $value }}</option>
+                        <option value="{{ $value }}" {{ $selected }} >
+                            <? if ($value == 1): ?>
+                            {{ $value }}: {{ $row['level_1'] }}
+                            <? elseif ($value == 2): ?>
+                            {{ $value }}: {{ $row['level_2'] }}
+                            <? elseif ($value == 3): ?>
+                            {{ $value }}: {{ $row['level_3'] }}
+                            <? elseif ($value == 4): ?>
+                            {{ $value }}: {{ $row['level_4'] }}
+                            <? else: ?>
+                            {{ $value }}: {{ $row['level_5'] }}
+                            <? endif; ?>
+                        </option>
                         @endforeach
                     </select>
                 </td>
@@ -243,7 +229,6 @@
 
             </tr>
         @endforeach
-
 
     </table>
   </form>

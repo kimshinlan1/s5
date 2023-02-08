@@ -63,7 +63,7 @@ class Constant
         's4'  => '清潔',
         's5'  => '躾'
     ];
-    public const POINT_VALUE_5S = [0,1,2,3,4,5];
+    public const POINT_VALUE_5S = [1,2,3,4,5];
     public const INSPECTION_DEFAULT_COLUMN_NUMBER = 5;
     public const PAGE_PATTERN_LIST_CUSTOMER = 1;
     public const MODE_5S = [
