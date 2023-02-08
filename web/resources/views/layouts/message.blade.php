@@ -25,3 +25,4 @@
 <input type="hidden" id="placeHolderPoint" name="placeHolderPoint" value="{{ __('Pattern_Detail_Num_Point') }}"/>
 <input type="hidden" id="kaizenbaseID" name="kaizenbaseID" value="{{Constant::KAIZEN_BASE_COMPANY_ID}}"/>
 <input type="hidden" id="radarLabel" name="radarLabel" value="{{ __('TopPage_Radar_Label') }}"/>
+<input type="hidden" id="commonDepartment" name="commonDepartment" value="{{ __('Department') }}"/>

@@ -1,6 +1,7 @@
 <div class="sidebar" style="display: none;">
     <div class="list-group list-group-flush">
         <!-- Management -->
+        @if(auth()->user()->isAdmin())
         <a id="managementMenuId" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('Manage') }}</span>
@@ -8,19 +9,18 @@
             </div>
         </a>
         <div id='subManagementMenuId' class="collapse sidebar-submenu">
-        @if(auth()->user()->isAdmin())
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='users')active @endif" href="/users">{{ __('User_Management') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='company')active @endif" href="/company">{{ __('Company_Management') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Management') }}</a>
             <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
             <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
-        @endif
         </div>
+        @endif
 
         <!-- Study Plan -->
         <a id="studyPlanMenuId" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between align-items-center">
-                <span class="menu-collapsed">{{ __('Study_Plan_Management') }}</span>
+                <span class="menu-collapsed">{{ __('TopPage_Study_Plan_Management') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon2"></i>
             </div>
         </a>
@@ -36,7 +36,7 @@
         <!-- Skill Map -->
         <a id="skillMapMenuId" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between align-items-center">
-                <span class="menu-collapsed">{{ __('SkillMap') }}</span>
+                <span class="menu-collapsed">{{ __('SkillMapMenu') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon3"></i>
 
             </div>

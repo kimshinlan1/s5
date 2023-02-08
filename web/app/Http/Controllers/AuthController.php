@@ -60,9 +60,9 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
             if ($user->isUser()) {
-                return redirect()->intended("/skillmaps_list");
+                return redirect()->intended("/top_page");
             } else {
-                return redirect()->intended("/users");
+                return redirect()->intended("/top_page");
             }
         }
 

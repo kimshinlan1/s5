@@ -98,6 +98,7 @@
 
     "=====  BLOCK_SKILLMAP_START =====": "",
     "SkillMap": "マルチスキルマップ",
+    "SkillMapMenu": "スキルマップ",
     "SkillMap_NoData": "データなし",
     "Skillmap_Add_Category": "分類を追加する",
     "SkillMap_Add_Line": "追加",
@@ -266,7 +267,10 @@
 
 
     "=====  BLOCK_USER_START =====": "",
-    "Study_Plan_Management": "学習計画",
+    "TopPage_Common_Management": "管理画面(KBのみ)",
+    "TopPage_Study_Plan_Management": "学習計画",
+    "TopPage_Skill_Map": "スキルマップ",
+    "TopPage_5S_System": "5Sシステム",
     "=====  BLOCK_USER_END =====": ""
 
 }

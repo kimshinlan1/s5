@@ -75,7 +75,7 @@ window.getUserTableList = function (params) {
  *    customCell
  --------------------- */
  window.customCell = function (_value, row, _index) {
-    return '<a id="alinkId'+_index+'" href="#" data-toggle="popover" data-placement="bottom" title="Department" data-container="body" data-content="aaaa" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
+    return '<a id="alinkId'+_index+'" href="#" data-toggle="popover" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
 }
 
 /** ------------------
@@ -194,6 +194,7 @@ $(function(){
                     html: true,
                     sanitize: false,
                     placement: 'bottom',
+                    title : $('#commonDepartment').val(),
                     trigger: 'click',
                     content: html,
                 });

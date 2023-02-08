@@ -10,17 +10,19 @@
 
 @section('content')
 <div class="row">
+    @if(auth()->user()->isAdmin())
     <div class="col-sm">
-        <a class="list-group-item list-group-item-action style-list @if(request()->path()==='users')active @endif" href="/users">{{ __('User_Management') }}</a>
+        <a class="list-group-item list-group-item-action style-list @if(request()->path()==='users')active @endif" href="/users">{{ __('TopPage_Common_Management') }}</a>
+    </div>
+    @endif
+    <div class="col-sm">
+        <a class="list-group-item list-group-item-action style-list @if(request()->path()==='study_plan')active @endif" href="/study_plan">{{ __('TopPage_Study_Plan_Management') }}</a>
     </div>
     <div class="col-sm">
-        <a class="list-group-item list-group-item-action style-list @if(request()->path()==='study_plan')active @endif" href="/study_plan">{{ __('Study_Plan_Management') }}</a>
+        <a class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('TopPage_Skill_Map') }}</a>
     </div>
     <div class="col-sm">
-        <a class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
-    </div>
-    <div class="col-sm">
-        <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">{{ __('Pattern_Top_Page') }}</a>
+        <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">{{ __('TopPage_5S_System') }}</a>
     </div>
   </div>
 @endsection
