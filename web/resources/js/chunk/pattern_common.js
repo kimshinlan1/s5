@@ -282,13 +282,20 @@ window.getValidRows = function() {
 }
 
 // Remove Location and re generate html (not save)
-window.removeLocation = function() {
+window.checkNoSelected = function() {
     if (select_location_to_delete.length == 0 && count_method_delete == 0) {
         //Show warning no item to delete
         $("#confirmDialog2").modal("show");
         $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
         return;
+    } else {
+        $("#modalDelectLocation").modal('show');
     }
+}
+
+// Remove Location and re generate html (not save)
+window.removeLocation = function() {
+    checkNoSelected();
 
     let params = {
         remove: 1, // case remove
