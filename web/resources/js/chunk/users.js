@@ -170,9 +170,8 @@ $(function(){
             reloadBoostrapTable(data, $('#userTable'))
             $('#userTable > tbody > tr').each(function(index, tr) {
                 let depts = data.rows[index]['company']['departments'];
-                let style = '';
-                style += depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
-                let html = '<div id="popover-content" style="' + style +'"><ul class="list-group custom-popover">';
+                let style = depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
+                let html = '<div id="popover-content" style="' + style + '"><ul class="list-group custom-popover">';
                 depts.forEach(element => {
                     html += '<li class="list-group-item">' + element.name + '</li>';
                 });
