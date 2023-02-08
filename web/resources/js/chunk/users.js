@@ -153,19 +153,6 @@ window.getUserTableList = function (params) {
         // hide loading
         hideLoading();
     });
- }
-
-/** ------------------
- *    rowAttributes
- --------------------- */
-function rowAttributes(row, index) {
-    return {
-      'data-toggle': 'tooltip',
-      'data-placement': 'bottom',
-      'data-trigger': 'hover',
-      'data-container': 'hover',
-      'data-content': 'aaaa',
-    }
 }
 
 /* ==============================
