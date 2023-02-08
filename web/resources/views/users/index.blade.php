@@ -38,12 +38,6 @@
 </table>
 <br />
 
-<!-- loaded popover content -->
-<div id="popover-content" style="display: none">
-    <ul class="list-group custom-popover">
-    </ul>
-</div>
-
 {{-- Add/Edit Dialog --}}
 <button type="button" class="btn btn-primary" id="btnAdd">
     {{ __('Common_button_add') }}

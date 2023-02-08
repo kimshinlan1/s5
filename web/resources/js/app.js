@@ -522,3 +522,28 @@ window.removeExistId = function(arr, id) {
     arr.splice( $.inArray(id,arr) , 1 );
     return arr;
 }
+
+/* ==============================
+jQuery
+============================== */
+$(function(){
+    /** ------------------
+     *    Handle toggle/collapse on sidebar
+     --------------------- */
+    $('#managementMenuId').click(function() {
+        $('#subManagementMenuId').toggleClass("collapse");
+        $('#icon1').toggleClass("fa-caret-right fa-caret-down");
+    })
+    $('#studyPlanMenuId').click(function() {
+        $('#subStudyPlanMenuId').toggleClass("collapse");
+        $('#icon2').toggleClass("fa-caret-right fa-caret-down");
+    })
+    $('#skillMapMenuId').click(function() {
+        $('#subSkillMapMenuId').toggleClass("collapse");
+        $('#icon3').toggleClass("fa-caret-right fa-caret-down");
+    })
+    $('#menu5sId').click(function() {
+        $('#submenu5sId').toggleClass("collapse");
+        $('#icon4').toggleClass("fa-caret-right fa-caret-down");
+    })
+});

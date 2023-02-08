@@ -75,7 +75,7 @@ window.getUserTableList = function (params) {
  *    customCell
  --------------------- */
  window.customCell = function (_value, row, _index) {
-    return '<a href="#" data-toggle="popover" data-placement="bottom" data-placement="" data-content="Content" title="Department" data-content="Some content inside the popover" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
+    return '<a id="alinkId'+_index+'" href="#" data-toggle="popover" data-placement="bottom" title="Department" data-container="body" data-content="aaaa" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
 }
 
 /** ------------------
@@ -172,7 +172,6 @@ function rowAttributes(row, index) {
 	jQuery
 ============================== */
 $(function(){
-
     $('#userTable').bootstrapTable({
         ajax: "getUserTableList",
         pagination: "true",
@@ -180,9 +179,25 @@ $(function(){
         sidePagination: "server",
         uniqueId:"id",
         escape:"true",
-        detailView:"true",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $('#userTable'))
+            $('#userTable > tbody > tr').each(function(index, tr) {
+                let depts = data.rows[index]['company']['departments'];
+                let style = '';
+                style += depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
+                let html = '<div id="popover-content" style="' + style +'"><ul class="list-group custom-popover">';
+                depts.forEach(element => {
+                    html += '<li class="list-group-item">' + element.name + '</li>';
+                });
+                html += '</ul></div>'
+                $('#alinkId' + index).popover({
+                    html: true,
+                    sanitize: false,
+                    placement: 'bottom',
+                    trigger: 'click',
+                    content: html,
+                });
+            });
         },
     });
 
@@ -331,17 +346,5 @@ $(function(){
         }
     });
 
-    $('#userTable').on("click-cell.bs.table", function (field, value, row, $element) {
-        $element['company']['departments'].forEach(element => {
-            let html = '<li class="list-group-item">' + element.name + '</li>';
-            $('#popover-content ul').append(html);
-        });
-        $('[data-toggle="popover"]').popover({
-            html: true,
-            content: function() {
-                return $('#popover-content').html();
-            }
-        });
-    });
 });
 
