@@ -272,6 +272,7 @@ function renderView(compId) {
  * Document Ready
  */
 $(function () {
+    $('#submenu5sId').collapse('show');
     // Company Onchange Event
     $('#companyOptionId').change(function() {
       let compId = $('#companyOptionId').find(':selected').val();
