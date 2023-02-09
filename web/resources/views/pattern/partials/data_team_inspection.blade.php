@@ -34,23 +34,23 @@
 
         {{-- Radar Chart --}}
         <tr style="border-color: transparent;">
-            <td colspan="3" class="title-chart" style="background-color: #DAEEF3; padding-top: 90px;">
+            <td colspan="3" class="title-chart" style="background-color: #DAEEF3; vertical-align: middle;">
                 {{ __('TeamInspection_Illustration_Here') }}
             </td>
             @foreach ($inspectionIds as $inspectionId)
-            <td>
-                <canvas id="myChart_{{ $inspectionId }}" height= "200px" width= "300px"></canvas>
+            <td style="text-align: -webkit-center;">
+                <canvas id="myChart_{{ $inspectionId }}" height= "150px" width= "150px"></canvas>
             </td>
             @endforeach
         </tr>
 
         {{-- Bar Chart --}}
-        <tr style="height: 215px; border-color: transparent;">
-            <td colspan="3" class="title-chart" style="background-color: #FDE9D9; padding-top: 90px;">
+        <tr style="height: 200px; border-color: transparent;">
+            <td colspan="3" class="title-chart" style="background-color: #FDE9D9; vertical-align: middle;">
                 {{ __('TeamInspection_Illustration_Here') }}
             </td>
             <td style="padding: 0px;" colspan="{{ $countInspection }}">
-                <canvas id="myBarChart"></canvas>
+                <canvas id="myBarChart" height= "200px"></canvas>
             </td>
         </tr>
 
@@ -84,8 +84,8 @@
         {{-- 平均 --}}
         <tr>
             <td rowspan="5" style="width: 20px">平均</td>
-            <td style="width: 50px">整理</td>
-            <td style="width: 50px">1S</td>
+            <td style="width: 30px; text-align: center;">整理</td>
+            <td style="width: 30px">1S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_1s_{{ $inspectionId }}">0</label>
@@ -93,7 +93,7 @@
             @endforeach
         </tr>
         <tr>
-            <td>整頓</td>
+            <td style="text-align: center;">整頓</td>
             <td>2S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
@@ -102,7 +102,7 @@
             @endforeach
         </tr>
         <tr>
-            <td>清掃</td>
+            <td style="text-align: center;">清掃</td>
             <td>3S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
@@ -111,7 +111,7 @@
             @endforeach
         </tr>
         <tr>
-            <td>清潔</td>
+            <td style="text-align: center;">清潔</td>
             <td>4S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
@@ -120,7 +120,7 @@
             @endforeach
         </tr>
         <tr>
-            <td>躾</td>
+            <td style="text-align: center;">躾</td>
             <td>5S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
@@ -132,7 +132,7 @@
         {{-- 点検実施日 --}}
         <tr>
             <td rowspan="2">No</td>
-            <td rowspan="2">点検箇所</td>
+            <td rowspan="2" style="text-align: center;">点検箇所</td>
             <td rowspan="2">ポイント</td>
             @for ($i = 0; $i < $countInspection; $i++)
             <td style="text-align: center;">
@@ -142,7 +142,7 @@
         </tr>
         <tr>
             @foreach ($inspectionIds as $inspectionId)
-            <td style="text-align: center;">
+            <td style="text-align: center; vertical-align: middle;">
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";

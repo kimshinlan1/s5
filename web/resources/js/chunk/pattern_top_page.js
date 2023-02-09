@@ -2,15 +2,6 @@
  * Variable
  */
 const MODE_NEW = 1;
-const labels = [
-    'S1',
-    'S2',
-    'S3',
-    'S4',
-    'S5',
-];
-const DEPT_CHART_COLOR = '#ffa500';
-const TEAM_CHART_COLOR = 'rgb(54, 162, 235)';
 
 //////////////////////////////////////////////////////////////////
 
@@ -33,59 +24,16 @@ function gotoInspectionPage(team_id) {
  * Load radar chart
  */
 function loadRadarChart(id, avgPointArr, isDept) {
-    const data = {
-        labels: labels,
-        datasets: [{
-          label: CONFIG.get("RADAR_CHART_LABEL"),
-          data: avgPointArr,
-          fill: true,
-          backgroundColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
-          borderColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
-          pointBackgroundColor: isDept ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
-        }]
-      };
-      const config = {
-        type: 'radar',
-        data: data,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          elements: {
-            line: {
-              borderWidth: 3
-            },
-          },
-          scales: {
-            r: {
-                angleLines: {
-                    display: false
-                },
-                suggestedMin: 0,
-                suggestedMax: 5,
-                beginAtZero: true,
-                ticks: {
-                    backdropPadding: {
-                        y: 1
-                    },
-                    stepSize: 1
-                },
-            }
-          },
-        },
-      };
-      const ctx = document.getElementById(id);
-
-      new Chart(ctx, config);
+    let config = configRadarChart(avgPointArr, isDept);
+    const ctx = document.getElementById(id);
+    new Chart(ctx, config);
 }
 
 /**
  * Init bar chart
  */
 function loadBarChart(id, mapObj, count) {
-    // todo:
+     // todo:
     // alert("init chart");
     const labels = [];
     for (let index = 0; index < count; index++) {
