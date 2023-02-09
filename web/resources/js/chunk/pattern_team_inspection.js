@@ -401,54 +401,7 @@ function initChart() {
  ********************/
 function createRadarChart(array5s) {
     for (let e of inspIds) {
-        const data = {
-            labels: [
-                'S1',
-                'S2',
-                'S3',
-                'S4',
-                'S5',
-            ],
-            datasets: [{
-                label: '',
-                data: array5s[e],
-                fill: true,
-                backgroundColor: 'rgb(54, 162, 235)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(54, 162, 235)'
-            }]
-        };
-        const config = {
-            type: 'radar',
-            data: data,
-            options: {
-                responsive: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-                scales: {
-                    r: {
-                        angleLines: {
-                            display: false
-                        },
-                        suggestedMin: 0,
-                        suggestedMax: 5,
-                        beginAtZero: true,
-                        ticks: {
-                            backdropPadding: {
-                                y: 1
-                            },
-                            stepSize: 1
-                        },
-                    }
-                },
-            },
-        };
+        let config = configRadarChart(array5s[e], 0);
         const ctx = document.getElementById('myChart_'+ e);
         RenderRadarChart[e] = new Chart(ctx, config);
     }
@@ -458,77 +411,13 @@ function createRadarChart(array5s) {
  * Create bar chart
  ******************/
 function createBarChart(arrayPoint) {
+    let datasets =[arrayPoint['S1'], arrayPoint['S2'], arrayPoint['S3'], arrayPoint['S4'], arrayPoint['S5']]
     const labels = [];
     for (let index = 0; index < inspIds.length; index++) {
       labels.push('');
     }
-    const data = {
-        labels: labels,
-        datasets: [
-            {
-            label: 'S1',
-            data: arrayPoint['S1'],
-            backgroundColor: 'blue',
-            },
-            {
-            label: 'S2',
-            data: arrayPoint['S2'],
-            backgroundColor: 'red',
-            },
-            {
-            label: 'S3',
-            data: arrayPoint['S3'],
-            backgroundColor: 'green',
-            },
-            {
-            label: 'S4',
-            data: arrayPoint['S4'],
-            backgroundColor: 'purple',
-            },
-            {
-            label: 'S5',
-            data: arrayPoint['S5'],
-            backgroundColor: 'yellow',
-            },
-        ]
-    };
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: ''
-                },
-                legend: {
-                    position: "top",
-                    align: "start",
-                    labels: {
-                      boxWidth: 20
-                    }
-                },
-            },
-            responsive: true,
-            scales: {
-                x: {
-                        stacked: true,
-                    },
-                y: {
-                    suggestedMin: 0,
-                    suggestedMax: 25,
-                    beginAtZero: true,
-                    stacked: true,
-                    ticks: {
-                        stepSize: 5
-                    },
-                },
-            },
-            animation: false
-        }
-    };
+    let config = configBarChart(labels, datasets);
     const ctx = document.getElementById('myBarChart');
-    ctx.height = '128px';
     RenderBarChart = new Chart(ctx, config);
 }
 

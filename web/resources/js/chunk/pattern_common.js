@@ -3,6 +3,15 @@
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var highlight = '#ced4da';
 const maxCnt5s = 5;
+const labels = [
+    'S1',
+    'S2',
+    'S3',
+    'S4',
+    'S5',
+];
+const DEPT_CHART_COLOR = '#ffa500';
+const TEAM_CHART_COLOR = 'rgb(54, 162, 235)';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
@@ -604,3 +613,126 @@ $(function () {
         }
     });
 });
+
+/********************
+ * Config radar chart
+ ********************/
+function configRadarChart(datasets, colorChart) {
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: '',
+            data: datasets,
+            fill: true,
+            backgroundColor: colorChart ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
+            borderColor: colorChart ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
+            pointBackgroundColor: colorChart ? DEPT_CHART_COLOR: TEAM_CHART_COLOR,
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(54, 162, 235)'
+        }]
+    };
+    const config = {
+        type: 'radar',
+        data: data,
+        options: {
+            maintainAspectRatio: false,
+            responsive: false,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+            scales: {
+                r: {
+                    angleLines: {
+                        display: false
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 5,
+                    beginAtZero: true,
+                    ticks: {
+                        backdropPadding: {
+                            y: 1
+                        },
+                        stepSize: 1
+                    },
+                }
+            },
+        },
+    };
+    return config;
+}
+
+/******************
+ * Config bar chart
+ ******************/
+function configBarChart(labels, datasets) {
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+            label: 'S1',
+            data: datasets[0],
+            backgroundColor: 'blue',
+            },
+            {
+            label: 'S2',
+            data: datasets[1],
+            backgroundColor: 'red',
+            },
+            {
+            label: 'S3',
+            data: datasets[2],
+            backgroundColor: 'green',
+            },
+            {
+            label: 'S4',
+            data: datasets[3],
+            backgroundColor: 'purple',
+            },
+            {
+            label: 'S5',
+            data: datasets[4],
+            backgroundColor: 'yellow',
+            },
+        ]
+    };
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: ''
+                },
+                legend: {
+                    position: "top",
+                    align: "start",
+                    labels: {
+                      boxWidth: 20
+                    }
+                },
+            },
+            responsive: true,
+            scales: {
+                x: {
+                        stacked: true,
+                    },
+                y: {
+                    suggestedMin: 0,
+                    suggestedMax: 25,
+                    beginAtZero: true,
+                    stacked: true,
+                    ticks: {
+                        stepSize: 5
+                    },
+                },
+            },
+            animation: false
+        }
+    };
+    return config
+}
