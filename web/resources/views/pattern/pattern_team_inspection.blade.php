@@ -93,7 +93,7 @@
                 <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
             </div>
             <div class="modal-body">
-                <div><span style="font-size: 0.9rem;">{{ __('Confirm_Delete') }}</span></div>
+                <div><span style="font-size: 0.9rem;">{{ __('TeamInspection_Confirm_Delete') }}</span></div>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="acceptRemoveColumn()"
