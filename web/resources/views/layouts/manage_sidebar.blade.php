@@ -53,15 +53,15 @@
             </div>
         </a>
         <div id='submenu5sId' class="collapse sidebar-submenu">
-            @if(auth()->user()->isAdmin())
-            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_list')active @endif" href="/pattern_list">{{ __('Pattern_List') }}</a>
-            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'pattern_detail'))active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>
-            @endif
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">{{ __('Pattern_Top_Page') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_team_inspection')active @endif" href="/pattern_team_inspection">{{ __('Pattern_Team_Inspection') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'pattern_dept_setting'))active @endif" href="/pattern_dept_setting">{{ __('Pattern_Dept_Setting') }}</a>
             @if(!auth()->user()->is5SModeFree())
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_list_customer')active @endif" href="/pattern_list_customer">{{ __('Pattern_List_Customer') }}</a>
+            @endif
+            @if(auth()->user()->isAdmin())
+            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_list')active @endif" href="/pattern_list">{{ __('Pattern_List') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'pattern_detail'))active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>
             @endif
         </div>
     </div>
