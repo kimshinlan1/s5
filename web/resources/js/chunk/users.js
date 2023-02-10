@@ -159,6 +159,8 @@ window.getUserTableList = function (params) {
 	jQuery
 ============================== */
 $(function(){
+    $('#subManagementMenuId').collapse('show');
+
     $('#userTable').bootstrapTable({
         ajax: "getUserTableList",
         pagination: "true",

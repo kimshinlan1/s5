@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
 @push('css')
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
+    <link href= "{!! url('assets/jquery/css/jquery-ui.css') !!}" rel="Stylesheet"
         type="text/css"/>
     <link href="{{ mix('/css/pattern_team_inspection.css') }}" rel="stylesheet"/>
 @endpush
-
 @push('scripts')
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="{!! url('assets/jquery/jquery-ui.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
     <script src="{{ mix('/js/pattern_team_inspection.js') }}"></script>
     <script src="{{ mix('/js/pattern_team_inspection_evidence.js') }}"></script>

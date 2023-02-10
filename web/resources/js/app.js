@@ -531,19 +531,103 @@ $(function(){
      *    Handle toggle/collapse on sidebar
      --------------------- */
     $('#managementMenuId').click(function() {
-        $('#subManagementMenuId').toggleClass("collapse");
+        $('#subManagementMenuId').collapse('toggle');
         $('#icon1').toggleClass("fa-caret-right fa-caret-down");
     })
     $('#studyPlanMenuId').click(function() {
-        $('#subStudyPlanMenuId').toggleClass("collapse");
+        $('#subStudyPlanMenuId').collapse('toggle');
         $('#icon2').toggleClass("fa-caret-right fa-caret-down");
     })
     $('#skillMapMenuId').click(function() {
-        $('#subSkillMapMenuId').toggleClass("collapse");
+        $('#subSkillMapMenuId').collapse('toggle');
         $('#icon3').toggleClass("fa-caret-right fa-caret-down");
     })
     $('#menu5sId').click(function() {
-        $('#submenu5sId').toggleClass("collapse");
-        $('#icon4').toggleClass("fa-caret-right fa-caret-down");
+        $('#submenu5sId').collapse('toggle');
+        $('#icon4').toggleClass("fa-cyaret-right fa-caret-down");
     })
+
+    /** ------------------ Menu 1 ------------------ */
+    $('#subManagementMenuId').on("shown.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu1", "show");
+        $('#icon1').addClass("fa-caret-down");
+        $('#icon1').removeClass("fa-caret-right");
+    });
+
+    $('#subManagementMenuId').on("hide.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu1", "hide");
+        $('#icon1').addClass("fa-caret-right");
+        $('#icon1').removeClass("fa-caret-down");
+    });
+
+    const mainMenu1 = sessionStorage.getItem("mainMenu1");
+
+    if (mainMenu1 == "show") {
+        $('#subManagementMenuId').collapse('show');
+    } else {
+        $('#subManagementMenuId').collapse('hide');
+    }
+
+    /** ------------------ Menu 2 ------------------ */
+    $('#subStudyPlanMenuId').on("shown.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu2", "show");
+        $('#icon2').addClass("fa-caret-down");
+        $('#icon2').removeClass("fa-caret-right");
+    });
+
+    $('#subStudyPlanMenuId').on("hide.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu2", "hide");
+        $('#icon2').addClass("fa-caret-right");
+        $('#icon2').removeClass("fa-caret-down");
+    });
+
+    const mainMenu2 = sessionStorage.getItem("mainMenu2");
+
+    if (mainMenu2 == "show") {
+        $('#subStudyPlanMenuId').collapse('show');
+    } else {
+        $('#subStudyPlanMenuId').collapse('hide');
+    }
+
+    /** ------------------ Menu 3 ------------------ */
+    $('#subSkillMapMenuId').on("shown.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu3", "show");
+        $('#icon3').addClass("fa-caret-down");
+        $('#icon3').removeClass("fa-caret-right");
+    });
+
+    $('#subSkillMapMenuId').on("hide.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu3", "hide");
+        $('#icon3').addClass("fa-caret-right");
+        $('#icon3').removeClass("fa-caret-down");
+    });
+
+    const mainMenu3 = sessionStorage.getItem("mainMenu3");
+
+    if (mainMenu3 == "show") {
+        $('#subSkillMapMenuId').collapse('show');
+    } else {
+        $('#subSkillMapMenuId').collapse('hide');
+    }
+
+    /** ------------------ Menu 4 ------------------ */
+    $('#submenu5sId').on("shown.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu4", "show");
+        $('#icon4').addClass("fa-caret-down");
+        $('#icon4').removeClass("fa-caret-right");
+    });
+
+    $('#submenu5sId').on("hide.bs.collapse", function () {
+        sessionStorage.setItem("mainMenu4", "hide");
+        $('#icon4').addClass("fa-caret-down");
+        $('#icon4').removeClass("fa-caret-right");
+    });
+
+    const mainMenu4 = sessionStorage.getItem("mainMenu4");
+
+    if (mainMenu4 == "show") {
+        $('#submenu5sId').collapse('show');
+    } else {
+        $('#submenu5sId').collapse('hide');
+    }
 });
