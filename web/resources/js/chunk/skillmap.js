@@ -792,7 +792,7 @@ function createNewRow(event) {
 /**
  * Event validate myForm
  */
-function validateMyform() {
+function validateMyFormSkillMap() {
     $('#myForm button[type="submit"]').click();
     $("#exampleModalCenter").modal('hide');
 }
@@ -801,7 +801,7 @@ function validateMyform() {
  * Validate my form
  * @param  {} textbox
  */
-function InvalidMsgMyForm(textbox) {
+function InvalidMsgMyFormSkillMap(textbox) {
     if (textbox.value == '') {
         textbox.setCustomValidity(CONFIG.get("SKILL_MAP_REQUIRED"));
     } else if (textbox.validity.patternMismatch) {
@@ -867,7 +867,7 @@ function paintBgSkillMap(_event, type) {
 }
 
 /**
- * Event selected change item department 
+ * Event selected change item department
  */
 function onChangeDataDepartment() {
     let data = {
@@ -924,7 +924,7 @@ function onChangeDataDepartment() {
 }
 
 /**
- * Open celendar 
+ * Open celendar
  */
 function openCalendar(name) {
     $('#' + name).focus();
@@ -1521,7 +1521,7 @@ function compareObject(sObject, pObject) {
  --------------------- */
  function onKeyUp(e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
-        validateMyform();
+        validateMyFormSkillMap();
     }
 }
 
