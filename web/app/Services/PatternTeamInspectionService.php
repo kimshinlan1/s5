@@ -196,20 +196,20 @@ class PatternTeamInspectionService extends BaseService
             // Step: todo: Insert new
             // $inspectionDate = strtotime($data['info']['inspection_date']);
             // $inspectionDateTime = date('Y-m-d h:i:s', $inspectionDate);
-
-            $inspectionId = Inspection::updateOrCreate(
-                [
-                    'id' => $id
-                ],
-                [
-                    'team_id' => $data['info']['team_id'],
-                    'inspection_date' => $data['info']['inspection_date'],
-                ]
-            );
-            $inspectionId = $inspectionId->id;
-
-            // Loop to insert details rows
             foreach ($data['data'] as $locationId => $points) {
+                $inspectionId = Inspection::updateOrCreate(
+                    [
+                        'id' => $id
+                    ],
+                    [
+                        'team_id' => $data['info']['team_id'],
+                        'inspection_date' => $data['info']['inspection_date'],
+                        'avg_point' => $points['s1']."|".$points['s2']."|".$points['s3']."|".$points['s4']."|".$points['s5'],
+                    ]
+                );
+                $inspectionId = $inspectionId->id;
+
+                // Loop to insert details rows
                 foreach ($points as $key => $val) {
                     InspectionDetail::create([
                         'inspection_id' => $inspectionId,

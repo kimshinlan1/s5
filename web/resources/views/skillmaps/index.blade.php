@@ -132,14 +132,14 @@
                             </div>
                             @if (!(auth()->user()->isModeFree()))
                             <div class="form-check" style="padding: 10px; padding-left: 100px;"  id="chartRadioDefault">
-                                <input class="form-check-input-chart" type="radio" name="chartRadioDefault" 
+                                <input class="form-check-input-chart" type="radio" name="chartRadioDefault"
                                     id="chartRadioDefault1" value="A3">
                                 <label class="form-check-label-chart" for="chartRadioDefault1">
                                     A3
                                 </label>
                             </div>
                             <div class="form-check" style="padding-right: 156px;"  id="chartRadioDefault3">
-                                <input class="form-check-input-chart" type="radio" name="chartRadioDefault" 
+                                <input class="form-check-input-chart" type="radio" name="chartRadioDefault"
                                     id="chartRadioDefault2" value="A4" checked>
                                 <label class="form-check-label-chart" for="chartRadioDefault2">
                                     A4
@@ -337,13 +337,13 @@
                         <div class="input-group">
                             <div class="col">
                                 <input type="text" class="form-control" placeholder="分類名" autofocus
-                                    id="category" required="required" oninvalid="InvalidMsgMyForm(this);"
-                                    oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                    id="category" required="required" oninvalid="InvalidMsgMyFormSkillMap(this);"
+                                    oninput="InvalidMsgMyFormSkillMap(this);" onkeyup="onKeyUp(this)"/>
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
                                     id="rowTable" required="required"
-                                    oninvalid="InvalidMsgMyForm(this);" oninput="InvalidMsgMyForm(this);" onkeyup="onKeyUp(this)"/>
+                                    oninvalid="InvalidMsgMyFormSkillMap(this);" oninput="InvalidMsgMyFormSkillMap(this);" onkeyup="onKeyUp(this)"/>
                             </div>
                         </div>
                         <button type="submit" name="submit" style="display: none;" />
@@ -352,7 +352,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="validateMyform()"
+                    <button type="button" onclick="validateMyFormSkillMap()"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
@@ -415,7 +415,7 @@
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                     <button type="button" class="btn btn-secondary" onclick="cancelExport()">
                         {{ __('Common_button_cancel') }}</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -436,7 +436,7 @@
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                     <button type="button" class="btn btn-secondary" onclick="cancelSaveDataChange()">
                         {{ __('Common_button_cancel') }}</button>
-                    
+
                 </div>
             </div>
         </div>

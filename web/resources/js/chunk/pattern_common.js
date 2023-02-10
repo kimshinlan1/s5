@@ -10,8 +10,8 @@ const labels = [
     'S4',
     'S5',
 ];
-const DEPT_CHART_COLOR = '#ffa500';
-const TEAM_CHART_COLOR = 'rgb(54, 162, 235)';
+const DEPT_CHART_COLOR = 'rgb(255,165,0, 0.5)';
+const TEAM_CHART_COLOR = 'rgb(54, 162, 235, 0.5)';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
@@ -638,6 +638,11 @@ function configRadarChart(datasets, colorChart) {
         options: {
             maintainAspectRatio: false,
             responsive: false,
+            elements: {
+                point:{
+                    radius: 0
+                }
+            },
             plugins: {
                 legend: {
                     display: false,
