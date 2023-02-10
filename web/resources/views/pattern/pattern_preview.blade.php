@@ -7,11 +7,8 @@
 @endpush
 
 @push('scripts')
-    <script src="{!! url('assets/jquery/jquery-3.2.1.slim.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery-ui.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
-
     <script type="text/javascript">
         $(function () {
             loadDataPreview('{{ $pageDest }}');

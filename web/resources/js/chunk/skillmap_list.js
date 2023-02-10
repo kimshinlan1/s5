@@ -82,8 +82,6 @@ window.openEdit = function (id, no) {
     jQuery
 ==============================*/
 $(function () {
-    $('#subSkillMapMenuId').collapse('show');
-
     $("#skillmapsTable").bootstrapTable({
         ajax: "getSkillmapsTableList",
         pagination: "true",

@@ -34,7 +34,7 @@ window.queryParams = function (params) {
     params.page = params.offset > 0 ? Math.ceil(params.offset / CONFIG.get('PAGING')) + 1 : 1;
     params.team_id = $('#teamSearchTable').val();
     params.department_id = $('#departmentSearchTable').val();
-    if($('#userMode').val() != CONFIG.get('ROLE_ADMIN_ID')) {
+    if($('#userId').val() != CONFIG.get('ROLE_ADMIN_ID')) {
         params.company_id = $('#userCompanyId').val();
     } else {
         params.company_id = $("#companySearchTable").find(":selected").val();
@@ -126,12 +126,15 @@ window.saveData = function () {
  *  Load department list
  --------------------- */
 
-window.loadDeptListByComp = function(id) {
-    $.ajax({
-        type: 'GET',
-        url: '/departments/list/' + id,
-        success: function (res) {
-            let html = '<option value=""> </option>';
+window.loadDeptListByComp = function(id, deptID = null) {
+    let url = '/departments/list/' + id;
+
+    let method = "GET";
+
+    let params = {};
+
+    let doneCallback = function (res, _textStatus, _jqXHR) {
+        let html = '<option value=""> </option>';
             listDepartment = res;
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
@@ -139,13 +142,18 @@ window.loadDeptListByComp = function(id) {
 
             $('#departmentSearchTable').html(html);
             $('#employeeDepartmentId').html(html);
-            let deptId = $("#departmentSearchTable").find(":selected").val();
+            let deptId = deptID ? deptID : $("#departmentSearchTable").find(":selected").val();
+            if (deptID) {
+                $("#departmentSearchTable").val(deptID);
+            }
             loadTeamListByDept(deptId);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus + ': ' + errorThrown);
-        },
-    });
+    };
+
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+
+    runAjax(url, method, params, doneCallback, failCallback, null, true);
 }
 
 /** ------------------
@@ -157,6 +165,7 @@ window.loadDeptListByComp = function(id) {
     $.ajax({
         type: 'GET',
         url: '/teams/dept_id',
+        async: false,
         data: data,
         success: function (res) {
             let html = '<option value=""> </option>';
@@ -188,7 +197,16 @@ window.loadDeptListByComp = function(id) {
  ==============================*/
  $(function () {
     let compID = $("#userCompanyId").val();
-    loadDeptListByComp(compID);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let deptId = urlParams.get('deptId');
+    let companyId = urlParams.get('companyId');
+    if(companyId) {
+        $('#companySearchTable').val(companyId);
+        loadDeptListByComp(companyId, deptId);
+    } else {
+        loadDeptListByComp(compID);
+    }
 
     $("#employeeTable").bootstrapTable({
         uniqueId: "id",

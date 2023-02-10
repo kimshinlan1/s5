@@ -3,7 +3,7 @@
 @push('css')
     <link href="{!! url('assets/jquery/css/jquery-ui.css') !!}" rel="Stylesheet"
         type="text/css"/>
-    <link href="{{ mix('/css/top_page.css') }}" rel="stylesheet"/>
+    <link href="{{ mix('/css/pattern_top_page.css') }}" rel="stylesheet"/>
 @endpush
 
 @push('scripts')
