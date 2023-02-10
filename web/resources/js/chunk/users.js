@@ -4,6 +4,8 @@
 ****************************************************/
 "use strict";
 
+var totalRowNumber = 0;
+
 /* ==============================
 	Global Functions
 ============================== */
@@ -186,6 +188,8 @@ $(function(){
                     content: html,
                 });
             });
+            totalRowNumber = document.getElementById("userTable").rows.length;
+
         },
     });
 
@@ -197,6 +201,9 @@ $(function(){
      *    User edit dialog show
      --------------------- */
     $('#userEditDialog').on('show.bs.modal', function(e) {
+        for (let index = 0; index < totalRowNumber; index++) {
+            $('#alinkId' + index).popover('hide');
+        }
         let $button = $(e.relatedTarget);
         let userId = $button.data('id');
         if (userId) {
@@ -268,6 +275,9 @@ $(function(){
      *    User delete dialog show
      --------------------- */
      $('#userDeleteDialog').on('show.bs.modal', function(e) {
+        for (let index = 0; index < totalRowNumber; index++) {
+            $('#alinkId' + index).popover('hide');
+        }
         let $button = $(e.relatedTarget);
         let userId = $button.data('id');
         if (userId) {
@@ -334,14 +344,16 @@ $(function(){
         }
     });
 
-    $("#userTable").on("click-row.bs.table", function (e, row, $element, index) {
-        let curIndex = $element.index();
-        let totalRowNumber = document.getElementById("userTable").rows.length;
-        for (let index = 0; index < totalRowNumber; index++) {
-            if(curIndex != index) {
-                $('#alinkId' + index).popover('hide');
-            } else {
-                $('#alinkId' + index).popover('show');
+    $("#userTable").on("click-row.bs.table", function (e, value, row, $element) {
+        let curIndex = row.index();
+
+        if ($element == "company.name") {
+            for (let index = 0; index < totalRowNumber; index++) {
+                if(curIndex != index) {
+                    $('#alinkId' + index).popover('hide');
+                } else {
+                    $('#alinkId' + index).popover('show');
+                }
             }
         }
     });
