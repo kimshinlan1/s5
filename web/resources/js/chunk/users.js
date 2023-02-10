@@ -159,8 +159,6 @@ window.getUserTableList = function (params) {
 	jQuery
 ============================== */
 $(function(){
-    $('#subManagementMenuId').collapse('show');
-
     $('#userTable').bootstrapTable({
         ajax: "getUserTableList",
         pagination: "true",
@@ -175,9 +173,10 @@ $(function(){
                 let style = depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
                 let html = '<div id="popover-content" style="' + style + '"><ul class="list-group custom-popover">';
                 depts.forEach(element => {
-                    html += '<li class="list-group-item">' + element.name + '</li>';
+                    html += '<li class="list-group-item"><a href="/employee?companyId='+element.company_id+'&deptId='+element.id+'" style="color: black; text-decoration: none;">' + element.name + '</a></li>';
                 });
-                html += '</ul></div>'
+                html += '</ul></div>';
+
                 $('#alinkId' + index).popover({
                     html: true,
                     sanitize: false,
@@ -335,5 +334,16 @@ $(function(){
         }
     });
 
+    $("#userTable").on("click-row.bs.table", function (e, row, $element, index) {
+        let curIndex = $element.index();
+        let totalRowNumber = document.getElementById("userTable").rows.length;
+        for (let index = 0; index < totalRowNumber; index++) {
+            if(curIndex != index) {
+                $('#alinkId' + index).popover('hide');
+            } else {
+                $('#alinkId' + index).popover('show');
+            }
+        }
+    });
 });
 
