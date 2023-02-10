@@ -208,7 +208,9 @@ class PatternTeamInspectionService extends BaseService
                     ]
                 );
                 $inspectionId = $inspectionId->id;
+            }
 
+            foreach ($data['data'] as $locationId => $points) {
                 // Loop to insert details rows
                 foreach ($points as $key => $val) {
                     InspectionDetail::create([
