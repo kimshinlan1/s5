@@ -1027,7 +1027,7 @@ function getData(chart) {
         updatedAt = dateFormat($('#dateTo').datepicker("getDate"));
     } else {
         // Get current
-        updatedAt = (new Date()).toLocaleString();
+        updatedAt = dateFormat((new Date()).toLocaleString());
     }
 
     objResult.skillMapId = id;

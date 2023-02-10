@@ -214,8 +214,10 @@ class SkillMapService extends BaseService
             $skillMapId = $data['skillMapId'];
             if ($skillMapId != -1) {
                 // Update
-                $created_at = Carbon::parse($data['createdAt'])->toDateTimeString();
-                $updated_at = Carbon::parse($data['updatedAt'])->toDateTimeString();
+                $dateCreate = Carbon::parse($data['createdAt']);
+                $created_at = $dateCreate->format('Y/m/d H:i:s');
+                $dateUpdate = Carbon::parse($data['updatedAt']);
+                $updated_at = $dateUpdate->format('Y/m/d H:i:s');
                 SkillMap::where('id', $skillMapId)->update([
                     'name' => $data['lineName'],
                     'department_id' => $data['departmentId'],
@@ -228,10 +230,12 @@ class SkillMapService extends BaseService
                 $dataSkillMap['name'] = $data['lineName'];
                 $dataSkillMap['department_id'] = $data['departmentId'];
                 if (isset($data['createdAt'])) {
-                    $dataSkillMap['created_at'] = Carbon::parse($data['createdAt'])->toDateTimeString();
+                    $dateCreate = Carbon::parse($data['createdAt']);
+                    $dataSkillMap['created_at'] = $dateCreate->format('Y/m/d H:i:s');
                 }
                 if (isset($data['updatedAt'])) {
-                    $dataSkillMap['updated_at'] = Carbon::parse($data['updatedAt'])->toDateTimeString();
+                    $dateUpdate = Carbon::parse($data['updatedAt']);
+                    $dataSkillMap['updated_at'] = $dateUpdate->format('Y/m/d H:i:s');
                 }
 
                 $dataSkillMap['user_id'] = $userId;
