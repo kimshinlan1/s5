@@ -532,19 +532,15 @@ $(function(){
      --------------------- */
     $('#managementMenuId').click(function() {
         $('#subManagementMenuId').collapse('toggle');
-        $('#icon1').toggleClass("fa-caret-right fa-caret-down");
     })
     $('#studyPlanMenuId').click(function() {
         $('#subStudyPlanMenuId').collapse('toggle');
-        $('#icon2').toggleClass("fa-caret-right fa-caret-down");
     })
     $('#skillMapMenuId').click(function() {
         $('#subSkillMapMenuId').collapse('toggle');
-        $('#icon3').toggleClass("fa-caret-right fa-caret-down");
     })
     $('#menu5sId').click(function() {
         $('#submenu5sId').collapse('toggle');
-        $('#icon4').toggleClass("fa-cyaret-right fa-caret-down");
     })
 
     /** ------------------ Menu 1 ------------------ */
@@ -556,8 +552,7 @@ $(function(){
 
     $('#subManagementMenuId').on("hide.bs.collapse", function () {
         sessionStorage.setItem("mainMenu1", "hide");
-        $('#icon1').addClass("fa-caret-right");
-        $('#icon1').removeClass("fa-caret-down");
+        $('#icon1').toggleClass("fa-caret-right fa-caret-down");
     });
 
     const mainMenu1 = sessionStorage.getItem("mainMenu1");
@@ -577,8 +572,7 @@ $(function(){
 
     $('#subStudyPlanMenuId').on("hide.bs.collapse", function () {
         sessionStorage.setItem("mainMenu2", "hide");
-        $('#icon2').addClass("fa-caret-right");
-        $('#icon2').removeClass("fa-caret-down");
+        $('#icon2').toggleClass("fa-caret-right fa-caret-down");
     });
 
     const mainMenu2 = sessionStorage.getItem("mainMenu2");
@@ -598,8 +592,7 @@ $(function(){
 
     $('#subSkillMapMenuId').on("hide.bs.collapse", function () {
         sessionStorage.setItem("mainMenu3", "hide");
-        $('#icon3').addClass("fa-caret-right");
-        $('#icon3').removeClass("fa-caret-down");
+        $('#icon3').toggleClass("fa-caret-right fa-caret-down");
     });
 
     const mainMenu3 = sessionStorage.getItem("mainMenu3");
@@ -619,8 +612,7 @@ $(function(){
 
     $('#submenu5sId').on("hide.bs.collapse", function () {
         sessionStorage.setItem("mainMenu4", "hide");
-        $('#icon4').addClass("fa-caret-down");
-        $('#icon4').removeClass("fa-caret-right");
+        $('#icon4').toggleClass("fa-caret-right fa-caret-down");
     });
 
     const mainMenu4 = sessionStorage.getItem("mainMenu4");
@@ -630,4 +622,11 @@ $(function(){
     } else {
         $('#submenu5sId').collapse('hide');
     }
+
+    $('#logoutBtn').click(function() {
+        sessionStorage.removeItem("mainMenu1");
+        sessionStorage.removeItem("mainMenu2");
+        sessionStorage.removeItem("mainMenu3");
+        sessionStorage.removeItem("mainMenu4");
+    });
 });

@@ -29,7 +29,7 @@
                     <a class="dropdown-item @if(request()->path()==='user')active @endif" href="/my_page/{{auth()->user()->id}}">
                         {{ __('My_Page') }}
                     </a>
-                    <a class="dropdown-item logout" href="{{ route('logout') }}"
+                    <a id="logoutBtn" class="dropdown-item logout" href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
