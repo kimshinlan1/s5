@@ -20,6 +20,8 @@
     <script src="{!! url('assets/bootstrap/js/bootstrap-table-reorder-rows.min.js') !!}"></script>
     <script src="{!! url('assets/jquery/jquery.tablednd.min.js') !!}"></script>
 
+    @stack('scripts_lib')
+
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script defer>
@@ -29,6 +31,7 @@
         }
     });
     </script>
+
     @stack('scripts')
 
     <!-- Fonts -->

@@ -1,24 +1,31 @@
 @extends('layouts.app')
 
 @push('css')
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
-        type="text/css"/>
+    <link href= "{!! url('assets/jquery-ui-themes-1.8.24/themes/base/jquery-ui.css') !!}" rel="Stylesheet"/>
     <link href="{{ mix('/css/skillmap.css') }}" rel="stylesheet"/>
+@endpush
+
+@push('scripts_lib')
+
+    {{-- <script src="{!! url('assets/jquery/jquery-3.2.1.slim.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/popper.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/bootstrap/js/bootstrap.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script> --}}
+
+    <script src="{!! url('assets/bootstrap-4.0.0-dist/js/bootstrap.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery-ui.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
+    <script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script>
+
 @endpush
 
 @push('scripts')
     <script type="text/javascript">
         var employees = {{ Js::from($employee ?? []) }};
     </script>
-
-    <script src="{!! url('assets/jquery/jquery-3.2.1.slim.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/popper.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/bootstrap/js/bootstrap.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery-1.6.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery-ui.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
-    <script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script>
-
 
     <script src="{{ mix('/js/skillmap.js') }}"></script>
     <script src="{{ mix('/js/pdf.js') }}"></script>
@@ -352,7 +359,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="validateMyFormSkillMap()"
+                    <button type="button" onclick="validateMyFormSkillMap()" data-dismiss="modal"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
