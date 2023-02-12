@@ -801,10 +801,6 @@ function validateMyFormSkillMap() {
     }
 }
 
-
-
-
-
 /**
  * Validate my form
  * @param  {} textbox
