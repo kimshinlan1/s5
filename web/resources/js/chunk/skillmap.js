@@ -794,32 +794,48 @@ function createNewRow(event) {
  */
 function validateMyFormSkillMap() {
     $('#myForm button[type="submit"]').click();
-    $("#exampleModalCenter").modal('hide');
+
+    // Update after upgrade version bootstrap
+    if (validity) {
+        $("#exampleModalCenter").find('#btnModalCategoryAdd').attr('data-dismiss', 'modal');
+    }
 }
+
+
+
+
 
 /**
  * Validate my form
  * @param  {} textbox
  */
+var validity = true;
 function InvalidMsgMyFormSkillMap(textbox) {
     if (textbox.value == '') {
         textbox.setCustomValidity(CONFIG.get("SKILL_MAP_REQUIRED"));
+        validity = false;
     } else if (textbox.validity.patternMismatch) {
         textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
+        validity = false;
     } else if (textbox.placeholder == (CONFIG.get("NUMBER_OF_LINES_IN_WORK_NAME")) && !isNaN(parseInt(textbox.value))) {
         // get number of record current on table list
         let currentNo = currentNoNumber;
         currentNo += parseInt(textbox.value);
         if (currentNo > parseInt(CONFIG.get("MAX_JOB"))) {
             textbox.setCustomValidity(CONFIG.get("MAXIMUM_OF_100_LINES"));
+            validity = false;
         } else {
             textbox.setCustomValidity('');
+            validity = true;
         }
+
     } else if(textbox.placeholder == (CONFIG.get("PLACE_HOLDER_CATEGORY")) &&
         textbox.value.length > parseInt(CONFIG.get("MAX_LENGTH_CATEGORY"))) {
             textbox.setCustomValidity(CONFIG.get("SKILL_MAP_ERROR_MAX_LENGTH"));
+        validity = false;
     } else {
         textbox.setCustomValidity('');
+        validity = true;
     }
     return true;
 }
@@ -1568,5 +1584,10 @@ $(function () {
     // On change select department
     $('#department').change(function () {
         onChangeDataDepartment();
+    });
+
+
+    $('#exampleModalCenter').on("hide.bs.modal", function () {
+        $("#exampleModalCenter").find('#btnModalCategoryAdd').attr('data-dismiss', '');
     });
 });

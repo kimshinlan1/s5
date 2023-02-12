@@ -332,7 +332,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    <div class="modal " id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -359,7 +359,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="validateMyFormSkillMap()" data-dismiss="modal"
+                    <button type="button" onclick="validateMyFormSkillMap()" id="btnModalCategoryAdd"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
