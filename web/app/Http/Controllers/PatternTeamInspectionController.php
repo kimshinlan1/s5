@@ -211,4 +211,13 @@ class PatternTeamInspectionController extends Controller
         ];
         return view('pattern.partials.evidence_block', $params);
     }
+
+    /**
+     * Add block
+     *
+     */
+    public function addBlock(Request $request)
+    {
+        return view('pattern.partials.evidence_new_block');
+    }
 }

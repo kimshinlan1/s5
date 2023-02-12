@@ -799,6 +799,8 @@ function validateMyFormSkillMap() {
     if (validity) {
         $("#exampleModalCenter").find('#btnModalCategoryAdd').attr('data-dismiss', 'modal');
     }
+
+    // $("#exampleModalCenter").modal('hide');
 }
 
 /**

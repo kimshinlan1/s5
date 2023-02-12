@@ -72,4 +72,5 @@ class Constant
     ];
 
     public const INSPECTION_IMAGE_PATH = 'uploads/inspections/imgs';
+    public const NO_IMAGE_PATH = '/assets/img/no_image.jpg';
 }

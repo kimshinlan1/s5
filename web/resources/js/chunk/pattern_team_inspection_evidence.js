@@ -27,8 +27,18 @@ function deleteEvidence(block, is_before) {
 ---------------------- */
 function addBlock() {
     // todo:
-    let html = "AAAAAA";
-    $("#patternEvidenceDialog").find(".modal-body").append(html);
+
+    // showLoading();
+
+    let params = {};
+    let url = "/pattern_team_inspection/evidence/addblock";
+    let method = "GET";
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+        $("#patternEvidenceDialog").find(".modal-body").append(data);
+    };
+
+    runAjax(url, method, params, doneCallback);
 }
 
 /*---------------------
