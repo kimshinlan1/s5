@@ -104,4 +104,7 @@
 </div>
 
 @include('pattern.partials.evidence_dialog')
+
+<input type="hidden" id="hidAuthUserId" name="hidAuthUserId" value="{{ auth()->user()->id }}"/>
+
 @endsection
