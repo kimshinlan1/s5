@@ -46,11 +46,13 @@ class PatternTeamInspectionController extends Controller
 
         if (empty($teamId)) {
             // todo:
+            $inspectionDetails = [];
+        } else {
+            // Get Columns: Inspection detail and render structure todo:
+            $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
         }
-
-        // Get Columns: Inspection detail and render structure todo:
-        $inspectionDetails = $this->service->getInspectionDetailsByTeam($teamId);
         $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
+
 
         // Get Rows: patterns
         // $data = $this->service->getPatternDataByDept($deptId);

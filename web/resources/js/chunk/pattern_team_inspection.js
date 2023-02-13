@@ -313,8 +313,8 @@ function calculateAvgPoint() {
         if (Number(countS1[key]) != 0) {
             pointAvg = Number(sumS1[key]) / Number(countS1[key]);
         }
-        avgS1[key] = pointAvg;
-        $('#point_avg_1s_' + key).text(pointAvg);
+        avgS1[key] = pointAvg.toFixed(1);
+        $('#point_avg_1s_' + key).text(avgS1[key]);
     }
 
     for (let key in sumS2) {
@@ -322,8 +322,8 @@ function calculateAvgPoint() {
         if (Number(countS2[key]) != 0) {
             pointAvg = Number(sumS2[key]) / Number(countS2[key]);
         }
-        avgS2[key] = pointAvg;
-        $('#point_avg_2s_' + key).text(pointAvg);
+        avgS2[key] = pointAvg.toFixed(1);
+        $('#point_avg_2s_' + key).text(avgS2[key]);
     }
 
     for (let key in sumS3) {
@@ -331,8 +331,8 @@ function calculateAvgPoint() {
         if (Number(countS3[key]) != 0) {
             pointAvg = Number(sumS3[key]) / Number(countS3[key]);
         }
-        avgS3[key] = pointAvg;
-        $('#point_avg_3s_' + key).text(pointAvg);
+        avgS3[key] = pointAvg.toFixed(1);
+        $('#point_avg_3s_' + key).text(avgS3[key]);
     }
 
     for (let key in sumS4) {
@@ -340,8 +340,8 @@ function calculateAvgPoint() {
         if (Number(countS4[key]) != 0) {
             pointAvg = Number(sumS4[key]) / Number(countS4[key]);
         }
-        avgS4[key] = pointAvg;
-        $('#point_avg_4s_' + key).text(pointAvg);
+        avgS4[key] = pointAvg.toFixed(1);
+        $('#point_avg_4s_' + key).text(avgS4[key]);
     }
 
     for (let key in sumS5) {
@@ -349,8 +349,8 @@ function calculateAvgPoint() {
         if (Number(countS5[key]) != 0) {
             pointAvg = Number(sumS5[key]) / Number(countS5[key]);
         }
-        avgS5[key] = pointAvg;
-        $('#point_avg_5s_' + key).text(pointAvg);
+        avgS5[key] = pointAvg.toFixed(1);
+        $('#point_avg_5s_' + key).text(avgS5[key]);
     }
     let array5s = [];
     for (let id_inspec of inspIds) {
@@ -429,18 +429,34 @@ function createBarChart(arrayPoint) {
 /////////////////////////////---DOCUMENT---READY---//////////////////////////////////
 $(function () {
     // Call ajax get list data department
-    $.ajax({
-        type: 'GET',
-        url: '/departments/list',
-        success: function (res) {
-            let html = '';
-            for (let e of res.rows) {
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
+    let accountAdmin = $('#hidAuthUserId').val();
+    if (accountAdmin == 1) {
+        $.ajax({
+            type: 'GET',
+            url: '/departments/comp_list',
+            success: function (res) {
+                let html = '';
+                for (let e of res.rows) {
+                    html += '<option value="' + e.id + '">' + e.name + ' - ' + e.company['name'] + '</option>';
+                }
+                $('#selectDeptList').html(html);
+                $('#selectDeptList').change();
             }
-            $('#selectDeptList').html(html);
-            $('#selectDeptList').change();
-        }
-    });
+        });
+    } else {
+        $.ajax({
+            type: 'GET',
+            url: '/departments/list',
+            success: function (res) {
+                let html = '';
+                for (let e of res.rows) {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+                $('#selectDeptList').html(html);
+                $('#selectDeptList').change();
+            }
+        });
+    }
 
     // On change select department
     $('#selectDeptList').change(function () {
