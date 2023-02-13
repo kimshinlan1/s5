@@ -37,7 +37,7 @@ function loadBarChart(id, mapObj, count) {
     // alert("init chart");
     const labels = [];
     for (let index = 0; index < count; index++) {
-      labels.push('Inspection' + index);
+      labels.push('');
     }
     const data = {
       labels: labels,
@@ -159,12 +159,13 @@ function redirectToInspection(teamId) {
 function loadCharts() {
   // Loop all Depts
   $("input[id*=hidDeptId_]").each(function(i,d){
+    var countInspection = $('#hidCountInspection').val();
     let dept_id = $(d).val();
     let barChartId = 'barchart_dept_' + dept_id;
-
+    var deptMapData = new Map();
     // Load overall dept chart
     let deptAvgPoints = $('#hidDeptId_' + dept_id).attr('data-avgPoint');
-    let count = $('#hidCountInspection').val();
+    // let count = $('#hidCountInspection').val();
     var mapObj = new Map();
     if(deptAvgPoints) {
       deptAvgPoints = deptAvgPoints.split('|');
@@ -175,19 +176,43 @@ function loadCharts() {
       mapObj.set("s5", [deptAvgPoints[4]]);
     }
     // Load dept radar chart
-    let radarchartId = 'radarchart_dept_' + dept_id + '-0';
-    loadRadarChart(radarchartId, deptAvgPoints, 1);
-    for (let index = 1; index < count; index++) {
-      let radarchartId = 'radarchart_dept_' + dept_id + '-' + index ;
-      loadRadarChart(radarchartId, '', 1);
-    }
+    // let radarchartId = 'radarchart_dept_' + dept_id + '-0';
+    // loadRadarChart(radarchartId, deptAvgPoints, 1);
+    // for (let index = 1; index < count; index++) {
+    //   let radarchartId = 'radarchart_dept_' + dept_id + '-' + index ;
+    //   loadRadarChart(radarchartId, '', 1);
+    // }
     // Load dept bar chart
-    loadBarChart(barChartId, mapObj, count);
+    // loadBarChart(barChartId, mapObj, count);
     // Loop all Teams in 1 Dept
     $("input[id^=hid_deptId_"+dept_id+"_teamId_]").each(function(i,t){
         let team_id = $(t).val();
         renderAvgChart(dept_id, team_id);
+
+        $('#dept_'+dept_id+'-team_'+team_id+'-info').find('input[id^=hidAvgPoint]').each(function(i,e){
+          let avtPoints = $(e).val();
+          let avgPointArr = '';
+          if (avtPoints) {
+              avgPointArr = $(e).val().split('|');
+              let key = 'inspection' + i;
+              if (!deptMapData.has(key)) {
+                deptMapData.set(key, [0,0,0,0,0]);
+              }
+              let sum =  deptMapData.get(key).map(function (val, index) {
+                return parseInt(val) + parseInt(avgPointArr[index]);
+              });
+              deptMapData.set((key), sum);
+          }
+      });
     });
+    for (let index = 0; index < countInspection; index++) {
+      let key = 'inspection' + index;
+      if (deptMapData.has(key)) {
+        let avgPointArr = deptMapData.get(key);
+        let radarchartId = 'radarchart_dept_' + dept_id + '-' + index;
+        loadRadarChart(radarchartId, avgPointArr, 1);
+      }
+    }
 });
 }
 

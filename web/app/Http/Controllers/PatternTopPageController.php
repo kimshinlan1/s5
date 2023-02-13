@@ -55,7 +55,10 @@ class PatternTopPageController extends Controller
         // Get dept list
         $deptList = app(DepartmentService::class)->getFullDataByCompanyId($companyId);
         $maxColumn = 0;
+
+
         foreach ($deptList as $key => $dept) {
+            $overallPoint = array();
             $count = 0;
             $totalDeptPointArr = [0, 0, 0, 0, 0];
             $avgDeptPointArr = null;
@@ -81,12 +84,16 @@ class PatternTopPageController extends Controller
                     'inspections' => $inspectionDetails
                 ];
 
-                foreach ($inspectionDetails as $inspectionDetail) {
-                    $count += 1;
+                foreach ($inspectionDetails as $index => $inspectionDetail) {
+                    $count = $index;
                     $tempArr = explode('|', $inspectionDetail['avg_point']);
-                    $totalDeptPointArr = array_map(function () {
+                    $tempStr = 'inspection' . strval($index);
+                    if (!array_key_exists($tempStr, $overallPoint)) {
+                        $overallPoint[$tempStr] = [0, 0, 0, 0, 0];
+                    }
+                    $overallPoint[$tempStr] = array_map(function () {
                         return array_sum(func_get_args());
-                    }, $totalDeptPointArr, $tempArr);
+                    }, $overallPoint[$tempStr], $tempArr);
                 }
 
                 if (count($inspectionDetails) > $maxColumn) {
@@ -101,9 +108,9 @@ class PatternTopPageController extends Controller
 
             if ($avgDeptPointArr) {
                 $avgDeptPointArr = implode('|', $avgDeptPointArr);
-                $inspectionData[$key]['dept_avgPoint'] = $avgDeptPointArr;
             }
-
+            // $inspectionData[$key]['dept_avgPoint'] = $overallPoint;
+            // $i = 0;
             // dd($inspectionData);
         }
         // dd($deptList);
