@@ -22,6 +22,7 @@
         overflow-x: unset;
     }
 </style>
+@if (!$teamId)
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ __('TeamInspection_Input') }}</div>
 
@@ -41,6 +42,7 @@
         </div>
     </div>
 </div>
+
 <div class="d-flex justify-content-start mb-4" style="width: 55%;">
     {{-- Department List --}}
     {{-- Add selectbox --}}
@@ -56,7 +58,30 @@
     <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
     </select>
 </div>
+@else
+<div class="d-flex justify-content-between">
+    <div class="h-title">{{ $teamName }}係  5Sレベル推移</div>
 
+    <!-- My Toast -->
+    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ __('Message_Save_Success') }}
+            </div>
+        </div>
+    </div>
+    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast2">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ __('Message_Delete_Success') }}
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+<input type="hidden" id="hidDeptId" value="{{ $deptId }}"/>
+<input type="hidden" id="hidTeamId" value="{{ $teamId }}"/>
 <div id="content"></div>
 <br>
 

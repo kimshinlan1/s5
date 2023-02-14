@@ -17,10 +17,22 @@ var inspectionIdBtnRemove = [];
  ********************************************************************/
 function loadInspectionData(data, mode = '') {
     showLoading();
-    let params = {
-        dept_id: data.department_id,
-        team_id: data.team_id,
-    };
+    let params = {};
+    if ($("#hidTeamId").val()){
+        params = {
+            dept_id: $("#hidDeptId").val(),
+            team_id: $("#hidTeamId").val(),
+        };
+        data = {
+            department_id: $("#hidDeptId").val(),
+            team_id: $("#hidTeamId").val(),
+        }
+    } else {
+        params = {
+            dept_id: data.department_id,
+            team_id: data.team_id,
+        };
+    }
 
     let count = $('#hidCountInspection').val();
     if (mode == MODE_NEW) {
@@ -82,10 +94,18 @@ function removeColumn(inspection_id) {
  **********************/
 function acceptRemoveColumn() {
     $("#modalRemoveColumn").modal('hide');
-    let param = {
-        department_id: $('#selectDeptList').val(),
-        team_id: $('#selectTeamList').val(),
-    };
+    let param = {};
+    if ($("#hidTeamId").val()){
+        param = {
+            dept_id: $("#hidDeptId").val(),
+            team_id: $("#hidTeamId").val(),
+        };
+    } else {
+        param = {
+            dept_id: $('#selectDeptList').val(),
+            team_id: $('#selectTeamList').val(),
+        };
+    }
     let inspection_id = inspectionIdBtnRemove;
 
     showLoading();
@@ -140,14 +160,27 @@ function saveInspectionData() {
 
     let url = "/pattern_team_inspection/save";
     let method = "POST";
-    let param = {
-        department_id: $('#selectDeptList').val(),
-        team_id: $('#selectTeamList').val(),
+    let param = {}
+    if ($("#hidTeamId").val()) {
+        param = {
+            department_id: $("#hidDeptId").val(),
+            team_id: $("#hidTeamId").val(),
+        }
+    } else {
+        param = {
+            department_id: $('#selectDeptList').val(),
+            team_id: $('#selectTeamList').val(),
+        }
     }
+
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($('#toast1'), 2000, true);
         // Load data
-        loadInspectionData(param);
+        if ($("#hidTeamId").val()){
+            window.location = "/pattern_top_page";
+        } else {
+            loadInspectionData(param);
+        }
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -186,11 +219,17 @@ function validateAndGetData() {
                 'data': {}
             };
 
+            let teamId = '';
+            if ($("#hidTeamId").val()) {
+                teamId = $("#hidTeamId").val();
+            } else {
+                teamId = $('#selectTeamList').val();
+            }
             // Info
             let info = {
                 'inspection_id': id,
                 'inspection_date': inspection_date,
-                'team_id': $('#selectTeamList').val(),
+                'team_id': teamId,
             };
             inspection['info'] = info;
 
@@ -437,7 +476,7 @@ $(function () {
             success: function (res) {
                 let html = '';
                 for (let e of res.rows) {
-                    html += '<option value="' + e.id + '">' + e.name + ' - ' + e.company['name'] + '</option>';
+                    html += '<option value="' + e.id + '">' + e.company['name'] + ' - ' + e.name + '</option>';
                 }
                 $('#selectDeptList').html(html);
                 $('#selectDeptList').change();
@@ -481,11 +520,24 @@ $(function () {
 
     // Add column click
     $("#btnAdd").click(function () {
-        let data = {
-            department_id: $('#selectDeptList').val(),
-            team_id: $('#selectTeamList').val(),
+        let data = {}
+        if ($("#hidTeamId").val()) {
+            data = {
+                department_id: $("#hidDeptId").val(),
+                team_id: $("#hidTeamId").val(),
+            }
+        } else {
+            data = {
+                department_id: $('#selectDeptList').val(),
+                team_id: $('#selectTeamList').val(),
+            }
         }
+
         // Load data
         loadInspectionData(data, MODE_NEW);
     });
+
+    if ($("#hidTeamId").val()) {
+        loadInspectionData();
+    }
 });

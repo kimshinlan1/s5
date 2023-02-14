@@ -17,9 +17,8 @@ function showHideTeam(dept_id) {
  */
 function gotoInspectionPage(team_id) {
     // todo:
-    alert("go");
+    window.location = '/pattern_team_inspection/' + team_id;
 }
-
 /**
  * Load radar chart
  */
