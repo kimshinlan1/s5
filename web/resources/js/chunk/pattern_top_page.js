@@ -22,7 +22,6 @@ function showHideTeam(deptId) {
 function gotoInspectionPage(teamId) {
     window.location = '/pattern_team_inspection/' + teamId;
 }
-
 /**
  * Load radar chart
  */

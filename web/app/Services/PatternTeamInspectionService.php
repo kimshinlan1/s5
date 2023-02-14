@@ -9,6 +9,7 @@ use App\Models\Location;
 use App\Models\Inspection;
 use Illuminate\Http\Request;
 use App\Models\PatternDetail;
+use App\Models\Team;
 use App\Models\InspectionImage;
 use App\Models\InspectionDetail;
 use App\Services\LocationService;
@@ -27,6 +28,18 @@ class PatternTeamInspectionService extends BaseService
         $this->model = $model;
         parent::__construct($model);
         $this->inspectionImagePath = public_path(Constant::INSPECTION_IMAGE_PATH);
+    }
+
+    /**
+     * Get list by conditions
+     *
+     * @param  $id (id of pattern)
+     *
+     * @return array
+     */
+    public function getDataTeamById($id)
+    {
+        return Team::where('id', $id)->get()->toArray();
     }
 
     /**
