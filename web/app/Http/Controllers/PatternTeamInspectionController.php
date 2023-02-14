@@ -6,6 +6,7 @@ use App\Common\Constant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Services\PatternTeamInspectionService;
+use App\Services\TeamService;
 
 class PatternTeamInspectionController extends Controller
 {
@@ -26,7 +27,32 @@ class PatternTeamInspectionController extends Controller
      */
     public function index(Request $request)
     {
-        return view('pattern.pattern_team_inspection');
+        $data = [
+            'deptId' => '',
+            'teamId' => ''
+        ];
+        return view('pattern.pattern_team_inspection', $data);
+    }
+
+    /**
+     * Returns edit resource
+     *
+     * @param int $teamId
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($teamId)
+    {
+        $info = $this->service->getDataTeamById($teamId);
+        if (empty($info)) {
+            return abort(500, __('Message_No_Data'));
+        }
+        $data = [
+            'teamId' => $teamId,
+            'teamName' => $info[0]['name'],
+            'deptId' => $info[0]['department_id']
+        ];
+        return view('pattern.pattern_team_inspection', $data);
     }
 
     /**
@@ -222,4 +248,5 @@ class PatternTeamInspectionController extends Controller
     {
         return view('pattern.partials.evidence_new_block');
     }
+
 }

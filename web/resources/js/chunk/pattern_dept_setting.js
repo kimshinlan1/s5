@@ -53,12 +53,7 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
-            if (isFree) {
-                location.replace(document.referrer);
-
-            } else {
-                location.replace(document.referrer);
-            }
+            location.replace(document.referrer);
         }, 200);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {

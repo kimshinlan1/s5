@@ -56,16 +56,9 @@ class AuthController extends Controller
 
         $user = User::where('identifier', $identifier)->first();
         if ($user && Crypt::decryptString($user->password) == $password) {
-            Auth::login($user);
-
             $request->session()->regenerate();
-            if ($user->isUser()) {
-                return redirect()->intended("/top_page");
-            } else {
-                return redirect()->intended("/top_page");
-            }
+            return redirect()->intended("/top_page");
         }
-
         return back()->withErrors([
             'error' => __('Error_Login_fail'),
         ]);

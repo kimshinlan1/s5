@@ -407,8 +407,6 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
     params['data'] = [];
     params['old_areas'] = [];
     params['old_locations'] = [];
-    params['department'] = [];
-    params['company'] = [];
     params['isSelectedFree'] = isSelectedFree ? 'free' : 'paid';
 
     // get department id
