@@ -82,10 +82,9 @@ class PatternTopPageController extends Controller
             }
             // dd($inspectionData);
         }
+        $companies = Cache::get('companies');
 
-        if (Cache::has('companies')) {
-            $companies = Cache::get('companies');
-        } else {
+        if (!$companies) {
             $companies = app()->get(CompanyService::class)->getAll()->toArray();
             Cache::put('companies', $companies, 10);
         }
