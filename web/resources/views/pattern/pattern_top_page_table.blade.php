@@ -29,7 +29,7 @@ $width_data = '250px';
                 {{-- Bar Chart --}}
                 <tr>
                     <td colspan="{{ $countInspection }}">
-                        <canvas class="barChart" style="width: 15px; height: 10px;" id="barchart_dept_{{ $inspection['dept_id'] }}"></canvas>
+                        <canvas class="barChart" style="width: 10px; height: 10px;" id="barchart_dept_{{ $inspection['dept_id'] }}"></canvas>
                     </td>
                 </tr>
             </table>
@@ -37,7 +37,7 @@ $width_data = '250px';
             <fieldset class="form-group border border-collapse" id="fiestSetId">
                 @if (count($inspection['teams']))
                     <legend class="float-none w-auto">
-                        <button style="" class="btn-danger rounded-3 btnTeamInspection" id="btnTeamInspection"
+                        <button style="font-size: 14.4px;" class="btn-danger rounded-3 btnTeamInspection" id="btnTeamInspection_{{ $inspection['dept_id'] }}"
                             value="{{ __('TopPage_Expand_Button') }}"
                             onclick="showHideTeam('{{ $inspection['dept_id'] }}')">
                             <i class="fa fa-plus" aria-hidden="true"></i> {{ __('TopPage_Expand_Button') }}
@@ -84,7 +84,7 @@ $width_data = '250px';
                                 id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart"
                                 style="display: none; border-bottom-color: transparent;">
                                 <td colspan="{{ $countInspection }}">
-                                    <canvas class="barChart" style="width: 15px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
+                                    <canvas class="barChart" style="width: 10px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
                                 </td>
                             </tr>
 
@@ -101,7 +101,7 @@ $width_data = '250px';
                                         @if ($countImgs)
                                             <input style="" type="button" class="btn-primary rounded-3"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
-                                                onclick="redirectToInspection({{ $team['team_id'] }})" />
+                                                onclick="" />
                                         @else
                                             <input style="" type="button" class="btn-secondary rounded-3"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
