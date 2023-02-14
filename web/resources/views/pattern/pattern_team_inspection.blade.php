@@ -60,7 +60,7 @@
 </div>
 @else
 <div class="d-flex justify-content-between">
-    <div class="h-title">{{ $teamName }}係  5Sレベル推移</div>
+    <div class="h-title">{{ $teamName }}{{ __('TeamInspection_5S_Level_Transition') }}</div>
 
     <!-- My Toast -->
     <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
