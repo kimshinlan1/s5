@@ -83,12 +83,17 @@ class PatternTopPageController extends Controller
             // dd($inspectionData);
         }
 
-        $companies = app()->get(CompanyService::class)->getAll()->toArray();
-        Cache::put('companies', $companies, 10);
+        if (Cache::has('companies')) {
+            $companies = Cache::get('companies');
+        } else {
+            $companies = app()->get(CompanyService::class)->getAll()->toArray();
+            Cache::put('companies', $companies, 10);
+        }
+
         $params = [
             'countInspection' => $maxColumn > Constant::INSPECTION_DEFAULT_COLUMN_NUMBER ? $maxColumn : Constant::INSPECTION_DEFAULT_COLUMN_NUMBER,
             'inspectionData' => $inspectionData,
-            'companies' => Cache::get('companies')
+            'companies' => $companies
         ];
 
         // dd($params);

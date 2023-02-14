@@ -149,16 +149,22 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
     for (let index = 0; index < countMaxInspection; index++) {
       let key = 'inspection' + index;
       let avgPointArr = null;
+
+      // If inspection has data, create radar chart and add data to deptMapBarData for rendering dept bar chart
       if (deptMapRadarData.has(key)) {
         avgPointArr = deptMapRadarData.get(key);
+        // Calculate average value
         avgPointArr = avgPointArr.map(function(val){
           return Math.round(val / parseInt(countPerInspection[key]) * 100) / 100;
         })
+        // Create data structure for rendering bar chart from data structure of radar chart
         avgPointArr.forEach(function (value, i) {
           let key = "s" + (i+1).toString();
           deptMapBarData.get(key).push(parseInt(value));
         });
       }
+
+      /** Loop Dept Radar Chart **/
       let radarchartId = 'radarchart_dept_' + deptId + '-' + index;
       loadRadarChart(radarchartId, avgPointArr, 1);
     }
