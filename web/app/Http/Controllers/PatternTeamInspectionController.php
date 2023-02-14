@@ -45,7 +45,7 @@ class PatternTeamInspectionController extends Controller
     {
         $info = $this->service->getDataTeamById($teamId);
         if (empty($info)) {
-            return abort(500, (Constant::MESSAGES['NO_DATA']));
+            return abort(500, __('Message_No_Data'));
         }
         $data = [
             'teamId' => $teamId,

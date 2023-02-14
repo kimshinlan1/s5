@@ -18,7 +18,6 @@ class Constant
         "MAX_EMP_ERROR" => "Deparment_Count_Employee",
         "UNIQUE_PATTERN_NAME" => "パターン名は社内で一意である必要があります",
         "DUPLICATED_PATTERN" => "このパターンはすでに使用されています",
-        "NO_DATA" => "データが見つかりません。",
     ];
 
     public const ROLE = [
