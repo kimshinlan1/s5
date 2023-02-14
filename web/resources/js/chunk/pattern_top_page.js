@@ -16,7 +16,6 @@ function showHideTeam(dept_id) {
  * Go to Inspection Page
  */
 function gotoInspectionPage(team_id) {
-    // todo:
     window.location = '/pattern_team_inspection/' + team_id;
 }
 /**
@@ -32,80 +31,15 @@ function loadRadarChart(id, avgPointArr, isDept) {
  * Init bar chart
  */
 function loadBarChart(id, mapObj, count) {
-     // todo:
-    // alert("init chart");
     const labels = [];
     for (let index = 0; index < count; index++) {
       labels.push('Inspection' + index);
     }
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'S1',
-          data: mapObj.get('s1'),
-          backgroundColor: 'blue',
-        },
-        {
-          label: 'S2',
-          data: mapObj.get('s2'),
-          backgroundColor: 'red',
-        },
-        {
-          label: 'S3',
-          data: mapObj.get('s3'),
-          backgroundColor: 'green',
-        },
-        {
-          label: 'S4',
-          data: mapObj.get('s4'),
-          backgroundColor: 'purple',
-        },
-        {
-          label: 'S5',
-          data: mapObj.get('s5'),
-          backgroundColor: 'yellow',
-        },
-      ]
-    };
-    const config = {
-      type: 'bar',
-      data: data,
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: ''
-          },
-          legend: {
-            position: "top",
-            align: "start",
-            labels: {
-              boxWidth: 20
-            }
-          },
-        },
-        responsive: true,
-        scales: {
-          x: {
-                  stacked: true,
-              },
-          y: {
-              suggestedMin: 0,
-              suggestedMax: 25,
-              beginAtZero: true,
-              stacked: true,
-              ticks: {
-                  stepSize: 5
-              },
-          }
-        },
-      }
-    };
+
+    let config = configBarChart(labels, null, mapObj);
 
     const ctx = document.getElementById(id);
     ctx.height = 2;
-    // ctx.width = 1;
     new Chart(ctx, config);
 }
 

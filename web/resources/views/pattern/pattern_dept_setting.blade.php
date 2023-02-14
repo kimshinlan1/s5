@@ -9,6 +9,7 @@
 @push('scripts')
     <script src="{!! url('assets/jquery/jquery-ui.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
+    <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script src="{{ mix('/js/pattern_dept_setting.js') }}"></script>
 @endpush
 

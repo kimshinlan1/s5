@@ -5,6 +5,7 @@
 @endpush
 
 @push('scripts')
+    <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script src="{{ mix('/js/pattern_list_customer.js') }}"></script>
 @endpush
 

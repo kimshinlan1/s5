@@ -670,33 +670,33 @@ function configRadarChart(datasets, colorChart) {
 /******************
  * Config bar chart
  ******************/
-function configBarChart(labels, datasets) {
+function configBarChart(labels, datasets = null, mapObj = null) {
     const data = {
         labels: labels,
         datasets: [
             {
             label: 'S1',
-            data: datasets[0],
+            data: datasets ? datasets[0] : mapObj.get('s1'),
             backgroundColor: 'blue',
             },
             {
             label: 'S2',
-            data: datasets[1],
+            data: datasets ? datasets[1] : mapObj.get('s2'),
             backgroundColor: 'red',
             },
             {
             label: 'S3',
-            data: datasets[2],
+            data: datasets ? datasets[2] : mapObj.get('s3'),
             backgroundColor: 'green',
             },
             {
             label: 'S4',
-            data: datasets[3],
+            data: datasets ? datasets[3] : mapObj.get('s4'),
             backgroundColor: 'purple',
             },
             {
             label: 'S5',
-            data: datasets[4],
+            data: datasets ? datasets[4] : mapObj.get('s5'),
             backgroundColor: 'yellow',
             },
         ]
