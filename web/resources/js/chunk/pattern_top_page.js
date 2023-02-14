@@ -29,7 +29,7 @@ function gotoInspectionPage(teamId) {
 function loadRadarChart(id, avgPointArr, isDept) {
     let config = configRadarChart(avgPointArr, isDept);
     const ctx = document.getElementById(id);
-    new Chart(ctx, config);
+    var chart = new Chart(ctx, config);
 }
 
 /**
@@ -110,7 +110,7 @@ function loadBarChart(id, mapObj, count) {
     const ctx = document.getElementById(id);
     ctx.height = 2;
     // ctx.width = 1;
-    new Chart(ctx, config);
+    var chart = new Chart(ctx, config);
 }
 
 /**

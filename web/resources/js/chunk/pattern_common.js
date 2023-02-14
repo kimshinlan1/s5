@@ -407,12 +407,9 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
     params['data'] = [];
     params['old_areas'] = [];
     params['old_locations'] = [];
-    params['department'] = [];
-    params['company'] = [];
     params['isSelectedFree'] = isSelectedFree ? 'free' : 'paid';
-
-    // get department id
     params['department'] = $('#departmentId').find(':selected').val();
+    // get department id
     params['company'] = getCompanyId();
 
     // Loop main area
