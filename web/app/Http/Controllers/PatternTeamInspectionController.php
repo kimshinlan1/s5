@@ -44,6 +44,9 @@ class PatternTeamInspectionController extends Controller
     public function edit($teamId)
     {
         $info = $this->service->getDataTeamById($teamId);
+        if (empty($info)) {
+            return abort(500, (Constant::MESSAGES['SQL_ERROR']));
+        }
         $data = [
             'teamId' => $teamId,
             'teamName' => $info[0]['name'],
