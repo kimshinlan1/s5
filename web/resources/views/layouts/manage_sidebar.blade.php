@@ -42,7 +42,7 @@
             </div>
         </a>
         <div id='subSkillMapMenuId' class="collapse sidebar-submenu">
-            <a class="list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
         </div>
 
         <!-- 5S Management -->

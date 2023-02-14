@@ -45,10 +45,6 @@ tr.radarChartRow > td:not(:last-child) {
     border: 0px solid transparent !important;
 }
 
-#btnTeamInspection {
-    font-size: 14.4px;
-}
-
 #fiestSetId {
     margin-bottom: 50px;
     min-width: fit-content !important;
