@@ -10,6 +10,24 @@ var inspectionIdBtnRemove = [];
 //*********************************************************************************//
 //**********************//---DOCUMENT---FUNCTION---START---//**********************//
 
+/*************************************
+ * Set param give teamId, departmentId
+ *************************************/
+function setParam() {
+    let param = {};
+    if ($("#hidTeamId").val()){
+        param = {
+            dept_id: $("#hidDeptId").val(),
+            team_id: $("#hidTeamId").val(),
+        };
+    } else {
+        param = {
+            dept_id: $('#selectDeptList').val(),
+            team_id: $('#selectTeamList').val(),
+        };
+    }
+    return param;
+}
 /********************************************************************
  * Load data
  * Check mode: MODE_NEW = Add column, MODE_REMOVE_NEW = Remove column
@@ -17,22 +35,10 @@ var inspectionIdBtnRemove = [];
  ********************************************************************/
 function loadInspectionData(data, mode = '') {
     showLoading();
-    let params = {};
-    if ($("#hidTeamId").val()){
-        params = {
-            dept_id: $("#hidDeptId").val(),
-            team_id: $("#hidTeamId").val(),
-        };
-        data = {
-            department_id: $("#hidDeptId").val(),
-            team_id: $("#hidTeamId").val(),
-        }
-    } else {
-        params = {
-            dept_id: data.department_id,
-            team_id: data.team_id,
-        };
-    }
+    let params = {
+        dept_id: data.dept_id,
+        team_id: data.team_id,
+    };
 
     let count = $('#hidCountInspection').val();
     if (mode == MODE_NEW) {
@@ -94,18 +100,7 @@ function removeColumn(inspection_id) {
  **********************/
 function acceptRemoveColumn() {
     $("#modalRemoveColumn").modal('hide');
-    let param = {};
-    if ($("#hidTeamId").val()){
-        param = {
-            dept_id: $("#hidDeptId").val(),
-            team_id: $("#hidTeamId").val(),
-        };
-    } else {
-        param = {
-            dept_id: $('#selectDeptList').val(),
-            team_id: $('#selectTeamList').val(),
-        };
-    }
+    let param = setParam();
     let inspection_id = inspectionIdBtnRemove;
 
     showLoading();
@@ -147,32 +142,18 @@ function saveInspectionData() {
     $("#modalSaveInspectionData").modal('hide');
     // Validate + get data
     let params = validateAndGetData();
-
     // Check empty
     if (!params || params.length <= 0) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#messageNoSelectedData').val());
         return;
     }
-
     // Save
     showLoading();
 
     let url = "/pattern_team_inspection/save";
     let method = "POST";
-    let param = {}
-    if ($("#hidTeamId").val()) {
-        param = {
-            department_id: $("#hidDeptId").val(),
-            team_id: $("#hidTeamId").val(),
-        }
-    } else {
-        param = {
-            department_id: $('#selectDeptList').val(),
-            team_id: $('#selectTeamList').val(),
-        }
-    }
-
+    let param = setParam();
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($('#toast1'), 2000, true);
         // Load data
@@ -182,18 +163,16 @@ function saveInspectionData() {
             loadInspectionData(param);
         }
     };
-
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#messageSystemError').val());
     };
-
     runAjax(url, method, params, doneCallback, failCallback);
 }
 
-/**
+/*************************
  * Button cancel save data
- */
+ *************************/
 function cancelSaveInspectionData() {
     $("#modalSaveInspectionData").modal('hide');
 }
@@ -504,10 +483,7 @@ $(function () {
 
     // On change select department
     $('#selectTeamList').change(function () {
-        let data = {
-            department_id: $('#selectDeptList').val(),
-            team_id: $('#selectTeamList').val(),
-        }
+        let data = setParam();
         // Load data
         loadInspectionData(data);
     });
@@ -520,24 +496,13 @@ $(function () {
 
     // Add column click
     $("#btnAdd").click(function () {
-        let data = {}
-        if ($("#hidTeamId").val()) {
-            data = {
-                department_id: $("#hidDeptId").val(),
-                team_id: $("#hidTeamId").val(),
-            }
-        } else {
-            data = {
-                department_id: $('#selectDeptList').val(),
-                team_id: $('#selectTeamList').val(),
-            }
-        }
-
+        let data = setParam();
         // Load data
         loadInspectionData(data, MODE_NEW);
     });
 
     if ($("#hidTeamId").val()) {
-        loadInspectionData();
+        let data = setParam();
+        loadInspectionData(data);
     }
 });
