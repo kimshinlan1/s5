@@ -2,6 +2,8 @@
 // Common vars
 var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":"躾"};
 var highlight = '#ced4da';
+var select_location_to_delete = [];
+var count_method_delete = '';
 const maxCnt5s = 5;
 const labels = [
     'S1',
@@ -15,7 +17,7 @@ const TEAM_CHART_COLOR = 'rgb(54, 162, 235, 0.5)';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
-    selected_5s = [];
+    let selected_5s = [];
     $('.check_5s').find('input').each(function(){
         if ($(this).is(':checked')) {
             selected_5s.push($(this).val());
@@ -534,6 +536,7 @@ function cancelRemoveLocation() {
  * Config create/update date with calendar
  */
 function configCalendarPattern() {
+    let updatedAtChanged = '';
     $('#dateCreate').datepicker({
         autoclose: true,
         dateFormat: 'yy年mm月dd日',
