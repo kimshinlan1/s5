@@ -1,7 +1,7 @@
 <div class="sidebar" style="display: none;">
     <div class="list-group list-group-flush">
         <!-- Management -->
-        @if(auth()->user()->isAdmin())
+        @if(!auth()->user()->is5SModeFree())
         <a id="managementMenuId" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('Manage') }}</span>
@@ -9,11 +9,15 @@
             </div>
         </a>
         <div id='subManagementMenuId' class="collapse sidebar-submenu">
+            @if(auth()->user()->isAdmin())
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='users')active @endif" href="/users">{{ __('User_Management') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='company')active @endif" href="/company">{{ __('Company_Management') }}</a>
+            @endif
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Management') }}</a>
             <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
+            @if(auth()->user()->isAdmin())
             <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
+            @endif
         </div>
         @endif
 
