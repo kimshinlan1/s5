@@ -19,13 +19,8 @@ function showHideTeam(deptId) {
 /**
  * Go to Inspection Page
  */
-<<<<<<< HEAD
-function gotoInspectionPage(team_id) {
-    window.location = '/pattern_team_inspection/' + team_id;
-=======
 function gotoInspectionPage(teamId) {
     window.location = '/pattern_team_inspection/' + teamId;
->>>>>>> 5d46a68d2fbd7470a8cae69b318e7ae638d82e58
 }
 /**
  * Load radar chart
@@ -49,12 +44,8 @@ function loadBarChart(id, mapObj, count) {
 
     const ctx = document.getElementById(id);
     ctx.height = 2;
-<<<<<<< HEAD
-    new Chart(ctx, config);
-=======
     // ctx.width = 1;
     var chart = new Chart(ctx, config);
->>>>>>> 5d46a68d2fbd7470a8cae69b318e7ae638d82e58
 }
 
 /**
