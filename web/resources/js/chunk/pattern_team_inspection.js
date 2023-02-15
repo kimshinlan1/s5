@@ -50,9 +50,9 @@ function loadInspectionData(data, mode = '') {
     let url = "/pattern_team_inspection/data";
     let method = "GET";
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (datas, _textStatus, _jqXHR) {
         $("#content").html("");
-        $("#content").append(data);
+        $("#content").append(datas);
 
         // Config init calendar
         $('input[id^=txtInspectionDate_]').each(function() {
@@ -115,12 +115,12 @@ function acceptRemoveColumn() {
     let url = "/pattern_team_inspection/destroy/" + inspection_id;
     let method = "DELETE";
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#toast2'), 2000, true);
         loadInspectionData(param);
     };
 
-    let failCallback = function (jqXHR, _textStatus, _jqXHR) {
+    let failCallback = function (_jqXHR, _textStatus, _jqXHR) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#messageSystemError').val());
     };
@@ -154,7 +154,7 @@ function saveInspectionData() {
     let url = "/pattern_team_inspection/save";
     let method = "POST";
     let param = setParam();
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#toast1'), 2000, true);
         // Load data
         if ($("#hidTeamId").val()){
@@ -163,7 +163,7 @@ function saveInspectionData() {
             loadInspectionData(param);
         }
     };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+    let failCallback = function (_jqXHR, _textStatus, _errorThrown) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#messageSystemError').val());
     };
@@ -214,11 +214,11 @@ function validateAndGetData() {
 
             // Detail data
             let details = {};
-            $('input[id^=hidLocationId_]').each(function(i, l) {
+            $('input[id^=hidLocationId_]').each(function(_i, l) {
                 let location_id = $(l).val();
                 let area_location_index = $('#hidAreaLocationIndex_'+location_id).val();
                 let rows = {};
-                $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(k, e) {
+                $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(_k, e) {
                     let method = $(e).data('5s');
                     let point_value = $(e).find(":selected").val();
                     rows[method] = point_value;
@@ -259,7 +259,7 @@ function onChangeDataDepartment() {
 /***************
  * Open Evidence
  ***************/
-function openEvidenceDialog(inspection_id) {
+function openEvidenceDialog(_inspection_id) {
     // todo:
     alert("open evidence");
 }
@@ -491,7 +491,6 @@ $(function () {
     // Save click
     $("#btnSave").click(function () {
         $("#modalSaveInspectionData").modal("show");
-        // saveInspectionData();
     });
 
     // Add column click

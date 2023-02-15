@@ -375,7 +375,7 @@ function hideMenuInit() {
 --------------------- */
 window.dialogModalHide = function (dialog, form) {
     if ($(form).length) {
-        $(dialog).on('hide.bs.modal', function (e) {
+        $(dialog).on('hide.bs.modal', function () {
             // reset form
             $(form).removeClass('was-validated');
             $(form + ' .form-control').val('').removeClass('is-invalid');

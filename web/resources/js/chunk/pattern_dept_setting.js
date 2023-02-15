@@ -8,7 +8,7 @@ var department_id = null;
 var loginCompid = null;
 // Onchange 5S methods 改善ポイントの選択
 window.loadData = function() {
-    let params = {
+    let data = {
         selected_5s: JSON.stringify(selected_5s),
         id: $('#hidPatternId').val()
     };
@@ -16,7 +16,7 @@ window.loadData = function() {
     $.ajax({
         url: "/pattern_detail_generate_area/",
         type: "GET",
-        data: params,
+        data: data,
         async: false
     })
     .done(function (res) {
@@ -25,7 +25,7 @@ window.loadData = function() {
             $('#countRows').html($('#hidTotalRows').val());
         }
     })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
+    .fail(function (_jqXHR, _textStatus, _errorThrown) {
         // show errors
 
     })
@@ -48,9 +48,9 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         department_id: $('#departmentId').find(':selected').val(),
         company_id: compId,
     }
-    let params = isFree ? freeData : {data: data} ;
+    let paramDatas = isFree ? freeData : {data: data} ;
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
             location.replace(document.referrer);
@@ -64,7 +64,7 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
             $('.invalid-feedback').text(msgJson.message);
         }
     };
-    runAjax(url, method, params, doneCallback, failCallback, null, true);
+    runAjax(url, method, paramDatas, doneCallback, failCallback, null, true);
 }
 
 /**
@@ -168,7 +168,7 @@ window.loadCompany = function(id) {
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         let html = '';
-        data.forEach(function callback(e, index) {
+        data.forEach(function callback(e, _index) {
                 if(e.id == id) {
                     html += '<option value="' + e.id + '" data-mode5s="'+ e.mode_5s+ '" selected>' + e.name + '</option>';
                 } else {
@@ -216,7 +216,7 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
 
     let method = "GET";
 
-    let params = {
+    let paramDatas = {
         new: !mode ? 1 : -1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
         total_rows: $("#table-content tbody").find("tr").length,
@@ -242,7 +242,7 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
         $("#modalAddInspectionPoint").modal('hide');
     };
 
-    runAjax(url, method, params, doneCallback, failCallback, alwaysCallback, false);
+    runAjax(url, method, paramDatas, doneCallback, failCallback, alwaysCallback, false);
 }
 
 window.initLoadPage = function() {
@@ -263,7 +263,6 @@ window.initLoadPage = function() {
     if (companyId) {
         $('#companyOptionId option[value='+companyId+']').prop("selected", true);
     }
-    // let patternId = urlParams.get('patternId');
     let selectedCompId = loginCompid == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
     // Edit mode
     if (hidPatternId) {
@@ -276,9 +275,9 @@ window.initLoadPage = function() {
         $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
-            let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
-            ispattern = ispattern == "true" ? true : false;
-            let isDept = ispattern ? null : 1;
+            let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
+            isPattern = isPattern == "true" ? true : false;
+            let isDept = isPattern ? null : 1;
             if (selectedPatId) {
                 loadDataPreview(isDept, selectedPatId);
                 $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
@@ -343,11 +342,6 @@ $(function () {
     configCalendarPattern();
 
     select5S();
-
-    // Load data for edit
-    if ($('#hidPatternId').val()) {
-        // loadData();
-    }
 
     // Add New Area
     $("#openModal").click(function () {

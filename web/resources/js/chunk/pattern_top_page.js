@@ -65,8 +65,8 @@ function renderTeamChart(deptId, teamId) {
         let avgPointArr = '';
         if (avtPoints) {
             avgPointArr = $(e).val().split('|');
-            avgPointArr.forEach(function (value, i) {
-                let key = "s" + (i+1).toString();
+            avgPointArr.forEach(function (value, index) {
+                let key = "s" + (index+1).toString();
                 mapObj.get(key).push(parseInt(value));
             });
         }
@@ -95,8 +95,8 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
         })
         // Create data structure for rendering bar chart from data structure of radar chart
         avgPointArr.forEach(function (value, i) {
-          let key = "s" + (i+1).toString();
-          deptMapBarData.get(key).push(parseInt(value));
+          let keyString = "s" + (i+1).toString();
+          deptMapBarData.get(keyString).push(parseInt(value));
         });
       }
 
@@ -114,7 +114,7 @@ function loadCharts() {
   // Get hidCountInspection value
   let countMaxInspection = $('#hidCountInspection').val();
   // Loop all Depts
-  $("input[id*=hidDeptId_]").each(function(i,d){
+  $("input[id*=hidDeptId_]").each(function(_i,d){
     // Get dept value
     let deptId = $(d).val();
 
@@ -131,7 +131,7 @@ function loadCharts() {
     deptMapBarData.set("s5", []);
 
     /** Loop all Teams in 1 Dept **/
-    $("input[id^=hid_deptId_"+deptId+"_teamId_]").each(function(i,t){
+    $("input[id^=hid_deptId_"+deptId+"_teamId_]").each(function(_i,t){
         let teamId = $(t).val();
         // Load chart for each team
         renderTeamChart(deptId, teamId);
@@ -171,9 +171,9 @@ function renderView(compId) {
 
     let data = {company_id : compId}
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (resData, _textStatus, _jqXHR) {
         $('#topPageChart').empty();
-        $('#topPageChart').html(data);
+        $('#topPageChart').html(resData);
         loadCharts();
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {

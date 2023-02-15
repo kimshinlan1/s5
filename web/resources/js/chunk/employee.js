@@ -186,7 +186,7 @@ window.loadDeptListByComp = function(id, deptID = null) {
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function(_jqXHR, textStatus, errorThrown) {
             console.log(textStatus + ': ' + errorThrown);
         },
     });
@@ -220,8 +220,8 @@ window.loadDeptListByComp = function(id, deptID = null) {
     });
 
     $("#companySearchTable").on('change', function() {
-        let compID = $("#companySearchTable").find(":selected").val();
-        loadDeptListByComp(compID);
+        let compId = $("#companySearchTable").find(":selected").val();
+        loadDeptListByComp(compId);
     });
 
     if ($("#errorDialog .modal-body .error-messages").length) {
@@ -245,7 +245,7 @@ window.loadDeptListByComp = function(id, deptID = null) {
             type: "POST",
             data: obj,
         })
-            .done(function (_data, _textStatus, _jqXHR) {
+            .done(function (_value, _textStatus, _jqXHR) {
                 $("#employeeTable").bootstrapTable("refresh");
             })
             .fail(function (jqXHR, _textStatus, _errorThrown) {
@@ -378,15 +378,6 @@ window.loadDeptListByComp = function(id, deptID = null) {
      *    Event input enter of field name employee
      --------------------- */
      $("#employeeName").on('keyup', function (e) {
-        if (e.key === 'Enter' || e.keyCode === 13) {
-            window.saveData();
-        }
-    });
-
-    /** ------------------
-     *    Event input enter of field email employee
-     --------------------- */
-    $("#employeeEmail").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             window.saveData();
         }

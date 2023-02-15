@@ -9,7 +9,7 @@ var params = {};
 window.loadData = function() {
     showLoading();
 
-    let params = {
+    let paramDatas = {
         selected_5s: JSON.stringify(selected_5s),
         id: $('#hidPatternId').val()
     };
@@ -24,18 +24,18 @@ window.loadData = function() {
         }
     };
 
-    runAjax(url, method, params, doneCallback);
+    runAjax(url, method, paramDatas, doneCallback);
 }
 
 // Save pattern
 window.saveAjax = function(data) {
-    let params = {
+    let paramDatas = {
         data: data
     };
     let url = "/pattern_save";
     let method = "POST";
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         // Notify
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
@@ -51,7 +51,7 @@ window.saveAjax = function(data) {
         }
     };
 
-    runAjax(url, method, params, doneCallback, failCallback);
+    runAjax(url, method, paramDatas, doneCallback, failCallback);
 }
 
 function auto_grow(element) {
@@ -80,7 +80,7 @@ function cancelBackPage() {
 function addAreaToTable() {
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
-    let params = {
+    let paramDatas = {
         new: 1, // case add new (remove in case edit)
         selected_5s: JSON.stringify(selected_5s),
         total_rows: $("#table-content tbody").find("tr").length,
@@ -103,7 +103,7 @@ function addAreaToTable() {
         $("#modalAddInspectionPoint").modal('hide');
     };
 
-    runAjax(url, method, params, doneCallback, failCallback, alwaysCallback);
+    runAjax(url, method, paramDatas, doneCallback, failCallback, alwaysCallback);
 }
 
 /**

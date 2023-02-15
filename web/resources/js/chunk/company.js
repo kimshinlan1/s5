@@ -162,7 +162,7 @@ window.saveData = function () {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.noStyle = function(value, row, index) {
+window.noStyle = function() {
     let width = '20%';
     return {
         css: {
@@ -174,7 +174,7 @@ window.noStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.nameStyle = function(value, row, index) {
+window.nameStyle = function() {
     let width = '25%';
     return {
         css: {
@@ -186,7 +186,7 @@ window.nameStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.modeStyle = function(value, row, index) {
+window.modeStyle = function() {
     let width = '45%';
     return {
         css: {

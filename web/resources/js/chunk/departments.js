@@ -49,7 +49,7 @@ window.department5SChecklistActions = function (_value, row, _index) {
         .done(function (_data, _textStatus, _jqXHR) {
             pattern_list_data = _data;
         })
-        .fail(function (jqXHR, _textStatus, _errorThrown) {
+        .fail(function (_jqXHR, _textStatus, _errorThrown) {
             // SHOW ERRORS
             // failAjax(jqXHR, _textStatus, _errorThrown);
         });
@@ -83,7 +83,7 @@ function initPatternListData() {
 /** ------------------
   *    Add classes / css for 5s pattern checklist column
 --------------------- */
-window.checkListStyle = function(value, row, index) {
+window.checkListStyle = function() {
     let width = isIpad() ? '20%' : '25%';
     return {
         classes: 'text-center',
@@ -96,7 +96,7 @@ window.checkListStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.idStyle = function(value, row, index) {
+window.idStyle = function() {
     let width = isIpad() ? '10%' : '20%';
     return {
         css: {
@@ -108,7 +108,7 @@ window.idStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for department name column
 --------------------- */
-window.departmentStyle = function(value, row, index) {
+window.departmentStyle = function() {
     let width = isIpad() ? '30%' : '40%';
     return {
         css: {
@@ -120,7 +120,7 @@ window.departmentStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for button column
 --------------------- */
-window.buttonStyle = function(value, row, index) {
+window.buttonStyle = function() {
     let width = isIpad() ? '40%' : '20%';
     return {
         css: {
@@ -153,7 +153,7 @@ window.unbindDeptPattern = function(patternId, deptId) {
         pattern_id: patternId
     };
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($("#successUpdateDialog"), 2000, true);
         setTimeout(() => {
             location.reload();
@@ -185,7 +185,7 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
         company_id: $('#companyListID').find(':selected').val()
     };
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($("#successUpdateDialog"), 2000, true);
         setTimeout(() => {
             location.reload();
@@ -495,7 +495,7 @@ window.saveDataEmployee = function () {
 
             $('#teamDepartment').html(html);
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function(textStatus, errorThrown) {
             console.log(textStatus + ': ' + errorThrown);
         },
     });
@@ -582,7 +582,7 @@ window.saveDataEmployee = function () {
     /*---------------------
      * Show Registration Team Dialog
      ---------------------- */
-     $("#teamEditDialog").on("show.bs.modal", function (e) {
+     $("#teamEditDialog").on("show.bs.modal", function () {
         clearDialog();
         let id = $('#companyListID').val();
         $("#teamEditDialog .modal-title.edit").hide();
@@ -704,14 +704,6 @@ window.saveDataEmployee = function () {
         }
     });
 
-    /** ------------------
-     *    Event input enter of field email employee
-     --------------------- */
-    $("#employeeEmail").on('keyup', function (e) {
-        if (e.key === 'Enter' || e.keyCode === 13) {
-            window.saveDataEmployee();
-        }
-    });
 
     /** ------------------
     *    Event click row on table department.
