@@ -2,6 +2,8 @@
  * Variable
  */
 const MODE_NEW = 1;
+var radarChart = [];
+var barChart = [];
 
 //////////////////////////////////////////////////////////////////
 
@@ -28,7 +30,7 @@ function gotoInspectionPage(teamId) {
 function loadRadarChart(id, avgPointArr, isDept) {
     let config = configRadarChart(avgPointArr, isDept);
     const ctx = document.getElementById(id);
-    var chart = new Chart(ctx, config);
+    radarChart = new Chart(ctx, config);
 }
 
 /**
@@ -44,8 +46,7 @@ function loadBarChart(id, mapObj, count) {
 
     const ctx = document.getElementById(id);
     ctx.height = 2;
-    // ctx.width = 1;
-    var chart = new Chart(ctx, config);
+    barChart = new Chart(ctx, config);
 }
 
 /**
@@ -53,7 +54,7 @@ function loadBarChart(id, mapObj, count) {
  */
 function renderTeamChart(deptId, teamId) {
     let count = $('#hidCountInspection').val();
-    var mapObj = new Map();
+    let mapObj = new Map();
     mapObj.set("s1", []);
     mapObj.set("s2", []);
     mapObj.set("s3", []);
@@ -111,18 +112,18 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
 
 function loadCharts() {
   // Get hidCountInspection value
-  var countMaxInspection = $('#hidCountInspection').val();
+  let countMaxInspection = $('#hidCountInspection').val();
   // Loop all Depts
   $("input[id*=hidDeptId_]").each(function(i,d){
     // Get dept value
     let deptId = $(d).val();
 
     //Declare data structure for overall dept radar chart
-    var deptMapRadarData = new Map();
-    var countPerInspection = {};
+    let deptMapRadarData = new Map();
+    let countPerInspection = {};
 
     //Declare data structure for overall dept bar chart
-    var deptMapBarData = new Map();
+    let deptMapBarData = new Map();
     deptMapBarData.set("s1", []);
     deptMapBarData.set("s2", []);
     deptMapBarData.set("s3", []);
