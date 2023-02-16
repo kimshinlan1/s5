@@ -57,8 +57,6 @@ Route::group(['middleware' => ['auth']], function () {
         //Pattern detail
         Route::get('/pattern_detail', [PatternDetailController::class, 'index']);
         Route::get('/pattern_detail/{id}', [PatternDetailController::class, 'edit']);
-        // Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
-        // Route::post('/pattern_detail_remove', [PatternDetailController::class, 'removeLocation']);
         Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
 
     });
@@ -139,10 +137,10 @@ Route::group(['middleware' => ['auth']], function () {
         // Team inspection by pattern
         Route::get('/pattern_team_inspection', [PatternTeamInspectionController::class, 'index']);
         Route::get('/pattern_team_inspection/data', [PatternTeamInspectionController::class, 'generateDataHtml']);
+        Route::get('/pattern_team_inspection/evidence', [PatternTeamInspectionController::class, 'getEvidence']);
         Route::get('/pattern_team_inspection/{id}', [PatternTeamInspectionController::class, 'edit']);
         Route::post('/pattern_team_inspection/save', [PatternTeamInspectionController::class, 'saveInspection']);
         Route::delete('/pattern_team_inspection/destroy/{id}', [PatternTeamInspectionController::class, 'destroy']);
-        Route::get('/pattern_team_inspection/evidence', [PatternTeamInspectionController::class, 'getEvidence']);
         Route::get('/pattern_team_inspection/evidence/addblock', [PatternTeamInspectionController::class, 'addBlock']);
 
         // Pattern top page

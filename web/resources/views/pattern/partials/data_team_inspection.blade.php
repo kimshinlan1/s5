@@ -196,7 +196,7 @@
                 @endif
 
                 {{-- Point --}}
-                <td id="level_tooltip" style="">
+                <td id="level_tooltip">
                     {{ Constant::NAME_5S[$row['5s']] }}
                 </td>
                 {{-- Point Value --}}

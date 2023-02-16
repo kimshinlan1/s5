@@ -87,7 +87,7 @@
     "=====  BLOCK_USER_END =====": "",
 
     "=====  BLOCK_DEPARTMENT_START =====": "",
-    "Department_Management": "部門",
+    "Department_Management": "部門管理",
     "Department": "部門",
     "Department_ID": "部門ID",
     "Please enter your department information": "部門情報を入力してください。",

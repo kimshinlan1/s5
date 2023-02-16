@@ -105,15 +105,15 @@ $(function() {
         $('#userChangePasswordForm .form-control').removeClass('is-invalid');
         $('#userChangePasswordForm .invalid-feedback').html('');
         // validate
-        var userChangePwdForm = $('#userChangePasswordForm')[0];
+        let userChangePwdForm = $('#userChangePasswordForm')[0];
         if (!userChangePwdForm || !userChangePwdForm.checkValidity()) {
             $('#userChangePasswordForm').addClass('was-validated');
             return;
         }
 
         // get data from dialog.
-        var id =  $('#hidAuthUserId').val();
-        var userData = {
+        let id =  $('#hidAuthUserId').val();
+        let userData = {
             id: $('#hidAuthUserId').val(),
             old_password: $('#userOldPassword').val(),
             new_password: $('#userNewPassword').val(),
