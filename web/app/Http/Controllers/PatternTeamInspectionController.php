@@ -86,14 +86,15 @@ class PatternTeamInspectionController extends Controller
 
 
         $data = [];
-        $key = "pattern_data_{$deptId}_{$teamId}";
-        if (!Cache::get($key)) {
+        // Pending cache
+        // $key = "pattern_data_{$deptId}_{$teamId}";
+        // if (!Cache::get($key)) {
             $data = $this->service->getPatternDataByDept($deptId);
             $data = json_decode(json_encode($data), true);
-            Cache::put($key, $data);
-        } else {
-            $data = Cache::get($key);
-        }
+        //     Cache::put($key, $data);
+        // } else {
+        //     $data = Cache::get($key);
+        // }
 
 
 

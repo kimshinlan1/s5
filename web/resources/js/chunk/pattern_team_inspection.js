@@ -225,7 +225,15 @@ function validateAndGetData() {
                 });
                 details[location_id] = rows;
             });
-            inspection['data'] = details;
+
+            let pointAvg = [];
+            let pointAvgS1 = document.getElementById('point_avg_1s_'+id).textContent;
+            let pointAvgS2 = document.getElementById('point_avg_2s_'+id).textContent;
+            let pointAvgS3 = document.getElementById('point_avg_3s_'+id).textContent;
+            let pointAvgS4 = document.getElementById('point_avg_4s_'+id).textContent;
+            let pointAvgS5 = document.getElementById('point_avg_5s_'+id).textContent;
+            pointAvg = [pointAvgS1 + '|' + pointAvgS2 + '|' + pointAvgS3 + '|' + pointAvgS4 + '|' + pointAvgS5];
+            inspection['data'] = {details, pointAvg};
 
             // Add params
             params.push(inspection);

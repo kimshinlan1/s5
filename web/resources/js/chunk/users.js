@@ -76,8 +76,22 @@ window.getUserTableList = function (params) {
 /** ------------------
  *    customCell
  --------------------- */
- window.customCell = function (_value, row, _index) {
-    return '<a id="alinkId'+_index+'" href="#" data-toggle="popover" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
+//  window.customCell = function (_value, row, _index) {
+//     return '<a id="alinkId'+_index+'" href="#" data-toggle="popover" style="color: black; text-decoration: none;">' + row['company']['name'] + '</a>'
+// }
+window.customCell = function (_value, row, _index) {
+    let deptList = row['company']['departments'];
+    let menu = '<div id="subMenu' + _index + '" class="collapse">';
+    let tagString = '';
+    deptList.forEach(element => {
+        tagString += '<a class="list-group-item list-group-item-action style-list" href="/employee?companyId='+element.company_id+'&deptId='+element.id+'" style="color: black; text-decoration: none;background-color: unset; border: unset;">' + element.name + '</a>';
+
+    });
+    menu += tagString + '</div>';
+
+    return '<a id="alinkId'+_index+'" href="#" data-toggle="collapse" style="color: black; text-decoration: none;">'
+    + row['company']['name'] + '<i class="fa fa-caret-right" aria-hidden="true" id="arrow' + _index + '" style="float: right;line-height: inherit;"></i></a><br>' + menu;
+
 }
 
 /** ------------------
@@ -170,24 +184,24 @@ $(function(){
         escape:"true",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $('#userTable'))
-            $('#userTable > tbody > tr').each(function(index, tr) {
-                let depts = data.rows[index]['company']['departments'];
-                let style = depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
-                let html = '<div id="popover-content" style="' + style + '"><ul class="list-group custom-popover">';
-                depts.forEach(element => {
-                    html += '<li class="list-group-item"><a href="/employee?companyId='+element.company_id+'&deptId='+element.id+'" style="color: black; text-decoration: none;">' + element.name + '</a></li>';
-                });
-                html += '</ul></div>';
+            // $('#userTable > tbody > tr').each(function(index, tr) {
+            //     let depts = data.rows[index]['company']['departments'];
+            //     let style = depts.length > 5 ? 'overflow: auto; height: 200px;' : '';
+            //     let html = '<div id="popover-content" style="' + style + '"><ul class="list-group custom-popover">';
+            //     depts.forEach(element => {
+            //         html += '<li class="list-group-item"><a href="/employee?companyId='+element.company_id+'&deptId='+element.id+'" style="color: black; text-decoration: none;">' + element.name + '</a></li>';
+            //     });
+            //     html += '</ul></div>';
 
-                $('#alinkId' + index).popover({
-                    html: true,
-                    sanitize: false,
-                    placement: 'bottom',
-                    title : $('#commonDepartment').val(),
-                    trigger: 'click',
-                    content: html,
-                });
-            });
+            //     $('#alinkId' + index).popover({
+            //         html: true,
+            //         sanitize: false,
+            //         placement: 'bottom',
+            //         title : $('#commonDepartment').val(),
+            //         trigger: 'click',
+            //         content: html,
+            //     });
+            // });
             totalRowNumber = document.getElementById("userTable").rows.length;
 
         },
@@ -345,15 +359,20 @@ $(function(){
     });
 
     $("#userTable").on("click-row.bs.table", function (e, value, row, $element) {
-        let curIndex = row.index();
+        // let curIndex = row.index();
 
         if ($element == "company.name") {
             for (let index = 0; index < totalRowNumber; index++) {
-                if(curIndex != index) {
-                    $('#alinkId' + index).popover('hide');
-                } else {
-                    $('#alinkId' + index).popover('show');
-                }
+                // if(curIndex != index) {
+                //     $('#alinkId' + index).popover('hide');
+                // } else {
+                //     $('#alinkId' + index).popover('show');
+                // }
+
+                $('#alinkId' + index).off().on('click', function() {
+                    $('#subMenu' + index).collapse('toggle');
+                    $('#arrow' + index).toggleClass("fa-caret-right fa-caret-down");
+                })
             }
         }
     });
