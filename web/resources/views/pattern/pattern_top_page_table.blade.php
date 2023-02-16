@@ -1,7 +1,7 @@
 <?php
 $width_data = '250px';
 ?>
-<div style="" id="scrolling">
+<div id="scrolling">
     <div style="width: 100%; height: auto;">
         @foreach ($inspectionData as $inspection)
             <table id="topPageTable" class="table table-bordered">
@@ -60,8 +60,8 @@ $width_data = '250px';
                                 id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}"
                                 style="display:none">
                                 <td colspan="{{ $countInspection }}" style="padding-left: 1rem;">
-                                    <strong style="">{{ __('Team') }}: {{ $team['team_name'] }}</strong>
-                                    <input style="" type="button" class="btn-info rounded-3" id="btnInput"
+                                    <strong>{{ __('Team') }}: {{ $team['team_name'] }}</strong>
+                                    <input type="button" class="btn-info rounded-3" id="btnInput"
                                         value="{{ __('TopPage_Evidence_Button') }}"
                                         onclick="gotoInspectionPage('{{ $team['team_id'] }}')" />
                                 </td>
@@ -99,11 +99,11 @@ $width_data = '250px';
 
                                     <td style="text-align: center;">
                                         @if ($countImgs)
-                                            <input style="" type="button" class="btn-primary rounded-3"
+                                            <input type="button" class="btn-primary rounded-3"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
                                                 onclick="" />
                                         @else
-                                            <input style="" type="button" class="btn-secondary rounded-3"
+                                            <input type="button" class="btn-secondary rounded-3"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
                                                 onclick="" />
                                         @endif

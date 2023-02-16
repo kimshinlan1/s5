@@ -17,7 +17,7 @@ const TEAM_CHART_COLOR = 'rgb(54, 162, 235, 0.5)';
 
 // Select 5S - 改善ポイントの選択
 window.select5S = function (ele) {
-    let selected_5s = [];
+    selected_5s = [];
     $('.check_5s').find('input').each(function(){
         if ($(this).is(':checked')) {
             selected_5s.push($(this).val());
@@ -536,7 +536,7 @@ function cancelRemoveLocation() {
  * Config create/update date with calendar
  */
 function configCalendarPattern() {
-    let updatedAtChanged = '';
+    updatedAtChanged = '';
     $('#dateCreate').datepicker({
         autoclose: true,
         dateFormat: 'yy年mm月dd日',
