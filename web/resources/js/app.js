@@ -545,8 +545,10 @@ $(function(){
     $('#subDeptMenu').click(function(e) {
         if ($('#subDeptMenu').hasClass('active')) {
             e.preventDefault();
+            sessionStorage.setItem("mainMenu1", "show");
             $('#extraSubDeptMenuId').collapse('toggle');
         }
+        sessionStorage.setItem("mainMenu1", "show");
     })
 
     /** ------------------ Menu 1 ------------------ */

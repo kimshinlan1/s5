@@ -237,7 +237,6 @@ window.btnStyle = function() {
     jQuery
 ==============================*/
 $(function () {
-    $('#subManagementMenuId').collapse('show');
     $("#companyTable").bootstrapTable({
         ajax: "getCompanyTableList",
         pagination: "true",

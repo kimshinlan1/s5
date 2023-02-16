@@ -188,7 +188,6 @@ window.showDeptList = function(index) {
 	jQuery
 ============================== */
 $(function(){
-    $('#subManagementMenuId').collapse('show');
     $('#userTable').bootstrapTable({
         ajax: "getUserTableList",
         pagination: "true",
