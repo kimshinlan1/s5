@@ -4,7 +4,10 @@
 ****************************************************/
 "use strict";
 
-var totalRowNumber = 0;
+/* ==============================
+	Common Variables
+============================== */
+let totalRowNumber = 0;
 
 /* ==============================
 	Global Functions
@@ -89,9 +92,19 @@ window.customCell = function (_value, row, _index) {
     });
     menu += tagString + '</div>';
 
-    return '<a id="alinkId'+_index+'" href="#" data-toggle="collapse" style="color: black; text-decoration: none;">'
+    return '<a id="alinkId'+_index+'" onclick="showDeptList('+_index+');" href="#" data-toggle="collapse" style="color: black; text-decoration: none; display: inline-block; width: 100%;">'
     + row['company']['name'] + '<i class="fa fa-caret-right" aria-hidden="true" id="arrow' + _index + '" style="float: right;line-height: inherit;"></i></a><br>' + menu;
 
+}
+
+/** ------------------
+ *    show department list when click on company name cell
+ --------------------- */
+window.showDeptList = function(index) {
+    $('body').off().on('click', '#alinkId' + index, function() {
+        $('#subMenu' + index).collapse('toggle');
+        $('#arrow' + index).toggleClass("fa-caret-right fa-caret-down");
+    })
 }
 
 /** ------------------
@@ -175,6 +188,7 @@ window.customCell = function (_value, row, _index) {
 	jQuery
 ============================== */
 $(function(){
+    $('#subManagementMenuId').collapse('show');
     $('#userTable').bootstrapTable({
         ajax: "getUserTableList",
         pagination: "true",
@@ -203,7 +217,9 @@ $(function(){
             //     });
             // });
             totalRowNumber = document.getElementById("userTable").rows.length;
-
+            for (let index = 0; index < totalRowNumber; index++) {
+                $('#alinkId' + index).bind('click');
+            }
         },
     });
 
@@ -355,25 +371,6 @@ $(function(){
     $("#userEditDialog input").keypress(function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             window.saveData();
-        }
-    });
-
-    $("#userTable").on("click-row.bs.table", function (e, value, row, $element) {
-        // let curIndex = row.index();
-
-        if ($element == "company.name") {
-            for (let index = 0; index < totalRowNumber; index++) {
-                // if(curIndex != index) {
-                //     $('#alinkId' + index).popover('hide');
-                // } else {
-                //     $('#alinkId' + index).popover('show');
-                // }
-
-                $('#alinkId' + index).off().on('click', function() {
-                    $('#subMenu' + index).collapse('toggle');
-                    $('#arrow' + index).toggleClass("fa-caret-right fa-caret-down");
-                })
-            }
         }
     });
 });

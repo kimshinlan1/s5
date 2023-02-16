@@ -542,6 +542,12 @@ $(function(){
     $('#menu5sId').click(function() {
         $('#submenu5sId').collapse('toggle');
     })
+    $('#subDeptMenu').click(function(e) {
+        if ($('#subDeptMenu').hasClass('active')) {
+            e.preventDefault();
+            $('#extraSubDeptMenuId').collapse('toggle');
+        }
+    })
 
     /** ------------------ Menu 1 ------------------ */
     $('#subManagementMenuId').on("shown.bs.collapse", function () {
@@ -561,6 +567,26 @@ $(function(){
         $('#subManagementMenuId').collapse('show');
     } else {
         $('#subManagementMenuId').collapse('hide');
+    }
+
+    /** ------------------ Sub Dept Menu 1 ------------------ */
+    $('#extraSubDeptMenuId').on("shown.bs.collapse", function () {
+        sessionStorage.setItem("subMenu1", "show");
+        $('#subIcon1').addClass("fa-caret-down");
+        $('#subIcon1').removeClass("fa-caret-right");
+    });
+
+    $('#extraSubDeptMenuId').on("hide.bs.collapse", function () {
+        sessionStorage.setItem("subMenu1", "hide");
+        $('#subIcon1').toggleClass("fa-caret-right fa-caret-down");
+    });
+
+    const subMenu1 = sessionStorage.getItem("subMenu1");
+
+    if (subMenu1 == "show") {
+        $('#extraSubDeptMenuId').collapse('show');
+    } else {
+        $('#extraSubDeptMenuId').collapse('hide');
     }
 
     /** ------------------ Menu 2 ------------------ */
