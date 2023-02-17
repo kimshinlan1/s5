@@ -343,13 +343,11 @@
                         <div class="input-group">
                             <div class="col">
                                 <input type="text" class="form-control" placeholder="分類名" autofocus
-                                    id="category" required="required" oninvalid="InvalidMsgMyFormSkillMap(this);"
-                                    oninput="InvalidMsgMyFormSkillMap(this);" onkeyup="onKeyUp(this)"/>
+                                    id="category" required="required" />
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
-                                    id="rowTable" required="required"
-                                    oninvalid="InvalidMsgMyFormSkillMap(this);" oninput="InvalidMsgMyFormSkillMap(this);" onkeyup="onKeyUp(this)"/>
+                                    id="rowTable" required="required" />
                             </div>
                         </div>
                         <button type="submit" name="submit" style="display: none;" />
