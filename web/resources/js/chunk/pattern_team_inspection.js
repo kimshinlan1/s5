@@ -494,7 +494,7 @@ $(function () {
         let data = setParam();
         // Check empty
         if (!data.team_id) {
-            $('#errorLabel').html('※この部門のチームを作成してください。').show();
+            $('#errorLabel').show();
             $('#tableDetailInspection').hide();
             $('#btnSave').hide();
             $('#btnAdd').hide();
