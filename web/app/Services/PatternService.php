@@ -121,7 +121,7 @@ class PatternService extends BaseService
      *
      * @return object
      */
-    public function destroyPatternByMode($id, $pageDest)
+    public function destroyPatternByMode($id, $compId, $pageDest)
     {
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);

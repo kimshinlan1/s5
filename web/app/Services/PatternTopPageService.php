@@ -48,8 +48,8 @@ class PatternTopPageService extends BaseService
             WHERE inspection_images.inspection_id = $table.id
             ) as count_evidence")
         ])
-        ->orderBy("$table.inspection_date");
-
+        ->orderBy("$table.inspection_date")
+        ->orderBy("$table.id");
         if ($teamId) {
             $sql->where('inspection.team_id', $teamId)->whereNotNull('avg_point');
         }
