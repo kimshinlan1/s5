@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @push('css')
-    <link href= "{!! url('assets/jquery-ui-themes-1.8.24/themes/base/jquery-ui.css') !!}" rel="Stylesheet"/>
     <link href="{{ mix('/css/skillmap.css') }}" rel="stylesheet"/>
 @endpush
 

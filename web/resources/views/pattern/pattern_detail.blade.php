@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @push('css')
-    <link href="{!! url('assets/jquery/css/jquery-ui.css') !!}" rel="Stylesheet"
-        type="text/css"/>
     <link href="{{ mix('/css/pattern.css') }}" rel="stylesheet"/>
 @endpush
 
