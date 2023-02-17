@@ -114,7 +114,6 @@ window.updateLocationName = function(ele, area_id, location_id) {
 
 // Select location and high-light
 window.selectLocationToDelete = function(ele, area_id, location_id) {
-
     if ($(ele).find('input').is(":focus")) {
         return;
     }
@@ -364,7 +363,7 @@ function InvalidMsgMyForm(textbox) {
         textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
         flag = true;
     } else if (textbox.placeholder == (CONFIG.get("PLACE_HOLDER_POINT"))) {
-        if (isNaN(parseInt(textbox.value)) || (!/^[0-9]+$/.test(textbox.value))) {
+        if (isNaN(textbox.value) || (!/^[0-9]+$/.test(textbox.value))) {
             textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
             flag = true;
         } else {
