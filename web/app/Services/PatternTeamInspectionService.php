@@ -196,7 +196,7 @@ class PatternTeamInspectionService extends BaseService
          */
 
         foreach ($dataList as $data) {
-            $id = is_int($data['info']['inspection_id']) ? $data['info']['inspection_id'] : null;
+            $id = is_numeric($data['info']['inspection_id']) ? $data['info']['inspection_id'] : null;
 
             // Step: todo: Remove old data
             if ($data['info']['inspection_id']) {

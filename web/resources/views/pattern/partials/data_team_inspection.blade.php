@@ -12,8 +12,9 @@
 
 <div style="width: 100%; height: auto; overflow: auto; ">
   <form id="formFormsInput">
+    <label id="errorLabel" style="font-size: 1.6rem; color: red;"></label>
     {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
-    <table id="" class="table table-bordered">
+    <table id="tableDetailInspection" class="table table-bordered">
 
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
