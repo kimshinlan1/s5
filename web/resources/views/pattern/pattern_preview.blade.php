@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @push('css')
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
-        type="text/css"/>
     <link href="{{ mix('/css/pattern.css') }}" rel="stylesheet"/>
 @endpush
 
