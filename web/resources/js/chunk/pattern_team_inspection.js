@@ -155,7 +155,8 @@ function saveInspectionData() {
     let method = "POST";
     let param = setParam();
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        showToast($('#toast1'), 2000, true);
+        $('html, body').animate({scrollTop:0}, 100);
+        showToast($('#toast1'), 2500, true);
         // Load data
         if ($("#hidTeamId").val()){
             window.location = "/pattern_top_page";
@@ -263,6 +264,51 @@ function onChangeDataDepartment() {
         }
     });
 }
+
+/**************************
+ * Check empty dept pattern
+ **************************/
+function checkEmptyDeptPattern() {
+    let department_id = $('#selectDeptList').val();
+    let team_id = $('#selectTeamList').val();
+    $.ajax({
+        type: 'GET',
+        url: '/departments/getDeptPattern',
+        data: { department_id: department_id },
+        success: function (res) {
+            let deptPatternId = res.dept_pattern_id;
+            let data = setParam();
+            if (deptPatternId && team_id) {
+                $('#errorLabelNoDeptPattern').hide();
+                $('#errorLabelNoTeam').hide();
+                $('#tableDetailInspection').show();
+                $('#btnSave').show();
+                $('#btnAdd').show();
+                // Load data
+                loadInspectionData(data);
+            } else if (!deptPatternId && team_id) {
+                $('#errorLabelNoDeptPattern').show();
+                $('#errorLabelNoTeam').hide();
+                $('#tableDetailInspection').hide();
+                $('#btnSave').hide();
+                $('#btnAdd').hide();
+            } else if (deptPatternId && !team_id) {
+                $('#errorLabelNoDeptPattern').hide();
+                $('#errorLabelNoTeam').show();
+                $('#tableDetailInspection').hide();
+                $('#btnSave').hide();
+                $('#btnAdd').hide();
+            } else {
+                $('#errorLabelNoDeptPattern').show();
+                $('#errorLabelNoTeam').show();
+                $('#tableDetailInspection').hide();
+                $('#btnSave').hide();
+                $('#btnAdd').hide();
+            }
+        }
+    });
+}
+
 
 /***************
  * Open Evidence
@@ -491,21 +537,7 @@ $(function () {
 
     // On change select department
     $('#selectTeamList').change(function () {
-        let data = setParam();
-        // Check empty
-        if (!data.team_id) {
-            $('#errorLabel').show();
-            $('#tableDetailInspection').hide();
-            $('#btnSave').hide();
-            $('#btnAdd').hide();
-        } else {
-            $('#errorLabel').hide();
-            $('#tableDetailInspection').show();
-            $('#btnSave').show();
-            $('#btnAdd').show();
-            // Load data
-            loadInspectionData(data);
-        }
+        checkEmptyDeptPattern();
     });
 
     // Save click

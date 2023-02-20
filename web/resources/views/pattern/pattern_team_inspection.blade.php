@@ -42,22 +42,22 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-start mb-4" style="width: 55%;">
+<div class="d-flex justify-content-start mt-4" style="width: 55%;">
     {{-- Department List --}}
     {{-- Add selectbox --}}
     <div class="mt-1 fs-5" style="padding-right: 50px;">{{ __('Department') }}</div>
     <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Department select" id="selectDeptList" >
     </select>
 </div>
-
-<div class="d-flex justify-content-start mb-4" style="width: 55%;">
+<label id="errorLabelNoDeptPattern" style="font-size: 1.3rem; color: red; margin-left: 5.2rem;">{{ __('TeamInspection_Please_Choose_Pattern_For_This_Department') }}</label>
+<div class="d-flex justify-content-start mt-4" style="width: 55%;">
     {{-- Team List / Team Name --}}
     {{-- Add selectbox --}}
     <div class="mt-1 fs-5" style="padding-right: 15px;">{{ __('Team_Management') }}</div>
     <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
     </select>
 </div>
-<label id="errorLabel" style="font-size: 1.3rem; color: red;">{{ __('TeamInspection_Please_Create_Team_This_Department') }}</label>
+<label id="errorLabelNoTeam" style="font-size: 1.3rem; color: red; margin-left: 5.2rem;">{{ __('TeamInspection_Please_Create_Team_This_Department') }}</label>
 @else
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ $teamName }}{{ __('TeamInspection_5S_Level_Transition') }}</div>

@@ -213,4 +213,18 @@ class DepartmentController extends Controller
         }
         return response()->json($data);
     }
+
+     /**
+     * Returns resource as a  department list.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDeptPattern(Request $request)
+    {
+        $data = $this->service->checkDataDeptPattern($request);
+        return response()->json($data);
+    }
+
 }

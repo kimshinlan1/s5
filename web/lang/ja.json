@@ -260,6 +260,7 @@
     "TeamInspection_Confirm_Delete": "データを削除してよろしいですか。",
     "TeamInspection_5S_Level_Transition": "係　5Sレベル推移",
     "TeamInspection_Please_Create_Team_This_Department": "※この部門のチームを作成してください。",
+    "TeamInspection_Please_Choose_Pattern_For_This_Department": "※この部門のパターンを選択してください。",
     "=====  BLOCK_PATTERN_TEAM_INSPECTION_END =====": "",
 
     "=====  BLOCK_TOPPAGE_START =====": "",
