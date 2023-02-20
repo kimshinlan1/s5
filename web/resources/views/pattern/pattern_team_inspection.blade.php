@@ -57,6 +57,7 @@
     <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
     </select>
 </div>
+<label id="errorLabel" style="font-size: 1.3rem; color: red;">{{ __('TeamInspection_Please_Create_Team_This_Department') }}</label>
 @else
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ $teamName }}{{ __('TeamInspection_5S_Level_Transition') }}</div>

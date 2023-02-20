@@ -463,7 +463,7 @@ $(function () {
             success: function (res) {
                 let html = '';
                 for (let e of res.rows) {
-                    html += '<option value="' + e.id + '">' + e.company['name'] + ' - ' + e.name + '</option>';
+                    html += '<option value="' + e.id + '">' + e.company['name'] + ' - ' + e.name +'</option>';
                 }
                 $('#selectDeptList').html(html);
                 $('#selectDeptList').change();
@@ -492,8 +492,20 @@ $(function () {
     // On change select department
     $('#selectTeamList').change(function () {
         let data = setParam();
-        // Load data
-        loadInspectionData(data);
+        // Check empty
+        if (!data.team_id) {
+            $('#errorLabel').show();
+            $('#tableDetailInspection').hide();
+            $('#btnSave').hide();
+            $('#btnAdd').hide();
+        } else {
+            $('#errorLabel').hide();
+            $('#tableDetailInspection').show();
+            $('#btnSave').show();
+            $('#btnAdd').show();
+            // Load data
+            loadInspectionData(data);
+        }
     });
 
     // Save click
