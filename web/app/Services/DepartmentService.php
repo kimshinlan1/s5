@@ -31,7 +31,7 @@ class DepartmentService extends BaseService
         $limit = $request->input('limit');
         $companyId = $request->input('company_id');
         if ($companyId == null) {
-            return $this->model::with('company:id,name')->paginate($limit);
+            return $this->model::with('company:id,name')->orderBy('company_id')->paginate($limit);
         } else {
             return $this->model::where('company_id', $companyId)->with('company:id,name')->paginate($limit);
         }
@@ -227,5 +227,17 @@ class DepartmentService extends BaseService
         ->with('company:id,name')
         ->with('teams:department_id,id,no,name')
         ->orderBy('id')->get()->toArray();
+    }
+
+     /**
+     * Get list by conditions
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return object
+     */
+    public function checkDataDeptPattern(Request $request)
+    {
+        $departmentId = $request->input('department_id');
+        return $this->model->where('dept_pattern_id', $departmentId)->orderBy('dept_pattern_id')->first();
     }
 }

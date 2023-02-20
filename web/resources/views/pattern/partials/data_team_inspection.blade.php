@@ -13,8 +13,7 @@
 <div style="width: 100%; height: auto; overflow: auto; ">
   <form id="formFormsInput">
     {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
-    <table id="" class="table table-bordered">
-
+    <table id="tableDetailInspection" class="table table-bordered">
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
             <td colspan="3">

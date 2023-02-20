@@ -793,49 +793,56 @@ function createNewRow(event) {
  * Event validate myForm
  */
 function validateMyFormSkillMap() {
-    $('#myForm button[type="submit"]').click();
-
-    // Update after upgrade version bootstrap
-    if (validity) {
-        $("#exampleModalCenter").find('#btnModalCategoryAdd').attr('data-dismiss', 'modal');
+    // Check
+    if (InvalidMsgMyFormSkillMap($('#category')[0]) && InvalidMsgMyFormSkillMap($('#rowTable')[0])) {
+        $('#myForm button[type="submit"]').click();
     }
 
-    // $("#exampleModalCenter").modal('hide');
+    // Show validate mess if err or close modal
+    if (!($('#category')[0]).checkValidity() || !($('#rowTable')[0]).checkValidity()) {
+        $('#myForm')[0].reportValidity();
+    } else {
+        // Close modal with valid dialog
+        $("#exampleModalCenter").find('#btnModalCategoryAdd').attr('data-dismiss', 'modal');
+    }
 }
 
 /**
  * Validate my form
  * @param  {} textbox
  */
-var validity = true;
 function InvalidMsgMyFormSkillMap(textbox) {
+    let result = true;
     if (textbox.value == '') {
         textbox.setCustomValidity(CONFIG.get("SKILL_MAP_REQUIRED"));
-        validity = false;
+        result = false;
     } else if (textbox.validity.patternMismatch) {
         textbox.setCustomValidity(CONFIG.get("SKILL_MAP_FORMAT_NUMBER"));
-        validity = false;
-    } else if (textbox.placeholder == (CONFIG.get("NUMBER_OF_LINES_IN_WORK_NAME")) && !isNaN(parseInt(textbox.value))) {
-        // get number of record current on table list
-        let currentNo = currentNoNumber;
-        currentNo += parseInt(textbox.value);
-        if (currentNo > parseInt(CONFIG.get("MAX_JOB"))) {
-            textbox.setCustomValidity(CONFIG.get("MAXIMUM_OF_100_LINES"));
-            validity = false;
+        result = false;
+    } else if (textbox.placeholder == (CONFIG.get("NUMBER_OF_LINES_IN_WORK_NAME"))) {
+        if (isNaN(textbox.value)) {
+            result = false;
         } else {
-            textbox.setCustomValidity('');
-            validity = true;
+            // get number of record current on table list
+            let currentNo = currentNoNumber;
+            currentNo += parseInt(textbox.value);
+            if (currentNo > parseInt(CONFIG.get("MAX_JOB"))) {
+                textbox.setCustomValidity(CONFIG.get("MAXIMUM_OF_100_LINES"));
+                result = false;
+            } else {
+                textbox.setCustomValidity('');
+                result = true;
+            }
         }
-
     } else if(textbox.placeholder == (CONFIG.get("PLACE_HOLDER_CATEGORY")) &&
         textbox.value.length > parseInt(CONFIG.get("MAX_LENGTH_CATEGORY"))) {
             textbox.setCustomValidity(CONFIG.get("SKILL_MAP_ERROR_MAX_LENGTH"));
-        validity = false;
+            result = false;
     } else {
         textbox.setCustomValidity('');
-        validity = true;
+        result = true;
     }
-    return true;
+    return result;
 }
 
 /**
