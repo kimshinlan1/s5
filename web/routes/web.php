@@ -91,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/departments/comp_list', [DepartmentController::class, 'getDepartmentListByID']);
         Route::post('/departments/unbind_deptpattern', [DepartmentController::class, 'unbindDeptPattern']);
         Route::post('/departments/bind_deptpattern', [DepartmentController::class, 'bindDeptPattern']);
+        Route::get('/departments/getDeptPattern', [DepartmentController::class, 'getDeptPattern']);
 
         // print pdf
         Route::post('/skillmap_pdf/html/', [PdfController::class, 'getHtmlPDF'])->name('skillmap_html');

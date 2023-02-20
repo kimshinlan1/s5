@@ -228,4 +228,16 @@ class DepartmentService extends BaseService
         ->with('teams:department_id,id,no,name')
         ->orderBy('id')->get()->toArray();
     }
+
+     /**
+     * Get list by conditions
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return object
+     */
+    public function checkDataDeptPattern(Request $request)
+    {
+        $departmentId = $request->input('department_id');
+        return $this->model->where('dept_pattern_id', $departmentId)->orderBy('dept_pattern_id')->first();
+    }
 }
