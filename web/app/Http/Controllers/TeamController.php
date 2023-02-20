@@ -12,9 +12,6 @@ class TeamController extends Controller
     /* @var team_service */
     private $service;
 
-    /* @var EmployeeService */
-    private $serviceEmployee;
-
     public function __construct(TeamService $service)
     {
         $this->service = $service;

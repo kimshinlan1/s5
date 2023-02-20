@@ -23,7 +23,6 @@
     @stack('scripts_lib')
 
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script defer>
     $.ajaxSetup({
         headers: {

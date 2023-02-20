@@ -114,7 +114,6 @@ window.updateLocationName = function(ele, area_id, location_id) {
 
 // Select location and high-light
 window.selectLocationToDelete = function(ele, area_id, location_id) {
-
     if ($(ele).find('input').is(":focus")) {
         return;
     }
@@ -166,7 +165,7 @@ window.selectLocationToDelete = function(ele, area_id, location_id) {
 
 // todo: Select method and high-light
 const CLASS_DELETE = "delete";
-window.selectMethodToDelete = function(ele, area_id, location_id, index) {
+window.selectMethodToDelete = function(_ele, area_id, location_id, index) {
     /**
      * Steps:
      *   Remove existed item from {select_location_to_delete}
@@ -222,7 +221,7 @@ window.selectMethodToDelete = function(ele, area_id, location_id, index) {
     // Update rowspan (current - selected)
     let delete_rows = $('[id*='+id+']').find("."+CLASS_DELETE).length;
     let current_rows = $('[id*='+id+']').find('.td_point').length;
-    $("[id*="+id+"]").each(function(i, r) {
+    $("[id*="+id+"]").each(function(_i, r) {
         $(r).find('#hidLocationRowspan').val(current_rows - delete_rows);
     });
 
@@ -239,7 +238,7 @@ window.getValidRows = function() {
         let trid = $(this).attr("id").split('_location_')[0];
         let area_name = $(this).find("#area").val() ? $(this).find("#area").val() : $(this).find("#hidAreaName").val();
         let delete_rows = 0;
-        $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
+        $('[id*='+trid+']').filter('.main_location').each(function(_i, ele) {
             // if: selected to delete
             if ($.inArray($(ele).attr("id"), select_location_to_delete) >= 0) {
                 delete_rows = delete_rows + parseInt($(ele).find("#hidLocationRowspan").val());
@@ -253,12 +252,12 @@ window.getValidRows = function() {
         }
 
         // Loop all valid locations
-        $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
+        $('[id*='+trid+']').filter('.main_location').each(function(_i, ele) {
             if ($.inArray($(ele).attr("id"), select_location_to_delete) < 0) {
 
                 // Loop all rows in location
                 let trid_location = $(ele).attr("id").split('_row_')[0];
-                $('[id*='+trid_location+']').each(function(i, e) {
+                $('[id*='+trid_location+']').each(function(_index, e) {
 
                     // todo: Check if not selected method to delete (!= class "delete")
                     if (!$(e).find('.td_point').hasClass(CLASS_DELETE)) {
@@ -364,10 +363,7 @@ function InvalidMsgMyForm(textbox) {
         textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
         flag = true;
     } else if (textbox.placeholder == (CONFIG.get("PLACE_HOLDER_POINT"))) {
-        if (isNaN(parseInt(textbox.value))) {
-            textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
-            flag = true;
-        } else if (!/^[0-9]+$/.test(textbox.value)) {
+        if (isNaN(textbox.value) || (!/^[0-9]+$/.test(textbox.value))) {
             textbox.setCustomValidity(CONFIG.get("PATTERN_FORMAT_NUMBER"));
             flag = true;
         } else {
@@ -435,7 +431,7 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
 
         // Loop all locations
         let trid = $(this).attr("id").split('_location_')[0];
-        $('[id*='+trid+']').filter('.main_location').each(function(i, ele) {
+        $('[id*='+trid+']').filter('.main_location').each(function(_i, ele) {
             // New location
             // get location name on each row
             let locName = $(ele).find("#location").val();
@@ -453,7 +449,7 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
 
             // Loop all rows in location
             let trid_location = $(ele).attr("id").split('_row_')[0];
-            $('[id*='+trid_location+']').each(function(i, e) {
+            $('[id*='+trid_location+']').each(function(_index, e) {
                 // Case Valid
                 // Add levels in 1 methos 5S (1 row)
                 let row = {};
@@ -461,12 +457,9 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
                     let levelName = $(e).find("#level_"  + cnt).val();
                     // if level is empty
                     if (levelName.trim().length === 0) {
-                        // valid = false;
                         row["level_" + cnt] = "";
-                        // $(e).find("#level_"  + cnt).addClass('is-invalid');
                     } else {
                         row["level_" + cnt] = levelName;
-                        // $(e).find("#level_"  + cnt).removeClass('is-invalid');
                     }
                 }
                 location['rows'][$(e).find("#hid5S").val()] = row;
@@ -672,33 +665,33 @@ function configRadarChart(datasets, colorChart) {
 /******************
  * Config bar chart
  ******************/
-function configBarChart(labels, datasets) {
+function configBarChart(labels, datasets = null, mapObj = null) {
     const data = {
         labels: labels,
         datasets: [
             {
             label: 'S1',
-            data: datasets[0],
+            data: datasets ? datasets[0] : mapObj.get('s1'),
             backgroundColor: 'blue',
             },
             {
             label: 'S2',
-            data: datasets[1],
+            data: datasets ? datasets[1] : mapObj.get('s2'),
             backgroundColor: 'red',
             },
             {
             label: 'S3',
-            data: datasets[2],
+            data: datasets ? datasets[2] : mapObj.get('s3'),
             backgroundColor: 'green',
             },
             {
             label: 'S4',
-            data: datasets[3],
+            data: datasets ? datasets[3] : mapObj.get('s4'),
             backgroundColor: 'purple',
             },
             {
             label: 'S5',
-            data: datasets[4],
+            data: datasets ? datasets[4] : mapObj.get('s5'),
             backgroundColor: 'yellow',
             },
         ]

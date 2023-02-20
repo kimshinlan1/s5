@@ -74,6 +74,32 @@ window.formatter5sMode = function (_value, row, _index) {
 }
 
 /** ------------------
+*    Formater for company name column
+--------------------- */
+window.customCell = function (_value, row, _index) {
+    let deptList = row['departments'];
+    let menu = '<div id="subList' + _index + '" class="collapse">';
+    let tagString = '';
+    deptList.forEach(element => {
+        tagString += '<a class="list-group-item list-group-item-action style-list" href="/employee?companyId='+element.company_id+'&deptId='+element.id+'" style="color: black; text-decoration: none;background-color: unset; border: unset;">' + element.name + '</a>';
+
+    });
+    menu += tagString + '</div>';
+    return '<a id="aDeptLinkId'+_index+'" onclick="showDeptList('+_index+');"  href="#" data-toggle="collapse" style="color: black; text-decoration: none; display: inline-block; width: 100%;">'
+    + row['name'] + '<i class="fa fa-caret-right" aria-hidden="true" id="arrowIcon' + _index + '" style="float: right;line-height: inherit;"></i></a><br>' + menu;
+}
+
+/** ------------------
+ *    show department list when click on company name cell
+ --------------------- */
+ window.showDeptList = function(index) {
+    $('body').off().on('click', '#aDeptLinkId' + index, function() {
+        $('#subList' + index).collapse('toggle');
+        $('#arrowIcon' + index).toggleClass("fa-caret-right fa-caret-down");
+    })
+}
+
+/** ------------------
 *    Clear dialog
 --------------------- */
 window.clearDialog = function () {
@@ -162,7 +188,7 @@ window.saveData = function () {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.noStyle = function(value, row, index) {
+window.noStyle = function() {
     let width = '20%';
     return {
         css: {
@@ -174,7 +200,7 @@ window.noStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.nameStyle = function(value, row, index) {
+window.nameStyle = function() {
     let width = '25%';
     return {
         css: {
@@ -186,7 +212,7 @@ window.nameStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.modeStyle = function(value, row, index) {
+window.modeStyle = function() {
     let width = '45%';
     return {
         css: {
@@ -198,7 +224,7 @@ window.modeStyle = function(value, row, index) {
 /** ------------------
   *    Add classes / css for id column
 --------------------- */
-window.btnStyle = function(value, row, index) {
+window.btnStyle = function() {
     let width = '10%';
     return {
         css: {
@@ -221,6 +247,7 @@ $(function () {
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $("#companyTable"));
         },
+
     });
 
     if ($("#errorDialog .modal-body .error-messages").length) {

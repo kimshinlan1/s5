@@ -6,6 +6,7 @@
 
 @push('scripts')
     <script src="{{ mix('/js/pattern_list.js') }}"></script>
+    <script src="{{ mix('js/pattern_common.js') }}" defer></script>
 @endpush
 
 @section('sidebar')

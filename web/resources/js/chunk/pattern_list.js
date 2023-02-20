@@ -43,7 +43,7 @@ window.patternListTableActions = function (_value, row, _index) {
 /** ------------------
  *    Add styles/classes to button cells
  --------------------- */
-window.cellStyle = function (value, row, index) {
+window.cellStyle = function () {
     return {
         classes: 'justify-content-around',
     }
@@ -108,7 +108,7 @@ $(function () {
     });
 
     // Handle click on row event
-    $('#patternListTable').on('click-cell.bs.table', function (field, value, row, $el) {
+    $('#patternListTable').on('click-cell.bs.table', function (_field, _value, row, $el) {
         // Redirect to 5S pattern preview page
         if (row !== undefined) {
             window.location = window.location = '/pattern_detail/' + $el.id;

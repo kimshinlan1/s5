@@ -42,7 +42,7 @@ class PatternDeptSettingController extends Controller
       *
       * @return \Illuminate\Http\Response
     */
-    public function edit($id = null, Request $request)
+    public function edit(Request $request, $id = null)
     {
         $selected5s = null;
         $info = null;

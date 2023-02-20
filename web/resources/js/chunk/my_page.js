@@ -17,7 +17,7 @@
     $.get(url + '?offset=0&limit=100').then(function (res) {
         if(res && res.rows.length > 0) {
             slt_opt_company.empty();
-            $.each(res.rows, function(key, value) {
+            $.each(res.rows, function(_key, value) {
                 let _text = $('<div/>').text(value.name).html();
                 slt_opt_company.append(`<option value="${value.id}">${_text}</option>`);
             });
@@ -35,7 +35,7 @@ $(function() {
     /** ------------------
      *    User edit dialog show
      --------------------- */
-    $('#userEditDialog').on('show.bs.modal', function(e) {
+    $('#userEditDialog').on('show.bs.modal', function() {
         // fill data to inputs
         $('#userName').val($('#trUserName').data('value'));
         $('#userIdentifier').val($('#trUserIdentifier').data('value'));
@@ -84,7 +84,7 @@ $(function() {
             url:'/user/' + id,
             type: 'PUT',
             data: userData
-        }).done(function(data, textStatus, jqXHR){
+        }).done(function(_data, _textStatus, _jqXHR){
             $("#userEditDialog").modal('hide');
             location.reload();
         }).fail(function(jqXHR, _textStatus, _errorThrown){

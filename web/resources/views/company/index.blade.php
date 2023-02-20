@@ -19,7 +19,7 @@
             <tr style="text-align: center;">
                 <th data-field="id" data-visible="false" rowspan="2"></th>
                 <th data-field="no" class="word-wrap align-middle" rowspan="2" data-cell-style="noStyle">{{ __('Company_No') }}</th>
-                <th data-field="name" class="word-wrap align-middle" rowspan="2" data-cell-style="nameStyle">{{ __('Company_Name') }}</th>
+                <th data-field="name" data-formatter="customCell" class="word-wrap align-middle" rowspan="2" data-cell-style="nameStyle">{{ __('Company_Name') }}</th>
                 <th data-field="mode" data-formatter="formatterDataMode" colspan="2" data-cell-style="modeStyle">{{ __('Company_Mode') }}</th>
                 <th data-width="130" data-formatter="companyTableActions" rowspan="2" data-cell-style="btnStyle"></th>
             </tr>

@@ -39,9 +39,16 @@ class CompanyController extends Controller
     public function list(Request $request)
     {
         $data = $this->service->getList($request);
+        $companyCollection = $data->toArray()['data'];
+
+        for ($i = 0; $i < count($companyCollection); $i++) {
+            $deptList = app()->get(DepartmentService::class)->getDataByCompany($companyCollection[$i]['id']);
+            $companyCollection[$i]['departments'] = $deptList;
+        }
+
         return response()->json([
             'total' => $data->total(),
-            'rows' => $data->getCollection(),
+            'rows' => $companyCollection,
             'currentCompany' => auth()->user()->company()->first()
         ]);
     }

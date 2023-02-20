@@ -80,7 +80,6 @@ class PatternTopPageController extends Controller
                     $maxColumn = count($inspectionDetails);
                 }
             }
-            // dd($inspectionData);
         }
         $companies = Cache::get('companies');
 
@@ -95,7 +94,6 @@ class PatternTopPageController extends Controller
             'companies' => $companies
         ];
 
-        // dd($params);
         return view('pattern.pattern_top_page_table', $params)->render();
     }
 }

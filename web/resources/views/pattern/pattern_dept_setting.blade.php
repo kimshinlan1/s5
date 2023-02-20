@@ -7,6 +7,7 @@
 @push('scripts')
     <script src="{!! url('assets/jquery/jquery-ui.js') !!}" type="text/javascript"></script>
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
+    <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script src="{{ mix('/js/pattern_dept_setting.js') }}"></script>
 @endpush
 
@@ -275,7 +276,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <div><span  style="font-size: 0.9rem;" class="badge bg-danger">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
+                    <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
