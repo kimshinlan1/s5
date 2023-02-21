@@ -38,7 +38,7 @@
                 @if (!empty($image['is_before']))
                     <div class="item {{ $isActive == false ? 'active' : ''}}" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
                     <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }})">
-                        &times;
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                     <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 250px; position: relative" onclick="fullScreen('{{ $image['img_path'] }}')">
                     </div>
@@ -89,7 +89,7 @@
                 @foreach ($evidence['images'] as $key => $image)
                 @if (empty($image['is_before']))
                     <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }})">
-                        &times;
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                     <div class="item {{ $isActive == false ? 'active' : ''}}" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
                     <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 250px; position: relative;" onclick="fullScreen('{{ $image['img_path'] }}')">

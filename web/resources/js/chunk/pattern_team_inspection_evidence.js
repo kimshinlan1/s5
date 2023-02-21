@@ -40,7 +40,7 @@ function uploadFile(input, block, is_before) {
                 for (let i = 0; i < data.length; i++) {
                     let divClass = (i == data.length - 1) ? 'item active' : 'item';
                     let img = '<div class="' + divClass + '" id="item' + data[i]['id'] + '" data-id="' + data[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
-                    data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ')">&times;</button>' +
+                    data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
                     '<img src="' + data[i]['img_path'] + '" style="width:100%; height: 250px; position: relative" id="slideImageID"/></div>';
 
                     if (is_before) {
