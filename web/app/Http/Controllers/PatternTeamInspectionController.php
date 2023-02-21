@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Common\Constant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use App\Services\PatternTeamInspectionService;
-use App\Services\TeamService;
 
 class PatternTeamInspectionController extends Controller
 {
@@ -184,56 +182,8 @@ class PatternTeamInspectionController extends Controller
         }
 
         // Get data and format structure
-        // $evidences = $this->service->getEvidenceByInspectionId($inspectionId);
-        // $evidences = json_decode(json_encode($evidences), true);
-
-
-        // Sample Structure
-        $evidences = [
-            '1' => [ // block_id
-                'problem_before' => 'problem_before',
-                'problem_after' => 'problem_after',
-                'images' => [
-                    0 => [ // image
-                        'img_path' => '/assets/img/skill-1.png',
-                        'img_name' => 'skill-1.png',
-                        'is_before' => 1,
-                    ],
-                    1 => [ // image
-                        'img_path' => '/assets/img/skill-2.png',
-                        'img_name' => 'skill-2.png',
-                        'is_before' => 1,
-                    ],
-                    2 => [ // image
-                        'img_path' => '/assets/img/skill-3.png',
-                        'img_name' => 'skill-3.png',
-                        'is_before' => '',
-                    ],
-                    3 => [ // image
-                        'img_path' => '/assets/img/skill-4.png',
-                        'img_name' => 'skill-4.png',
-                        'is_before' => '',
-                    ],
-                ]
-            ],
-            '2' => [ // block_id
-                'problem_before' => 'problem_before',
-                'problem_after' => 'problem_after',
-                'images' => [
-                    0 => [ // image
-                        'img_path' => '/assets/img/skill-1.png',
-                        'img_name' => 'skill-1.png',
-                        'is_before' => 1,
-                    ],
-                    1 => [ // image
-                        'img_path' => '/assets/img/skill-2.png',
-                        'img_name' => 'skill-2.png',
-                        'is_before' => 1,
-                    ],
-
-                ]
-            ],
-        ];
+        $evidences = $this->service->getEvidenceByInspectionId($inspectionId);
+        $evidences = json_decode(json_encode($evidences), true);
 
         $params = [
             'evidences' => $evidences,
@@ -250,4 +200,34 @@ class PatternTeamInspectionController extends Controller
         return view('pattern.partials.evidence_new_block');
     }
 
+    /**
+     * Save upload Image
+     *
+     */
+    public function saveImage(Request $request)
+    {
+        $data = $this->service->saveUploadedImage($request);
+        if (isset($data['invalid'])) {
+            return $this->responseException("Constant::MESSAGES['SYSTEM_ERROR']", 500);
+        }
+        return $data;
+    }
+
+    /**
+     * Save upload Image
+     *
+     */
+    public function removeImage($id)
+    {
+        return $this->service->removeExistingImage($id);
+    }
+
+    /**
+     * Save upload Image
+     *
+     */
+    public function removeAlbum(Request $request)
+    {
+        return $this->service->removeExistingAlbum($request);
+    }
 }

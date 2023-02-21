@@ -23,7 +23,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">エビデンス</h4>
+                <h4 class="modal-title text-danger fw-bold fs-1">{{ __('Evidence_Title') }}</h4>
             </div>
 
             {{-- Render evidence data here from inspectionId  --}}

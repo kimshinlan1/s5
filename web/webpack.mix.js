@@ -16,6 +16,7 @@ const glob = require("glob");
     .css('resources/css/skillmap.css','public/css')
     .css('resources/css/users.css','public/css')
     .css('resources/css/employee.css','public/css')
+    .css('resources/css/evidence.css','public/css')
     .css('resources/css/login.css','public/css')
     .css('resources/css/my_page.css','public/css')
     .sass('resources/sass/app.scss', 'public/css')

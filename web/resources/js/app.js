@@ -109,11 +109,13 @@ window.runAjax = function (url, method, data, donecallback, failcallback, always
     if ($.isArray(data)) {
         data = {data};
     }
-
+    let isFormData = data instanceof FormData;
     $.ajax({
         url: url,
         type: method,
         data: data,
+        contentType: isFormData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
+        processData: isFormData ? false : true,
         async: async
     })
         .done(donecallback ? donecallback : function (res) {
