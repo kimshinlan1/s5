@@ -155,8 +155,7 @@ function saveInspectionData() {
     let method = "POST";
     let param = setParam();
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        $('html, body').animate({scrollTop:0}, 100);
-        showToast($('#toast1'), 2500, true);
+        showToast($('#toast1'), 2000, true);
         // Load data
         if ($("#hidTeamId").val()){
             window.location = "/pattern_top_page";

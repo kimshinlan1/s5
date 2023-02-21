@@ -27,14 +27,14 @@
     <div class="h-title">{{ __('TeamInspection_Input') }}</div>
 
     <!-- My Toast -->
-    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
+    <div class="toast hide align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
         <div class="d-flex">
             <div class="toast-body">
                 {{ __('Message_Save_Success') }}
             </div>
         </div>
     </div>
-    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast2">
+    <div class="toast hide align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast2">
         <div class="d-flex">
             <div class="toast-body">
                 {{ __('Message_Delete_Success') }}
@@ -50,7 +50,7 @@
     <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Department select" id="selectDeptList" >
     </select>
 </div>
-<label id="errorLabelNoDeptPattern" style="font-size: 1.3rem; color: red; margin-left: 5.2rem;">{{ __('TeamInspection_Please_Choose_Pattern_For_This_Department') }}</label>
+<label id="errorLabelNoDeptPattern" style="font-size: 1em; color: red; margin-left: 5.2rem;">{{ __('TeamInspection_Please_Choose_Pattern_For_This_Department') }}</label>
 <div class="d-flex justify-content-start mt-4" style="width: 55%;">
     {{-- Team List / Team Name --}}
     {{-- Add selectbox --}}
@@ -58,7 +58,7 @@
     <select style="text-align-last: center;" class="form-select form-select-arrow w-50" aria-label="Team select" id="selectTeamList" >
     </select>
 </div>
-<label id="errorLabelNoTeam" style="font-size: 1.3rem; color: red; margin-left: 5.2rem;">{{ __('TeamInspection_Please_Create_Team_This_Department') }}</label>
+<label id="errorLabelNoTeam" style="font-size: 1em; color: red; margin-left: 5.2rem;">{{ __('TeamInspection_Please_Create_Team_This_Department') }}</label>
 @else
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ $teamName }}{{ __('TeamInspection_5S_Level_Transition') }}</div>
