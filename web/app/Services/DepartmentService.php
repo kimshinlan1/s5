@@ -238,6 +238,6 @@ class DepartmentService extends BaseService
     public function checkDataDeptPattern(Request $request)
     {
         $departmentId = $request->input('department_id');
-        return $this->model->where('dept_pattern_id', $departmentId)->orderBy('dept_pattern_id')->first();
+        return $this->model->where('id', $departmentId)->orderBy('dept_pattern_id')->first();
     }
 }

@@ -155,7 +155,7 @@ function saveInspectionData() {
     let method = "POST";
     let param = setParam();
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        $('html, body').animate({scrollTop:0}, 100);
+        // $('html, body').animate({scrollTop:0}, 100);
         showToast($('#toast1'), 2500, true);
         // Load data
         if ($("#hidTeamId").val()){
