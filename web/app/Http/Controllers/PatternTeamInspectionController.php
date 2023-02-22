@@ -197,7 +197,7 @@ class PatternTeamInspectionController extends Controller
      */
     public function addBlock(Request $request)
     {
-        $evidence = $this->service->addNewBlock($request);
+        $evidence = $this->service->addNewBlock($request)->toArray();
 
         $params = [
             'evidence' => $evidence,

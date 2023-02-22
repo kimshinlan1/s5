@@ -33,8 +33,10 @@ function uploadFile(input, block, is_before) {
             let doneCallback = function (data, _textStatus, _jqXHR) {
                 if (is_before) {
                     $('#img_before' + block).find('.active').removeClass('active');
+                    $('#img_before' + block).children('img').remove();
                 } else {
                     $('#img_after' + block).find('.active').removeClass('active');
+                    $('#img_after' + block).children('img').remove();
                 }
 
                 for (let i = 0; i < data.length; i++) {
