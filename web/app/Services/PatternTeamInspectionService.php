@@ -386,8 +386,9 @@ class PatternTeamInspectionService extends BaseService
             if (File::exists($sourcePath)) {
                 File::deleteDirectory($sourcePath);
             }
+            $data = $data->delete();
         }
-        return $data->delete();
+        return $data;
     }
 
      /**
