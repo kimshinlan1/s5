@@ -262,86 +262,163 @@ class PatternTeamInspectionService extends BaseService
     }
 
     /**
-     * Save upload Image
+     * Save uploaded Image
      *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return array
      */
     public function saveUploadedImage(Request $request)
     {
         $blockId = $request->get('block_id');
         $isBefore = $request->get('is_before');
         $countFile = $request->get('count_file');
+        // $inspectionId = $request->get('inspection_id');
+        $inspectionId = 1;
         $arr = [];
-        for ($i=0; $i < intval($countFile); $i++) {
-            $image = $request->file('file'.$i);
-            // $inspectionId = $request->get('inspection_id');
-            $inspectionId = 1;
-            if (!empty($image)) {
-                $path = public_path(Constant::INSPECTION_IMAGE_PATH);
-                if (!File::exists($path)) {
-                    File::makeDirectory($path, 0777, true, true);
+        $imgPath = '';
+        if ($blockId && $isBefore != null && $inspectionId) {
+            for ($i=0; $i < intval($countFile); $i++) {
+                $image = $request->file('file'.$i);
+                if (!empty($image)) {
+                    $path = $isBefore ?
+                    $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockId . '/before/':
+                    $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockId . '/after/';
+
+                    $imgPath = $isBefore ?
+                    Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/before/':
+                    Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/after/';
+
+                    if (!File::exists($path)) {
+                        File::makeDirectory($path, 0777, true, true);
+                    }
+                    $fileName = $image->getClientOriginalName();
+                    $location = $path . $fileName;
+                    Image::make($image)->save($location);
+                } else {
+                    return [
+                        'invalid' => true,
+                    ];
                 }
-                $fileName = $image->getClientOriginalName();
-                $location = $path . $fileName;
-                Image::make($image)->save($location);
-            } else {
-                return [
-                    'invalid' => true,
+                $data = [
+                    'block_id' => $blockId,
+                    'inspection_id' => $inspectionId,
+                    'img_name' => $fileName,
+                    'img_path' => $imgPath .$fileName,
+                    'is_before' => $isBefore,
                 ];
+                $isExisted = $this->imageModel->where('img_path', $data['img_path'])->exists();
+                if (!$isExisted) {
+                    $res = $this->imageModel::create($data);
+                    if ($res) {
+                        array_push($arr, $res);
+                    } else {
+                        return [
+                            'invalid' => true,
+                        ];
+                    }
+                }
             }
-            $data = [
-                'block_id' => $blockId,
-                'inspection_id' => $inspectionId,
-                'img_name' => $fileName,
-                'img_path' => Constant::INSPECTION_IMAGE_PATH .$fileName,
-                'is_before' => $isBefore,
+        } else {
+            return [
+                'invalid' => true,
             ];
-            $res = $this->imageModel::firstOrCreate($data);
-            array_push($arr, $res);
         }
 
         return $arr;
     }
 
     /**
-     * Remove Image
+     * Remove one Image in a specific album
      *
+     * @param int $id
+     *
+     * @return object
      */
     public function removeExistingImage($id)
     {
-        return $this->imageModel::find($id)->delete();
+        $img =  $this->imageModel::find($id);
+        if ($img) {
+            $fileInSourceCode = $img->img_path;
+            $file = public_path($fileInSourceCode);
+            if (File::exists($file)) {
+                File::delete($file);
+            }
+            if (File::exists($fileInSourceCode)) {
+                File::delete($fileInSourceCode);
+            }
+        }
+        return $img->delete();
     }
 
     /**
-     * Remove block
+     * Add a block
      *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function addNewBlock(Request $request)
+    {
+        return $this->imageBlockModel::create($request->all());
+    }
+
+     /**
+     * Remove a block
+     *
+     * @param int $id
+     *
+     * @return object
      */
     public function removeExistingBlock($id)
     {
         $data = DB::table('inspection_block_images')->where('id', $id);
+        // $inspectionId = $request->get('inspection_id');
+        $inspectionId = 1;
         if ($data) {
             $imageIds = $this->imageModel->where('block_id', $id)->select('id')->get()->toArray();
             $this->imageModel::whereIn('id', $imageIds)->delete();
+            $path = $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $id;
+            $sourcePath = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $id;
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
+            }
+            if (File::exists($sourcePath)) {
+                File::deleteDirectory($sourcePath);
+            }
         }
         return $data->delete();
     }
-    /**
-     * Add block
-     *
-     */
-    public function addNewBlock(Request $request)
-    {
-        $data = $this->imageBlockModel::create($request->all());
-        return $data;
-    }
 
-    /**
-     * Remove album
+     /**
+     * Remove before/after album
      *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
      */
     public function removeExistingAlbum(Request $request)
     {
+        // $inspectionId = $request->get('inspection_id');
+        $inspectionId = 1;
+        $blockID = $request->get('blockID');
+        $isBefore = $request->get('isBefore');
         $ids = $request->get('ids');
         if ($ids) {
+            $path = $isBefore == '1' ?
+            $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockID . '/after/':
+            $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockID . '/before/';
+
+            $sourcePath = $isBefore == '1' ?
+            Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockID . '/after/':
+            Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockID . '/before/';
+
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
+            }
+            if (File::exists($sourcePath)) {
+                File::deleteDirectory($sourcePath);
+            }
             return $this->imageModel::whereIn('id', $ids)->delete();
         }
         return false;

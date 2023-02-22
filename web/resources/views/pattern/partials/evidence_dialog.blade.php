@@ -27,7 +27,7 @@
             </div>
 
             {{-- Render evidence data here from inspectionId  --}}
-            <div class="modal-body"></div>
+            <div class="modal-body evidences-body"></div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnEvidenceSave">{{ __('Common_button_save') }}</button>

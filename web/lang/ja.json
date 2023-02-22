@@ -99,6 +99,7 @@
 
     "=====  BLOCK_SKILLMAP_START =====": "",
     "SkillMap": "マルチスキルマップ",
+    "SkillMap_Detail": "スキルマップ追加",
     "SkillMapMenu": "スキルマップ",
     "SkillMap_NoData": "データなし",
     "Skillmap_Add_Category": "分類を追加する",
@@ -203,6 +204,7 @@
     "=====  BLOCK_PATTERN_LIST_START =====": "",
     "Pattern_List": "５Sチェックリストパターン一覧 ",
     "Pattern_List_Customer": "部門と５Sチェックリストパターン連携一覧",
+    "Pattern_List_Customer_Menu": "5Sチェックリスト管理",
     "Pattern_ID": "チェックリストパターンID",
     "Pattern_Name": "チェックリストパターン名",
     "Pattern_Note": "チェックリストの説明",
@@ -287,6 +289,8 @@
     "Evidence_Upload_Btn": "アップロード",
     "Evidence_Delete_Btn": "削除",
     "Evidence_Add_Block_Btn": "アドブロック",
+    "Evidence_Existed_Image": "画像は存在した",
+    "Evidence_No_File_To_Upload": "アップロードするファイルがありません",
     "=====  BLOCK_EVIDENCE_END =====": ""
 
 

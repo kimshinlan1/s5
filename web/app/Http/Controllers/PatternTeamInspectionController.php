@@ -167,9 +167,12 @@ class PatternTeamInspectionController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * getEvidence
+     /**
+     * Get evidence
      *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
      */
     public function getEvidence(Request $request)
     {
@@ -192,8 +195,11 @@ class PatternTeamInspectionController extends Controller
     }
 
     /**
-     * Add block
+     * Add a block
      *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
      */
     public function addBlock(Request $request)
     {
@@ -206,39 +212,51 @@ class PatternTeamInspectionController extends Controller
     }
 
     /**
-     * Save upload Image
+     * Remove a block
      *
-     */
-    public function saveImage(Request $request)
-    {
-        $data = $this->service->saveUploadedImage($request);
-        if (isset($data['invalid'])) {
-            return $this->responseException("Constant::MESSAGES['SYSTEM_ERROR']", 500);
-        }
-        return $data;
-    }
-
-    /**
-     * Delete Image
+     * @param int $id
      *
-     */
-    public function removeImage($id)
-    {
-        return $this->service->removeExistingImage($id);
-    }
-
-    /**
-     * Remove Block
-     *
+     * @return object
      */
     public function removeBlock($id)
     {
         return $this->service->removeExistingBlock($id);
     }
 
-    /**
-     * Remove album
+     /**
+     * Save uploaded Image
      *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return array
+     */
+    public function saveImage(Request $request)
+    {
+        $data = $this->service->saveUploadedImage($request);
+        if (isset($data['invalid'])) {
+            return $this->responseException();
+        }
+        return $data;
+    }
+
+    /**
+     * Remove one Image in a specific album
+     *
+     * @param int $id
+     *
+     * @return object
+     */
+    public function removeImage($id)
+    {
+        return $this->service->removeExistingImage($id);
+    }
+
+     /**
+     * Remove before/after album
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
      */
     public function removeAlbum(Request $request)
     {

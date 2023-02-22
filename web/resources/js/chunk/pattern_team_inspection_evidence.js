@@ -5,6 +5,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+/*---------------------
+* GLOBAL FUNCTION
+---------------------- */
 
 /*---------------------
 * Upload file
@@ -31,26 +34,32 @@ function uploadFile(input, block, is_before) {
             let method = "POST";
 
             let doneCallback = function (data, _textStatus, _jqXHR) {
-                if (is_before) {
-                    $('#img_before' + block).find('.active').removeClass('active');
-                    $('#img_before' + block).children('img').remove();
-                } else {
-                    $('#img_after' + block).find('.active').removeClass('active');
-                    $('#img_after' + block).children('img').remove();
-                }
-
-                for (let i = 0; i < data.length; i++) {
-                    let divClass = (i == data.length - 1) ? 'item active' : 'item';
-                    let img = '<div class="' + divClass + '" id="item' + data[i]['id'] + '" data-id="' + data[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
-                    data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                    '<img src="' + data[i]['img_path'] + '" style="width:100%; height: 250px; position: relative" id="slideImageID"/></div>';
-
+                if (data.length > 0) {
                     if (is_before) {
-                        $('#img_before' + block).append(img);
+                        $('#img_before' + block).find('.active').removeClass('active');
+                        $('#img_before' + block).children('img').remove();
                     } else {
-                        $('#img_after' + block).append(img);
+                        $('#img_after' + block).find('.active').removeClass('active');
+                        $('#img_after' + block).children('img').remove();
                     }
+
+                    for (let i = 0; i < data.length; i++) {
+                        let divClass = (i == data.length - 1) ? 'item active' : 'item';
+                        let img = '<div class="' + divClass + '" id="item' + data[i]['id'] + '" data-id="' + data[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
+                        data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
+                        '<img src="' + data[i]['img_path'] + '" style="width:100%; height: 250px; position: relative" id="slideImageID"/></div>';
+
+                        if (is_before) {
+                            $('#img_before' + block).append(img);
+                        } else {
+                            $('#img_after' + block).append(img);
+                        }
+                    }
+                } else {
+                    $("#confirmDialog").modal("show");
+                    $(".confirmMessage").html($('#existedImage').val());
                 }
+
             };
             let failCallback = function (jqXHR, _textStatus, _errorThrown) {
                 failAjax(jqXHR, _textStatus, _errorThrown);
@@ -62,16 +71,10 @@ function uploadFile(input, block, is_before) {
         reader.readAsDataURL(input.files[0]);
         input.value.replace(/^.*\\/, "");
     } else {
-        // print out error
+        $("#confirmDialog").modal("show");
+        $(".confirmMessage").html($('#noFileUpload').val());
     }
 
-}
-
-/*---------------------
-* Delete
----------------------- */
-function deleteEvidence(block, is_before) {
-    // todo:
 }
 
 /*---------------------
@@ -87,7 +90,7 @@ function addBlock() {
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        $("#patternEvidenceDialog").find(".modal-body").append(data);
+        $("#patternEvidenceDialog").find(".evidences-body").append(data);
     };
 
     runAjax(url, method, params, doneCallback);
@@ -132,7 +135,7 @@ function saveDialog() {
 * Load data
 ---------------------- */
 function loadEvidence(inspection_id) {
-    showLoading();
+    // showLoading();
 
     let params = {
         inspection_id : inspection_id
@@ -142,20 +145,25 @@ function loadEvidence(inspection_id) {
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        // $("#patternEvidenceDialog .modal-body").empty();
-        $("#patternEvidenceDialog .modal-body").append(data);
+        $("#patternEvidenceDialog .evidences-body").append(data);
         $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val(inspection_id);
     };
 
     runAjax(url, method, params, doneCallback);
 }
 
+/*---------------------
+* Display full screen image
+---------------------- */
 function fullScreen(img_src) {
     $('#imgFullscreen').css({
         'background-image': 'url("' + img_src + '")',
     }).show();
 }
 
+/*---------------------
+* Remove one selected image
+---------------------- */
 function removeImage(imgID) {
     if ($('#item'+imgID).next().length != 0) {
         $('#item'+imgID).next().addClass('active');
@@ -177,7 +185,10 @@ function removeImage(imgID) {
     runAjax(url, method, null, doneCallback, failCallback);
 }
 
-function removeAlbum(albumID) {
+/*---------------------
+* Remove a before/after album
+---------------------- */
+function removeAlbum(albumID, blockID, isBefore) {
     let ids = {};
     ids = $.map($('#' + albumID + ' > div'), div => div.dataset['id'] )
     console.log("TCL: removeAlbum -> ids", ids)
@@ -186,7 +197,9 @@ function removeAlbum(albumID) {
     let url = "/pattern_team_inspection/evidence/removeAlbum";
     let method = "POST";
     let params = {
-        ids: ids
+        ids: ids,
+        blockID: blockID,
+        isBefore: isBefore
     }
     let doneCallback = function (data, _textStatus, _jqXHR) {
         console.log("TCL: doneCallback -> data", data)
@@ -213,20 +226,41 @@ function removeAlbum(albumID) {
         loadEvidence(id);
 
     });
+
+    /*---------------------
+     * Handle hide event for the evidence dialog
+     ---------------------- */
     $("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
-        $("#patternEvidenceDialog").find(".modal-body").html('');
+        $("#patternEvidenceDialog").find(".evidences-body").html('');
     });
 
     /*---------------------
      * Click add block
      ---------------------- */
-    $("#btnEvidenceAddBlock").on("click", function (e) {
+    $("#btnEvidenceAddBlock").on("click", function (_e) {
         addBlock();
     });
 
-    // $("body").on('click','#removeImage1', function() {
-    //     alert("123");
-    // })
+    /*---------------------
+     * Close button on error dialog
+     ---------------------- */
+    $("body").on('click','#errorDialog button', function() {
+        $('#errorDialog').modal('hide');
+    })
+
+    /*---------------------
+     * Close button on confirmation dialog
+     ---------------------- */
+    $("body").on('click','#confirmDialog button', function() {
+        $('#confirmDialog').modal('hide');
+    })
+
+    /*---------------------
+     * Handle hide event for the confirmation dialog
+     ---------------------- */
+    $("#confirmDialog").on("hide.bs.modal", function () {
+        $("#confirmDialog").find(".modal-body").html('');
+    });
 
 
  });

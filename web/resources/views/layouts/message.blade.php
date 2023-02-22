@@ -26,3 +26,4 @@
 <input type="hidden" id="kaizenbaseID" name="kaizenbaseID" value="{{Constant::KAIZEN_BASE_COMPANY_ID}}"/>
 <input type="hidden" id="radarLabel" name="radarLabel" value="{{ __('TopPage_Radar_Label') }}"/>
 <input type="hidden" id="commonDepartment" name="commonDepartment" value="{{ __('Department') }}"/>
+<input type="hidden" id="existedImage" name="existedImage" value="{{ __('Evidence_Existed_Image') }}"/>

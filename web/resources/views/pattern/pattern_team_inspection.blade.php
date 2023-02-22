@@ -130,6 +130,7 @@
 </div>
 
 @include('pattern.partials.evidence_dialog')
+@include('layouts.confirm')
 
 <input type="hidden" id="hidAuthUserId" name="hidAuthUserId" value="{{ auth()->user()->id }}"/>
 
