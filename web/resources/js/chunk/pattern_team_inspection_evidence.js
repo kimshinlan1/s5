@@ -94,15 +94,27 @@ function addBlock() {
 /*---------------------
 * Delete Block
 ---------------------- */
-function deleteBlock(block) {
+function deleteBlock(blockId) {
     // todo:
     if (confirm('Do you want to delete this block?')) {
 
         // todo: call ajax delete from DB
+        let params = {
+            id: blockId
+        };
+        let url = "/pattern_team_inspection/evidence/" + blockId;
+        let method = "DELETE";
 
-        $('#block_'+block).remove();
-        $('#block_content_'+block).remove();
+        let doneCallback = function (_data, _textStatus, _jqXHR) {
+            $('#block_'+blockId).remove();
+            $('#block_content_'+blockId).remove();
+        };
 
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+
+        runAjax(url, method, params, doneCallback, failCallback);
 
     }
 }
@@ -149,7 +161,7 @@ function removeImage(imgID) {
         $('#item'+imgID).siblings("div:first").addClass('active');
     }
     $('#item'+imgID).remove();
-    let url = "/pattern_team_inspection/evidence/" + imgID;
+    let url = "/pattern_team_inspection/evidence/image/" + imgID;
     let method = "DELETE";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {

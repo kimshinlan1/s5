@@ -214,7 +214,7 @@ class PatternTeamInspectionController extends Controller
     }
 
     /**
-     * Save upload Image
+     * Delete Image
      *
      */
     public function removeImage($id)
@@ -223,7 +223,16 @@ class PatternTeamInspectionController extends Controller
     }
 
     /**
-     * Save upload Image
+     * Remove Block
+     *
+     */
+    public function removeBlock($id)
+    {
+        return $this->service->removeExistingBlock($id);
+    }
+
+    /**
+     * Remove album
      *
      */
     public function removeAlbum(Request $request)

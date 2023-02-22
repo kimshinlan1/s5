@@ -18,19 +18,19 @@
 @foreach ($evidences as $id => $evidence)
 <input type="hidden" id="hidInspectionId_{{ $evidence['id'] }}" value="{{ $evidence['id'] }}"/>
 {{-- Cross Button --}}
-<div class="row" id="block_{{ $id }}">
+<div class="row" id="block_{{ $evidence['id'] }}">
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn-close" aria-label="Close" onclick="deleteBlock('{{ $id }}')"></button>
+        <button type="button" class="btn-close" aria-label="Close" onclick="deleteBlock('{{ $evidence['id'] }}')"></button>
     </div>
 </div>
 
-<div class="row" id="block_content_{{ $id }}">
+<div class="row" id="block_content_{{ $evidence['id'] }}">
     <div class="col-5" style="padding-left: 3rem;">
         {{-- Before --}}
         <div class="before-title">
             <label class="before-label py-2">{{ __('Evidence_Before_Title') }}</label>
         </div>
-        <div id="myCarousel_before_{{ $id }}" class="carousel slide" data-interval="false">
+        <div id="myCarousel_before_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_before{{ $evidence['id'] }}">
                 @php $isActive = false; @endphp
@@ -48,11 +48,11 @@
             </div>
 
             <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel_before_{{ $id }}" data-slide="prev">
+            <a class="left carousel-control" href="#myCarousel_before_{{ $evidence['id'] }}" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="right carousel-control right-control" href="#myCarousel_before_{{ $id }}" data-slide="next">
+            <a class="right carousel-control right-control" href="#myCarousel_before_{{ $evidence['id'] }}" data-slide="next">
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 <span class="sr-only">Next</span>
             </a>
@@ -82,7 +82,7 @@
         <div class="after-title">
             <label class="after-label py-2">{{ __('Evidence_After_Title') }}</label>
         </div>
-        <div id="myCarousel_after_{{ $id }}" class="carousel slide" data-interval="false">
+        <div id="myCarousel_after_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_after{{ $evidence['id'] }}">
                 @php $isActive = false; @endphp
@@ -100,11 +100,11 @@
             </div>
 
             <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel_after_{{ $id }}" data-slide="prev">
+            <a class="left carousel-control" href="#myCarousel_after_{{ $evidence['id'] }}" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="right carousel-control right-control" href="#myCarousel_after_{{ $id }}" data-slide="next">
+            <a class="right carousel-control right-control" href="#myCarousel_after_{{ $evidence['id'] }}" data-slide="next">
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 <span class="sr-only">Next</span>
             </a>

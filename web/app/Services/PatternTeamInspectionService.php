@@ -285,7 +285,6 @@ class PatternTeamInspectionService extends BaseService
             $inspectionId = 1;
             if (!empty($image)) {
                 $path = public_path(Constant::INSPECTION_IMAGE_PATH);
-                // $path = public_path().'/assets/img/';
                 if (!File::exists($path)) {
                     File::makeDirectory($path, 0777, true, true);
                 }
@@ -312,26 +311,38 @@ class PatternTeamInspectionService extends BaseService
     }
 
     /**
-     * Save upload Image
+     * Remove Image
      *
      */
     public function removeExistingImage($id)
     {
-        $data = $this->imageModel::find($id);
-        $data->delete();
-        return $data;
+        return $this->imageModel::find($id)->delete();
     }
 
     /**
-     * Save upload Image
+     * Remove block
+     *
+     */
+    public function removeExistingBlock($id)
+    {
+        $data = DB::table('inspection_block_images')->where('id', $id);
+        if ($data) {
+            $imageIds = $this->imageModel->where('block_id', $id)->select('id')->get()->toArray();
+            $this->imageModel::whereIn('id', $imageIds)->delete();
+        }
+        return $data->delete();
+    }
+
+    /**
+     * Remove album
      *
      */
     public function removeExistingAlbum(Request $request)
     {
         $ids = $request->get('ids');
-        $data = $this->imageModel::whereIn('id', $ids);
-        $data->delete();
-
-        return $data;
+        if ($ids) {
+            return $this->imageModel::whereIn('id', $ids)->delete();
+        }
+        return false;
     }
 }
