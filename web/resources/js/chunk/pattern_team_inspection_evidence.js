@@ -161,6 +161,7 @@ function removeImage(imgID) {
         $('#item'+imgID).siblings("div:first").addClass('active');
     }
     $('#item'+imgID).remove();
+    $('#removeImage'+imgID).remove();
     let url = "/pattern_team_inspection/evidence/image/" + imgID;
     let method = "DELETE";
 

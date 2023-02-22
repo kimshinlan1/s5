@@ -197,7 +197,12 @@ class PatternTeamInspectionController extends Controller
      */
     public function addBlock(Request $request)
     {
-        return view('pattern.partials.evidence_new_block');
+        $evidence = $this->service->addNewBlock($request);
+
+        $params = [
+            'evidence' => $evidence,
+        ];
+        return view('pattern.partials.evidence_new_block', $params);
     }
 
     /**

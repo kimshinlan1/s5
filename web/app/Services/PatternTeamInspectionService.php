@@ -9,6 +9,7 @@ use App\Models\PatternDetail;
 use App\Models\Team;
 use App\Models\InspectionImage;
 use App\Models\InspectionDetail;
+use App\Models\InspectionImageBlock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -18,14 +19,16 @@ class PatternTeamInspectionService extends BaseService
     /* @var Model */
     private $model;
     private $imageModel;
+    private $imageBlockModel;
 
     private $inspectionImagePath = '';
 
-    public function __construct(PatternDetail $model, InspectionImage $imageModel)
+    public function __construct(PatternDetail $model, InspectionImage $imageModel, InspectionImageBlock $imageBlockModel)
     {
         // todo: update
         $this->model = $model;
         $this->imageModel = $imageModel;
+        $this->imageBlockModel = $imageBlockModel;
         parent::__construct($model);
         $this->inspectionImagePath = public_path(Constant::INSPECTION_IMAGE_PATH);
     }
@@ -247,17 +250,6 @@ class PatternTeamInspectionService extends BaseService
      * @return object
      */
     public function getEvidenceByInspectionId($id) {
-        // $data = DB::table('inspection_block_images')->join('inspection_images', 'inspection_images.block_id', '=', 'inspection_block_images.id')
-        // ->select([
-        //     'inspection_block_images.id as block_id',
-        //     'inspection_block_images.problem_before as block_problem_before',
-        //     'inspection_block_images.problem_after as block_problem_after',
-        //     'inspection_images.id as image.id',
-        //     'inspection_images.img_path as image.img_path',
-        //     'inspection_images.img_name as image.img_name',
-        //     'inspection_images.is_before as image.is_before',
-        // ])->get();
-
         $blocks = DB::table('inspection_block_images')->orderBy('inspection_block_images.id')->get()->toArray();
 
         foreach ($blocks as $key => $block) {
@@ -331,6 +323,15 @@ class PatternTeamInspectionService extends BaseService
             $this->imageModel::whereIn('id', $imageIds)->delete();
         }
         return $data->delete();
+    }
+    /**
+     * Add block
+     *
+     */
+    public function addNewBlock(Request $request)
+    {
+        $data = $this->imageBlockModel::create($request->all());
+        return $data;
     }
 
     /**

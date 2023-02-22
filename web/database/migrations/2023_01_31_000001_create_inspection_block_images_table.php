@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
-            $table->tinyInteger('id')->primary();
+            $table->bigIncrements('id');
             $table->string('problem_before', 255)->nullable();
             $table->string('problem_after', 255)->nullable();
             $table->timestamps();
