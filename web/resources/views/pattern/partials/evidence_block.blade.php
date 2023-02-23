@@ -14,7 +14,7 @@
 <style>
     .carousel{
         width: 100%;
-        height: 250px;
+        height: 350px;
         border: 1px solid black
     }
 </style>
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="row" id="block_content_{{ $evidence['id'] }}">
+<div class="row count-block" id="block_content_{{ $evidence['id'] }}">
     <div class="col-5" style="padding-left: 3rem;">
         {{-- Before --}}
         <div class="before-title">
@@ -37,18 +37,22 @@
         <div id="myCarousel_before_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_before{{ $evidence['id'] }}">
-                @php $isActive = false; @endphp
-                @foreach ($evidence['images'] as $key => $image)
-                @if (!empty($image['is_before']))
-                    <div class="item {{ $isActive == false ? 'active' : ''}}" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
-                        <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }})">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        </button>
-                        <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 250px; position: relative" onclick="fullScreen('{{ $image['img_path'] }}')">
-                    </div>
-                    @php $isActive = true; @endphp
+                @if (!$evidence['hasBefore'])
+                    <img src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">
+                @else
+                    @php $isActive = false; @endphp
+                    @foreach ($evidence['images'] as $key => $image)
+                        @if (!empty($image['is_before']))
+                            <div class="item {{ $isActive == false ? 'active' : ''}}" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
+                                <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }}, img_before{{ $evidence['id'] }})">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                                <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 350px; position: relative" onclick="fullScreen('{{ $image['img_path'] }}')">
+                            </div>
+                            @php $isActive = true; @endphp
+                        @endif
+                    @endforeach
                 @endif
-                @endforeach
             </div>
 
             <!-- Left and right controls -->
@@ -64,20 +68,19 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-success btn-sm mx-2" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1)" accept="image/*" multiple/></div>
-                <button type="button" class="btn btn-danger btn-sm" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button>
+                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1)" accept="image/*" multiple/></div>
+                <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button>
             </div>
         </div>
         <br>
         <span class="fw-bold" style="font-size: 1.7rem; color:#aa403b">
             {{ __('Evidence_Before_Problem') }}
         </span>
-        <br>
         <textarea id="txt" class="problem-area">{{ $evidence['problem_before'] }}</textarea>
     </div>
     <div class="col-2" style="text-align: center;">
         <div class="row" style="height: 50px"></div>
-        <div class="row" style="height:250px; ">
+        <div class="row" style="height:350px; ">
             <i class="fa fa-caret-right right-arrow" aria-hidden="true"></i>
         </div>
     </div>
@@ -89,18 +92,22 @@
         <div id="myCarousel_after_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_after{{ $evidence['id'] }}">
-                @php $isActive = false; @endphp
-                @foreach ($evidence['images'] as $key => $image)
-                @if (empty($image['is_before']))
-                    <div class="item {{ $isActive == false ? 'active' : ''}}" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
-                        <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }})">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        </button>
-                        <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 250px; position: relative;" onclick="fullScreen('{{ $image['img_path'] }}')">
-                    </div>
-                    @php $isActive = true; @endphp
+                @if (!$evidence['hasAfter'])
+                    <img src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">
+                @else
+                    @php $isActive = false; @endphp
+                    @foreach ($evidence['images'] as $key => $image)
+                        @if (empty($image['is_before']))
+                            <div class="item {{ $isActive == false ? 'active' : ''}}" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
+                                <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }},img_after{{ $evidence['id'] }})">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                                <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 350px; position: relative" onclick="fullScreen('{{ $image['img_path'] }}')">
+                            </div>
+                            @php $isActive = true; @endphp
+                        @endif
+                    @endforeach
                 @endif
-                @endforeach
             </div>
 
             <!-- Left and right controls -->
@@ -116,17 +123,16 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-success btn-sm mx-2" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0)" accept="image/*" multiple/></div>
-                <button type="button" class="btn btn-danger btn-sm" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button>
+                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0)" accept="image/*" multiple/></div>
+                <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button>
             </div>
         </div>
         <br>
         <span class="fw-bold" style="font-size: 1.7rem; color:rgb(231, 168, 51)">
             {{ __('Evidence_After_Problem') }}
         </span>
-        <br>
         <textarea id="txt" class="problem-area">{{ $evidence['problem_after'] }}</textarea>
     </div>
+    <hr>
 </div>
-<hr>
 @endforeach

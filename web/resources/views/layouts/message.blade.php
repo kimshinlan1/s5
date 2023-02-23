@@ -27,3 +27,5 @@
 <input type="hidden" id="radarLabel" name="radarLabel" value="{{ __('TopPage_Radar_Label') }}"/>
 <input type="hidden" id="commonDepartment" name="commonDepartment" value="{{ __('Department') }}"/>
 <input type="hidden" id="existedImage" name="existedImage" value="{{ __('Evidence_Existed_Image') }}"/>
+<input type="hidden" id="noFileUpload" name="noFileUpload" value="{{ __('Evidence_No_File_To_Upload') }}"/>
+<input type="hidden" id="noImage" name="noImage" value="{{Constant::NO_IMAGE_PATH}}"/>

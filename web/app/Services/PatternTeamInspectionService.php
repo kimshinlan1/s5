@@ -251,13 +251,23 @@ class PatternTeamInspectionService extends BaseService
      */
     public function getEvidenceByInspectionId($id) {
         $blocks = DB::table('inspection_block_images')->orderBy('inspection_block_images.id')->get()->toArray();
-
         foreach ($blocks as $key => $block) {
+            $hasBefore = false;
+            $hasAfter = false;
             $id = $block->id;
             $images = DB::table('inspection_images')->where('inspection_images.block_id', $id)->orderBy('inspection_images.id')->get()->toArray();
             $block->images = $images;
+            foreach ($images as $key => $image) {
+                if ($image->is_before == 1) {
+                    $hasBefore = true;
+                };
+                if ($image->is_before == 0) {
+                    $hasAfter = true;
+                };
+            }
+            $block->hasBefore = $hasBefore;
+            $block->hasAfter = $hasAfter;
         }
-
         return $blocks;
     }
 
@@ -293,6 +303,10 @@ class PatternTeamInspectionService extends BaseService
                         File::makeDirectory($path, 0777, true, true);
                     }
                     $fileName = $image->getClientOriginalName();
+                    $isExistedName = $this->imageModel->where('img_name', $fileName)->exists();
+                    if ($isExistedName) {
+                        $fileName = 'new_' . $fileName;
+                    }
                     $location = $path . $fileName;
                     Image::make($image)->save($location);
                 } else {
@@ -307,16 +321,14 @@ class PatternTeamInspectionService extends BaseService
                     'img_path' => $imgPath .$fileName,
                     'is_before' => $isBefore,
                 ];
-                $isExisted = $this->imageModel->where('img_path', $data['img_path'])->exists();
-                if (!$isExisted) {
-                    $res = $this->imageModel::create($data);
-                    if ($res) {
-                        array_push($arr, $res);
-                    } else {
-                        return [
-                            'invalid' => true,
-                        ];
-                    }
+
+                $res = $this->imageModel::create($data);
+                if ($res) {
+                    array_push($arr, $res);
+                } else {
+                    return [
+                        'invalid' => true,
+                    ];
                 }
             }
         } else {
