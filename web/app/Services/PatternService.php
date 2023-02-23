@@ -116,12 +116,11 @@ class PatternService extends BaseService
      * Remove the specified resource from storage.
      *
      * @param  $id (id of dept_patter_setting)
-     * @param  $compId (compId mode check company)
      * @param  $pageDest (pageDest mode check page list pattern and page list pattern customer)
      *
      * @return object
      */
-    public function destroyPatternByMode($id, $compId, $pageDest)
+    public function destroyPatternByMode($id, $pageDest)
     {
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);

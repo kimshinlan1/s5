@@ -210,15 +210,35 @@
                         ?>
                         <option value="{{ $value }}" {{ $selected }} >
                             <? if ($value == 1): ?>
-                            {{ $value }}: {{ $row['level_1'] }}
+                                <? if (($row['level_1']) == ''): ?>
+                                    {{ $value }}: {{ __('TeamInspection_None_Config') }}
+                                <? else: ?>
+                                    {{ $value }}: {{ $row['level_1'] }}
+                                <? endif; ?>
                             <? elseif ($value == 2): ?>
-                            {{ $value }}: {{ $row['level_2'] }}
+                                <? if (($row['level_2']) == ''): ?>
+                                    {{ $value }}: {{ __('TeamInspection_None_Config') }}
+                                <? else: ?>
+                                    {{ $value }}: {{ $row['level_2'] }}
+                                <? endif; ?>
                             <? elseif ($value == 3): ?>
-                            {{ $value }}: {{ $row['level_3'] }}
+                                <? if (($row['level_3']) == ''): ?>
+                                    {{ $value }}: {{ __('TeamInspection_None_Config') }}
+                                <? else: ?>
+                                    {{ $value }}: {{ $row['level_3'] }}
+                                <? endif; ?>
                             <? elseif ($value == 4): ?>
-                            {{ $value }}: {{ $row['level_4'] }}
+                                <? if (($row['level_4']) == ''): ?>
+                                    {{ $value }}: {{ __('TeamInspection_None_Config') }}
+                                <? else: ?>
+                                    {{ $value }}: {{ $row['level_4'] }}
+                                <? endif; ?>
                             <? else: ?>
-                            {{ $value }}: {{ $row['level_5'] }}
+                                <? if (($row['level_5']) == ''): ?>
+                                    {{ $value }}: {{ __('TeamInspection_None_Config') }}
+                                <? else: ?>
+                                    {{ $value }}: {{ $row['level_5'] }}
+                                <? endif; ?>
                             <? endif; ?>
                         </option>
                         @endforeach

@@ -107,10 +107,9 @@ class PatternController extends Controller
      */
     public function destroy($id)
     {
-        $compId = request()->get('companyId');
         // pageDest mode check page list pattern and page list pattern customer
         $pageDest = request()->get('pageDest');
-        $data = $this->service->destroyPatternByMode($id, $compId, $pageDest);
+        $data = $this->service->destroyPatternByMode($id, $pageDest);
         return response()->json($data);
     }
 

@@ -162,20 +162,48 @@ class PatternDeptSettingService extends BaseService
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
             // Step: Insert new Area
-            $areaId = Area::create([
-                'name' => $area['area_name'],
-                'dept_pattern_id' => $deptPatternId
-            ]);
-            $areaId = $areaId->id;
+            $areaId = null;
+            if (isset($area['area_id']) && is_numeric($area['area_id'])) {
+                $areaId = $area['area_id'];
+                Area::updateOrCreate(
+                    [
+
+                        'id' => $areaId,
+                    ],
+                    [
+                        'name' => $area['area_name'],
+                        'dept_pattern_id' => $deptPatternId
+                    ]
+                );
+            } else {
+                $newArea = Area::create([
+                    'name' => $area['area_name'],
+                    'dept_pattern_id' => $deptPatternId
+                ]);
+                $areaId = $newArea->id;
+            }
 
             // Loop to insert Locations
             foreach ($area['locations'] as $location) {
                 // Step: Insert new location
-                $locationId = Location::create([
-                    'name' => $location['location_name'],
-                    'area_id' => $areaId
-                ]);
-                $locationId = $locationId->id;
+                $locationId = null;
+                if (isset($location['location_id']) && is_numeric($location['location_id'])) {
+                    $locationId = $location['location_id'];
+                    Location::updateOrCreate(
+                        [
+                            'id' => $locationId,
+                        ],
+                        [
+                            'name' => $location['location_name'],
+                            'area_id' => $areaId
+                    ]);
+                } else {
+                    $newLocation = Location::create([
+                        'name' => $location['location_name'],
+                        'area_id' => $areaId
+                    ]);
+                    $locationId = $newLocation->id;
+                }
 
                 // Loop to insert detail rows
                 foreach ($location['rows'] as $key => $row) {
@@ -194,7 +222,6 @@ class PatternDeptSettingService extends BaseService
                 }
             }
         }
-
         return $deptPattern;
     }
 
