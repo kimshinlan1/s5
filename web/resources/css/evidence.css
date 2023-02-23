@@ -27,7 +27,7 @@
 .right-arrow {
     font-size: 10rem !important;
     color: green !important;
-    line-height: 250px !important;
+    line-height: 300px !important;
 }
 
 .modal-lg {
@@ -36,11 +36,11 @@
 }
 
 .col-5 {
-    width: 46% !important;
+    width: 47% !important;
 }
 
 .col-2 {
-    width: 8% !important;
+    width: 6% !important;
 }
 
 .before-title, .after-title {
@@ -51,13 +51,13 @@
 
 .before-label {
     background-color: #aa403b;
-    width: 40%;
+    width: 30%;
     font-size: 2rem;
 }
 
 .after-label {
     background-color: rgb(231, 168, 51);
-    width: 40%;
+    width: 30%;
     font-size: 2rem;
 }
 
@@ -67,6 +67,39 @@
 
 .problem-area {
     height: 80px;
-    border: 3px solid green;
+    border: 1px solid;
     width: 100%;
 }
+
+.btn-primary-1:hover {
+    color: #fff !important;
+    background-color: #0b5ed7 !important;
+    border-color: #0a58ca !important;
+}
+
+.btn-primary-1 {
+    background: #0852C0 !important;
+    color: rgb(255, 255, 255) !important;
+    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 12%) !important;
+}
+
+.btn-secondary-1 {
+    color: #fff !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+.btn-secondary-1:hover {
+    color: #fff !important;
+    background-color: #5c636a !important;
+    border-color: #565e64 !important;
+}
+
+/* .carousel-control {
+    opacity: 0;
+}
+
+.carousel-control:hover {
+    opacity: 0.2;
+} */
+

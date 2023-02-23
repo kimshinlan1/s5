@@ -34,30 +34,28 @@ function uploadFile(input, block, is_before) {
             let method = "POST";
 
             let doneCallback = function (data, _textStatus, _jqXHR) {
-                if (data.length > 0) {
-                    if (is_before) {
-                        $('#img_before' + block).find('.active').removeClass('active');
-                        $('#img_before' + block).children('img').remove();
-                    } else {
-                        $('#img_after' + block).find('.active').removeClass('active');
-                        $('#img_after' + block).children('img').remove();
-                    }
-
-                    for (let i = 0; i < data.length; i++) {
-                        let divClass = (i == data.length - 1) ? 'item active' : 'item';
-                        let img = '<div class="' + divClass + '" id="item' + data[i]['id'] + '" data-id="' + data[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
-                        data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                        '<img src="' + data[i]['img_path'] + '" style="width:100%; height: 250px; position: relative" id="slideImageID"/></div>';
-
-                        if (is_before) {
-                            $('#img_before' + block).append(img);
-                        } else {
-                            $('#img_after' + block).append(img);
-                        }
-                    }
+                let albumID = '';
+                if (is_before) {
+                    $('#img_before' + block).find('.active').removeClass('active');
+                    $('#img_before' + block).children('img').remove();
+                    albumID = 'img_before' + block;
                 } else {
-                    $("#confirmDialog").modal("show");
-                    $(".confirmMessage").html($('#existedImage').val());
+                    $('#img_after' + block).find('.active').removeClass('active');
+                    $('#img_after' + block).children('img').remove();
+                    albumID = 'img_after' + block;
+                }
+
+                for (let i = 0; i < data.length; i++) {
+                    let divClass = (i == data.length - 1) ? 'item active' : 'item';
+                    let img = '<div class="' + divClass + '" id="item' + data[i]['id'] + '" data-id="' + data[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
+                    data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
+                    '<img src="' + data[i]['img_path'] + '" style="width:100%; height: 350px; position: relative" id="slideImageID"/></div>';
+
+                    if (is_before) {
+                        $('#img_before' + block).append(img);
+                    } else {
+                        $('#img_after' + block).append(img);
+                    }
                 }
 
             };
@@ -81,10 +79,10 @@ function uploadFile(input, block, is_before) {
 * Add Block
 ---------------------- */
 function addBlock() {
-    // todo:
-
     // showLoading();
-
+    if ($('#noDataId').length > 0) {
+        $('#noDataId').remove();
+    }
     let params = {};
     let url = "/pattern_team_inspection/evidence/addblock";
     let method = "GET";
@@ -100,10 +98,8 @@ function addBlock() {
 * Delete Block
 ---------------------- */
 function deleteBlock(blockId) {
-    // todo:
     if (confirm('Do you want to delete this block?')) {
 
-        // todo: call ajax delete from DB
         let params = {
             id: blockId
         };
@@ -113,6 +109,10 @@ function deleteBlock(blockId) {
         let doneCallback = function (_data, _textStatus, _jqXHR) {
             $('#block_'+blockId).remove();
             $('#block_content_'+blockId).remove();
+            if ($('.evidences-body').find('.count-block').length == 0) {
+                let noDataMsg = $('#messageNoData').val()
+                $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
+            }
         };
 
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -120,7 +120,6 @@ function deleteBlock(blockId) {
         };
 
         runAjax(url, method, params, doneCallback, failCallback);
-
     }
 }
 
@@ -136,7 +135,9 @@ function saveDialog() {
 ---------------------- */
 function loadEvidence(inspection_id) {
     // showLoading();
-
+    if ($('#noDataId').length > 0) {
+        $('#noDataId').remove();
+    }
     let params = {
         inspection_id : inspection_id
     };
@@ -147,6 +148,10 @@ function loadEvidence(inspection_id) {
     let doneCallback = function (data, _textStatus, _jqXHR) {
         $("#patternEvidenceDialog .evidences-body").append(data);
         $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val(inspection_id);
+        if ($('.evidences-body').find('.count-block').length == 0) {
+            let noDataMsg = $('#messageNoData').val()
+            $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
+        }
     };
 
     runAjax(url, method, params, doneCallback);
@@ -164,7 +169,7 @@ function fullScreen(img_src) {
 /*---------------------
 * Remove one selected image
 ---------------------- */
-function removeImage(imgID) {
+function removeImage(imgID, albumID) {
     if ($('#item'+imgID).next().length != 0) {
         $('#item'+imgID).next().addClass('active');
     } else {
@@ -175,8 +180,11 @@ function removeImage(imgID) {
     let url = "/pattern_team_inspection/evidence/image/" + imgID;
     let method = "DELETE";
 
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        console.log("TCL: doneCallback -> data", data)
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
+        let noImgPath = $('#noImage').val();
+        if ($(albumID).find('.item').length == 0) {
+            $(albumID).append('<img src="'+noImgPath+'" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">');
+        }
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -191,8 +199,9 @@ function removeImage(imgID) {
 function removeAlbum(albumID, blockID, isBefore) {
     let ids = {};
     ids = $.map($('#' + albumID + ' > div'), div => div.dataset['id'] )
-    console.log("TCL: removeAlbum -> ids", ids)
+    let noImgPath = $('#noImage').val();
     $('#'+albumID).empty();
+    $('#'+albumID).append('<img src="'+noImgPath+'" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">');
 
     let url = "/pattern_team_inspection/evidence/removeAlbum";
     let method = "POST";
