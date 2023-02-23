@@ -15,6 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
+        // Remove exist table
+        if (Schema::hasTable($this->tableName)) {
+            Schema::dropIfExists($this->tableName);
+        }
+
+        // Create
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('problem_before', 255)->nullable();

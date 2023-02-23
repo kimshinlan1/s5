@@ -180,6 +180,7 @@ return [
 
         Elibyy\TCPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -200,6 +201,8 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Constant' => Constant::class,
+        'Image' => Intervention\Image\Facades\Image::class
+
     ])->toArray(),
 
 ];
