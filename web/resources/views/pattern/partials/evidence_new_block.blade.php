@@ -61,7 +61,7 @@
             {{ __('Evidence_Before_Problem') }}
         </span>
         <br>
-        <textarea id="txt" style="width: 100%"></textarea>
+        <textarea id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
 
     <div class="col">
@@ -97,7 +97,7 @@
             {{ __('Evidence_After_Problem') }}
         </span>
         <br>
-        <textarea id="txt" style="width: 100%"></textarea>
+        <textarea id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
 </div>
 <hr>
