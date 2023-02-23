@@ -10,7 +10,7 @@
                 <div class="confirmMessage"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" id="okBtn" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
             </div>
         </div>
     </div>

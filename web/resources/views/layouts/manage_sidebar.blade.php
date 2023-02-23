@@ -45,11 +45,11 @@
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('SkillMapMenu') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon3"></i>
-
             </div>
         </a>
         <div id='subSkillMapMenuId' class="collapse sidebar-submenu">
             <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap_Detail') }}</a>
         </div>
 
         <!-- 5S Management -->
@@ -64,7 +64,7 @@
             <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(),'pattern_team_inspection'))active @endif" href="/pattern_team_inspection">{{ __('Pattern_Team_Inspection') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'pattern_dept_setting'))active @endif" href="/pattern_dept_setting">{{ __('Pattern_Dept_Setting') }}</a>
             @if(!auth()->user()->is5SModeFree())
-            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_list_customer')active @endif" href="/pattern_list_customer">{{ __('Pattern_List_Customer') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_list_customer')active @endif" href="/pattern_list_customer">{{ __('Pattern_List_Customer_Menu') }}</a>
             @endif
             @if(auth()->user()->isAdmin())
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='pattern_list')active @endif" href="/pattern_list">{{ __('Pattern_List') }}</a>

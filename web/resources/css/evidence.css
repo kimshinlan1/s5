@@ -1,0 +1,72 @@
+.file-div {
+    position: relative;
+    overflow: hidden;
+}
+
+.file {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.close-image {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 35px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 3rem;
+    z-index: 1;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.right-arrow {
+    font-size: 10rem !important;
+    color: green !important;
+    line-height: 250px !important;
+}
+
+.modal-lg {
+    width: 1250px !important;
+    max-width: 1250px !important;
+}
+
+.col-5 {
+    width: 46% !important;
+}
+
+.col-2 {
+    width: 8% !important;
+}
+
+.before-title, .after-title {
+    text-align: center;
+    color: white;
+    height: 50px;
+}
+
+.before-label {
+    background-color: #aa403b;
+    width: 40%;
+    font-size: 2rem;
+}
+
+.after-label {
+    background-color: rgb(231, 168, 51);
+    width: 40%;
+    font-size: 2rem;
+}
+
+.right-control {
+    top: 30px !important;
+}
+
+.problem-area {
+    height: 80px;
+    border: 3px solid green;
+    width: 100%;
+}
