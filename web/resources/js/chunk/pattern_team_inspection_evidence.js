@@ -1,7 +1,7 @@
 /*---------------------
 * Global var
 ---------------------- */
-
+var openEvidenceBtn = null;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -14,8 +14,8 @@
 ---------------------- */
 function uploadFile(input, block, is_before) {
     // todo: upload by ajax (select multi files => auto upload after selected)
-    let inspecionId = $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val();
-
+    // let inspecionId = $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val();
+    let inspecionId = $(openEvidenceBtn).attr('data-id');
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -28,6 +28,7 @@ function uploadFile(input, block, is_before) {
             formData.append('inspection_id', inspecionId);
             formData.append('is_before', is_before);
             formData.append('count_file', input.files.length);
+            formData.append('team_id', $('#selectTeamList').val());
 
 
             let url = "/pattern_team_inspection/evidence/saveImage";
@@ -45,11 +46,11 @@ function uploadFile(input, block, is_before) {
                     albumID = 'img_after' + block;
                 }
 
-                for (let i = 0; i < data.length; i++) {
-                    let divClass = (i == data.length - 1) ? 'item active' : 'item';
-                    let img = '<div class="' + divClass + '" id="item' + data[i]['id'] + '" data-id="' + data[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
-                    data[i]['id'] + '" onclick="removeImage(' + data[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                    '<img src="' + data[i]['img_path'] + '" style="width:100%; height: 350px; position: relative" id="slideImageID"/></div>';
+                for (let i = 0; i < data.imgs.length; i++) {
+                    let divClass = (i == data.imgs.length - 1) ? 'item active' : 'item';
+                    let img = '<div class="' + divClass + '" id="item' + data.imgs[i]['id'] + '" data-id="' + data.imgs[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
+                    data.imgs[i]['id'] + '" onclick="removeImage(' + data.imgs[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
+                    '<img src="' + data.imgs[i]['img_path'] + '" style="width:100%; height: 350px; position: relative" id="slideImageID"/></div>';
 
                     if (is_before) {
                         $('#img_before' + block).append(img);
@@ -57,7 +58,12 @@ function uploadFile(input, block, is_before) {
                         $('#img_after' + block).append(img);
                     }
                 }
-
+                // $(btn).attr('data-id', data.inspectionId);
+                $(openEvidenceBtn).attr('data-id', data.inspectionId);
+                let time = $(openEvidenceBtn).attr('data-time');
+                let hidTd = $(openEvidenceBtn).parent().parent().siblings('#hidInspectionRow').find('td')[time];
+                $(hidTd).children().last().val(data.inspectionId);
+                $(hidTd).children().last().attr('id', 'hidInspectionId_'+data.inspectionId);
             };
             let failCallback = function (jqXHR, _textStatus, _errorThrown) {
                 failAjax(jqXHR, _textStatus, _errorThrown);
@@ -271,5 +277,38 @@ function removeAlbum(albumID, blockID, isBefore) {
         $("#confirmDialog").find(".modal-body").html('');
     });
 
+    /*---------------------
+     * Handle save event
+     ---------------------- */
+    $('#btnEvidenceSave').click(function() {
+        let blocks = $('.evidences-body').find('.count-block');
+        let data = {};
 
+        if (blocks.length > 0) {
+            for (const block of blocks) {
+                let blockId = $(block).attr('data-id');
+                let problemBefore = $(blocks).find('#problemBefore' + blockId).val();
+                let problemAfter = $(blocks).find('#problemAfter' + blockId).val();
+
+                data['problemBefore_' + blockId] = problemBefore;
+                data['problemAfter_' + blockId] = problemAfter;
+            }
+        }
+        data['count'] = blocks.length;
+        let url = "/pattern_team_inspection/evidence/save";
+        let method = "POST";
+
+        let doneCallback = function (data, _textStatus, _jqXHR) {
+
+        };
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+
+        runAjax(url, method, data, doneCallback, failCallback, false);
+    })
+
+    $("body").on('click','#openEvidenceBtn', function(e) {
+        openEvidenceBtn = e.currentTarget;
+    })
  });

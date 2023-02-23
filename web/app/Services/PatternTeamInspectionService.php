@@ -283,8 +283,18 @@ class PatternTeamInspectionService extends BaseService
         $blockId = $request->get('block_id');
         $isBefore = $request->get('is_before');
         $countFile = $request->get('count_file');
-        // $inspectionId = $request->get('inspection_id');
-        $inspectionId = 1;
+        $inspectionId = $request->get('inspection_id');
+        if (!$inspectionId) {
+            $inspection = Inspection::create(
+                [
+                    'team_id' => $request->get('team_id'),
+                    'inspection_date' => null,
+                    'avg_point' => null,
+                ]
+            );
+            $inspectionId = $inspection->id;
+        }
+        // $inspectionId = 1;
         $arr = [];
         $imgPath = '';
         if ($blockId && $isBefore != null && $inspectionId) {
@@ -337,7 +347,10 @@ class PatternTeamInspectionService extends BaseService
             ];
         }
 
-        return $arr;
+        return [
+            'imgs' => $arr,
+            'inspectionId' => $inspectionId
+        ];
     }
 
     /**
@@ -434,6 +447,19 @@ class PatternTeamInspectionService extends BaseService
             }
             return $this->imageModel::whereIn('id', $ids)->delete();
         }
+        return false;
+    }
+     /**
+     * Save data from the evidence dialog
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function saveData(Request $request)
+    {
+        // $inspectionId = $request->get('inspection_id');
+
         return false;
     }
 }

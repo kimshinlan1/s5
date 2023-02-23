@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="row count-block" id="block_content_{{ $evidence['id'] }}">
+<div class="row count-block" id="block_content_{{ $evidence['id'] }}" data-id="{{ $evidence['id'] }}">
     <div class="col-5" style="padding-left: 3rem;">
         {{-- Before --}}
         <div class="before-title">
@@ -76,7 +76,7 @@
         <span class="fw-bold" style="font-size: 1.7rem; color:#aa403b">
             {{ __('Evidence_Before_Problem') }}
         </span>
-        <textarea id="txt" class="problem-area">{{ $evidence['problem_before'] }}</textarea>
+        <textarea id="problemBefore{{ $evidence['id'] }}" class="problem-area">{{ $evidence['problem_before'] }}</textarea>
     </div>
     <div class="col-2" style="text-align: center;">
         <div class="row" style="height: 50px"></div>
@@ -131,7 +131,7 @@
         <span class="fw-bold" style="font-size: 1.7rem; color:rgb(231, 168, 51)">
             {{ __('Evidence_After_Problem') }}
         </span>
-        <textarea id="txt" class="problem-area">{{ $evidence['problem_after'] }}</textarea>
+        <textarea id="problemAfter{{ $evidence['id'] }}" class="problem-area">{{ $evidence['problem_after'] }}</textarea>
     </div>
     <hr>
 </div>

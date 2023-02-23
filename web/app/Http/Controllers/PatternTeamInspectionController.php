@@ -262,4 +262,16 @@ class PatternTeamInspectionController extends Controller
     {
         return $this->service->removeExistingAlbum($request);
     }
+
+     /**
+     * Save data from the evidence dialog
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function save(Request $request)
+    {
+        return $this->service->saveData($request);
+    }
 }
