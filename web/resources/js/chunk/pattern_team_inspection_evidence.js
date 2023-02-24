@@ -13,13 +13,12 @@ var openEvidenceBtn = null;
 * Upload file
 ---------------------- */
 function uploadFile(input, block, is_before) {
-    // todo: upload by ajax (select multi files => auto upload after selected)
     // let inspecionId = $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val();
     let inspecionId = $(openEvidenceBtn).attr('data-id');
+
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-
             let formData = new FormData();
             input.files.forEach((_element, index) => {
                 formData.append("file" + index, input.files[index]);
@@ -29,6 +28,10 @@ function uploadFile(input, block, is_before) {
             formData.append('is_before', is_before);
             formData.append('count_file', input.files.length);
             formData.append('team_id', $('#selectTeamList').val());
+            $('input[id^=hidLocationId_]').each(function(i, l) {
+                formData.append('location' + i, $(l).val());
+            })
+            formData.append('countLocation',  $('input[id^=hidLocationId_]').length);
 
 
             let url = "/pattern_team_inspection/evidence/saveImage";
@@ -58,12 +61,16 @@ function uploadFile(input, block, is_before) {
                         $('#img_after' + block).append(img);
                     }
                 }
-                // $(btn).attr('data-id', data.inspectionId);
                 $(openEvidenceBtn).attr('data-id', data.inspectionId);
                 let time = $(openEvidenceBtn).attr('data-time');
-                let hidTd = $(openEvidenceBtn).parent().parent().siblings('#hidInspectionRow').find('td')[time];
-                $(hidTd).children().last().val(data.inspectionId);
-                $(hidTd).children().last().attr('id', 'hidInspectionId_'+data.inspectionId);
+
+                $('input[id^=hidInspectionId_]').each(function(i, l) {
+                    if (i == time) {
+                       $(l).val(data.inspectionId);
+                       $(l).attr('id', 'hidInspectionId_'+data.inspectionId);
+                    }
+                })
+
             };
             let failCallback = function (jqXHR, _textStatus, _errorThrown) {
                 failAjax(jqXHR, _textStatus, _errorThrown);
@@ -86,15 +93,34 @@ function uploadFile(input, block, is_before) {
 ---------------------- */
 function addBlock() {
     // showLoading();
+    let inspectionId = $(openEvidenceBtn).attr('data-id');
+    let locationArr = [];
+    $('input[id^=hidLocationId_]').each(function(i, l) {
+        locationArr.push($(l).val());
+    })
     if ($('#noDataId').length > 0) {
         $('#noDataId').remove();
     }
-    let params = {};
+    let params = {
+        inspectionId: inspectionId,
+        locationArr: locationArr,
+        team_id: $('#selectTeamList').val()
+    };
     let url = "/pattern_team_inspection/evidence/addblock";
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         $("#patternEvidenceDialog").find(".evidences-body").append(data);
+        let inspectionId = $('#hidNewInspectionId').val();
+        $(openEvidenceBtn).attr('data-id', inspectionId);
+        let time = $(openEvidenceBtn).attr('data-time');
+
+        $('input[id^=hidInspectionId_]').each(function(i, l) {
+            if (i == time) {
+                $(l).val(inspectionId);
+                $(l).attr('id', 'hidInspectionId_'+inspectionId);
+            }
+        })
     };
 
     runAjax(url, method, params, doneCallback);
@@ -160,7 +186,11 @@ function loadEvidence(inspection_id) {
         }
     };
 
-    runAjax(url, method, params, doneCallback);
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    };
+
+    runAjax(url, method, params, doneCallback, failCallback);
 }
 
 /*---------------------
@@ -237,7 +267,7 @@ function removeAlbum(albumID, blockID, isBefore) {
      * DIALOG ON SHOW/HIDE
      ---------------------- */
     $("#patternEvidenceDialog").on("show.bs.modal", function (e) {
-        let id = $(e.relatedTarget).data("id");
+        let id = $(e.relatedTarget).attr("data-id");
         loadEvidence(id);
 
     });
@@ -283,6 +313,9 @@ function removeAlbum(albumID, blockID, isBefore) {
     $('#btnEvidenceSave').click(function() {
         let blocks = $('.evidences-body').find('.count-block');
         let data = {};
+        let problemBeforeArray = [];
+        let problemAfterArray = [];
+        let blockIdArray = [];
 
         if (blocks.length > 0) {
             for (const block of blocks) {
@@ -290,11 +323,14 @@ function removeAlbum(albumID, blockID, isBefore) {
                 let problemBefore = $(blocks).find('#problemBefore' + blockId).val();
                 let problemAfter = $(blocks).find('#problemAfter' + blockId).val();
 
-                data['problemBefore_' + blockId] = problemBefore;
-                data['problemAfter_' + blockId] = problemAfter;
+                problemBeforeArray.push(problemBefore);
+                problemAfterArray.push(problemAfter);
+                blockIdArray.push(blockId);
             }
         }
         data['count'] = blocks.length;
+        data['before'] = problemBeforeArray;
+        data['after'] = problemAfterArray;
         let url = "/pattern_team_inspection/evidence/save";
         let method = "POST";
 

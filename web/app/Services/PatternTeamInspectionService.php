@@ -250,14 +250,20 @@ class PatternTeamInspectionService extends BaseService
      * @return object
      */
     public function getEvidenceByInspectionId($id) {
-        $blocks = DB::table('inspection_block_images')->orderBy('inspection_block_images.id')->get()->toArray();
-        foreach ($blocks as $key => $block) {
+        $blockIds = DB::table('inspection_block_images')->where('inspection_id', $id)
+        ->distinct()->pluck('id')->toArray();
+
+        $blocks = DB::table('inspection_block_images')->whereIn('id', $blockIds)
+        ->orderBy('inspection_block_images.id')->get()->toArray();
+
+        foreach ($blocks as $block) {
             $hasBefore = false;
             $hasAfter = false;
-            $id = $block->id;
-            $images = DB::table('inspection_images')->where('inspection_images.block_id', $id)->orderBy('inspection_images.id')->get()->toArray();
+            $blockId = $block->id;
+            $images = DB::table('inspection_images')->where('inspection_images.block_id', $blockId)
+            ->where('inspection_images.block_id', $blockId)->orderBy('inspection_images.id')->get()->toArray();
             $block->images = $images;
-            foreach ($images as $key => $image) {
+            foreach ($images as $image) {
                 if ($image->is_before == 1) {
                     $hasBefore = true;
                 };
@@ -283,20 +289,45 @@ class PatternTeamInspectionService extends BaseService
         $blockId = $request->get('block_id');
         $isBefore = $request->get('is_before');
         $countFile = $request->get('count_file');
+        $countLocation = $request->get('countLocation');
         $inspectionId = $request->get('inspection_id');
+
+        // If add evidences for empty inspection, it will create one default inspection for new evidences.
         if (!$inspectionId) {
             $inspection = Inspection::create(
                 [
                     'team_id' => $request->get('team_id'),
-                    'inspection_date' => null,
-                    'avg_point' => null,
+                    'inspection_date' => date_create()->format('Y-m-d H:i:s'),
+                    'avg_point' => "1.0|1.0|1.0|1.0|1.0",
                 ]
             );
             $inspectionId = $inspection->id;
+
+            // Default point value is 1
+            $points = [
+                's1' => 1,
+                's2' => 1,
+                's3' => 1,
+                's4' => 1,
+                's5' => 1,
+            ];
+
+            // Create default details for new evidence
+            for ($i=0; $i < $countLocation; $i++) {
+                foreach ($points as $key => $val) {
+                    InspectionDetail::create([
+                        'inspection_id' => $inspectionId,
+                        'location_id' => $request->get('location'.$i),
+                        'point' => $key,
+                        'point_value' => $val,
+                    ]);
+                }
+            }
         }
-        // $inspectionId = 1;
+
         $arr = [];
         $imgPath = '';
+        // Create and save uploaded image
         if ($blockId && $isBefore != null && $inspectionId) {
             for ($i=0; $i < intval($countFile); $i++) {
                 $image = $request->file('file'.$i);
@@ -385,7 +416,43 @@ class PatternTeamInspectionService extends BaseService
      */
     public function addNewBlock(Request $request)
     {
-        return $this->imageBlockModel::create($request->all());
+        $inspectionID = $request->get('inspectionId');
+        $locations = $request->get('locationArr');
+        if (!$inspectionID) {
+            $inspection = Inspection::create(
+                [
+                    'team_id' => $request->get('team_id'),
+                    'inspection_date' => date_create()->format('Y-m-d H:i:s'),
+                    'avg_point' => "1.0|1.0|1.0|1.0|1.0",
+                ]
+            );
+            $inspectionID = $inspection->id;
+
+            // Default point value is 1
+            $points = [
+                's1' => 1,
+                's2' => 1,
+                's3' => 1,
+                's4' => 1,
+                's5' => 1,
+            ];
+
+            // Create default details for new evidence
+            for ($i=0; $i < count($locations); $i++) {
+                foreach ($points as $key => $val) {
+                    InspectionDetail::create([
+                        'inspection_id' => $inspectionID,
+                        'location_id' => $locations[$i],
+                        'point' => $key,
+                        'point_value' => $val,
+                    ]);
+                }
+            }
+        }
+        $data = [
+            'inspection_id' => $inspectionID
+        ];
+        return $this->imageBlockModel::create($data);
     }
 
      /**

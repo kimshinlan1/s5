@@ -27,7 +27,9 @@
     </div>
 </div>
 
-<div class="row count-block" id="block_content_{{ $evidence['id'] }}">
+<input type="hidden" id="hidNewInspectionId" value="{{ $evidence['inspection_id'] }}"/>
+
+<div class="row count-block" id="block_content_{{ $evidence['id'] }}" data-id="{{ $evidence['id'] }}">
     <div class="col" style="padding-left: 3rem;">
         {{-- Before --}}
         <div class="before-title">
@@ -60,7 +62,7 @@
         <span class="fw-bold" style="font-size: 1.7rem; color:#aa403b">
             {{ __('Evidence_Before_Problem') }}
         </span>
-        <textarea id="txt" style="width: 100%" class="problem-area"></textarea>
+        <textarea id="problemBefore{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
 
     <div class="col">
@@ -95,7 +97,7 @@
         <span class="fw-bold" style="font-size: 1.7rem; color:rgb(231, 168, 51)">
             {{ __('Evidence_After_Problem') }}
         </span>
-        <textarea id="txt" style="width: 100%" class="problem-area"></textarea>
+        <textarea id="problemAfter{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
     <hr>
 </div>
