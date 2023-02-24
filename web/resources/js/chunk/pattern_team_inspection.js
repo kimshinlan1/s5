@@ -542,7 +542,12 @@ $(function () {
     // Save click
     $("#btnSave").click(function () {
         $("#modalSaveInspectionData").modal("show");
+        $("#modalSaveInspectionData").addClass("show");
     });
+
+    $("#modalSaveInspectionData").on('hidden.bs.modal', function (e) {
+        $("#modalSaveInspectionData").removeClass("show");
+    })
 
     // Add column click
     $("#btnAdd").click(function () {
