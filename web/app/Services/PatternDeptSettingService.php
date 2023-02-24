@@ -163,26 +163,17 @@ class PatternDeptSettingService extends BaseService
         foreach ($data['data'] as $area) {
             // Step: Insert new Area
             $areaId = null;
-            if ($data['info']['pattern_id']) {
-                if (isset($area['area_id']) && is_numeric($area['area_id'])) {
-                    $areaId = $area['area_id'];
-                    Area::updateOrCreate(
-                        [
-
-                            'id' => $areaId,
-                        ],
-                        [
-                            'name' => $area['area_name'],
-                            'dept_pattern_id' => $deptPatternId
-                        ]
-                    );
-                } else {
-                    $newArea = Area::create([
+            if (($data['info']['pattern_id']) && (isset($area['area_id']) && is_numeric($area['area_id']))) {
+                $areaId = $area['area_id'];
+                Area::updateOrCreate(
+                    [
+                        'id' => $areaId,
+                    ],
+                    [
                         'name' => $area['area_name'],
                         'dept_pattern_id' => $deptPatternId
-                    ]);
-                    $areaId = $newArea->id;
-                }
+                    ]
+                );
             } else {
                 $newArea = Area::create([
                     'name' => $area['area_name'],
@@ -195,7 +186,7 @@ class PatternDeptSettingService extends BaseService
             foreach ($area['locations'] as $location) {
                 // Step: Insert new location
                 $locationId = null;
-                if (isset($location['location_id']) && is_numeric($location['location_id'])) {
+                if (($data['info']['pattern_id']) && (isset($location['location_id']) && is_numeric($location['location_id']))) {
                     $locationId = $location['location_id'];
                     Location::updateOrCreate(
                         [

@@ -143,7 +143,6 @@ $(function () {
     $("#deletePatternListBtn").on("click", function () {
         showLoading();
         let id = $("#deletePatternListId").val();
-        let compID = $('#companyListID').val() ? $('#companyListID').val() : $('#userCompanyId').val();
         $.ajax({
             url: "/pattern_list/" + id + "?pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER"),
             type: "DELETE",

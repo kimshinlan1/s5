@@ -125,7 +125,7 @@ class PatternService extends BaseService
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);
             if ($data->delete()) {
-                Area::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
+                Area::where('dept_pattern_id', $id)->delete();
                 Department::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
                 $deptDetails = DeptPatternDetail::where('dept_pattern_id', $id)->pluck('dept_pattern_id')->toArray();
                 DeptPatternDetail::whereIn('dept_pattern_id', $deptDetails)->delete();
