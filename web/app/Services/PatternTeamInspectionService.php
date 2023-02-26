@@ -525,8 +525,23 @@ class PatternTeamInspectionService extends BaseService
      */
     public function saveData(Request $request)
     {
-        // $inspectionId = $request->get('inspection_id');
+        $count = $request->get('count');
+        $before = $request->get('before');
+        $after = $request->get('after');
+        $blockIds = $request->get('blockIds');
+        for ($i=0; $i < $count; $i++) {
+            $block = InspectionImageBlock::find($blockIds[$i]);
+            if ($block) {
+                $block->problem_before = $before[$i];
+                $block->problem_after = $after[$i];
+                $block->save();
+            } else {
+                return [
+                    'invalid' => true,
+                ];
+            }
+        }
 
-        return false;
+        return true;
     }
 }

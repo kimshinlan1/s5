@@ -331,11 +331,17 @@ function removeAlbum(albumID, blockID, isBefore) {
         data['count'] = blocks.length;
         data['before'] = problemBeforeArray;
         data['after'] = problemAfterArray;
+        data['blockIds'] = blockIdArray;
         let url = "/pattern_team_inspection/evidence/save";
         let method = "POST";
 
         let doneCallback = function (data, _textStatus, _jqXHR) {
-
+            // $('#patternEvidenceDialog').modal('hide');
+            $("#patternEvidenceDialog").css("display", "none");
+            $("#patternEvidenceDialog").removeClass("show");
+            $('.modal-backdrop').remove();
+            $('.modal-open').css("overflow", "unset");
+            $('body').removeClass('modal-open');
         };
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
             failAjax(jqXHR, _textStatus, _errorThrown);

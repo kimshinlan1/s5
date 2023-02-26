@@ -272,6 +272,10 @@ class PatternTeamInspectionController extends Controller
      */
     public function save(Request $request)
     {
-        return $this->service->saveData($request);
+        $data = $this->service->saveData($request);
+        if (isset($data['invalid'])) {
+            return $this->responseException();
+        }
+        return $data;
     }
 }
