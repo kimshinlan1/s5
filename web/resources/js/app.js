@@ -517,6 +517,11 @@ window.checkExistId = function(arr, id) {
     return existed;
 }
 
+window.auto_grow = function(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+}
+
 /** ------------------
  *    Remove existed item in array
  --------------------- */
@@ -524,6 +529,7 @@ window.removeExistId = function(arr, id) {
     arr.splice( $.inArray(id,arr) , 1 );
     return arr;
 }
+
 
 /* ==============================
 jQuery
