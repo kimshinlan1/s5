@@ -12,14 +12,6 @@
     {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 </div>
 
-<style>
-    .carousel{
-        width: 100%;
-        height: 350px;
-        border: 1px solid black
-    }
-</style>
-
 {{-- Cross Button --}}
 <div class="row" id="block_{{ $evidence['id'] }}">
     <div class="d-flex justify-content-end">
@@ -27,7 +19,9 @@
     </div>
 </div>
 
-<div class="row count-block" id="block_content_{{ $evidence['id'] }}">
+<input type="hidden" id="hidNewInspectionId" value="{{ $evidence['inspection_id'] }}"/>
+
+<div class="row count-block" id="block_content_{{ $evidence['id'] }}" data-id="{{ $evidence['id'] }}">
     <div class="col" style="padding-left: 3rem;">
         {{-- Before --}}
         <div class="before-title">
@@ -36,7 +30,7 @@
         <div id="myCarousel_before_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_before{{ $evidence['id'] }}">
-                <img src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">
+                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
             </div>
 
             <!-- Left and right controls -->
@@ -60,7 +54,7 @@
         <span class="fw-bold" style="font-size: 1.7rem; color:#aa403b">
             {{ __('Evidence_Before_Problem') }}
         </span>
-        <textarea id="txt" style="width: 100%" class="problem-area"></textarea>
+        <textarea id="problemBefore{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
 
     <div class="col">
@@ -71,7 +65,7 @@
         <div id="myCarousel_after_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_after{{ $evidence['id'] }}">
-                <img src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">
+                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
             </div>
 
             <!-- Left and right controls -->
@@ -95,7 +89,7 @@
         <span class="fw-bold" style="font-size: 1.7rem; color:rgb(231, 168, 51)">
             {{ __('Evidence_After_Problem') }}
         </span>
-        <textarea id="txt" style="width: 100%" class="problem-area"></textarea>
+        <textarea id="problemAfter{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
     <hr>
 </div>

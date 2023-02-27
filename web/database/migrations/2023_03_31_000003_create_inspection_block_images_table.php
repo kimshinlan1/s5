@@ -23,6 +23,7 @@ return new class extends Migration
         // Create
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('inspection_id');
             $table->string('problem_before', 255)->nullable();
             $table->string('problem_after', 255)->nullable();
             $table->timestamps();

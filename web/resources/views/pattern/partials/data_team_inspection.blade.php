@@ -58,7 +58,7 @@
             <td colspan="3">
 
             </td>
-            @foreach ($inspectionIds as $inspectionId)
+            @foreach ($inspectionIds as $key => $inspectionId)
             @php
                 $countImgs = isset($inspectionData[$inspectionId]['count_evidence'])
                 ? $inspectionData[$inspectionId]['count_evidence'] : 0;
@@ -74,7 +74,7 @@
                 <a style="color: black;" href="">{{ $countImgs }}{{ __('TeamInspection_Registered') }}</a>
                 <br>
                 {{-- <a style="color: black;" href="javascript:evidenceDialog('{{ is_int($inspectionId) ? $inspectionId : null }}')" >新しく登録する</a> --}}
-                <a style="color: black;" href="javascript:void(0)" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" >{{ __('TeamInspection_Register_New') }}</a>
+                <a style="color: black;" href="javascript:void(0)" id="openEvidenceBtn" data-time={{ $key }} data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" >{{ __('TeamInspection_Register_New') }}</a>
 
             </td>
             @endforeach
@@ -139,9 +139,9 @@
             </td>
             @endfor
         </tr>
-        <tr>
-            @foreach ($inspectionIds as $inspectionId)
-            <td style="text-align: center; vertical-align: middle;">
+        <tr id="hidInspectionRow">
+            @foreach ($inspectionIds as $key => $inspectionId)
+            <td style="text-align: center; vertical-align: middle;" data-time="{{  $key }}">
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";
@@ -149,7 +149,7 @@
                 ?>
                 <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
                 <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
-                <input type="hidden" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
+                <input type="hidden" class="hidInspectionClass" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
             </td>
             @endforeach
         </tr>

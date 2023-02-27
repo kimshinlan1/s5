@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
+use App\Services\PatternTeamInspectionEvidenceService;
 use Illuminate\Http\Request;
 use App\Services\PatternTeamInspectionService;
 
@@ -10,10 +11,12 @@ class PatternTeamInspectionController extends Controller
 {
     /* @var team_service */
     private $service;
+    private $evidenceService;
 
-    public function __construct(PatternTeamInspectionService $service)
+    public function __construct(PatternTeamInspectionService $service, PatternTeamInspectionEvidenceService $evidenceService)
     {
         $this->service = $service;
+        $this->evidenceService = $evidenceService;
     }
 
     /**
@@ -185,7 +188,7 @@ class PatternTeamInspectionController extends Controller
         }
 
         // Get data and format structure
-        $evidences = $this->service->getEvidenceByInspectionId($inspectionId);
+        $evidences = $this->evidenceService->getEvidenceByInspectionId($inspectionId);
         $evidences = json_decode(json_encode($evidences), true);
 
         $params = [
@@ -203,8 +206,10 @@ class PatternTeamInspectionController extends Controller
      */
     public function addBlock(Request $request)
     {
-        $evidence = $this->service->addNewBlock($request)->toArray();
-
+        $evidence = $this->evidenceService->addNewBlock($request)->toArray();
+        if (isset($evidence['invalid'])) {
+            return $this->responseException();
+        }
         $params = [
             'evidence' => $evidence,
         ];
@@ -215,12 +220,18 @@ class PatternTeamInspectionController extends Controller
      * Remove a block
      *
      * @param int $id
+     * @param  \Illuminate\Http\Request  $request
      *
      * @return object
      */
-    public function removeBlock($id)
+    public function removeBlock($id, Request $request)
     {
-        return $this->service->removeExistingBlock($id);
+        $data = $this->evidenceService->removeExistingBlock($id, $request);
+        if (isset($data['invalid'])) {
+            return $this->responseException();
+        }
+        return $data;
+
     }
 
      /**
@@ -232,7 +243,7 @@ class PatternTeamInspectionController extends Controller
      */
     public function saveImage(Request $request)
     {
-        $data = $this->service->saveUploadedImage($request);
+        $data = $this->evidenceService->saveUploadedImage($request);
         if (isset($data['invalid'])) {
             return $this->responseException();
         }
@@ -248,7 +259,7 @@ class PatternTeamInspectionController extends Controller
      */
     public function removeImage($id)
     {
-        return $this->service->removeExistingImage($id);
+        return $this->evidenceService->removeExistingImage($id);
     }
 
      /**
@@ -260,6 +271,22 @@ class PatternTeamInspectionController extends Controller
      */
     public function removeAlbum(Request $request)
     {
-        return $this->service->removeExistingAlbum($request);
+        return $this->evidenceService->removeExistingAlbum($request);
+    }
+
+     /**
+     * Save data from the evidence dialog
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function save(Request $request)
+    {
+        $data = $this->evidenceService->saveData($request);
+        if (isset($data['invalid'])) {
+            return $this->responseException();
+        }
+        return $data;
     }
 }
