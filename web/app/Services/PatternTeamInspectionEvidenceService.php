@@ -260,6 +260,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
         }
         return false;
     }
+
      /**
      * Save data from the evidence dialog
      *
@@ -289,6 +290,15 @@ class PatternTeamInspectionEvidenceService extends BaseService
         return true;
     }
 
+    /**
+     * Create default inspection
+     *
+     * @param int $teamId
+     * @param array $locations
+     * @param int $countLocation
+     *
+     * @return inspectionId
+     */
     private function createDefaultInspection($teamId, $locations, $countLocation) {
         $inspection = Inspection::create(
             [
