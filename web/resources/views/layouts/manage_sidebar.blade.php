@@ -48,8 +48,8 @@
             </div>
         </a>
         <div id='subSkillMapMenuId' class="collapse sidebar-submenu">
-            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
-            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap_Detail') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps_list'))active @endif" href="{{ route('skillmap_list') }}">{{ __('SkillMap') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(str_contains(request()->path(), 'skillmaps_detail'))active @endif" href="/skillmaps_detail">{{ __('SkillMap_Detail') }}</a>
         </div>
 
         <!-- 5S Management -->

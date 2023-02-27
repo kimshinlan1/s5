@@ -85,8 +85,6 @@ $(function () {
         });
     }
 
-    console.log($("#companyListID").find(":selected").val());
-
     // Setting datatable
     $("#patternListTable").bootstrapTable({
         pagination: "true",
@@ -134,12 +132,6 @@ $(function () {
    *   Delete dialog show
    --------------------- */
     $("#patternListDeleteDialog").on("show.bs.modal", function (e) {
-        let $button = $(e.relatedTarget);
-        let id = $button.data("dept-id");
-        $.ajax({
-            url: "/pattern_list/" + id,
-            type: "DELETE",
-        })
         showDialogDelete('#patternListTable', '#deletePatternListId', '#patternListDeleteDialog', e);
     });
 
