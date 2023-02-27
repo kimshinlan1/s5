@@ -58,13 +58,17 @@ class PatternService extends BaseService
         $compId = $request->input('company_id');
         $limit = $request->input('limit');
 
-        $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
-        if (empty($ids)) {
-            return [];
-        }
-        return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+        // $ids = Department::select('dept_pattern_id')->where('company_id', $compId)->get()->toArray();
+        // if (empty($ids)) {
+        //     return [];
+        // }
+        // return DeptPattern::join('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
+        //     ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
+        //     ->whereIn('dept_patterns.id', $ids)->orderBy('departments.id')->paginate($limit);
+
+        return DeptPattern::leftJoin('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
             ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
-            ->whereIn('dept_patterns.id', $ids)->orderBy('departments.id')->paginate($limit);
+            ->where('dept_patterns.company_id', $compId)->orderBy('departments.id')->paginate($limit);
     }
 
     /**

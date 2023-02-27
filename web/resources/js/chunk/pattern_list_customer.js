@@ -20,7 +20,7 @@ window.patternListTableActions = function (_value, row, _index) {
         '" onclick="redirectToEdit(' +row.id+ ',' + row.deptId +',' + row.company_id +')" id="patternListEdit">編集</button> ' +
         '<button type="button" style="margin-left: 6px;" class="btn btn-danger btn-sm" data-id="' +
         row.id +
-        '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" >削除</button>'
+        '" data-bs-toggle="modal" data-bs-target="#patternListDeleteDialog" data-dept-id="' + row.deptId + '">削除</button>'
     ) : ''
     return buttons;
 };
@@ -80,7 +80,7 @@ $(function () {
                         "</option>";
                 }
                 $("#companyListID").html(html);
-
+                $("#companyListID").change();
             },
         });
     }
@@ -134,6 +134,12 @@ $(function () {
    *   Delete dialog show
    --------------------- */
     $("#patternListDeleteDialog").on("show.bs.modal", function (e) {
+        let $button = $(e.relatedTarget);
+        let id = $button.data("dept-id");
+        $.ajax({
+            url: "/pattern_list/" + id,
+            type: "DELETE",
+        })
         showDialogDelete('#patternListTable', '#deletePatternListId', '#patternListDeleteDialog', e);
     });
 

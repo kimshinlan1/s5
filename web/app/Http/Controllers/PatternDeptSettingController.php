@@ -144,6 +144,7 @@ class PatternDeptSettingController extends Controller
 
         return response()->json($data);
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -161,7 +162,7 @@ class PatternDeptSettingController extends Controller
         return response()->json($data);
     }
 
-        /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request

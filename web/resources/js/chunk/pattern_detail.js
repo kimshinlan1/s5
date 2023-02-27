@@ -54,11 +54,6 @@ window.saveAjax = function(data) {
     runAjax(url, method, paramDatas, doneCallback, failCallback);
 }
 
-function auto_grow(element) {
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight)+"px";
-}
-
 /**
  * Button back page
  */
@@ -180,5 +175,8 @@ $(function () {
     $("#removeLocation").click(function () {
         checkNoSelected();
     });
-
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    }
 });
