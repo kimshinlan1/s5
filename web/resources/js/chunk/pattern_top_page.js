@@ -67,7 +67,7 @@ function renderTeamChart(deptId, teamId) {
             avgPointArr = $(e).val().split('|');
             avgPointArr.forEach(function (value, index) {
                 let key = "s" + (index+1).toString();
-                mapObj.get(key).push(parseInt(value));
+                mapObj.get(key).push(parseFloat(value));
             });
         }
         let id = 'radarchart_team_' + teamId + '-' + i;
@@ -91,12 +91,12 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
         avgPointArr = deptMapRadarData.get(key);
         // Calculate average value
         avgPointArr = avgPointArr.map(function(val){
-          return Math.round(val / parseInt(countPerInspection[key]) * 100) / 100;
+          return Math.round(val / parseFloat(countPerInspection[key]) * 100) / 100;
         })
         // Create data structure for rendering bar chart from data structure of radar chart
         avgPointArr.forEach(function (value, i) {
           let keyString = "s" + (i+1).toString();
-          deptMapBarData.get(keyString).push(parseInt(value));
+          deptMapBarData.get(keyString).push(parseFloat(value));
         });
       }
 
@@ -148,7 +148,7 @@ function loadCharts() {
               countPerInspection[key] = 0;
             }
             let sum =  deptMapRadarData.get(key).map(function (val, index) {
-              return parseInt(val) + parseInt(avgPointArr[index]);
+              return parseFloat(val) + parseFloat(avgPointArr[index]);
             });
             deptMapRadarData.set((key), sum);
             countPerInspection[key]++;

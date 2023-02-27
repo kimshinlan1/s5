@@ -15,7 +15,7 @@ var openEvidenceBtn = null;
 function uploadFile(input, block, is_before) {
     // let inspecionId = $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val();
     let inspecionId = $(openEvidenceBtn).attr('data-id');
-
+    let locations = [];
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -29,9 +29,10 @@ function uploadFile(input, block, is_before) {
             formData.append('count_file', input.files.length);
             formData.append('team_id', $('#selectTeamList').val());
             $('input[id^=hidLocationId_]').each(function(i, l) {
-                formData.append('location' + i, $(l).val());
+                locations.push($(l).val());
             })
             formData.append('countLocation',  $('input[id^=hidLocationId_]').length);
+            formData.append('locations',  locations);
 
 
             let url = "/pattern_team_inspection/evidence/saveImage";
@@ -104,7 +105,7 @@ function addBlock() {
     let params = {
         inspectionId: inspectionId,
         locationArr: locationArr,
-        team_id: $('#selectTeamList').val()
+        teamId: $('#selectTeamList').val()
     };
     let url = "/pattern_team_inspection/evidence/addblock";
     let method = "GET";
@@ -130,12 +131,9 @@ function addBlock() {
 * Delete Block
 ---------------------- */
 function deleteBlock(blockId) {
+    let inspectionId = $(openEvidenceBtn).attr('data-id');
     if (confirm('Do you want to delete this block?')) {
-
-        let params = {
-            id: blockId
-        };
-        let url = "/pattern_team_inspection/evidence/" + blockId;
+        let url = "/pattern_team_inspection/evidence/" + blockId + "?inspectionId=" + inspectionId;
         let method = "DELETE";
 
         let doneCallback = function (_data, _textStatus, _jqXHR) {
@@ -151,7 +149,7 @@ function deleteBlock(blockId) {
             failAjax(jqXHR, _textStatus, _errorThrown);
         };
 
-        runAjax(url, method, params, doneCallback, failCallback);
+        runAjax(url, method, null, doneCallback, failCallback);
     }
 }
 
@@ -233,6 +231,7 @@ function removeImage(imgID, albumID) {
 * Remove a before/after album
 ---------------------- */
 function removeAlbum(albumID, blockID, isBefore) {
+    let inspectionId = $(openEvidenceBtn).attr('data-id');
     let ids = {};
     ids = $.map($('#' + albumID + ' > div'), div => div.dataset['id'] )
     let noImgPath = $('#noImage').val();
@@ -244,7 +243,8 @@ function removeAlbum(albumID, blockID, isBefore) {
     let params = {
         ids: ids,
         blockID: blockID,
-        isBefore: isBefore
+        isBefore: isBefore,
+        inspectionId: inspectionId,
     }
     let doneCallback = function (data, _textStatus, _jqXHR) {
         console.log("TCL: doneCallback -> data", data)
