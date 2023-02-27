@@ -54,7 +54,7 @@ function uploadFile(input, block, is_before) {
                     let divClass = (i == data.imgs.length - 1) ? 'item active' : 'item';
                     let img = '<div class="' + divClass + '" id="item' + data.imgs[i]['id'] + '" data-id="' + data.imgs[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
                     data.imgs[i]['id'] + '" onclick="removeImage(' + data.imgs[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                    '<img src="' + data.imgs[i]['img_path'] + '" style="width:100%; height: 350px; position: relative; object-fit: contain;" id="slideImageID"/></div>';
+                    '<img class="img-size" src="' + data.imgs[i]['img_path'] + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID"/></div>';
 
                     if (is_before) {
                         $('#img_before' + block).append(img);
@@ -217,7 +217,7 @@ function removeImage(imgID, albumID) {
     let doneCallback = function (_data, _textStatus, _jqXHR) {
         let noImgPath = $('#noImage').val();
         if ($(albumID).find('.item').length == 0) {
-            $(albumID).append('<img src="'+noImgPath+'" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">');
+            $(albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
         }
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -236,7 +236,7 @@ function removeAlbum(albumID, blockID, isBefore) {
     ids = $.map($('#' + albumID + ' > div'), div => div.dataset['id'] )
     let noImgPath = $('#noImage').val();
     $('#'+albumID).empty();
-    $('#'+albumID).append('<img src="'+noImgPath+'" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">');
+    $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
 
     let url = "/pattern_team_inspection/evidence/removeAlbum";
     let method = "POST";

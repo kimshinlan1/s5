@@ -207,7 +207,9 @@ class PatternTeamInspectionController extends Controller
     public function addBlock(Request $request)
     {
         $evidence = $this->evidenceService->addNewBlock($request)->toArray();
-
+        if (isset($evidence['invalid'])) {
+            return $this->responseException();
+        }
         $params = [
             'evidence' => $evidence,
         ];
@@ -218,6 +220,7 @@ class PatternTeamInspectionController extends Controller
      * Remove a block
      *
      * @param int $id
+     * @param  \Illuminate\Http\Request  $request
      *
      * @return object
      */

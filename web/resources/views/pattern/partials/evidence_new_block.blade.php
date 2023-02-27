@@ -12,14 +12,6 @@
     {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 </div>
 
-<style>
-    .carousel{
-        width: 100%;
-        height: 350px;
-        border: 1px solid black
-    }
-</style>
-
 {{-- Cross Button --}}
 <div class="row" id="block_{{ $evidence['id'] }}">
     <div class="d-flex justify-content-end">
@@ -38,7 +30,7 @@
         <div id="myCarousel_before_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_before{{ $evidence['id'] }}">
-                <img src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">
+                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
             </div>
 
             <!-- Left and right controls -->
@@ -73,7 +65,7 @@
         <div id="myCarousel_after_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_after{{ $evidence['id'] }}">
-                <img src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%; height: 350px;" onclick="" id="noImg">
+                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
             </div>
 
             <!-- Left and right controls -->

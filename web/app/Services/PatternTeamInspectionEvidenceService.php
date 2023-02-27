@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\InspectionImage;
 use App\Models\InspectionDetail;
 use App\Models\InspectionImageBlock;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -18,14 +17,11 @@ class PatternTeamInspectionEvidenceService extends BaseService
     private $imageModel;
     private $imageBlockModel;
 
-    private $inspectionImagePath = '';
-
     public function __construct(InspectionImage $imageModel, InspectionImageBlock $imageBlockModel)
     {
         // todo: update
         $this->imageModel = $imageModel;
         $this->imageBlockModel = $imageBlockModel;
-        $this->inspectionImagePath = public_path(Constant::INSPECTION_IMAGE_PATH);
     }
 
     /**
@@ -37,7 +33,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
      */
     public function getEvidenceByInspectionId($id) {
         $blocks =  $this->imageBlockModel->where('inspection_id', $id)
-        ->distinct()->orderBy('inspection_block_images.id')->get();
+        ->distinct()->orderBy('id')->get();
 
         foreach ($blocks as $block) {
             $hasBefore = false;
@@ -91,23 +87,17 @@ class PatternTeamInspectionEvidenceService extends BaseService
                 for ($i=0; $i < intval($countFile); $i++) {
                     $image = $request->file('file'.$i);
                     if (!empty($image)) {
-                        $path = $isBefore ?
-                        $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockId . '/before/':
-                        $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockId . '/after/';
+                        $imgPath = $this->inspectionImagePath($isBefore, $inspectionId, $blockId);
 
-                        $imgPath = $isBefore ?
-                        Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/before/':
-                        Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/after/';
-
-                        if (!File::exists($path)) {
-                            File::makeDirectory($path, 0777, true, true);
+                        if (!File::exists($imgPath)) {
+                            File::makeDirectory($imgPath, 0777, true, true);
                         }
                         $fileName = $image->getClientOriginalName();
                         $isExistedName = $this->imageModel->where('img_name', $fileName)->exists();
                         if ($isExistedName) {
-                            $fileName = 'new_' . $fileName;
+                            $fileName = date_create()->format('Y-m-d-H:i:s') . '-' . $fileName;
                         }
-                        $location = $path . $fileName;
+                        $location = $imgPath . $fileName;
                         Image::make($image)->save($location);
                     } else {
                         return [
@@ -141,13 +131,8 @@ class PatternTeamInspectionEvidenceService extends BaseService
                 'imgs' => $arr,
                 'inspectionId' => $inspectionId
             ];
-        } else {
-            return [
-                'invalid' => true,
-            ];
         }
-
-
+        return false;
     }
 
     /**
@@ -169,8 +154,9 @@ class PatternTeamInspectionEvidenceService extends BaseService
             if (File::exists($fileInSourceCode)) {
                 File::delete($fileInSourceCode);
             }
+            $img = $img->delete();
         }
-        return $img->delete();
+        return $img;
     }
 
     /**
@@ -189,22 +175,36 @@ class PatternTeamInspectionEvidenceService extends BaseService
         if (!$inspectionID) {
             $inspectionID = $this->createDefaultInspection($teamId, $locations, $countLocation);
         }
-        $data = [
+
+        $arr = [
             'inspection_id' => $inspectionID
         ];
-        return $this->imageBlockModel::create($data);
+        $data = $this->imageBlockModel::create($arr);
+        if ($data) {
+            $imgPath = $this->inspectionImagePath(null, $inspectionID, $data->id);
+            if (!File::exists($imgPath)) {
+                File::makeDirectory($imgPath, 0777, true, true);
+            }
+        } else {
+            return [
+                'invalid' => true,
+            ];
+        }
+
+        return $data;
     }
 
      /**
      * Remove a block
      *
      * @param int $id
+     * @param  \Illuminate\Http\Request  $request
      *
      * @return object
      */
     public function removeExistingBlock($id, Request $request)
     {
-        $data = DB::table('inspection_block_images')->where('id', $id);
+        $data = $this->imageBlockModel->find($id);
         if ($request->has('inspectionId')) {
             $inspectionId = $request->get('inspectionId');
         } else {
@@ -215,11 +215,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
         if ($data) {
             $imageIds = $this->imageModel->where('block_id', $id)->select('id')->get()->toArray();
             $this->imageModel::whereIn('id', $imageIds)->delete();
-            $path = $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $id;
             $sourcePath = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $id;
-            if (File::exists($path)) {
-                File::deleteDirectory($path);
-            }
             if (File::exists($sourcePath)) {
                 File::deleteDirectory($sourcePath);
             }
@@ -242,17 +238,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
         $isBefore = $request->get('isBefore');
         $ids = $request->get('ids');
         if ($ids) {
-            $path = $isBefore == '1' ?
-            $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockID . '/after/':
-            $this->inspectionImagePath . '/inspection' . $inspectionId . '/block' . $blockID . '/before/';
-
-            $sourcePath = $isBefore == '1' ?
-            Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockID . '/after/':
-            Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockID . '/before/';
-
-            if (File::exists($path)) {
-                File::deleteDirectory($path);
-            }
+            $sourcePath = $this->inspectionImagePath($isBefore, $inspectionId, $blockID);
             if (File::exists($sourcePath)) {
                 File::deleteDirectory($sourcePath);
             }
@@ -331,5 +317,25 @@ class PatternTeamInspectionEvidenceService extends BaseService
         }
 
         return $inspectionId;
+    }
+
+    /**
+     * Create default inspection
+     *
+     * @param boolean $isBefore
+     * @param int $inspectionId
+     * @param int $blockId
+     *
+     * @return string path
+     */
+    private function inspectionImagePath($isBefore, $inspectionId, $blockId) {
+        if ($isBefore != null) {
+            return $isBefore ?
+            Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/before/':
+            Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/after/';
+        } else {
+            return Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId;
+        }
+
     }
 }
