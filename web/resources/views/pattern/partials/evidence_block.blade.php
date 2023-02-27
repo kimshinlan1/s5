@@ -47,7 +47,7 @@
                                 <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }}, img_before{{ $evidence['id'] }})">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
-                                <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 350px; position: relative" onclick="fullScreen('{{ $image['img_path'] }}')">
+                                <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 350px; position: relative; object-fit: contain;" onclick="fullScreen('{{ $image['img_path'] }}')">
                             </div>
                             @php $isActive = true; @endphp
                         @endif
@@ -102,7 +102,7 @@
                                 <button type="submit" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }},img_after{{ $evidence['id'] }})">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
-                                <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 350px; position: relative" onclick="fullScreen('{{ $image['img_path'] }}')">
+                                <img src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; height: 350px; position: relative; object-fit: contain;" onclick="fullScreen('{{ $image['img_path'] }}')">
                             </div>
                             @php $isActive = true; @endphp
                         @endif

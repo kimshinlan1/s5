@@ -54,7 +54,7 @@ function uploadFile(input, block, is_before) {
                     let divClass = (i == data.imgs.length - 1) ? 'item active' : 'item';
                     let img = '<div class="' + divClass + '" id="item' + data.imgs[i]['id'] + '" data-id="' + data.imgs[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
                     data.imgs[i]['id'] + '" onclick="removeImage(' + data.imgs[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                    '<img src="' + data.imgs[i]['img_path'] + '" style="width:100%; height: 350px; position: relative" id="slideImageID"/></div>';
+                    '<img src="' + data.imgs[i]['img_path'] + '" style="width:100%; height: 350px; position: relative; object-fit: contain;" id="slideImageID"/></div>';
 
                     if (is_before) {
                         $('#img_before' + block).append(img);

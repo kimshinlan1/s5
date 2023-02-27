@@ -119,11 +119,11 @@
     border-color: #157347 !important;
 }
 
-/* .carousel-control {
-    opacity: 0;
+.carousel-control {
+    opacity: 0.1;
 }
 
 .carousel-control:hover {
-    opacity: 0.2;
-} */
+    opacity: 0.3;
+}
 
