@@ -192,7 +192,7 @@ function validateAndGetData() {
             inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
         }
 
-        if (id && inspection_date) {
+        if (id) {
             let inspection = {
                 'info': {},
                 'data': {}

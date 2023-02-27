@@ -415,7 +415,7 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
         // New Area
         // get area name
         let areaName = $(this).find("#area").val();
-
+        let areaId = $(this).find('#hidAreaId').val();
         // if area is empty
         if (areaName.trim().length === 0) {
             valid = false;
@@ -424,6 +424,7 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
             $(this).find("#area").removeClass('is-invalid');
         }
         let area = {
+            'area_id': areaId,
             'area_name': areaName,
             'locations': [],
             'old_locations': []
@@ -435,6 +436,7 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
             // New location
             // get location name on each row
             let locName = $(ele).find("#location").val();
+            let locationId = $(ele).find('#hidLocationId').val();
             // if location is empty
             if (locName.trim().length === 0) {
                 valid = false;
@@ -443,10 +445,10 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
                 $(ele).find("#location").removeClass('is-invalid');
             }
             let location = {
+                'location_id': locationId,
                 'location_name': locName,
                 'rows':{}
             };
-
             // Loop all rows in location
             let trid_location = $(ele).attr("id").split('_row_')[0];
             $('[id*='+trid_location+']').each(function(_index, e) {
@@ -455,6 +457,7 @@ function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
                 let row = {};
                 for (let cnt = 1; cnt <= maxCnt5s; cnt++) {
                     let levelName = $(e).find("#level_"  + cnt).val();
+
                     // if level is empty
                     if (levelName.trim().length === 0) {
                         row["level_" + cnt] = "";

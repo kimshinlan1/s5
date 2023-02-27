@@ -90,7 +90,7 @@ $(function () {
         let id = $("#deletePatternListId").val();
         let compID = $('#companyListID').val() ? $('#companyListID').val() : $('#userCompanyId').val();
         $.ajax({
-            url: "/pattern_list/" + id + "?companyId=" + compID + "&pageDest=" + CONFIG.get("PAGE_PATTERN_LIST"),
+            url: "/pattern_list/" + id + "?pageDest=" + CONFIG.get("PAGE_PATTERN_LIST"),
             type: "DELETE",
         })
             .done(function (_department, _textStatus, _jqXHR) {
