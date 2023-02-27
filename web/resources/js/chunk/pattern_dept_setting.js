@@ -6,6 +6,8 @@ var select_location_to_delete = [];
 var count_method_delete = 0;
 var department_id = null;
 var loginCompid = null;
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
 // Onchange 5S methods 改善ポイントの選択
 window.loadData = function() {
     let data = {
@@ -99,8 +101,14 @@ window.loadDeptList = function(id) {
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
         let html = '';
-            for (let e of data) {
-                html += '<option value="' + e.id + '">' + e.name + '</option>';
+
+        let deptId = urlParams.get('departmentId');
+            if (deptId == "null") {
+                html += '<option value="' + '">' + '</option>';
+            } else {
+                for (let e of data) {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
             }
             $('#departmentId').html(html);
             let selectedCompId = getCompanyId();
@@ -138,13 +146,13 @@ window.loadPatternList = function(id, patternId = null, isPattern = null ) {
             if (patternId == null && index == 0) {
                 $('#patternNote').val(e.note);
             }
-
+            let checkNoteNull = e.note?? '';
             if(e.id == patternId && e.isPattern == isPattern) {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '" selected>' + e.name + '</option>';
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
                 $('#patternNote').val(e.note);
             }
             else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + e.note + '">' + e.name + '</option>';
+                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
             }
         });
         $('#selectPatternIds').html(html);
@@ -249,8 +257,6 @@ window.initLoadPage = function() {
     if (loginCompid == $('#kaizenbaseID').val()) {
         loadCompany(loginCompid);
     }
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
     let hidPatternId = $('#hidPatternId').val()
     let deptId = urlParams.get('departmentId');
     let pageDept = urlParams.get('pageDept');

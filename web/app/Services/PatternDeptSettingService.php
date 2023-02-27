@@ -99,11 +99,13 @@ class PatternDeptSettingService extends BaseService
         // use:  dept_patterns, dept_patterns_details
         $data = $request->get('data');
         $companyId = $request->data['company'];
-        $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
-        if (!$isUnique) {
-            return [
-                'invalid' => true,
-            ];
+        if ($data['department']) {
+            $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
+            if (!$isUnique) {
+                return [
+                    'invalid' => true,
+                ];
+            }
         }
         /**
          * Step: Remove old data
@@ -135,6 +137,7 @@ class PatternDeptSettingService extends BaseService
             $this->deleteOldDeptPattern($companyId);
         }
 
+
         // Step: Insert new pattern
         $deptPattern = $this->model::updateOrCreate(
             [
@@ -155,9 +158,11 @@ class PatternDeptSettingService extends BaseService
             $deptPattern->save();
         }
         $deptPatternId = $deptPattern->id;
-        $dept = Department::find($request->data['department']);
-        $dept->dept_pattern_id = $deptPatternId;
-        $dept->save();
+        if (isset($data['department'])) {
+            $dept = Department::find($data['department']);
+            $dept->dept_pattern_id = $deptPatternId;
+            $dept->save();
+        }
 
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
