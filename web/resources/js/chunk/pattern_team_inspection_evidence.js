@@ -54,7 +54,7 @@ function uploadFile(input, block, is_before) {
                     let divClass = (i == data.imgs.length - 1) ? 'item active' : 'item';
                     let img = '<div class="' + divClass + '" id="item' + data.imgs[i]['id'] + '" data-id="' + data.imgs[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
                     data.imgs[i]['id'] + '" onclick="removeImage(' + data.imgs[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                    '<img class="img-size" src="' + data.imgs[i]['img_path'] + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID"/></div>';
+                    '<img class="img-size" src="' + data.imgs[i]['img_path'] + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + data.imgs[i]['img_path'] + '`)"/></div>';
 
                     if (is_before) {
                         $('#img_before' + block).append(img);
@@ -197,6 +197,8 @@ function loadEvidence(inspection_id) {
 function fullScreen(img_src) {
     $('#imgFullscreen').css({
         'background-image': 'url("' + img_src + '")',
+        'background-size': 'contain',
+        'background-position': 'center',
     }).show();
 }
 
@@ -269,7 +271,6 @@ function removeAlbum(albumID, blockID, isBefore) {
     $("#patternEvidenceDialog").on("show.bs.modal", function (e) {
         let id = $(e.relatedTarget).attr("data-id");
         loadEvidence(id);
-
     });
 
     /*---------------------
@@ -336,12 +337,7 @@ function removeAlbum(albumID, blockID, isBefore) {
         let method = "POST";
 
         let doneCallback = function (data, _textStatus, _jqXHR) {
-            // $('#patternEvidenceDialog').modal('hide');
-            $("#patternEvidenceDialog").css("display", "none");
-            $("#patternEvidenceDialog").removeClass("show");
-            $('.modal-backdrop').remove();
-            $('.modal-open').css("overflow", "unset");
-            $('body').removeClass('modal-open');
+            $('#patternEvidenceDialog').find('#cancelEvidenceBtnId').click();
         };
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
             failAjax(jqXHR, _textStatus, _errorThrown);
@@ -350,6 +346,9 @@ function removeAlbum(albumID, blockID, isBefore) {
         runAjax(url, method, data, doneCallback, failCallback, false);
     })
 
+    /*---------------------
+     * Get current clicked evidence link selector
+     ---------------------- */
     $("body").on('click','#openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
     })
