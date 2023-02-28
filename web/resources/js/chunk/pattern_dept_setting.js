@@ -6,6 +6,8 @@ var select_location_to_delete = [];
 var count_method_delete = 0;
 var department_id = null;
 var loginCompid = null;
+var checkDataWhenAdding = false;
+var checkDataWhenRemoving = false;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 // Onchange 5S methods 改善ポイントの選択
@@ -278,7 +280,12 @@ window.initLoadPage = function() {
         selectedCompId = compId ? compId : selectedCompId;
         loadDeptList(selectedCompId);
         loadPatternList(selectedCompId, hidPatternId);
-        $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+        if (deptId == "null") {
+            $('#departmentTitle').hide();
+            $('#patternTitle').hide();
+        } else {
+            $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+        }
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
@@ -331,6 +338,47 @@ window.initLoadPage = function() {
         }
     }
 }
+
+window.checkDataUsed = function() {
+    let deptId = urlParams.get('departmentId');
+    if (deptId == "null") {
+        return;
+    } else {
+        let url = '/pattern_dept_setting_check_data_used/' + deptId;
+        let method = "GET";
+        let doneCallback = function (data, _textStatus, _jqXHR) {
+            if (data.isCheckData.length > 0) {
+                checkDataWhenAdding = true;
+                checkDataWhenRemoving = true;
+            }
+        };
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+        runAjax(url, method, {}, doneCallback, failCallback, null, false);
+    }
+}
+
+window.confirmNotAddNewData = function() {
+    $("#modalCheckDataUsed1").modal('hide');
+}
+
+window.confirmAddNewData = function() {
+    checkDataWhenAdding = false;
+    $("#modalCheckDataUsed1").modal('hide');
+    $("#modalAddInspectionPoint").modal('show');
+}
+
+window.confirmNotRemoveData = function() {
+    $("#modalCheckDataUsed2").modal('hide');
+}
+
+window.confirmRemoveData = function() {
+    checkDataWhenRemoving = false;
+    $("#modalCheckDataUsed2").modal('hide');
+    checkNoSelected();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -349,6 +397,8 @@ $(function () {
 
     select5S();
 
+    checkDataUsed();
+
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
@@ -361,7 +411,11 @@ $(function () {
             return;
         }
 
-        $("#modalAddInspectionPoint").modal('show');
+        if (checkDataWhenAdding) {
+            $("#modalCheckDataUsed1").modal('show');
+        } else {
+            $("#modalAddInspectionPoint").modal('show');
+        }
     });
 
     $('#patternName').keyup(function () {
@@ -393,7 +447,11 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        checkNoSelected();
+        if (checkDataWhenRemoving) {
+            $("#modalCheckDataUsed2").modal('show');
+        } else {
+            checkNoSelected();
+        }
     });
 
     // Back page

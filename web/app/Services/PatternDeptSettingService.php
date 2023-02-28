@@ -376,4 +376,17 @@ class PatternDeptSettingService extends BaseService
             }
         }
     }
+
+    public function checkDataUsed($id)
+    {
+        $checkDataUsed = DB::table('departments')
+        ->where('department_id', $id)
+        ->join('teams','teams.department_id', '=', 'departments.id')
+        ->join('inspection', 'inspection.team_id', '=', 'teams.id')
+        ->get();
+        $data = [
+            'isCheckData' => $checkDataUsed,
+        ];
+        return $data;
+    }
 }

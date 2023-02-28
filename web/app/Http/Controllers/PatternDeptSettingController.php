@@ -180,4 +180,16 @@ class PatternDeptSettingController extends Controller
             ], 500);
         }
     }
+
+     /**
+      * Returns edit resource
+      *
+      * @param $id department id
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkDataUsed($id)
+    {
+        return $this->service->checkDataUsed($id);
+    }
 }
