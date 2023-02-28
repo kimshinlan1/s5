@@ -222,8 +222,8 @@ window.selectPattern = function(id) {
     if (dataId == "") {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#unBindDeptPatternMsg').val());
-        $('#okBtn').attr('data-deptid', id);
-        $('#okBtn').attr('data-patternid', dataId);
+        $('#okDialog3Btn').attr('data-deptid', id);
+        $('#okDialog3Btn').attr('data-patternid', dataId);
         $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
         isEmptyOption = true;
         return;
@@ -234,9 +234,9 @@ window.selectPattern = function(id) {
     || (isPattern == "false" && mode == CONFIG.get('5S_MODE')['FREE'] && patternOldSelectedValue == "" && !checkPatternOnly)) {
         $('#confirmDialog3').modal('show');
         $('.confirmMessage3').text($('#bindDeptPatternMsg').val());
-        $('#okBtn').attr('data-deptid', id);
-        $('#okBtn').attr('data-patternid', dataId);
-        $('#okBtn').val(targetPatId);
+        $('#okDialog3Btn').attr('data-deptid', id);
+        $('#okDialog3Btn').attr('data-patternid', dataId);
+        $('#okDialog3Btn').val(targetPatId);
         $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
         isExistedOption = true;
         return;
@@ -254,11 +254,11 @@ window.selectPattern = function(id) {
             isExistedOption = false;
             $('#confirmDialog3').modal('show');
             $('.confirmMessage3').text($('#confirmMessage').val());
-            $('#okBtn').attr('data-compId', companyId);
-            $('#okBtn').attr('data-deptid', id);
-            $('#okBtn').attr('data-patternid', dataId);
-            $('#okBtn').attr('data-isPattern', isPattern);
-            $('#okBtn').val(targetPatId);
+            $('#okDialog3Btn').attr('data-compId', companyId);
+            $('#okDialog3Btn').attr('data-deptid', id);
+            $('#okDialog3Btn').attr('data-patternid', dataId);
+            $('#okDialog3Btn').attr('data-isPattern', isPattern);
+            $('#okDialog3Btn').val(targetPatId);
             $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
         }
         if (dataId && checkDeptPattern == '') {
@@ -540,12 +540,12 @@ window.saveDataEmployee = function () {
 
     reloadDataDepartment();
 
-    $('#okBtn').on('click', function() {
-        let compId = $('#okBtn').attr('data-compId');
-        let deptId = $('#okBtn').attr('data-deptid');
-        let patternId = $('#okBtn').attr('data-patternid');
-        let isPattern = $('#okBtn').attr('data-isPattern');
-        let id = $('#okBtn').val();
+    $('#okDialog3Btn').on('click', function() {
+        let compId = $('#okDialog3Btn').attr('data-compId');
+        let deptId = $('#okDialog3Btn').attr('data-deptid');
+        let patternId = $('#okDialog3Btn').attr('data-patternid');
+        let isPattern = $('#okDialog3Btn').attr('data-isPattern');
+        let id = $('#okDialog3Btn').val();
         if (isEmptyOption) {
             unbindDeptPattern(patternId, deptId);
         }
@@ -558,7 +558,7 @@ window.saveDataEmployee = function () {
     })
 
     $('#cancelBtn').on('click', function() {
-        let deptId = $('#okBtn').attr('data-deptid');
+        let deptId = $('#okDialog3Btn').attr('data-deptid');
         let oldPatternSelected = $(this).attr('data-deptid-old');
         $("#checklist5sID" + deptId).val(oldPatternSelected);
         if (oldPatternSelected == '') {
