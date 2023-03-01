@@ -172,7 +172,6 @@ $(function () {
                 success: function (res) {
                     let html = '';
                     listDepartment = res;
-                    html += '<option value=-1></option>';
                     for (let e of res) {
                         html += '<option value="' + e.id + '">' + e.name + '</option>';
                     }
@@ -211,7 +210,6 @@ $(function () {
         success: function (res) {
             let html = '';
             listDepartment = res;
-            html += '<option value=-1></option>';
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
@@ -264,6 +262,7 @@ $(function () {
     $("#teamEditDialog").on("show.bs.modal", function (e) {
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
+        let departmentId = $('#departmentListID').val();
         if (id) {
             let rowData = $("#teamTable").bootstrapTable(
                 "getRowByUniqueId", id
@@ -277,7 +276,7 @@ $(function () {
             clearDialog();
             $("#teamEditDialog .modal-title.edit").hide();
             $("#teamEditDialog .modal-title.add").show();
-            $("#teamDepartment").val(listDepartment[0].id);
+            $("#teamDepartment").val(departmentId);
         }
         setTimeout(function (){
             $('#teamName').focus();

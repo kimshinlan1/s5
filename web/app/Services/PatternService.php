@@ -68,7 +68,8 @@ class PatternService extends BaseService
 
         return DeptPattern::leftJoin('departments', 'departments.dept_pattern_id', '=', 'dept_patterns.id')
             ->select('dept_patterns.*', 'departments.id as deptId', 'departments.name as deptName')
-            ->where('dept_patterns.company_id', $compId)->orderBy('departments.id')->paginate($limit);
+            ->where('dept_patterns.company_id', $compId)->orderBy('departments.id','desc')
+            ->orderBy('dept_patterns.id')->paginate($limit);
     }
 
     /**

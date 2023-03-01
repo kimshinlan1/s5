@@ -203,7 +203,6 @@ window.checkDeptPatternExist = function(id) {
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        console.log("TCL: doneCallback -> data", data)
         if (data.isExisted) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html($('#errMessageUse1Pattern').val());
@@ -272,6 +271,7 @@ window.initLoadPage = function() {
         $('#companyOptionId option[value='+companyId+']').prop("selected", true);
     }
     let selectedCompId = loginCompid == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+
     // Edit mode
     if (hidPatternId) {
         let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
@@ -328,6 +328,9 @@ window.initLoadPage = function() {
             loadPatternList(selectedCompId);
         }
         let patId = $('#selectPatternIds').find(':selected').val();
+        if (!patId) {
+            $("#modalErrInitPage").modal("show");
+        }
         let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         ispattern = ispattern == "true" ? true : false;
         let pageDest = ispattern ? null : 1;
@@ -336,6 +339,15 @@ window.initLoadPage = function() {
         } else {
             addAreaToTable('edit', patId, ispattern);
         }
+    }
+}
+
+window.btnErrInitPage = function() {
+    $('#modalErrInitPage').modal("hide");
+    if (loginCompid == $('#kaizenbaseID').val()) {
+        location.href = "/pattern_detail";
+    } else {
+        location.href = "/pattern_top_page";
     }
 }
 
@@ -376,7 +388,7 @@ window.confirmNotRemoveData = function() {
 window.confirmRemoveData = function() {
     checkDataWhenRemoving = false;
     $("#modalCheckDataUsed2").modal('hide');
-    checkNoSelected();
+    removeLocation();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -450,7 +462,8 @@ $(function () {
         if (checkDataWhenRemoving) {
             $("#modalCheckDataUsed2").modal('show');
         } else {
-            checkNoSelected();
+            // checkNoSelected();
+            $("#modalDelectLocation").modal('show');
         }
     });
 

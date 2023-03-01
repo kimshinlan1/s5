@@ -255,8 +255,26 @@
         </div>
     </div>
 
-     <!-- Modal Add Location -->
-     <div class="modal fade" id="modalCheckDataUsed1" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Modal Notifi Err Init Page -->
+    <div class="modal fade" id="modalErrInitPage" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Please_Add_New_Or_Confirm_Admin') }}</span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="btnErrInitPage()"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Location -->
+    <div class="modal fade" id="modalCheckDataUsed1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -275,8 +293,8 @@
         </div>
     </div>
 
-      <!-- Modal Add Location -->
-      <div class="modal fade" id="modalCheckDataUsed2" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Modal Remove Location -->
+    <div class="modal fade" id="modalCheckDataUsed2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">

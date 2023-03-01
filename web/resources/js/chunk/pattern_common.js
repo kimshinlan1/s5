@@ -292,38 +292,31 @@ window.getValidRows = function() {
 }
 
 // Remove Location and re generate html (not save)
-window.checkNoSelected = function() {
+window.removeLocation = function() {
     if (select_location_to_delete.length == 0 && count_method_delete == 0) {
         //Show warning no item to delete
         $("#confirmDialog2").modal("show");
         $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
         return;
     } else {
-        $("#modalDelectLocation").modal('show');
+        let params = {
+            remove: 1, // case remove
+            selected_5s: JSON.stringify(selected_5s),
+            rows: JSON.stringify(getValidRows())
+        };
+
+        let url = "/pattern_detail_remove";
+        let method = "POST";
+
+        let doneCallback = function (data, _textStatus, _jqXHR) {
+            $("#table-content tbody").html("");
+            $("#table-content tbody").append(data);
+            select_location_to_delete = [];
+            count_method_delete = 0;
+        };
+
+        runAjax(url, method, params, doneCallback);
     }
-}
-
-// Remove Location and re generate html (not save)
-window.removeLocation = function() {
-    checkNoSelected();
-
-    let params = {
-        remove: 1, // case remove
-        selected_5s: JSON.stringify(selected_5s),
-        rows: JSON.stringify(getValidRows())
-    };
-
-    let url = "/pattern_detail_remove";
-    let method = "POST";
-
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        $("#table-content tbody").html("");
-        $("#table-content tbody").append(data);
-        select_location_to_delete = [];
-        count_method_delete = 0;
-    };
-
-    runAjax(url, method, params, doneCallback);
 }
 
 /**

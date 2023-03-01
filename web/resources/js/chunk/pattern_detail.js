@@ -173,10 +173,6 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        checkNoSelected();
+        $("#modalDelectLocation").modal('show');
     });
-    function auto_grow(element) {
-        element.style.height = "5px";
-        element.style.height = (element.scrollHeight)+"px";
-    }
 });

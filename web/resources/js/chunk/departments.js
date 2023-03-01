@@ -55,8 +55,6 @@ window.department5SChecklistActions = function (_value, row, _index) {
        });
    }
 
-   console.log(pattern_list_data);
-
    let dataId = -1;
    let btn = '';
    pattern_list_data.forEach(ele => {
@@ -329,7 +327,6 @@ window.saveTeamData = function () {
        data: data,
    })
    .done(function (_data, _textStatus, _jqXHR) {
-   console.log("TCL: window.saveTeamData -> _data", _data)
        // SAVE SUCCESSFUL
        $("#teamEditDialog").modal("hide");
        showToast($(dialog), 2000, true);
@@ -466,7 +463,6 @@ window.saveDataEmployee = function () {
        data: data,
    })
    .done(function (_data, _textStatus, _jqXHR) {
-   console.log("TCL: window.saveDataEmployee -> _data", _data)
        $("#departmentAddDialog").modal("hide");
        showToast($('#successAddDialog'), 2000, true);
    })
@@ -496,7 +492,6 @@ window.loadDeptListByComp = function(id) {
            $('#teamDepartment').html(html);
        },
        error: function(textStatus, errorThrown) {
-           console.log(textStatus + ': ' + errorThrown);
        },
    });
 }
