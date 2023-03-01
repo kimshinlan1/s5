@@ -3,11 +3,6 @@
 <?php
     $id = "new_" . time();
 ?>
-<div id="lib">
-    <link rel="stylesheet" href= "{!! url('assets/bootstrap-3.4.1/css/bootstrap.min.css') !!}"/>
-    <link href="{{ mix('/css/evidence.css') }}" rel="stylesheet"/>
-    <script src="{!! url('assets/bootstrap-3.4.1/js/bootstrap.min.js') !!}" type="text/javascript"></script>
-</div>
 
 {{-- Cross Button --}}
 <div class="row" id="block_{{ $evidence['id'] }}">
