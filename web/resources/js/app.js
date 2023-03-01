@@ -145,11 +145,11 @@ window.removeZeroPad = function (num) {
 /** ------------------
  * Show loading
  --------------------- */
-window.showLoading = function () {
-    if ($('.md-loading').length) {
-        $('.md-loading').modal('show');
+ window.showLoading = function () {
+    if ($('body').find('.md-loading').length) {
+        $('body').find('.md-loading').modal('show');
         // disable multi submit
-        $('.modal').find('button').each(function(){
+        $('body').find('.modal').find('button').each(function(){
             this.disabled = true;
         });
         // reset form
@@ -161,9 +161,9 @@ window.showLoading = function () {
  * Hide loading
  --------------------- */
 window.hideLoading = function () {
-    if ($('.md-loading').length) {
-        $('.md-loading').modal('hide');
-        $('.modal').find('button').each(function(){
+    if ($('body').find('.md-loading').length) {
+        $('body').find('.md-loading').modal('hide');
+        $('body').find('.modal').find('button').each(function(){
             this.disabled = false;
         });
     }

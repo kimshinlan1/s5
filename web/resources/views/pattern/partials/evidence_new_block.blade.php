@@ -3,13 +3,10 @@
 <?php
     $id = "new_" . time();
 ?>
-
 <div id="lib">
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href= "{!! url('assets/bootstrap-3.4.1/css/bootstrap.min.css') !!}"/>
     <link href="{{ mix('/css/evidence.css') }}" rel="stylesheet"/>
     <script src="{!! url('assets/bootstrap-3.4.1/js/bootstrap.min.js') !!}" type="text/javascript"></script>
-    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 </div>
 
 {{-- Cross Button --}}
@@ -46,7 +43,7 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1)" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1)" accept="image/*" multiple/></div>
                 <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button>
             </div>
         </div>
@@ -81,7 +78,7 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0)" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file file-after" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0)" accept="image/*" multiple/></div>
                 <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button>
             </div>
         </div>

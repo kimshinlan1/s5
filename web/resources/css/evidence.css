@@ -129,7 +129,6 @@ and (orientation : landscape)
 
 .problem-area {
     height: 80px;
-    border: 1px solid;
     width: 100%;
     border: 3px solid gray;
 }
