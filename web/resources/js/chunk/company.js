@@ -80,8 +80,11 @@ window.customCell = function (_value, row, _index) {
     let deptList = row['departments'];
     let menu = '<div id="subList' + _index + '" class="collapse">';
     let tagString = '';
+    let mouseover = `onmouseover="this.style.backgroundColor='#C4E7CC'"`;
+    let mouseout = `onmouseout="this.style.backgroundColor='unset'; this.style.color='black';"`;
     deptList.forEach(element => {
-        tagString += '<a class="list-group-item list-group-item-action style-list" href="/employee?companyId='+element.company_id+'&deptId='+element.id+'" style="color: black; text-decoration: none;background-color: unset; border: unset;">' + element.name + '</a>';
+        tagString += '<a class="list-group-item list-group-item-action style-list" href="/employee?companyId='+element.company_id+'&deptId='+element.id+'"'+
+        ' style="color: black; text-decoration: none;background-color: unset; border: unset;"' + mouseover + " " + mouseout + '>' + element.name + '</a>';
 
     });
     menu += tagString + '</div>';
