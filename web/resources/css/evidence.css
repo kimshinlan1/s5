@@ -18,10 +18,11 @@
     width: 35px;
     height: 30px;
     line-height: 30px;
-    font-size: 3rem;
+    font-size: 2rem;
     z-index: 1;
     background-color: transparent;
     border-color: transparent;
+    color: #dcf568;
 }
 
 .right-arrow {
@@ -56,7 +57,7 @@ and (orientation : portrait)
         height: 214px !important;
     }
     .close-image {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 }
 
