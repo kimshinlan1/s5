@@ -38,7 +38,14 @@ window.cellStyle = function () {
  *   Open Edit tab
  --------------------- */
  window.redirectToEdit = function (id, deptId, compId) {
-    window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId  + '&companyId=' + compId;
+    let url = '/pattern_dept_setting/' + id + '?1=1';
+    if (deptId) {
+        url += '&departmentId=' + deptId;
+    }
+    if (compId) {
+        url += '&companyId=' + compId;
+    }
+    window.location = url;
 }
 
 /** ------------------`
