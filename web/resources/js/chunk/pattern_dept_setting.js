@@ -6,8 +6,8 @@ var select_location_to_delete = [];
 var count_method_delete = 0;
 var department_id = null;
 var loginCompid = null;
-var checkDataWhenAdding = false;
-var checkDataWhenRemoving = false;
+var checkDataWhenAddingFirsTime = false;
+var checkDataWhenRemovingFirsTime = false;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 // Onchange 5S methods 改善ポイントの選択
@@ -105,7 +105,7 @@ window.loadDeptList = function(id) {
         let html = '';
 
         let deptId = urlParams.get('departmentId');
-            if (deptId == "null") {
+            if (!Number(deptId)) {
                 html += '<option value="' + '">' + '</option>';
             } else {
                 for (let e of data) {
@@ -280,7 +280,7 @@ window.initLoadPage = function() {
         selectedCompId = compId ? compId : selectedCompId;
         loadDeptList(selectedCompId);
         loadPatternList(selectedCompId, hidPatternId);
-        if (deptId == "null") {
+        if (!Number(deptId)) {
             $('#departmentTitle').hide();
             $('#patternTitle').hide();
         } else {
@@ -342,6 +342,7 @@ window.initLoadPage = function() {
     }
 }
 
+// Error message when init page has no original pattern
 window.btnErrInitPage = function() {
     $('#modalErrInitPage').modal("hide");
     if (loginCompid == $('#kaizenbaseID').val()) {
@@ -351,17 +352,18 @@ window.btnErrInitPage = function() {
     }
 }
 
+// Check if the data has been used for inspection
 window.checkDataUsed = function() {
     let deptId = urlParams.get('departmentId');
-    if (deptId == "null") {
+    if (!Number(deptId)) {
         return;
     } else {
         let url = '/pattern_dept_setting_check_data_used/' + deptId;
         let method = "GET";
         let doneCallback = function (data, _textStatus, _jqXHR) {
             if (data.isCheckData.length > 0) {
-                checkDataWhenAdding = true;
-                checkDataWhenRemoving = true;
+                checkDataWhenAddingFirsTime = true;
+                checkDataWhenRemovingFirsTime = true;
             }
         };
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -371,22 +373,26 @@ window.checkDataUsed = function() {
     }
 }
 
+// Confirm the cancellation of data changes when adding a new area
 window.confirmNotAddNewData = function() {
     $("#modalCheckDataUsed1").modal('hide');
 }
 
+// Confirm data change when adding new area
 window.confirmAddNewData = function() {
-    checkDataWhenAdding = false;
+    checkDataWhenAddingFirsTime = false;
     $("#modalCheckDataUsed1").modal('hide');
     $("#modalAddInspectionPoint").modal('show');
 }
 
+// Confirm the cancellation of data changes when removing data
 window.confirmNotRemoveData = function() {
     $("#modalCheckDataUsed2").modal('hide');
 }
 
+// Confirm data change when removing data
 window.confirmRemoveData = function() {
-    checkDataWhenRemoving = false;
+    checkDataWhenRemovingFirsTime = false;
     $("#modalCheckDataUsed2").modal('hide');
     removeLocation();
 }
@@ -423,7 +429,7 @@ $(function () {
             return;
         }
 
-        if (checkDataWhenAdding) {
+        if (checkDataWhenAddingFirsTime) {
             $("#modalCheckDataUsed1").modal('show');
         } else {
             $("#modalAddInspectionPoint").modal('show');
@@ -459,10 +465,9 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        if (checkDataWhenRemoving) {
+        if (checkDataWhenRemovingFirsTime) {
             $("#modalCheckDataUsed2").modal('show');
         } else {
-            // checkNoSelected();
             $("#modalDelectLocation").modal('show');
         }
     });

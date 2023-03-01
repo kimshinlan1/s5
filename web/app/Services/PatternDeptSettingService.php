@@ -377,10 +377,16 @@ class PatternDeptSettingService extends BaseService
         }
     }
 
+    /**
+     * Check the data used for evaluation
+     *
+     * @param  $id departmentId
+     *
+     * @return void
+     */
     public function checkDataUsed($id)
     {
-        $checkDataUsed = DB::table('departments')
-        ->where('department_id', $id)
+        $checkDataUsed = Department::where('department_id', $id)
         ->join('teams','teams.department_id', '=', 'departments.id')
         ->join('inspection', 'inspection.team_id', '=', 'teams.id')
         ->get();
