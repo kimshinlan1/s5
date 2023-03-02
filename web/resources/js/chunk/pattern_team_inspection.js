@@ -120,7 +120,7 @@ function acceptRemoveColumn() {
         loadInspectionData(param);
     };
 
-    let failCallback = function (_jqXHR, _textStatus, _jqXHR) {
+    let failCallback = function (_jqXHR, _textStatus, _errorThrown) {
         $('#errorDialog').modal('show');
         $('#errorDialog .error-messages').text($('#messageSystemError').val());
     };
