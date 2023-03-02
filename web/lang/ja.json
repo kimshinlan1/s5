@@ -250,6 +250,9 @@
     "Pattern_Confirm_Message": "５Sパターンを設定してもよろしいでしょうか。",
     "Pattern_Unbind_Confirm_Message": "このパターンの連携を解除してもよろしいでしょうか。",
     "Pattern_Bind_Confirm_Message": "このパターンに連携しますか。",
+    "Pattern_Confirm_Message_Change_Data_Used": "このチェックリストを利用しているため、入力画面には追加点検箇所の入力初期値が1にります。追加してもよろしいでしょうか。",
+    "Pattern_Confirm_Message_Remove_Data_Used": "検証際の入力でデータが存在しているので、回復できずに削除してもよろしいでしょうか。",
+    "Pattern_Confirm_Message_Please_Add_New_Or_Confirm_Admin": "元のパターンがありません。新規追加するか、管理者を確認してください。",
     "=====  BLOCK_PATTERN_DETAIL_END =====": "",
 
     "=====  BLOCK_PATTERN_TEAM_INSPECTION_START =====": "",

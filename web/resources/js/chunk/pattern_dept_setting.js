@@ -6,6 +6,8 @@ var select_location_to_delete = [];
 var count_method_delete = 0;
 var department_id = null;
 var loginCompid = null;
+var checkDataWhenAddingFirsTime = false;
+var checkDataWhenRemovingFirsTime = false;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 // Onchange 5S methods 改善ポイントの選択
@@ -96,23 +98,15 @@ function setValueTest() {
  */
 window.loadDeptList = function(id) {
     let url = '/departments/list/' + id;
-
     let method = "GET";
-
     let doneCallback = function (data, _textStatus, _jqXHR) {
         let html = '';
-
-        let deptId = urlParams.get('departmentId');
-            if (deptId == "null") {
-                html += '<option value="' + '">' + '</option>';
-            } else {
-                for (let e of data) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
-                }
-            }
-            $('#departmentId').html(html);
-            let selectedCompId = getCompanyId();
-            loadPatternList(selectedCompId);
+        for (let e of data) {
+            html += '<option value="' + e.id + '">' + e.name + '</option>';
+        }
+        $('#departmentId').html(html);
+        let selectedCompId = getCompanyId();
+        loadPatternList(selectedCompId);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -201,7 +195,6 @@ window.checkDeptPatternExist = function(id) {
     let method = "GET";
 
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        console.log("TCL: doneCallback -> data", data)
         if (data.isExisted) {
             $("#confirmDialog2").modal("show");
             $(".confirmMessage").html($('#errMessageUse1Pattern').val());
@@ -270,6 +263,7 @@ window.initLoadPage = function() {
         $('#companyOptionId option[value='+companyId+']').prop("selected", true);
     }
     let selectedCompId = loginCompid == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+
     // Edit mode
     if (hidPatternId) {
         let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
@@ -278,7 +272,12 @@ window.initLoadPage = function() {
         selectedCompId = compId ? compId : selectedCompId;
         loadDeptList(selectedCompId);
         loadPatternList(selectedCompId, hidPatternId);
-        $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+        if (!deptId) {
+            $('#departmentTitle').hide();
+            $('#patternTitle').hide();
+        } else {
+            $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+        }
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
@@ -321,6 +320,9 @@ window.initLoadPage = function() {
             loadPatternList(selectedCompId);
         }
         let patId = $('#selectPatternIds').find(':selected').val();
+        if (!patId) {
+            $("#modalErrInitPage").modal("show");
+        }
         let ispattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         ispattern = ispattern == "true" ? true : false;
         let pageDest = ispattern ? null : 1;
@@ -331,6 +333,62 @@ window.initLoadPage = function() {
         }
     }
 }
+
+// Error message when init page has no original pattern
+window.btnErrInitPage = function() {
+    $('#modalErrInitPage').modal("hide");
+    if (loginCompid == $('#kaizenbaseID').val()) {
+        location.href = "/pattern_detail";
+    } else {
+        location.href = "/pattern_top_page";
+    }
+}
+
+// Check if the data has been used for inspection
+window.checkDataUsed = function() {
+    let deptId = urlParams.get('departmentId');
+    if (!deptId) {
+        return;
+    } else {
+        let url = '/pattern_dept_setting_check_data_used/' + deptId;
+        let method = "GET";
+        let doneCallback = function (data, _textStatus, _jqXHR) {
+            if (data.isCheckData.length > 0) {
+                checkDataWhenAddingFirsTime = true;
+                checkDataWhenRemovingFirsTime = true;
+            }
+        };
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+        runAjax(url, method, {}, doneCallback, failCallback, null, false);
+    }
+}
+
+// Confirm the cancellation of data changes when adding a new area
+window.confirmNotAddNewData = function() {
+    $("#modalCheckDataUsed1").modal('hide');
+}
+
+// Confirm data change when adding new area
+window.confirmAddNewData = function() {
+    checkDataWhenAddingFirsTime = false;
+    $("#modalCheckDataUsed1").modal('hide');
+    $("#modalAddInspectionPoint").modal('show');
+}
+
+// Confirm the cancellation of data changes when removing data
+window.confirmNotRemoveData = function() {
+    $("#modalCheckDataUsed2").modal('hide');
+}
+
+// Confirm data change when removing data
+window.confirmRemoveData = function() {
+    checkDataWhenRemovingFirsTime = false;
+    $("#modalCheckDataUsed2").modal('hide');
+    removeLocation();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -349,6 +407,8 @@ $(function () {
 
     select5S();
 
+    checkDataUsed();
+
     // Add New Area
     $("#openModal").click(function () {
         // todo: Check 5S (empty, ...)
@@ -361,7 +421,11 @@ $(function () {
             return;
         }
 
-        $("#modalAddInspectionPoint").modal('show');
+        if (checkDataWhenAddingFirsTime) {
+            $("#modalCheckDataUsed1").modal('show');
+        } else {
+            $("#modalAddInspectionPoint").modal('show');
+        }
     });
 
     $('#patternName').keyup(function () {
@@ -393,7 +457,11 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        checkNoSelected();
+        if (checkDataWhenRemovingFirsTime) {
+            $("#modalCheckDataUsed2").modal('show');
+        } else {
+            $("#modalDelectLocation").modal('show');
+        }
     });
 
     // Back page

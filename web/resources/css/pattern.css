@@ -24,9 +24,18 @@
     width: 15%;
 }
 
+.label_header_dept_setting {
+    margin-right: 0.5%;
+    width: 26%;
+}
+
 .label_header_1 {
     margin-right: 2%;
     width: 40%;
+}
+
+.label_header_dept_setting_1 {
+    width: 70.5%;
 }
 
 .table-scroll {
@@ -78,6 +87,11 @@
 .col-9 {
     width: 85%;
 }
+
+.col-7 {
+    width: 56.6%
+}
+
 @media only screen
   and (min-device-width : 768px)
   and (max-device-width : 1024px)

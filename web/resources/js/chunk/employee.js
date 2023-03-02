@@ -187,7 +187,6 @@ window.loadDeptListByComp = function(id, deptID = null) {
 
         },
         error: function(_jqXHR, textStatus, errorThrown) {
-            console.log(textStatus + ': ' + errorThrown);
         },
     });
 }

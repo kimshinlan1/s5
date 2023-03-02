@@ -21,18 +21,80 @@
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-9">
+                <div class="col-7">
                     @if(auth()->user()->isAdmin())
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Company') }}</span>
                         </div>
-                        <div class="label_header_1">
+                        <div class="label_header_dept_setting_1">
                             <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
                             aria-label="Company select" id="companyOptionId" >
                             </select>
                         </div>
-                        <div class="label_header">
+                    </div>
+                    @endif
+                    <div id="departmentTitle" class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
+                            <span class="input-group-text">{{ __('Pattern_Department_Label') }}</span>
+                        </div>
+                        <div class="label_header_dept_setting_1">
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            aria-label="Department select" id="departmentId" >
+                            </select>
+                        </div>
+                    </div>
+                    <div id="patternTitle" class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
+                            <span class="input-group-text">{{ __('Dept_Pattern_Detail_Name') }}</span>
+                        </div>
+                        <div class="label_header_dept_setting_1">
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            aria-label="Pattern select" id="selectPatternIds" >
+                            </select>
+                        </div>
+                        <div class="label_header_dept_setting_1" hidden>
+                            <input type="text" class="form-control" id="patternNote" value="">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="label_header_dept_setting">
+                            <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
+                        </div>
+                        <div class="label_header_dept_setting_1">
+                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @if(auth()->user()->isAdmin())
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting" style="width: 45%;">
+                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
+                        </div>
+                        <div class="date">
+                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
+                                title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting" style="width: 45%;">
+                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
+                        </div>
+                        <div class="date">
+                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
+                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
+                                title="{{ __('Common_Click_To_Select_Date') }}">
+                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
+                        </div>
+                    </div>
+                    @else
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting" style="width: 45%;">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
@@ -43,81 +105,6 @@
                         </div>
                     </div>
                     @endif
-                    <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Pattern_Department_Label') }}</span>
-                        </div>
-                        <div class="label_header_1">
-                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
-                            aria-label="Department select" id="departmentId" >
-                            </select>
-
-                        </div>
-                        @if(auth()->user()->isAdmin())
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
-                        </div>
-                        <div class="date">
-                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
-                                title="{{ __('Common_Click_To_Select_Date') }}">
-                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
-                        </div>
-                        @else
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
-                        </div>
-                        <div class="date">
-                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
-                                title="{{ __('Common_Click_To_Select_Date') }}">
-                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
-                        </div>
-                        @endif
-                    </div>
-                    <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Dept_Pattern_Detail_Name') }}</span>
-                        </div>
-                        <div class="label_header_1">
-                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
-                            aria-label="Pattern select" id="selectPatternIds" >
-                            </select>
-                        </div>
-                        <div class="label_header_1" hidden>
-                            <input type="text" class="form-control" id="patternNote" value="">
-                        </div>
-                        @if(auth()->user()->isAdmin())
-                        <div class="label_header">
-                        </div>
-                        <div class="date">
-                        </div>
-                        @else
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
-                        </div>
-                        <div class="date">
-                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
-                                title="{{ __('Common_Click_To_Select_Date') }}">
-                            <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
-                        </div>
-                        @endif
-                    </div>
-                    <div class="input-group">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
-                        </div>
-                        <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
-                            <div class="invalid-feedback">
-                            </div>
-                        </div>
-                        <div class="label_header">
-                        </div>
-                        <div class="date">
-                        </div>
-                    </div>
                 </div>
             </div>
             <br />
@@ -263,6 +250,64 @@
                     class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
                         class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Notifi Err Init Page -->
+    <div class="modal fade" id="modalErrInitPage" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Please_Add_New_Or_Confirm_Admin') }}</span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="btnErrInitPage()"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Location -->
+    <div class="modal fade" id="modalCheckDataUsed1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Change_Data_Used') }}</span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="confirmNotAddNewData()">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="confirmAddNewData()"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Remove Location -->
+    <div class="modal fade" id="modalCheckDataUsed2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Remove_Data_Used') }}</span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="confirmNotRemoveData()">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" onclick="confirmRemoveData()"
+                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
