@@ -85,10 +85,8 @@ function addBlock() {
                 $(l).attr('id', 'hidInspectionId_'+inspectionId);
             }
         })
-        debugger
-        // $("#patternEvidenceDialog").scrollTop($("#patternEvidenceDialog").height());
-        $("body").find('#patternEvidenceDialog').animate({
-            scrollTop: $("body").find('#patternEvidenceDialog').get(0).scrollHeight
+        $("#patternEvidenceDialog").find('.evidences-body').animate({
+            scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
         }, 1500);
     };
 
