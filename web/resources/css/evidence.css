@@ -14,15 +14,19 @@
 .close-image {
     position: absolute;
     right: 0;
-    top: 0;
-    width: 35px;
-    height: 30px;
-    line-height: 30px;
+    left: 0;
+    bottom: 0;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
     font-size: 2rem;
     z-index: 1;
     background-color: transparent;
     border-color: transparent;
-    color: #dcf568;
+    color: gray;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
 }
 
 .right-arrow {

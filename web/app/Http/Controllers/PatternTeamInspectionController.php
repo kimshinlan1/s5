@@ -234,22 +234,6 @@ class PatternTeamInspectionController extends Controller
 
     }
 
-     /**
-     * Save uploaded Image
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return array
-     */
-    public function saveImage(Request $request)
-    {
-        $data = $this->evidenceService->saveUploadedImage($request);
-        if (isset($data['invalid'])) {
-            return $this->responseException();
-        }
-        return $data;
-    }
-
     /**
      * Remove one Image in a specific album
      *
