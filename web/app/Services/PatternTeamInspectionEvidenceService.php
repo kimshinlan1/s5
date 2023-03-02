@@ -200,6 +200,16 @@ class PatternTeamInspectionEvidenceService extends BaseService
             if ($countBeforeImg > 0) {
                 for ($j=0; $j < $countBeforeImg; $j++) {
                     $image = $request->file('file_before_block' . $block->id . '_' . $j);
+                    if (substr($image->getMimeType(), 0, 5) != 'image') {
+                        return [
+                            'invalid_format' => true,
+                        ];
+                    }
+                    if ($image->getSize() > 10485760) {
+                        return [
+                            'exceed_size' => true,
+                        ];
+                    }
                     if (!empty($image)) {
                         $this->createImage(true, $inspecionId, $block->id, $image);
                     } else {
@@ -213,6 +223,16 @@ class PatternTeamInspectionEvidenceService extends BaseService
             if ($countAfterImg > 0) {
                 for ($j=0; $j < $countAfterImg; $j++) {
                     $image = $request->file('file_after_block' . $block->id . '_' . $j);
+                    if (substr($image->getMimeType(), 0, 5) != 'image') {
+                        return [
+                            'invalid_format' => true,
+                        ];
+                    }
+                    if ($image->getSize() > 10485760) {
+                        return [
+                            'exceed_size' => true,
+                        ];
+                    }
                     if (!empty($image)) {
                         $this->createImage(false, $inspecionId, $block->id, $image);
                     } else {

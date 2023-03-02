@@ -271,6 +271,12 @@ class PatternTeamInspectionController extends Controller
         if (isset($data['invalid'])) {
             return $this->responseException();
         }
+        if (isset($data['invalid_format'])) {
+            return $this->responseException(Constant::MESSAGES['INVALID_EXTENSION_ERROR'], 500);
+        }
+        if (isset($data['exceed_size'])) {
+            return $this->responseException(Constant::MESSAGES['EXCEED_SIZE_ERROR'], 500);
+        }
         return $data;
     }
 }

@@ -2,7 +2,8 @@
 * Global var
 ---------------------- */
 var openEvidenceBtn = null;
-
+var numberOfEvidences = 0;
+var confirmMsg = '';
 /////////////////////////////////////////////////////////////////////////////
 
 /*---------------------
@@ -12,7 +13,7 @@ var openEvidenceBtn = null;
 /*---------------------
 * Upload file
 ---------------------- */
-function uploadFile(input, block, is_before) {
+function uploadFile(input, block, is_before, albumId) {
     // let inspecionId = $(openEvidenceBtn).attr('data-id');
     if (input.files && input.files[0]) {
         input.files.forEach((_element, index) => {
@@ -33,8 +34,9 @@ function uploadFile(input, block, is_before) {
                 }
 
                 let divClass = (index == input.files.length - 1) ? 'item active ' + fileId : 'item ' + fileId;
-                let img = '<div class="' + divClass + '" id="item00' + index + '" data-id="' + index + '">' + '<button type="submit" class="close-image" id="removeImag00' +
-                index + '" onclick="removeImage(`00' + index + '`,'+null+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
+                let tempImgId = is_before ? '_before_' + index + "_" + block: '_after' + index + "_" + block;
+                let img = '<div class="' + divClass + '" id="item' + tempImgId + '" data-id="' + tempImgId + '">' + '<button type="submit" class="close-image" id="removeImage' +
+                tempImgId + '" onclick="removeImage(`' + tempImgId + '`,'+albumId+',' +true+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
                 '<img class="img-size" src="' + image.src + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + image.src + '`)"/></div>';
 
                 if (is_before) {
@@ -83,6 +85,11 @@ function addBlock() {
                 $(l).attr('id', 'hidInspectionId_'+inspectionId);
             }
         })
+        debugger
+        // $("#patternEvidenceDialog").scrollTop($("#patternEvidenceDialog").height());
+        $("body").find('#patternEvidenceDialog').animate({
+            scrollTop: $("body").find('#patternEvidenceDialog').get(0).scrollHeight
+        }, 1500);
     };
 
     runAjax(url, method, params, doneCallback);
@@ -93,7 +100,7 @@ function addBlock() {
 ---------------------- */
 function deleteBlock(blockId) {
     let inspectionId = $(openEvidenceBtn).attr('data-id');
-    if (confirm('Do you want to delete this block?')) {
+    if (confirm(confirmMsg)) {
         let url = "/pattern_team_inspection/evidence/" + blockId + "?inspectionId=" + inspectionId;
         let method = "DELETE";
 
@@ -104,6 +111,7 @@ function deleteBlock(blockId) {
                 let noDataMsg = $('#messageNoData').val()
                 $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
             }
+            showToast($('#toast2'), 2000, true);
         };
 
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -166,29 +174,42 @@ function fullScreen(img_src) {
 /*---------------------
 * Remove one selected image
 ---------------------- */
-function removeImage(imgID, albumID) {
-    if ($('#item'+imgID).next().length != 0) {
-        $('#item'+imgID).next().addClass('active');
-    } else {
-        $('#item'+imgID).siblings("div:first").addClass('active');
-    }
-    $('#item'+imgID).remove();
-    $('#removeImage'+imgID).remove();
-    let url = "/pattern_team_inspection/evidence/image/" + imgID;
-    let method = "DELETE";
-
-    let doneCallback = function (_data, _textStatus, _jqXHR) {
+function removeImage(imgID, albumID, isTempImage = false) {
+    if (confirm(confirmMsg)) {
         let noImgPath = $('#noImage').val();
-        if ($(albumID).find('.item').length == 0) {
-            $(albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
+        if ($('#item'+imgID).next().length != 0) {
+            $('#item'+imgID).next().addClass('active');
+        } else {
+            $('#item'+imgID).siblings("div:first").addClass('active');
         }
-        alert('Saved Successfully');
-    };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-    };
-    if (albumID) {
-        runAjax(url, method, null, doneCallback, failCallback);
+        $('#item'+imgID).remove();
+        $('#removeImage'+imgID).remove();
+
+        if (!isTempImage) {
+            let url = "/pattern_team_inspection/evidence/image/" + imgID;
+
+            let method = "DELETE";
+
+            let doneCallback = function (_data, _textStatus, _jqXHR) {
+                // Check if there is any image in the album. If not, append No-Image to empty album
+                if ($(albumID).find('.item').length == 0) {
+                    $(albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
+                }
+                showToast($('#toast2'), 2000, true);
+            };
+
+            let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+                failAjax(jqXHR, _textStatus, _errorThrown);
+            };
+
+            runAjax(url, method, null, doneCallback, failCallback);
+        } else {
+            if ($(albumID).find('.item').length == 0) {
+                $(albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
+            }
+        }
+
+
     }
 }
 
@@ -196,30 +217,141 @@ function removeImage(imgID, albumID) {
 * Remove a before/after album
 ---------------------- */
 function removeAlbum(albumID, blockID, isBefore) {
-    let inspectionId = $(openEvidenceBtn).attr('data-id');
-    let ids = {};
-    ids = $.map($('#' + albumID + ' > div'), div => div.dataset['id'] )
-    let noImgPath = $('#noImage').val();
-    $('#'+albumID).empty();
-    $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
+    if (confirm(confirmMsg)) {
+        let inspectionId = $(openEvidenceBtn).attr('data-id');
+        let ids = $.map($('#' + albumID + ' > div'), div => div.dataset['id'] );
+        let noImgPath = $('#noImage').val();
 
-    let url = "/pattern_team_inspection/evidence/removeAlbum";
-    let method = "POST";
-    let params = {
-        ids: ids,
-        blockID: blockID,
-        isBefore: isBefore,
-        inspectionId: inspectionId,
+        // Append No-Image to empty album
+        $('#'+albumID).empty();
+        $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
+
+        let url = "/pattern_team_inspection/evidence/removeAlbum";
+        let method = "POST";
+        let params = {
+            ids: ids,
+            blockID: blockID,
+            isBefore: isBefore,
+            inspectionId: inspectionId,
+        }
+        let doneCallback = function (data, _textStatus, _jqXHR) {
+            showToast($('#toast2'), 2000, true);
+        };
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+
+        runAjax(url, method, params, doneCallback, failCallback);
     }
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        console.log("TCL: doneCallback -> data", data)
-    };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-    };
-
-    runAjax(url, method, params, doneCallback, failCallback);
 }
+
+/*---------------------
+* Hide all modals
+---------------------- */
+function hideAllModals() {
+    $("#confirmDialog3").modal('hide');
+    $('#patternEvidenceDialog').modal('hide');
+    // Fix conflict hen use multi modal
+    $("body").find(".modal").each(function(i,e) {
+        $(e).hide();
+    });
+    $("body").find(".modal-backdrop").each(function(i,e) {
+        $(e).remove();
+    });
+}
+
+/*---------------------
+* Handle click OK button on confirmmation dialog
+* There are 2 cases: close dialog case and save case
+*
+---------------------- */
+/**
+ * Handle click OK button on confirmmation dialog. There are 2 cases: delete case and save case
+ *
+ * @param {bolean} isSaveMode Check mode
+ * @return void
+ */
+function handleConfirmOkBtn(isSaveMode) {
+    if (isSaveMode) {
+        // Save Case
+        let blocks = $('.evidences-body').find('.count-block');
+        let inspecionId = $(openEvidenceBtn).attr('data-id');
+        let problemBeforeArray = [];
+        let problemAfterArray = [];
+        let blockIdArray = [];
+        let formData = new FormData();
+
+        // Check if evidence dialog contains any blocks. If not, do nothing and close the dialog when click save button
+        if (blocks.length > 0) {
+            // Loop block
+            for (const block of blocks) {
+                let blockId = $(block).attr('data-id');
+                let beforeFiles = $(block).find(".file-before")[0].files;
+                let countAfter = 0, countBefore = 0;
+
+                // Loop before album
+                for (let i = 0; i < beforeFiles.length; i++) {
+                    // Check if uploaded image still exists or not
+                    if($(".file_before_block" + blockId + "_" + i).length > 0) {
+                        // Add item-count class in order to distinguish existing and non-exisiting uploaded image for calculating number of evidences
+                        $(".file_before_block" + blockId + "_" + i).addClass('item-count');
+                        // Append existing uploaded images in before album
+                        formData.append("file_before_block" + blockId + "_" + i, beforeFiles[i]);
+                        countBefore++;
+                    }
+                }
+                // Loop after album
+                let afterFiles = $(block).find(".file-after")[0].files;
+                for (let i = 0; i < afterFiles.length; i++) {
+                    // Check if uploaded image still exists or not
+                    if($(".file_after_block" + blockId + "_" + i).length > 0) {
+                        // Add item-count class in order to distinguish existing and non-exisiting uploaded image for calculating number of evidences
+                        $(".file_after_block" + blockId + "_" + i).addClass('item-count');
+                        // Append existing uploaded images in after album
+                        formData.append("file_after_block" + blockId + "_" + i, afterFiles[i]);
+                        countAfter++;
+                    }
+                }
+                // Append number of uploaded images per block
+                formData.append("countBeforeImg_block" + blockId, countBefore);
+                formData.append("countAfterImg_block" + blockId, countAfter);
+
+                // Add text area and block ids contents to array
+                let problemBefore = $(blocks).find('#problemBefore' + blockId).val();
+                let problemAfter = $(blocks).find('#problemAfter' + blockId).val();
+                problemBeforeArray.push(problemBefore);
+                problemAfterArray.push(problemAfter);
+                blockIdArray.push(blockId);
+            }
+            // Append data for saving text area content
+            formData.append("count", blocks.length);
+            formData.append("before", problemBeforeArray);
+            formData.append("after", problemAfterArray);
+            formData.append("blockIds", blockIdArray);
+            formData.append("inspecionId", inspecionId);
+
+            let url = "/pattern_team_inspection/evidence/save";
+            let method = "POST";
+
+            let doneCallback = function (data, _textStatus, _jqXHR) {
+                hideAllModals();
+                showToast($('#toast1'), 2000, true);
+            };
+            let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+                failAjax(jqXHR, _textStatus, _errorThrown);
+            };
+
+            runAjax(url, method, formData, doneCallback, failCallback, false);
+        } else {
+            $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
+        }
+    }
+    else {
+        // Close dialog Case
+        hideAllModals();
+    }
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -227,7 +359,6 @@ function removeAlbum(albumID, blockID, isBefore) {
  * DOCUMENT READY
  */
  $(function () {
-
     /*---------------------
      * DIALOG ON SHOW/HIDE
      ---------------------- */
@@ -239,9 +370,27 @@ function removeAlbum(albumID, blockID, isBefore) {
     /*---------------------
      * Handle hide event for the evidence dialog
      ---------------------- */
-    $("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
+     $("body").find('#patternEvidenceDialog').on("hide.bs.modal", function (e) {
+        let inspectionId = $(openEvidenceBtn).attr('data-id');
+        let postfix = $('#registeredInspectionId').val();
+        $('#countEvidence_' + inspectionId).text($('.item-count').length + postfix);
         $("#patternEvidenceDialog").find(".evidences-body").html('');
     });
+
+    /*---------------------
+     * Handle hide event for the confirmation dialog
+     ---------------------- */
+     $("body").find('#confirmDialog3').on("hide.bs.modal", function (e) {
+        $("#confirmDialog3").find('.confirmMessage3').text("");
+    });
+
+    /*---------------------
+     * Handle show event for the confirmation dialog
+     ---------------------- */
+    //  $("body").find('#confirmDialog3').on("show.bs.modal", function (e) {
+    //     let btn = e.currentTarget;
+    //     $("#confirmDialog3").find('#okBtn').attr("data-previous-id", btn.id);
+    // });
 
     /*---------------------
      * Click add block
@@ -272,81 +421,35 @@ function removeAlbum(albumID, blockID, isBefore) {
     });
 
     /*---------------------
-     * Handle save event
-     ---------------------- */
-    $('#btnEvidenceSave').click(function() {
-        let blocks = $('.evidences-body').find('.count-block');
-        let inspecionId = $(openEvidenceBtn).attr('data-id');
-        let problemBeforeArray = [];
-        let problemAfterArray = [];
-        let blockIdArray = [];
-        let formData = new FormData();
-        if (blocks.length > 0) {
-            for (const block of blocks) {
-                let blockId = $(block).attr('data-id');
-                let beforeFiles = $(block).find(".file-before")[0].files;
-                let countAfter = 0, countBefore = 0;
-                for (let i = 0; i < beforeFiles.length; i++) {
-                    if($(".file_before_block" + blockId + "_" + i).length > 0) {
-                        formData.append("file_before_block" + blockId + "_" + i, beforeFiles[i]);
-                        countBefore++;
-                    }
-                }
-                let afterFiles = $(block).find(".file-after")[0].files;
-                for (let i = 0; i < afterFiles.length; i++) {
-                    if($(".file_after_block" + blockId + "_" + i).length > 0) {
-                        formData.append("file_after_block" + blockId + "_" + i, afterFiles[i]);
-                        countAfter++;
-                    }
-                }
-                formData.append("countBeforeImg_block" + blockId, countBefore);
-                formData.append("countAfterImg_block" + blockId, countAfter);
-                let problemBefore = $(blocks).find('#problemBefore' + blockId).val();
-                let problemAfter = $(blocks).find('#problemAfter' + blockId).val();
-
-                problemBeforeArray.push(problemBefore);
-                problemAfterArray.push(problemAfter);
-                blockIdArray.push(blockId);
-            }
-        }
-
-        formData.append("count", blocks.length);
-        formData.append("before", problemBeforeArray);
-        formData.append("after", problemAfterArray);
-        formData.append("blockIds", blockIdArray);
-        formData.append("inspecionId", inspecionId);
-
-        let url = "/pattern_team_inspection/evidence/save";
-        let method = "POST";
-
-        let doneCallback = function (data, _textStatus, _jqXHR) {
-            $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
-        };
-        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-            failAjax(jqXHR, _textStatus, _errorThrown);
-        };
-
-        runAjax(url, method, formData, doneCallback, failCallback, false);
-    })
-
-    /*---------------------
      * Get current clicked evidence link selector
+     * Set common value here
      ---------------------- */
     $("body").on('click','#openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
+        confirmMsg = $('#confirmQuestionMsgId').val();
     })
 
-    /*---------------------
-     * Click OK btn on cancel evidence confirmation
-     ---------------------- */
-    $("body").find('#confirmDialog3').on("show.bs.modal", function (e) {
-        $("#confirmDialog3").find('.confirmMessage3').text("ewqeq");
+    $("body #patternEvidenceDialog").find('#cancelEvidenceBtnId').click(function () {
+        $("#confirmDialog3").modal('show');
+        $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);
+        $("#confirmDialog3").find('.confirmMessage3').text($('#closeDialogMsgId').val());
     });
 
-    $("#confirmDialog3").find('#okBtn').click(function () {
-        $("#confirmDialog3").modal('hide');
+    $("body #patternEvidenceDialog").find('#btnEvidenceSave').click(function () {
+        $("#confirmDialog3").modal('show');
+        $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
+        $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
+    });
 
-        $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
-    })
+    $("body #confirmDialog3").find('#okBtn').click(function (e) {
+        // Check add or close dialog mode
+        let isSaveMode = $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode') == "true" ? true : false;
+        handleConfirmOkBtn(isSaveMode);
+    });
+
+    // Click Cancel
+    $("#confirmDialog3").find('#cancelBtn').click(function () {
+        $("#confirmDialog3").modal('hide');
+    });
 
  });
