@@ -13,80 +13,41 @@ var openEvidenceBtn = null;
 * Upload file
 ---------------------- */
 function uploadFile(input, block, is_before) {
-    // let inspecionId = $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val();
-    let inspecionId = $(openEvidenceBtn).attr('data-id');
-    let locations = [];
+    // let inspecionId = $(openEvidenceBtn).attr('data-id');
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            let formData = new FormData();
-            input.files.forEach((_element, index) => {
-                formData.append("file" + index, input.files[index]);
-            });
-            formData.append('block_id', block);
-            formData.append('inspection_id', inspecionId);
-            formData.append('is_before', is_before);
-            formData.append('count_file', input.files.length);
-            formData.append('team_id', $('#selectTeamList').val());
-            $('input[id^=hidLocationId_]').each(function(i, l) {
-                locations.push($(l).val());
-            })
-            formData.append('countLocation',  $('input[id^=hidLocationId_]').length);
-            formData.append('locations',  locations);
+        input.files.forEach((_element, index) => {
+                var reader = new FileReader();
+                reader.onload = function (e) {
 
+                const image = new Image();
+                image.src = reader.result;
 
-            let url = "/pattern_team_inspection/evidence/saveImage";
-            let method = "POST";
-
-            let doneCallback = function (data, _textStatus, _jqXHR) {
-                let albumID = '';
                 if (is_before) {
                     $('#img_before' + block).find('.active').removeClass('active');
                     $('#img_before' + block).children('img').remove();
-                    albumID = 'img_before' + block;
+                    fileId = "file_before_block" + block + "_" + index;
                 } else {
                     $('#img_after' + block).find('.active').removeClass('active');
                     $('#img_after' + block).children('img').remove();
-                    albumID = 'img_after' + block;
+                    fileId = "file_after_block" + block + "_" + index;
                 }
 
-                for (let i = 0; i < data.imgs.length; i++) {
-                    let divClass = (i == data.imgs.length - 1) ? 'item active' : 'item';
-                    let img = '<div class="' + divClass + '" id="item' + data.imgs[i]['id'] + '" data-id="' + data.imgs[i]['id'] + '">' + '<button type="submit" class="close-image" id="removeImage' +
-                    data.imgs[i]['id'] + '" onclick="removeImage(' + data.imgs[i]['id'] + ','+albumID+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                    '<img class="img-size" src="' + data.imgs[i]['img_path'] + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + data.imgs[i]['img_path'] + '`)"/></div>';
+                let divClass = (index == input.files.length - 1) ? 'item active ' + fileId : 'item ' + fileId;
+                let img = '<div class="' + divClass + '" id="item00' + index + '" data-id="' + index + '">' + '<button type="submit" class="close-image" id="removeImag00' +
+                index + '" onclick="removeImage(`00' + index + '`,'+null+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
+                '<img class="img-size" src="' + image.src + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + image.src + '`)"/></div>';
 
-                    if (is_before) {
-                        $('#img_before' + block).append(img);
-                    } else {
-                        $('#img_after' + block).append(img);
-                    }
+                if (is_before) {
+                    $('#img_before' + block).append(img);
+                } else {
+                    $('#img_after' + block).append(img);
                 }
-                $(openEvidenceBtn).attr('data-id', data.inspectionId);
-                let time = $(openEvidenceBtn).attr('data-time');
-
-                $('input[id^=hidInspectionId_]').each(function(i, l) {
-                    if (i == time) {
-                       $(l).val(data.inspectionId);
-                       $(l).attr('id', 'hidInspectionId_'+data.inspectionId);
-                    }
-                })
-
-            };
-            let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-                failAjax(jqXHR, _textStatus, _errorThrown);
-            };
-
-            runAjax(url, method, formData, doneCallback, failCallback, false);
-        };
-
-        reader.readAsDataURL(input.files[0]);
+        }
+        reader.readAsDataURL(input.files[index]);
         input.value.replace(/^.*\\/, "");
-    } else {
-        $("#confirmDialog").modal("show");
-        $(".confirmMessage").html($('#noFileUpload').val());
-    }
+    });
 
+}
 }
 
 /*---------------------
@@ -157,7 +118,7 @@ function deleteBlock(blockId) {
 * Save dialog
 ---------------------- */
 function saveDialog() {
-    // todo:
+    //
 }
 
 /*---------------------
@@ -221,12 +182,14 @@ function removeImage(imgID, albumID) {
         if ($(albumID).find('.item').length == 0) {
             $(albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
         }
+        alert('Saved Successfully');
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
-
-    runAjax(url, method, null, doneCallback, failCallback);
+    if (albumID) {
+        runAjax(url, method, null, doneCallback, failCallback);
+    }
 }
 
 /*---------------------
@@ -313,14 +276,31 @@ function removeAlbum(albumID, blockID, isBefore) {
      ---------------------- */
     $('#btnEvidenceSave').click(function() {
         let blocks = $('.evidences-body').find('.count-block');
-        let data = {};
+        let inspecionId = $(openEvidenceBtn).attr('data-id');
         let problemBeforeArray = [];
         let problemAfterArray = [];
         let blockIdArray = [];
-
+        let formData = new FormData();
         if (blocks.length > 0) {
             for (const block of blocks) {
                 let blockId = $(block).attr('data-id');
+                let beforeFiles = $(block).find(".file-before")[0].files;
+                let countAfter = 0, countBefore = 0;
+                for (let i = 0; i < beforeFiles.length; i++) {
+                    if($(".file_before_block" + blockId + "_" + i).length > 0) {
+                        formData.append("file_before_block" + blockId + "_" + i, beforeFiles[i]);
+                        countBefore++;
+                    }
+                }
+                let afterFiles = $(block).find(".file-after")[0].files;
+                for (let i = 0; i < afterFiles.length; i++) {
+                    if($(".file_after_block" + blockId + "_" + i).length > 0) {
+                        formData.append("file_after_block" + blockId + "_" + i, afterFiles[i]);
+                        countAfter++;
+                    }
+                }
+                formData.append("countBeforeImg_block" + blockId, countBefore);
+                formData.append("countAfterImg_block" + blockId, countAfter);
                 let problemBefore = $(blocks).find('#problemBefore' + blockId).val();
                 let problemAfter = $(blocks).find('#problemAfter' + blockId).val();
 
@@ -329,21 +309,24 @@ function removeAlbum(albumID, blockID, isBefore) {
                 blockIdArray.push(blockId);
             }
         }
-        data['count'] = blocks.length;
-        data['before'] = problemBeforeArray;
-        data['after'] = problemAfterArray;
-        data['blockIds'] = blockIdArray;
+
+        formData.append("count", blocks.length);
+        formData.append("before", problemBeforeArray);
+        formData.append("after", problemAfterArray);
+        formData.append("blockIds", blockIdArray);
+        formData.append("inspecionId", inspecionId);
+
         let url = "/pattern_team_inspection/evidence/save";
         let method = "POST";
 
         let doneCallback = function (data, _textStatus, _jqXHR) {
-            $('#patternEvidenceDialog').find('#cancelEvidenceBtnId').click();
+            $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
         };
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
             failAjax(jqXHR, _textStatus, _errorThrown);
         };
 
-        runAjax(url, method, data, doneCallback, failCallback, false);
+        runAjax(url, method, formData, doneCallback, failCallback, false);
     })
 
     /*---------------------
@@ -352,4 +335,18 @@ function removeAlbum(albumID, blockID, isBefore) {
     $("body").on('click','#openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
     })
+
+    /*---------------------
+     * Click OK btn on cancel evidence confirmation
+     ---------------------- */
+    $("body").find('#confirmDialog3').on("show.bs.modal", function (e) {
+        $("#confirmDialog3").find('.confirmMessage3').text("ewqeq");
+    });
+
+    $("#confirmDialog3").find('#okBtn').click(function () {
+        $("#confirmDialog3").modal('hide');
+
+        $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
+    })
+
  });

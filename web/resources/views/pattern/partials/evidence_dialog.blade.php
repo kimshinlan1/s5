@@ -30,9 +30,10 @@
             <div class="modal-body evidences-body"></div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnEvidenceSave">{{ __('Common_button_save') }}</button>
+                <button type="button" class="btn btn-success" id="btnEvidenceSave">{{ __('Common_button_save') }}</button>
                 <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock">{{ __('Evidence_Add_Block_Btn') }}</button>
-                <button type="button" id="cancelEvidenceBtnId" class="btn btn-secondary" data-bs-dismiss="modal" >{{ __('Common_button_cancel') }}</button>
+                <button type="button" id="cancelEvidenceBtnId" data-toggle="modal" data-target="#confirmDialog3" class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
+                <button type="button" id="hideEvidenceBtnId" data-bs-dismiss="modal" hidden>{{ __('Common_button_cancel') }}</button>
 
                 {{-- Hidden --}}
                 <input type="hidden" id="hidInspectionId" value=""/>
