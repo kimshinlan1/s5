@@ -147,13 +147,8 @@ window.loadPatternList = function(id, patternId = null, isPattern = null ) {
                 $('#patternNote').val(e.note);
             }
             let checkNoteNull = e.note?? '';
-            if(e.id == patternId && e.isPattern == isPattern) {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
-                $('#patternNote').val(e.note);
-            }
-            else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
-            }
+            html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+            $('#patternNote').val(e.note);
         });
         $('#selectPatternIds').html(html);
         $('#selectPatternIds').change();
