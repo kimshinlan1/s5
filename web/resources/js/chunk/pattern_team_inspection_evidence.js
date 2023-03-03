@@ -256,7 +256,7 @@ function hideAllModals() {
     $("body").find(".modal-backdrop").each(function(i,e) {
         $(e).remove();
     });
-    $('.modal-open').css({
+    $('body').css({
         'overflow': 'unset',
         'padding-right': 'unset',
     })
