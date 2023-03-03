@@ -75,5 +75,6 @@ class Constant
 
     public const INSPECTION_IMAGE_PATH = 'uploads/inspections/imgs';
     public const NO_IMAGE_PATH = '/assets/img/no_image.jpg';
-    public const IMAGE_LIMIT_SIZE = 10485760;
+    public const IMAGE_LIMIT_SIZE_BYTE = 10485760;
+    public const IMAGE_LIMIT_SIZE = 10;
 }

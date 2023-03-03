@@ -276,7 +276,7 @@ class PatternTeamInspectionController extends Controller
             return $this->responseException(Constant::MESSAGES['INVALID_EXTENSION_ERROR']);
         }
         if (isset($data['exceed_size'])) {
-            return $this->responseException(StringUtil::replaceString(Constant::MESSAGES['EXCEED_SIZE_ERROR']));
+            return $this->responseException(StringUtil::replaceString(Constant::MESSAGES['EXCEED_SIZE_ERROR'], Constant::IMAGE_LIMIT_SIZE));
         }
         return $data;
     }

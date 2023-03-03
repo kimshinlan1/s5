@@ -19,8 +19,8 @@ class StringUtil
      *
      * @return string
      */
-    public static function replaceString($replaceValue, $key = '10')
+    public static function replaceString($originalValue, $replaceValue, $key = '%s')
     {
-        return str_replace('%s', $key, $replaceValue);
+        return str_replace($key, $replaceValue, $originalValue);
     }
 }
