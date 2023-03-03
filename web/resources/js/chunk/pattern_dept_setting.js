@@ -100,7 +100,6 @@ window.loadDeptList = function(id) {
     let url = '/departments/list/' + id;
     let method = "GET";
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        console.log(data);
         let html = '';
         let deptId = urlParams.get('departmentId');
         let companyId = urlParams.get('companyId');
