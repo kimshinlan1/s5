@@ -69,7 +69,6 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    @if(auth()->user()->isAdmin())
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header_dept_setting" style="width: 45%;">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
@@ -92,19 +91,6 @@
                             <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
                         </div>
                     </div>
-                    @else
-                    <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting" style="width: 45%;">
-                            <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
-                        </div>
-                        <div class="date">
-                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
-                                title="{{ __('Common_Click_To_Select_Date') }}">
-                            <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
             <br />

@@ -173,6 +173,12 @@ $(function () {
 
     // Remove click
     $("#removeLocation").click(function () {
-        $("#modalDelectLocation").modal('show');
+        if ($("#table-content tbody").find("tr.main_area").length === 0) {
+            $("#confirmDialog2").modal("show");
+            $(".confirmMessage").html(CONFIG.get('PATTERN_AT_LEAST_ONE_VERIFICATION_POINT_MUST_BE_CONFIGURED'));
+            return;
+        } else {
+            $("#modalDelectLocation").modal('show');
+        }
     });
 });
