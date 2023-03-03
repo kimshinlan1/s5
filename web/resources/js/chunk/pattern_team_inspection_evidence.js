@@ -424,7 +424,7 @@ function handleConfirmOkBtn(isSaveMode) {
      ---------------------- */
     $("body").on('click','#openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
-        confirmMsg = $('#confirmQuestionMsgId').val();
+        confirmMsg = $('#confirmDeleteMsgId').val();
     })
 
     $("body #patternEvidenceDialog").find('#cancelEvidenceBtnId').click(function () {

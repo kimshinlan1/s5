@@ -19,7 +19,7 @@ class Constant
         "UNIQUE_PATTERN_NAME" => "パターン名は社内で一意である必要があります",
         "DUPLICATED_PATTERN" => "このパターンはすでに使用されています",
         "INVALID_EXTENSION_ERROR" => "無効な画像拡張子です。有効な画像を選択してください ",
-        "EXCEED_SIZE_ERROR" => "画像サイズが 10MB を超えています。有効な画像を選択してください ",
+        "EXCEED_SIZE_ERROR" => "画像サイズが %sMB を超えています。有効な画像を選択してください ",
     ];
 
     public const ROLE = [
@@ -75,4 +75,5 @@ class Constant
 
     public const INSPECTION_IMAGE_PATH = 'uploads/inspections/imgs';
     public const NO_IMAGE_PATH = '/assets/img/no_image.jpg';
+    public const IMAGE_LIMIT_SIZE = 10485760;
 }

@@ -30,6 +30,6 @@
 <input type="hidden" id="noFileUpload" name="noFileUpload" value="{{ __('Evidence_No_File_To_Upload') }}"/>
 <input type="hidden" id="noImage" name="noImage" value="{{Constant::NO_IMAGE_PATH}}"/>
 <input type="hidden" id="registeredInspectionId" name="registeredInspectionId" value="{{ __('TeamInspection_Registered') }}"/>
-<input type="hidden" id="confirmQuestionMsgId" name="confirmQuestionMsgId" value="{{ __('Common_Are_You_Sure') }}"/>
+<input type="hidden" id="confirmDeleteMsgId" name="confirmDeleteMsgId" value="{{ __('Common_Are_You_Sure_Delete') }}"/>
 <input type="hidden" id="confirmSaveMsgId" name="confirmSaveMsgId" value="{{ __('Confirm_Message_Save_Data') }}"/>
 <input type="hidden" id="closeDialogMsgId" name="closeDialogMsgId" value="{{ __('Evidence_Close_Dialog_Warning') }}"/>

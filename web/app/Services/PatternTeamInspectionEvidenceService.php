@@ -205,7 +205,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
                             'invalid_format' => true,
                         ];
                     }
-                    if ($image->getSize() > 10485760) {
+                    if ($image->getSize() > Constant::IMAGE_LIMIT_SIZE) {
                         return [
                             'exceed_size' => true,
                         ];
@@ -228,7 +228,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
                             'invalid_format' => true,
                         ];
                     }
-                    if ($image->getSize() > 10485760) {
+                    if ($image->getSize() > Constant::IMAGE_LIMIT_SIZE) {
                         return [
                             'exceed_size' => true,
                         ];

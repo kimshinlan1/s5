@@ -35,7 +35,7 @@
     "Common_Click_To_Select_Date": "クリックして日付を選択してください",
     "Common_Created_Date": "作成日",
     "Common_Last_Update_Date": "最終更新日",
-    "Common_Are_You_Sure": "あなたはそれについて確信がありますか?",
+    "Common_Are_You_Sure_Delete": "本当に削除しますか?",
     "===== BLOCK_COMMON_END =====": "",
 
     "===== BLOCK_ERROR_MESSAGE_START =====": "",
