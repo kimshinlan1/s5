@@ -383,14 +383,6 @@ function handleConfirmOkBtn(isSaveMode) {
     });
 
     /*---------------------
-     * Handle show event for the confirmation dialog
-     ---------------------- */
-    //  $("body").find('#confirmDialog3').on("show.bs.modal", function (e) {
-    //     let btn = e.currentTarget;
-    //     $("#confirmDialog3").find('#okBtn').attr("data-previous-id", btn.id);
-    // });
-
-    /*---------------------
      * Click add block
      ---------------------- */
     $("#btnEvidenceAddBlock").on("click", function (_e) {
@@ -428,15 +420,22 @@ function handleConfirmOkBtn(isSaveMode) {
     })
 
     $("body #patternEvidenceDialog").find('#cancelEvidenceBtnId').click(function () {
-        $("#confirmDialog3").modal('show');
-        $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);
-        $("#confirmDialog3").find('.confirmMessage3').text($('#closeDialogMsgId').val());
+        if ($("[class*='file_']").length > 0) {
+            $("#confirmDialog3").modal('show');
+            $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);
+            $("#confirmDialog3").find('.confirmMessage3').text($('#closeDialogMsgId').val());
+        } else {
+            // Close dialog Case
+            hideAllModals();
+        }
     });
 
     $("body #patternEvidenceDialog").find('#btnEvidenceSave').click(function () {
-        $("#confirmDialog3").modal('show');
-        $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
-        $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
+        if ($('.evidences-body').find('.count-block').length > 0) {
+            $("#confirmDialog3").modal('show');
+            $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
+            $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
+        }
     });
 
     $("body #confirmDialog3").find('#okBtn').click(function (e) {
