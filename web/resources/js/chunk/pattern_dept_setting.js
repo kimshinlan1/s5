@@ -100,13 +100,20 @@ window.loadDeptList = function(id) {
     let url = '/departments/list/' + id;
     let method = "GET";
     let doneCallback = function (data, _textStatus, _jqXHR) {
+        console.log(data);
         let html = '';
-        for (let e of data) {
-            html += '<option value="' + e.id + '">' + e.name + '</option>';
-        }
-        $('#departmentId').html(html);
-        let selectedCompId = getCompanyId();
-        loadPatternList(selectedCompId);
+        let deptId = urlParams.get('departmentId');
+        let companyId = urlParams.get('companyId');
+            if (!deptId && companyId) {
+                html += '<option value="' + '">' + '</option>';
+            } else {
+                for (let e of data) {
+                    html += '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+            }
+            $('#departmentId').html(html);
+            let selectedCompId = getCompanyId();
+            loadPatternList(selectedCompId);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
