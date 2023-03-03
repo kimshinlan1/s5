@@ -35,6 +35,7 @@
     "Common_Click_To_Select_Date": "クリックして日付を選択してください",
     "Common_Created_Date": "作成日",
     "Common_Last_Update_Date": "最終更新日",
+    "Common_Are_You_Sure_Delete": "本当に削除しますか?",
     "===== BLOCK_COMMON_END =====": "",
 
     "===== BLOCK_ERROR_MESSAGE_START =====": "",
@@ -189,7 +190,7 @@
     "Company_TechMap_Mode": "マルチスキルマップ",
     "Company_Free_Contract": "無償契約",
     "Company_Paid_Contract": "有償契約",
-    "Company_5S_Mode": "5S管理",
+    "Company_5S_Mode": "５S管理",
     "Please enter your company information": "契約会社を入力してください。",
     "=====  BLOCK_COMPANY_END =====": "",
 
@@ -204,12 +205,12 @@
     "=====  BLOCK_PATTERN_LIST_START =====": "",
     "Pattern_List": "５Sチェックリストパターン一覧 ",
     "Pattern_List_Customer": "部門と５Sチェックリストパターン連携一覧",
-    "Pattern_List_Customer_Menu": "5Sチェックリスト管理",
+    "Pattern_List_Customer_Menu": "５Sチェックリスト管理",
     "Pattern_ID": "チェックリストパターンID",
     "Pattern_Name": "チェックリストパターン名",
     "Pattern_Note": "チェックリストの説明",
-    "Pattern_Detail_5S_Checklist_Pattern_Input": "5Sチェックリストパターン入力",
-    "Pattern_Detail_5S_Checklist_Pattern_Preview": "5Sチェックリストパターン",
+    "Pattern_Detail_5S_Checklist_Pattern_Input": "５Sチェックリストパターン入力",
+    "Pattern_Detail_5S_Checklist_Pattern_Preview": "５Sチェックリストパターン",
     "Pattern_Detail_Selection_Of_Improvement_Points": "改善ポイントの選択：",
     "Pattern_Detail_Name": "パターン名",
     "Dept_Pattern_Detail_Name": "５Sチェックリストパターン",
@@ -257,13 +258,13 @@
 
     "=====  BLOCK_PATTERN_TEAM_INSPECTION_START =====": "",
     "TeamInspection_Illustration_Here": "ここにイラスト",
-    "TeamInspection_Input": "5S入力画面",
+    "TeamInspection_Input": "５S入力画面",
     "TeamInspection_Add_Inspection_Point": "点検箇所の追加",
     "TeamInspection_Redirect_Inspection_Button": "改善結果を見る",
     "TeamInspection_Registered": "件登録済",
     "TeamInspection_Register_New": "新しく登録する",
     "TeamInspection_Confirm_Delete": "データを削除してよろしいですか。",
-    "TeamInspection_5S_Level_Transition": "係　5Sレベル推移",
+    "TeamInspection_5S_Level_Transition": "係　５Sレベル推移",
     "TeamInspection_Please_Create_Team_This_Department": "※この部門のチームを作成してください。",
     "TeamInspection_Please_Choose_Pattern_For_This_Department": "※この部門のパターンを選択してください。",
     "TeamInspection_None_Config": "設定なし",
@@ -281,7 +282,7 @@
     "TopPage_Common_Management": "管理画面",
     "TopPage_Study_Plan_Management": "学習計画",
     "TopPage_Skill_Map": "スキルマップ",
-    "TopPage_5S_System": "5Sシステム",
+    "TopPage_5S_System": "５Sシステム",
     "=====  BLOCK_USER_END =====": "",
 
     "=====  BLOCK_EVIDENCE_START =====": "",
@@ -295,6 +296,7 @@
     "Evidence_Add_Block_Btn": "ブロックを追加",
     "Evidence_Existed_Image": "画像は存在した",
     "Evidence_No_File_To_Upload": "アップロードするファイルがありません",
+    "Evidence_Close_Dialog_Warning": "このウィンドウを閉じると、新しくアップロードされたファイルが失われます。ウィンドウを閉じますか?",
     "=====  BLOCK_EVIDENCE_END =====": ""
 
 

@@ -13,4 +13,14 @@ class StringUtil
     {
         return true;
     }
+
+    /**
+     * Replace a specific character in string
+     *
+     * @return string
+     */
+    public static function replaceString($originalValue, $replaceValue, $key = '%s')
+    {
+        return str_replace($key, $replaceValue, $originalValue);
+    }
 }

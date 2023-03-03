@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
+use App\Common\StringUtil;
 use App\Services\PatternTeamInspectionEvidenceService;
 use Illuminate\Http\Request;
 use App\Services\PatternTeamInspectionService;
@@ -270,6 +271,15 @@ class PatternTeamInspectionController extends Controller
         $data = $this->evidenceService->saveData($request);
         if (isset($data['invalid'])) {
             return $this->responseException();
+        }
+        if (isset($data['invalid_format'])) {
+            return $this->responseException(Constant::MESSAGES['INVALID_EXTENSION_ERROR']);
+        }
+        if (isset($data['exceed_size'])) {
+            return $this->responseException(StringUtil::replaceString(
+                Constant::MESSAGES['EXCEED_SIZE_ERROR'],
+                Constant::IMAGE_LIMIT_SIZE
+            ));
         }
         return $data;
     }

@@ -19,7 +19,7 @@
 </style>
 
 
-<div id="patternEvidenceDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+<div id="patternEvidenceDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -32,9 +32,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="btnEvidenceSave">{{ __('Common_button_save') }}</button>
                 <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock">{{ __('Evidence_Add_Block_Btn') }}</button>
-                <button type="button" id="cancelEvidenceBtnId" data-toggle="modal" data-target="#confirmDialog3" class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
-                <button type="button" id="hideEvidenceBtnId" data-bs-dismiss="modal" hidden>{{ __('Common_button_cancel') }}</button>
-
+                <button type="button" id="cancelEvidenceBtnId" class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                 {{-- Hidden --}}
                 <input type="hidden" id="hidInspectionId" value=""/>
             </div>
