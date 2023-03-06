@@ -14,7 +14,7 @@
 #scrolling {
     overflow-x: scroll;
     overflow-y: scroll;
-    height:82vh;
+    height:80vh;
 }
 
 #deptRadarChart td:first-child {
