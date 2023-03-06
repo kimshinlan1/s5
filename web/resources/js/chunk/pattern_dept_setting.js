@@ -96,7 +96,7 @@ function setValueTest() {
 /**
  * List department list
  */
-window.loadDeptList = function(id) {
+window.loadDeptList = function(id, patternId = null) {
     let url = '/departments/list/' + id;
     let method = "GET";
     let doneCallback = function (data, _textStatus, _jqXHR) {
@@ -111,8 +111,9 @@ window.loadDeptList = function(id) {
                 }
             }
             $('#departmentId').html(html);
+            let ispattern = patternId ? true : null;
             let selectedCompId = getCompanyId();
-            loadPatternList(selectedCompId);
+            loadPatternList(selectedCompId, patternId, ispattern);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -259,6 +260,9 @@ window.initLoadPage = function() {
     let isPatternSelection = urlParams.get('isPattern');
     isPatternSelection = !isPatternSelection ? false : true;
     let companyId = urlParams.get('companyId');
+    if (isPatternSelection) {
+        $('#patternName').val('');
+    }
     if (companyId) {
         $('#companyOptionId option[value='+companyId+']').prop("selected", true);
     }
@@ -311,7 +315,7 @@ window.initLoadPage = function() {
     // Add new mode
     else {
         if (compId) {
-            loadDeptList(compId);
+            loadDeptList(compId, selectedPatId);
             loadPatternList(compId, selectedPatId, true);
             $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
             $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
