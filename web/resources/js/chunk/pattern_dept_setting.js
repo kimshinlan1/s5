@@ -100,7 +100,6 @@ window.loadDeptList = function(id) {
     let url = '/departments/list/' + id;
     let method = "GET";
     let doneCallback = function (data, _textStatus, _jqXHR) {
-        console.log(data);
         let html = '';
         let deptId = urlParams.get('departmentId');
         let companyId = urlParams.get('companyId');
@@ -129,12 +128,6 @@ window.loadDeptList = function(id) {
  */
 var pattern_list_data = null;
 window.loadPatternList = function(id, patternId = null, isPattern = null ) {
-
-    // Check existed data
-    if (pattern_list_data) {
-        return;
-    }
-
     let url = '/pattern_list/getlist_by_department/' + id;
     let method = "GET";
     isPattern = isPattern ? true : false;
