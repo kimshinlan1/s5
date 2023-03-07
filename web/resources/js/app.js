@@ -695,9 +695,7 @@ $(function(){
     // Handle department href link
     $('body').on('click', '#subDeptMenu', function(e) {
         if ($('#subDeptMenu').hasClass('active')) {
-            e.preventDefault();
-            sessionStorage.setItem("mainMenu1", "show");
-            $('#extraSubDeptMenuId').collapse('toggle');
+
             // Check if sub menu is showing, add status to storage and change icon
             $('#extraSubDeptMenuId').one("show.bs.collapse", function () {
                 sessionStorage.setItem("deptMenu", "show");
@@ -713,6 +711,10 @@ $(function(){
                 $('body').find('#subIcon1').addClass("fa-caret-right");
                 $('body').find('#subIcon1').removeClass("fa-caret-down");
             });
+
+            e.preventDefault();
+            sessionStorage.setItem("mainMenu1", "show");
+            $('#extraSubDeptMenuId').collapse('toggle');
         }
 
         sessionStorage.setItem("mainMenu1", "show");
