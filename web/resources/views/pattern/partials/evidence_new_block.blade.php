@@ -16,6 +16,7 @@
 <div class="row count-block" id="block_content_{{ $evidence['id'] }}" data-id="{{ $evidence['id'] }}">
     <div class="col" style="padding-left: 3rem;">
         {{-- Before --}}
+        <input type="hidden" id="beforeUploadedIndex" value="0"/>
         <div class="before-title">
             <label class="before-label py-2">{{ __('Evidence_Before_Title') }}</label>
         </div>
@@ -51,6 +52,7 @@
 
     <div class="col">
         {{-- After --}}
+        <input type="hidden" id="afterUploadedIndex" value="0"/>
         <div class="after-title">
             <label class="after-label py-2">{{ __('Evidence_After_Title') }}</label>
         </div>
