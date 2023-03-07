@@ -714,26 +714,25 @@ $(function(){
     showLoading();
 
     // CALL DATABASE UPDATE DATA
-    $.ajax({
-        url: id ? "/teams/" + id : "/teams",
-        type: id ? "PUT" : "POST",
-        data: data,
-    })
-    .done(function (_data, _textStatus, _jqXHR) {
+    let url = id ? "/teams/" + id : "/teams";
+    let method = id ? "PUT" : "POST";
+
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         // SAVE SUCCESSFUL
         reloadDataTeam();
         $("#teamEditDialog").modal("hide");
         showToast($(dialog), 2000, true);
         $("#teamTable").bootstrapTable("refresh");
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
         showError(jqXHR, 'team', 'teamEditDialog', 'errorDialog', 'teamForm');
-    })
-    .always(function () {
+    };
+    let alwaysCallback = function () {
         // HIDE LOADING
         hideLoading();
-    });
+    }
+    runAjax(url, method, data, doneCallback, failCallback, alwaysCallback);
 }
 
 /*======================
@@ -752,24 +751,22 @@ $(function(){
     };
 
     showLoading();
-
     // CALL DATABASE UPDATE DATA
-    $.ajax({
-        url: "/employee",
-        type: "POST",
-        data: data,
-    })
-    .done(function (_data, _textStatus, _jqXHR) {
+    let url = "/employee";
+    let method = "POST";
+
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
         // SAVE SUCCESSFUL
         $("#employeeAddDialog").modal("hide");
         showToast($('#successAddDialog'), 2000, true);
-    })
-    .fail(function (jqXHR, _textStatus, _errorThrown) {
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         // SHOW ERRORS
         showError(jqXHR, 'employee', 'employeeAddDialog', 'errorDialog', 'employeeForm');
-    })
-    .always(function () {
+    };
+    let alwaysCallback = function () {
         // HIDE LOADING
         hideLoading();
-    });
+    }
+    runAjax(url, method, data, doneCallback, failCallback, alwaysCallback);
 }
