@@ -30,7 +30,7 @@ window.departmentTableActions = function (_value, row, _index) {
 /** ------------------
  *    5S Checklist Actions
  --------------------- */
-var pattern_list_data = null;
+let pattern_list_data = null;
 window.department5SChecklistActions = function (_value, row, _index) {
    let options = '<select class=" form-select px-2" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
    options += '<option> </option>';
@@ -73,10 +73,6 @@ window.department5SChecklistActions = function (_value, row, _index) {
 
    return options;
 };
-
-function initPatternListData() {
-
-}
 
 /** ------------------
  *    Add classes / css for 5s pattern checklist column
@@ -293,55 +289,6 @@ window.queryParams = function (params) {
    return params;
 }
 
-/*==================
-* Save team data
-===================*/
-window.saveTeamData = function () {
-   $('#teamForm').removeClass('was-validated');
-   $('#teamForm .form-control').removeClass('is-invalid');
-   $('#teamForm .invalid-feedback').html('');
-   let id = $("#teamId").val();
-   let name = $("#teamName").val();
-   let department_id = $("#teamDepartment").val();
-   let data = null;
-   let dialog = '#successAddDialog';
-   if (id) {
-       dialog = '#successUpdateDialog';
-       data = {
-           id: id,
-           name: name,
-           department_id: department_id,
-       };
-   } else {
-       data = {
-           name: name,
-           department_id: department_id,
-       };
-   }
-   showLoading();
-
-   // CALL DATABASE UPDATE DATA
-   $.ajax({
-       url: id ? "/teams/" + id : "/teams",
-       type: id ? "PUT" : "POST",
-       data: data,
-   })
-   .done(function (_data, _textStatus, _jqXHR) {
-       // SAVE SUCCESSFUL
-       $("#teamEditDialog").modal("hide");
-       showToast($(dialog), 2000, true);
-       $("#teamTable").bootstrapTable("refresh");
-   })
-   .fail(function (jqXHR, _textStatus, _errorThrown) {
-       // SHOW ERRORS
-       showError(jqXHR, 'team', 'teamEditDialog', 'errorDialog', 'teamForm');
-   })
-   .always(function () {
-       // HIDE LOADING
-       hideLoading();
-   });
-}
-
 /** ------------------
  *    indexNo
 --------------------- */
@@ -438,42 +385,6 @@ window.saveDataDepartment = function () {
            // hide loading
            hideLoading();
        });
-}
-
-/** ------------------
-*    Save data employee
---------------------- */
-window.saveDataEmployee = function () {
-   $('#employeeForm').removeClass('was-validated');
-   $('#employeeForm .form-control').removeClass('is-invalid');
-   $('#employeeForm .invalid-feedback').html('');
-
-   let data = {
-       name: $("#employeeName").val(),
-       email: $("#employeeEmail").val(),
-       department_id:  $("#employeeDepartmentId").val(),
-   };
-
-   showLoading();
-
-   // save
-   $.ajax({
-       url: "/employee",
-       type: "POST",
-       data: data,
-   })
-   .done(function (_data, _textStatus, _jqXHR) {
-       $("#departmentAddDialog").modal("hide");
-       showToast($('#successAddDialog'), 2000, true);
-   })
-   .fail(function (jqXHR, _textStatus, _errorThrown) {
-       // show errors
-       showError(jqXHR, 'employee', 'departmentAddDialog', 'errorDialog', 'employeeForm');
-   })
-   .always(function () {
-       // hide loading
-       hideLoading();
-   });
 }
 
 /** ------------------
@@ -598,7 +509,7 @@ $(function () {
     * Save team data
     -----------------------------------------------*/
    $("#saveTeamBtn").on("click", function () {
-       window.saveTeamData();
+       window.saveDataTeam();
    });
 
    /** ------------------

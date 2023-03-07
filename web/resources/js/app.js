@@ -666,3 +666,110 @@ $(function(){
         sessionStorage.removeItem("mainMenu4");
     });
 });
+
+/*======================
+ * RELOAD DATA TEAM
+ =======================*/
+ window.reloadDataTeam = function (id) {
+    let data = {department_id: id};
+    $.ajax({
+        type: 'GET',
+        url: '/teams/dept_id',
+        data: data,
+        success: function (res) {
+            let html = '';
+            for (let e of res) {
+                html += '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#employeeTeamId').html(html);
+        }
+    });
+}
+
+/*==================
+ * SAVE DATA TEAM
+ ===================*/
+ window.saveDataTeam = function () {
+    $('#teamForm').removeClass('was-validated');
+    $('#teamForm .form-control').removeClass('is-invalid');
+    $('#teamForm .invalid-feedback').html('');
+    let id = $("#teamId").val();
+    let name = $("#teamName").val();
+    let department_id = $("#teamDepartment").val();
+    let data = null;
+    let dialog = '#successAddDialog';
+    if (id) {
+        dialog = '#successUpdateDialog';
+        data = {
+            id: id,
+            name: name,
+            department_id: department_id,
+        };
+    } else {
+        data = {
+            name: name,
+            department_id: department_id,
+        };
+    }
+    showLoading();
+
+    // CALL DATABASE UPDATE DATA
+    $.ajax({
+        url: id ? "/teams/" + id : "/teams",
+        type: id ? "PUT" : "POST",
+        data: data,
+    })
+    .done(function (_data, _textStatus, _jqXHR) {
+        // SAVE SUCCESSFUL
+        reloadDataTeam();
+        $("#teamEditDialog").modal("hide");
+        showToast($(dialog), 2000, true);
+        $("#teamTable").bootstrapTable("refresh");
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        showError(jqXHR, 'team', 'teamEditDialog', 'errorDialog', 'teamForm');
+    })
+    .always(function () {
+        // HIDE LOADING
+        hideLoading();
+    });
+}
+
+/*======================
+ * SAVE DATA EMPLOYEE
+ ========================*/
+ window.saveDataEmployee = function () {
+    $('#employeeForm').removeClass('was-validated');
+    $('#employeeForm .form-control').removeClass('is-invalid');
+    $('#employeeForm .invalid-feedback').html('');
+
+    let data = {
+        name: $("#employeeName").val(),
+        email: $("#employeeEmail").val(),
+        team_id: $("#employeeTeamId").val(),
+        department_id: $("#deptd").val(),
+    };
+
+    showLoading();
+
+    // CALL DATABASE UPDATE DATA
+    $.ajax({
+        url: "/employee",
+        type: "POST",
+        data: data,
+    })
+    .done(function (_data, _textStatus, _jqXHR) {
+        // SAVE SUCCESSFUL
+        $("#employeeAddDialog").modal("hide");
+        showToast($('#successAddDialog'), 2000, true);
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // SHOW ERRORS
+        showError(jqXHR, 'employee', 'employeeAddDialog', 'errorDialog', 'employeeForm');
+    })
+    .always(function () {
+        // HIDE LOADING
+        hideLoading();
+    });
+}
