@@ -375,7 +375,7 @@ function handleConfirmOkBtn(isSaveMode) {
     /*---------------------
      * Handle hide event for the evidence dialog
      ---------------------- */
-     $("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
+     $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         let inspectionId = $(openEvidenceBtn).attr('data-id');
         let postfix = $('#registeredInspectionId').val();
         $('#countEvidence_' + inspectionId).text($('.item').length + postfix);
