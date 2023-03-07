@@ -84,11 +84,11 @@
 <input type="hidden" id="hidDeptId" value="{{ $deptId }}"/>
 <input type="hidden" id="hidTeamId" value="{{ $teamId }}"/>
 <div id="content"></div>
-<br>
 
 <button type="button" class="btn btn-success" id="btnSave">{{ __('Common_button_save') }}</button>
 <button type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
 
+<div><br/></div>
 <!-- Modal confirm save data -->
 <div class="modal fade" id="modalSaveInspectionData" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
