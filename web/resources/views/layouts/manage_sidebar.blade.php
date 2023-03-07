@@ -2,7 +2,7 @@
     <div class="list-group list-group-flush">
         <!-- Management -->
         @if(!auth()->user()->is5SModeFree())
-        <a id="mainMenu1" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(1)">
+        <a id="mainMenu1" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(1)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('Manage') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon1"></i>
@@ -25,23 +25,23 @@
         @endif
 
         <!-- Study Plan -->
-        <a id="mainMenu2" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(2)">
+        <a id="mainMenu2" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(2)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('TopPage_Study_Plan_Management') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon2"></i>
             </div>
         </a>
         <div id='subMenu2' class="collapse sidebar-submenu">
-            <a href="#" class="list-group-item list-group-item-action text-black">
+            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black">
                 <span class="menu-collapsed">Sub1</span>
             </a>
-            <a href="#" class="list-group-item list-group-item-action text-black">
+            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black">
                 <span class="menu-collapsed">Sub2</span>
             </a>
         </div>
 
         <!-- Skill Map -->
-        <a id="mainMenu3" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(3)">
+        <a id="mainMenu3" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(3)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('SkillMapMenu') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon3"></i>
@@ -53,7 +53,7 @@
         </div>
 
         <!-- 5S Management -->
-        <a id="mainMenu4" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(4)">
+        <a id="mainMenu4" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(4)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('5s_Manage') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon4"></i>

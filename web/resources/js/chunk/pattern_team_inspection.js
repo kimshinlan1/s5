@@ -92,6 +92,7 @@ function loadInspectionData(data, mode = '') {
  ***************/
 function removeColumn(inspection_id) {
     $("#modalRemoveColumn").modal('show');
+    $("#modalRemoveColumn").addClass("show");
     inspectionIdBtnRemove = inspection_id;
 }
 
