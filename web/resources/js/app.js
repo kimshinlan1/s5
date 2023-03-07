@@ -635,12 +635,14 @@ window.toggleMenu = function(order) {
     })
 
     // Check if sub menu is showing, add status to storage and change icon
-    $('#subMenu' + order).one("shown.bs.collapse", function () {
+    $('#subMenu' + order).one("show.bs.collapse", function () {
+        $('body').find('#subMenu' + order).addClass('show').removeClass('in');
         handleToggle('show', order);
     });
 
     // Check if sub menu is hiding, add status to storage and change icon
     $('#subMenu' + order).one("hide.bs.collapse", function () {
+        $('body').find('#subMenu' + order).removeClass('show').removeClass('in');
         handleToggle('hide', order);
     });
 }
@@ -674,7 +676,7 @@ $(function(){
             $('#subMenu' + (i+1)).collapse('hide');
         }
         // Check if sub menu is showing, add status to storage and change icon
-        $('#subMenu' + (i+1)).one("shown.bs.collapse", function () {
+        $('#subMenu' + (i+1)).one("show.bs.collapse", function () {
             handleToggle('show', (i+1));
         });
 
@@ -684,13 +686,35 @@ $(function(){
         });
     });
 
+    if (sessionStorage.getItem("deptMenu") == "show") {
+        $('#extraSubDeptMenuId').collapse('show');
+    } else {
+        $('#extraSubDeptMenuId').collapse('hide');
+    }
+
     // Handle department href link
-    $('#subDeptMenu').click(function(e) {
+    $('body').on('click', '#subDeptMenu', function(e) {
         if ($('#subDeptMenu').hasClass('active')) {
             e.preventDefault();
             sessionStorage.setItem("mainMenu1", "show");
             $('#extraSubDeptMenuId').collapse('toggle');
+            // Check if sub menu is showing, add status to storage and change icon
+            $('#extraSubDeptMenuId').one("show.bs.collapse", function () {
+                sessionStorage.setItem("deptMenu", "show");
+                $('body').find('#extraSubDeptMenuId').addClass('show').removeClass('in');
+                $('body').find('#subIcon1').addClass("fa-caret-down");
+                $('body').find('#subIcon1').removeClass("fa-caret-right");
+            });
+
+            // Check if sub menu is hiding, add status to storage and change icon
+            $('#extraSubDeptMenuId').one("hide.bs.collapse", function () {
+                sessionStorage.setItem("deptMenu", "hide");
+                $('body').find('#extraSubDeptMenuId').removeClass('show').removeClass('in');
+                $('body').find('#subIcon1').addClass("fa-caret-right");
+                $('body').find('#subIcon1').removeClass("fa-caret-down");
+            });
         }
+
         sessionStorage.setItem("mainMenu1", "show");
     })
 

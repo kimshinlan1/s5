@@ -312,10 +312,12 @@ function handleConfirmOkBtn(isSaveMode) {
 
                 $("[class*=file_before_block" + blockId + ']').each((i, ele) => { //todo
                     keyArrayBefore.push(ele.dataset.id);
+                    $(ele).addClass('item-count');
                 });
 
                 $("[class*=file_after_block" + blockId + ']').each((i, ele) => { //todo
                     keyArrayAfter.push(ele.dataset.id);
+                    $(ele).addClass('item-count');
                 });
 
                 // Append array key of uploaded images per block
@@ -378,7 +380,7 @@ function handleConfirmOkBtn(isSaveMode) {
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         let inspectionId = $(openEvidenceBtn).attr('data-id');
         let postfix = $('#registeredInspectionId').val();
-        $('#countEvidence_' + inspectionId).text($('.item').length + postfix);
+        $('#countEvidence_' + inspectionId).text($('.item-count').length + postfix);
         $("#patternEvidenceDialog").find(".evidences-body").html('');
     });
 
