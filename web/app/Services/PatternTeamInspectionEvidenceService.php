@@ -195,11 +195,12 @@ class PatternTeamInspectionEvidenceService extends BaseService
                     'invalid' => true,
                 ];
             }
-            $countBeforeImg = $request->get('countBeforeImg_block' . $block->id);
-            $countAfterImg = $request->get('countAfterImg_block' . $block->id);
-            if ($countBeforeImg > 0) {
-                for ($j=0; $j < $countBeforeImg; $j++) {
-                    $image = $request->file('file_before_block' . $block->id . '_' . $j);
+            $keyArrayBefore = explode(',', $request->get('keyArrayBefore_block' . $block->id));
+            $keyArrayAfter = explode(',', $request->get('keyArrayAfter_block' . $block->id));
+
+            if ($keyArrayBefore[0]) {
+                foreach ($keyArrayBefore as $key) {
+                    $image = $request->file($key);
                     if (substr($image->getMimeType(), 0, 5) != 'image') {
                         return [
                             'invalid_format' => true,
@@ -220,9 +221,9 @@ class PatternTeamInspectionEvidenceService extends BaseService
                 }
             }
 
-            if ($countAfterImg > 0) {
-                for ($j=0; $j < $countAfterImg; $j++) {
-                    $image = $request->file('file_after_block' . $block->id . '_' . $j);
+            if ($keyArrayAfter[0]) {
+                foreach ($keyArrayAfter as $key) {
+                    $image = $request->file($key);
                     if (substr($image->getMimeType(), 0, 5) != 'image') {
                         return [
                             'invalid_format' => true,
@@ -242,6 +243,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
                     }
                 }
             }
+
         }
 
         return true;
