@@ -529,144 +529,6 @@ window.removeExistId = function(arr, id) {
     arr.splice( $.inArray(id,arr) , 1 );
     return arr;
 }
-
-
-/* ==============================
-jQuery
-============================== */
-$(function(){
-    /** ------------------
-     *    Handle toggle/collapse on sidebar
-     --------------------- */
-    $('#managementMenuId').click(function() {
-        $('#subManagementMenuId').collapse('toggle');
-    })
-    $('#studyPlanMenuId').click(function() {
-        $('#subStudyPlanMenuId').collapse('toggle');
-    })
-    $('#skillMapMenuId').click(function() {
-        $('#subSkillMapMenuId').collapse('toggle');
-    })
-    $('#menu5sId').click(function() {
-        $('#submenu5sId').collapse('toggle');
-    })
-    $('#subDeptMenu').click(function(e) {
-        if ($('#subDeptMenu').hasClass('active')) {
-            e.preventDefault();
-            sessionStorage.setItem("mainMenu1", "show");
-            $('#extraSubDeptMenuId').collapse('toggle');
-        }
-        sessionStorage.setItem("mainMenu1", "show");
-    })
-
-    /** ------------------ Menu 1 ------------------ */
-    $('#subManagementMenuId').on("shown.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu1", "show");
-        $('#icon1').addClass("fa-caret-down");
-        $('#icon1').removeClass("fa-caret-right");
-    });
-
-    $('#subManagementMenuId').on("hide.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu1", "hide");
-        $('#icon1').toggleClass("fa-caret-right fa-caret-down");
-    });
-
-    const mainMenu1 = sessionStorage.getItem("mainMenu1");
-
-    if (mainMenu1 == "show") {
-        $('#subManagementMenuId').collapse('show');
-    } else {
-        $('#subManagementMenuId').collapse('hide');
-    }
-
-    /** ------------------ Sub Dept Menu 1 ------------------ */
-    $('#extraSubDeptMenuId').on("shown.bs.collapse", function () {
-        sessionStorage.setItem("subMenu1", "show");
-        $('#subIcon1').addClass("fa-caret-down");
-        $('#subIcon1').removeClass("fa-caret-right");
-    });
-
-    $('#extraSubDeptMenuId').on("hide.bs.collapse", function () {
-        sessionStorage.setItem("subMenu1", "hide");
-        $('#subIcon1').toggleClass("fa-caret-right fa-caret-down");
-    });
-
-    const subMenu1 = sessionStorage.getItem("subMenu1");
-
-    if (subMenu1 == "show") {
-        $('#extraSubDeptMenuId').collapse('show');
-    } else {
-        $('#extraSubDeptMenuId').collapse('hide');
-    }
-
-    /** ------------------ Menu 2 ------------------ */
-    $('#subStudyPlanMenuId').on("shown.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu2", "show");
-        $('#icon2').addClass("fa-caret-down");
-        $('#icon2').removeClass("fa-caret-right");
-    });
-
-    $('#subStudyPlanMenuId').on("hide.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu2", "hide");
-        $('#icon2').toggleClass("fa-caret-right fa-caret-down");
-    });
-
-    const mainMenu2 = sessionStorage.getItem("mainMenu2");
-
-    if (mainMenu2 == "show") {
-        $('#subStudyPlanMenuId').collapse('show');
-    } else {
-        $('#subStudyPlanMenuId').collapse('hide');
-    }
-
-    /** ------------------ Menu 3 ------------------ */
-    $('#subSkillMapMenuId').on("shown.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu3", "show");
-        $('#icon3').addClass("fa-caret-down");
-        $('#icon3').removeClass("fa-caret-right");
-    });
-
-    $('#subSkillMapMenuId').on("hide.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu3", "hide");
-        $('#icon3').toggleClass("fa-caret-right fa-caret-down");
-    });
-
-    const mainMenu3 = sessionStorage.getItem("mainMenu3");
-
-    if (mainMenu3 == "show") {
-        $('#subSkillMapMenuId').collapse('show');
-    } else {
-        $('#subSkillMapMenuId').collapse('hide');
-    }
-
-    /** ------------------ Menu 4 ------------------ */
-    $('#submenu5sId').on("shown.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu4", "show");
-        $('#icon4').addClass("fa-caret-down");
-        $('#icon4').removeClass("fa-caret-right");
-    });
-
-    $('#submenu5sId').on("hide.bs.collapse", function () {
-        sessionStorage.setItem("mainMenu4", "hide");
-        $('#icon4').toggleClass("fa-caret-right fa-caret-down");
-    });
-
-    const mainMenu4 = sessionStorage.getItem("mainMenu4");
-
-    if (mainMenu4 == "show") {
-        $('#submenu5sId').collapse('show');
-    } else {
-        $('#submenu5sId').collapse('hide');
-    }
-
-    $('#logoutBtn').click(function() {
-        sessionStorage.removeItem("mainMenu1");
-        sessionStorage.removeItem("mainMenu2");
-        sessionStorage.removeItem("mainMenu3");
-        sessionStorage.removeItem("mainMenu4");
-    });
-});
-
 /*======================
  * RELOAD DATA TEAM
  =======================*/
@@ -762,3 +624,80 @@ $(function(){
     };
     runAjax(url, method, data, doneCallback, failCallback);
 }
+
+/** ------------------
+ *    Handle click on sidebar
+ --------------------- */
+window.toggleMenu = function(order) {
+    // Trigger toggle menu
+    $('body').off().on('click','#mainMenu' + order, function() {
+        $('#subMenu' + order).collapse('toggle');
+    })
+
+    // Check if sub menu is showing, add status to storage and change icon
+    $('#subMenu' + order).one("shown.bs.collapse", function () {
+        handleToggle('show', order);
+    });
+
+    // Check if sub menu is hiding, add status to storage and change icon
+    $('#subMenu' + order).one("hide.bs.collapse", function () {
+        handleToggle('hide', order);
+    });
+}
+
+/** ------------------
+ *    Handle toggle/collapse event
+ --------------------- */
+window.handleToggle = function(status, order) {
+    if (status == 'show') {
+        sessionStorage.setItem("mainMenu" + order, "show");
+        $('#icon' + order).addClass("fa-caret-down");
+        $('#icon' + order).removeClass("fa-caret-right");
+    }
+    else {
+        sessionStorage.setItem("mainMenu" + order, "hide");
+        $('#icon' + order).addClass("fa-caret-right");
+        $('#icon' + order).removeClass("fa-caret-down");
+    }
+}
+
+
+/* ==============================
+jQuery
+============================== */
+$(function(){
+    // Check and display show/hide status of each main menu when refresh page
+    $('.menu').each((i, ele) => {
+        if (sessionStorage.getItem((ele.id)) == "show") {
+            $('#subMenu' + (i+1)).collapse('show');
+        } else {
+            $('#subMenu' + (i+1)).collapse('hide');
+        }
+        // Check if sub menu is showing, add status to storage and change icon
+        $('#subMenu' + (i+1)).one("shown.bs.collapse", function () {
+            handleToggle('show', (i+1));
+        });
+
+        // Check if sub menu is hiding, add status to storage and change icon
+        $('#subMenu' + (i+1)).one("hide.bs.collapse", function () {
+            handleToggle('hide', (i+1));
+        });
+    });
+
+    // Handle department href link
+    $('#subDeptMenu').click(function(e) {
+        if ($('#subDeptMenu').hasClass('active')) {
+            e.preventDefault();
+            sessionStorage.setItem("mainMenu1", "show");
+            $('#extraSubDeptMenuId').collapse('toggle');
+        }
+        sessionStorage.setItem("mainMenu1", "show");
+    })
+
+    // Remove all sessionStorage data when logout
+    $('#logoutBtn').click(function() {
+        for (const key in sessionStorage) {
+            sessionStorage.removeItem(key);
+        }
+    });
+});
