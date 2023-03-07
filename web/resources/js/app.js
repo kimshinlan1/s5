@@ -728,11 +728,7 @@ $(function(){
         // SHOW ERRORS
         showError(jqXHR, 'team', 'teamEditDialog', 'errorDialog', 'teamForm');
     };
-    let alwaysCallback = function () {
-        // HIDE LOADING
-        hideLoading();
-    }
-    runAjax(url, method, data, doneCallback, failCallback, alwaysCallback);
+    runAjax(url, method, data, doneCallback, failCallback);
 }
 
 /*======================
@@ -764,9 +760,5 @@ $(function(){
         // SHOW ERRORS
         showError(jqXHR, 'employee', 'employeeAddDialog', 'errorDialog', 'employeeForm');
     };
-    let alwaysCallback = function () {
-        // HIDE LOADING
-        hideLoading();
-    }
-    runAjax(url, method, data, doneCallback, failCallback, alwaysCallback);
+    runAjax(url, method, data, doneCallback, failCallback);
 }
