@@ -263,7 +263,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
         $inspection = Inspection::create(
             [
                 'team_id' => $teamId,
-                'inspection_date' => date_create()->format('Y-m-d H:i:s'),
+                'inspection_date' => null,
                 'avg_point' => "1.0|1.0|1.0|1.0|1.0",
             ]
         );
