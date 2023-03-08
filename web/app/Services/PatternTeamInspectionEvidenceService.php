@@ -341,7 +341,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
             'block_id' => $blockId,
             'inspection_id' => $inspectionId,
             'img_name' => $fileName,
-            'img_path' => $imgPath .$fileName,
+            'img_path' => '/' . $imgPath .$fileName,
             'is_before' => $isBefore,
         ];
 
