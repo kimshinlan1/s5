@@ -377,9 +377,18 @@ function handleConfirmOkBtn(isSaveMode) {
      * Handle hide event for the evidence dialog
      ---------------------- */
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
+        let count = 0;
         let inspectionId = $(openEvidenceBtn).attr('data-id');
         let postfix = $('#registeredInspectionId').val();
-        $('#countEvidence_' + inspectionId).text($('.item-count').length + postfix);
+        $('.evidences-body').find('.count-block').each (function(i,ele) {
+            let isBeforeNotEmpty = $('#' + ele.id).find('#img_before' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
+            let isAfterNotEmpty = $('#' + ele.id).find('#img_after' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
+            if (isBeforeNotEmpty && isAfterNotEmpty) {
+                count++;
+            }
+        })
+
+        $('#countEvidence_' + inspectionId).text(count + postfix);
         $("#patternEvidenceDialog").find(".evidences-body").html('');
     });
 
