@@ -150,8 +150,7 @@ function loadEvidence(inspection_id) {
         $("#patternEvidenceDialog .evidences-body").append(data);
         $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val(inspection_id);
         if ($('.evidences-body').find('.count-block').length == 0) {
-            let noDataMsg = $('#messageNoData').val()
-            $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
+            addBlock();
         }
     };
 
