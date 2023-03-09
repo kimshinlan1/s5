@@ -81,7 +81,7 @@ window.getUserTableList = function (params) {
  --------------------- */
 window.customCell = function (_value, row, _index) {
     let deptList = row['company']['departments'];
-    let menu = '<div id="subMenu' + _index + '" class="collapse">';
+    let menu = '<div id="subDeptMenu' + _index + '" class="collapse">';
     let tagString = '';
     let mouseover = `onmouseover="this.style.backgroundColor='#C4E7CC'"`;
     let mouseout = `onmouseout="this.style.backgroundColor='unset'; this.style.color='black';"`;
@@ -102,7 +102,7 @@ window.customCell = function (_value, row, _index) {
  --------------------- */
 window.showDeptList = function(index) {
     $('body').off().on('click', '#alinkId' + index, function() {
-        $('#subMenu' + index).collapse('toggle');
+        $('#subDeptMenu' + index).collapse('toggle');
         $('#arrow' + index).toggleClass("fa-caret-right fa-caret-down");
     })
 }
