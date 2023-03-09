@@ -190,7 +190,7 @@ and (orientation : landscape)
 }
 
 .modal-backdrop.show {
-    opacity: 0.9;
+    opacity: 0.9 !important;
 }
 
 #modalHeader {

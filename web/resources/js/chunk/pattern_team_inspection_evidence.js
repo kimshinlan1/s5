@@ -273,6 +273,7 @@ function removeAlbum(albumID, blockID, isBefore) {
 function hideAllModals() {
     $("#confirmDialog3").modal('hide');
     $('#patternEvidenceDialog').modal('hide');
+    $('body').removeClass('modal-open');
     // Fix conflict hen use multi modal
     $("body").find(".modal").each(function(i,e) {
         $(e).hide();
@@ -377,19 +378,21 @@ function handleConfirmOkBtn(isSaveMode) {
      * Handle hide event for the evidence dialog
      ---------------------- */
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
-        let count = 0;
-        let inspectionId = $(openEvidenceBtn).attr('data-id');
-        let postfix = $('#registeredInspectionId').val();
-        $('.evidences-body').find('.count-block').each (function(i,ele) {
-            let isBeforeNotEmpty = $('#' + ele.id).find('#img_before' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
-            let isAfterNotEmpty = $('#' + ele.id).find('#img_after' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
-            if (isBeforeNotEmpty && isAfterNotEmpty) {
-                count++;
-            }
-        })
+        setTimeout(function() {
+            let count = 0;
+            let inspectionId = $(openEvidenceBtn).attr('data-id');
+            let postfix = $('#registeredInspectionId').val();
+            $('.evidences-body').find('.count-block').each (function(i,ele) {
+                let isBeforeNotEmpty = $('#' + ele.id).find('#img_before' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
+                let isAfterNotEmpty = $('#' + ele.id).find('#img_after' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
+                if (isBeforeNotEmpty && isAfterNotEmpty) {
+                    count++;
+                }
+            })
 
-        $('#countEvidence_' + inspectionId).text(count + postfix);
-        $("#patternEvidenceDialog").find(".evidences-body").html('');
+            $('#countEvidence_' + inspectionId).text(count + postfix);
+            $("#patternEvidenceDialog").find(".evidences-body").html('');
+        }, 10);
     });
 
     /*---------------------
@@ -431,7 +434,7 @@ function handleConfirmOkBtn(isSaveMode) {
      * Get current clicked evidence link selector
      * Set common value here
      ---------------------- */
-    $("body").on('click','#openEvidenceBtn', function(e) {
+    $("body").off('click').on('click','#openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
         confirmMsg = $('#confirmDeleteMsgId').val();
         formData = new FormData()
