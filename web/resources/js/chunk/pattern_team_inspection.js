@@ -187,6 +187,7 @@ function validateAndGetData() {
 
     $('input[id^=hidInspectionId]').each(function() {
         let id = $(this).val();
+        let count_evidence = $('#countEvidence_'+id).attr('data-count')
         let inspection_date = "";
         let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
         if (getdate && getdate instanceof Date) {
@@ -210,6 +211,7 @@ function validateAndGetData() {
                 'inspection_id': id,
                 'inspection_date': inspection_date,
                 'team_id': teamId,
+                'count_evidence': count_evidence,
             };
             inspection['info'] = info;
 
@@ -501,6 +503,7 @@ function sendDataWithoutSaveDB() {
     let requests = [];
     $('input[id^=hidInspectionId]').each(function() {
         let id = $(this).val();
+        let count_evidence = $('#countEvidence_'+id).attr('data-count')
         let inspection_date = "";
         let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
         if (getdate && getdate instanceof Date) {
@@ -520,7 +523,7 @@ function sendDataWithoutSaveDB() {
               'location_id': location_id,
               '5s': method,
               'point_value': point_value,
-              'count_evidence': '',
+              'count_evidence': count_evidence,
             };
             // Add inspection to request
             requests.push(inspection);

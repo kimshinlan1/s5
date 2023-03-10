@@ -218,6 +218,7 @@ class PatternTeamInspectionService extends BaseService
                         'team_id' => $data['info']['team_id'],
                         'inspection_date' => $data['info']['inspection_date'],
                         'avg_point' => $points,
+                        'uploaded_evidence_block_number' => $data['info']['count_evidence'],
                     ]
                 );
                 $inspectionId = $inspectionId->id;
