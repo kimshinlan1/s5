@@ -626,25 +626,51 @@ window.removeExistId = function(arr, id) {
 }
 
 /** ------------------
- *    Handle click on sidebar
+ *    Handle click on main menu
  --------------------- */
 window.toggleMenu = function(order) {
-    // Trigger toggle menu
-    $('body').off().on('click','#mainMenu' + order, function() {
-        $('#subMenu' + order).collapse('toggle');
-    })
-
     // Check if sub menu is showing, add status to storage and change icon
-    $('#subMenu' + order).one("show.bs.collapse", function () {
-        $('body').find('#subMenu' + order).addClass('show').removeClass('in');
+    $('#subMenu' + order).off('show.bs.collapse').on("show.bs.collapse", function () {
         handleToggle('show', order);
     });
 
     // Check if sub menu is hiding, add status to storage and change icon
-    $('#subMenu' + order).one("hide.bs.collapse", function () {
-        $('body').find('#subMenu' + order).removeClass('show').removeClass('in');
+    $('#subMenu' + order).off('hide.bs.collapse').on("hide.bs.collapse", function (e) {
         handleToggle('hide', order);
+        if (!$('#extraSubDeptMenuId').hasClass('show')) {
+            e.stopPropagation();
+        }
     });
+
+    // Trigger toggle menu
+    $('body').off().on('click','#mainMenu' + order, function() {
+        $('#subMenu' + order).collapse('toggle');
+    })
+}
+
+/** ------------------
+ *    Handle click on 部門管理 menu
+ --------------------- */
+window.toggleDeptMenu = function() {
+    // Check if sub menu is showing, add status to storage and change icon
+    $('#extraSubDeptMenuId').off('show.bs.collapse').on("show.bs.collapse", function (ev) {
+        ev.stopPropagation();
+        sessionStorage.setItem("deptMenu", "show");
+        $('body').find('#extraSubDeptMenuId').addClass('show').removeClass('in');
+        $('body').find('#subIcon1').addClass("fa-caret-down");
+        $('body').find('#subIcon1').removeClass("fa-caret-right");
+    });
+
+    // Check if sub menu is hiding, add status to storage and change icon
+    $('#extraSubDeptMenuId').off('hide.bs.collapse').on("hide.bs.collapse", function (e) {
+        e.stopPropagation();
+        sessionStorage.setItem("deptMenu", "hide");
+        $('body').find('#extraSubDeptMenuId').removeClass('show').removeClass('in');
+        $('body').find('#subIcon1').addClass("fa-caret-right");
+        $('body').find('#subIcon1').removeClass("fa-caret-down");
+    });
+    sessionStorage.setItem("mainMenu1", "show");
+    $('#extraSubDeptMenuId').collapse('toggle');
 }
 
 /** ------------------
@@ -653,16 +679,17 @@ window.toggleMenu = function(order) {
 window.handleToggle = function(status, order) {
     if (status == 'show') {
         sessionStorage.setItem("mainMenu" + order, "show");
+        $('body').find('#subMenu' + order).addClass('show').removeClass('in');
         $('#icon' + order).addClass("fa-caret-down");
         $('#icon' + order).removeClass("fa-caret-right");
     }
     else {
         sessionStorage.setItem("mainMenu" + order, "hide");
+        $('body').find('#subMenu' + order).removeClass('show').removeClass('in');
         $('#icon' + order).addClass("fa-caret-right");
         $('#icon' + order).removeClass("fa-caret-down");
     }
 }
-
 
 /* ==============================
 jQuery
@@ -670,55 +697,48 @@ jQuery
 $(function(){
     // Check and display show/hide status of each main menu when refresh page
     $('.menu').each((i, ele) => {
+        // Check if sub menu is showing, add status to storage and change icon
+        $('#subMenu' + (i+1)).off('show.bs.collapse').on("show.bs.collapse", function (e) {
+            if ($('#extraSubDeptMenuId').hasClass('show')) {
+                e.stopPropagation();
+            }
+            else {
+                handleToggle('show', (i+1));
+            }
+        });
+
+        // Check if sub menu is hiding, add status to storage and change icon
+        $('#subMenu' + (i+1)).off('hide.bs.collapse').on("hide.bs.collapse", function (e) {
+            if (!$('#extraSubDeptMenuId').hasClass('show')) {
+                e.stopPropagation();
+            }
+            else {
+                handleToggle('hide', (i+1));
+            }
+        });
+
         if (sessionStorage.getItem((ele.id)) == "show") {
             $('#subMenu' + (i+1)).collapse('show');
         } else {
             $('#subMenu' + (i+1)).collapse('hide');
         }
-        // Check if sub menu is showing, add status to storage and change icon
-        $('#subMenu' + (i+1)).one("show.bs.collapse", function () {
-            handleToggle('show', (i+1));
-        });
-
-        // Check if sub menu is hiding, add status to storage and change icon
-        $('#subMenu' + (i+1)).one("hide.bs.collapse", function () {
-            handleToggle('hide', (i+1));
-        });
     });
+
+    // Handle department href link
+    // $('body').on('click', '#subDeptMenu', function(ev) {
+    //     ev.stopPropagation();
+
+    // })
 
     if (sessionStorage.getItem("deptMenu") == "show") {
         $('#extraSubDeptMenuId').collapse('show');
+        $('body').find('#subIcon1').addClass("fa-caret-down");
+        $('body').find('#subIcon1').removeClass("fa-caret-right");
     } else {
         $('#extraSubDeptMenuId').collapse('hide');
+        $('body').find('#subIcon1').addClass("fa-caret-right");
+        $('body').find('#subIcon1').removeClass("fa-caret-down");
     }
-
-    // Handle department href link
-    $('body').on('click', '#subDeptMenu', function(e) {
-        if ($('#subDeptMenu').hasClass('active')) {
-
-            // Check if sub menu is showing, add status to storage and change icon
-            $('#extraSubDeptMenuId').one("show.bs.collapse", function () {
-                sessionStorage.setItem("deptMenu", "show");
-                $('body').find('#extraSubDeptMenuId').addClass('show').removeClass('in');
-                $('body').find('#subIcon1').addClass("fa-caret-down");
-                $('body').find('#subIcon1').removeClass("fa-caret-right");
-            });
-
-            // Check if sub menu is hiding, add status to storage and change icon
-            $('#extraSubDeptMenuId').one("hide.bs.collapse", function () {
-                sessionStorage.setItem("deptMenu", "hide");
-                $('body').find('#extraSubDeptMenuId').removeClass('show').removeClass('in');
-                $('body').find('#subIcon1').addClass("fa-caret-right");
-                $('body').find('#subIcon1').removeClass("fa-caret-down");
-            });
-
-            e.preventDefault();
-            sessionStorage.setItem("mainMenu1", "show");
-            $('#extraSubDeptMenuId').collapse('toggle');
-        }
-
-        sessionStorage.setItem("mainMenu1", "show");
-    })
 
     // Remove all sessionStorage data when logout
     $('#logoutBtn').click(function() {

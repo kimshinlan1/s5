@@ -13,10 +13,12 @@
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='users')active @endif" href="/users">{{ __('User_Management') }}</a>
             <a class="list-group-item list-group-item-action style-list @if(request()->path()==='company')active @endif" href="/company">{{ __('Company_Management') }}</a>
             @endif
-            <a id="subDeptMenu" data-toggle="collapse" aria-expanded="false" class="d-flex justify-content-between align-items-center list-group-item list-group-item-action style-list @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Management') }}
+            <a id="subDeptMenu" href="javascript:void(0);" onclick="event.stopPropagation(); toggleDeptMenu()" style="pointer-events: auto;" data-toggle="collapse" aria-expanded="false" class="d-flex justify-content-between align-items-center list-group-item list-group-item-action style-list">{{ __('Department_Management') }}
                 <i class="fa fa-caret-right" aria-hidden="true" id="subIcon1"></i>
             </a>
+
             <div id='extraSubDeptMenuId' class="collapse sidebar-submenu">
+                <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Menu') }}</a>
                 <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
                 <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
             </div>
@@ -25,7 +27,7 @@
         @endif
 
         <!-- Study Plan -->
-        <a id="mainMenu2" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(2)">
+        <a id="mainMenu2" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(2)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('TopPage_Study_Plan_Management') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon2"></i>
