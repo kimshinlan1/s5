@@ -338,7 +338,9 @@ function evidenceDialog(inspectionId) {
  * Calculate avg point 5S
  ************************/
 function calculateAvgPoint() {
+    // Get the form input element
     const formInput = document.getElementById('formFormsInput');
+    // Create arrays to store the sum and count of each inspection point for each inspection ID
     let sumS1 = [];
     let sumS2 = [];
     let sumS3 = [];
@@ -351,37 +353,46 @@ function calculateAvgPoint() {
     let countS4 = [];
     let countS5 = [];
 
+    // Loop through each element in the form input
     Array.from(formInput.elements).forEach(element => {
+        // Use the data-5s attribute to determine which inspection point the element represents
         switch (element.dataset['5s']) {
             case 's1':
+                // If it's an s1 point, add the value to the sum and increment the count for the corresponding inspection ID
                 sumS1[element.dataset['inspection_id']] = (sumS1[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                 countS1[element.dataset['inspection_id']] = (countS1[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                 break;
             case 's2':
+                // If it's an s2 point, add the value to the sum and increment the count for the corresponding inspection ID
                 sumS2[element.dataset['inspection_id']] = (sumS2[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                 countS2[element.dataset['inspection_id']] = (countS2[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                 break;
             case 's3':
+                // If it's an s3 point, add the value to the sum and increment the count for the corresponding inspection ID
                 sumS3[element.dataset['inspection_id']] = (sumS3[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                 countS3[element.dataset['inspection_id']] = (countS3[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                 break;
             case 's4':
+                // If it's an s4 point, add the value to the sum and increment the count for the corresponding inspection ID
                 sumS4[element.dataset['inspection_id']] = (sumS4[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                 countS4[element.dataset['inspection_id']] = (countS4[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                 break;
             case 's5':
+                // If it's an s5 point, add the value to the sum and increment the count for the corresponding inspection ID
                 sumS5[element.dataset['inspection_id']] = (sumS5[element.dataset['inspection_id']] ?? 0) +  Number($('#' + element.id).val());
                 countS5[element.dataset['inspection_id']] = (countS5[element.dataset['inspection_id']] ?? 0) + ((Number($('#' + element.id).val()) != 0) ? 1 : 0);
                 break;
         }
     });
-
+    // Initialize arrays to store the average score for each 5S category and inspection ID
     let avgS1 = [];
     let avgS2 = [];
     let avgS3 = [];
     let avgS4 = [];
     let avgS5 = [];
     let pointAvg = 0;
+
+    // Loop through each inspection ID and calculate the average score for each 5S category
     for (let key in sumS1) {
         pointAvg = 0;
         if (Number(countS1[key]) != 0) {
@@ -426,7 +437,11 @@ function calculateAvgPoint() {
         avgS5[key] = pointAvg.toFixed(1);
         $('#point_avg_5s_' + key).text(avgS5[key]);
     }
+
+    // Initialize an array to store the array of averages for each inspection ID
     let array5s = [];
+
+    // Loop through each inspection ID and create an array of the average scores for each 5S category
     for (let id_inspec of inspIds) {
         let arrayInspection = [];
 
@@ -438,6 +453,8 @@ function calculateAvgPoint() {
 
         array5s[id_inspec] = arrayInspection;
     }
+
+    // Return the array of arrays containing the average scores for each 5S category for each inspection ID
     return array5s;
 }
 
@@ -495,50 +512,71 @@ function createBarChart(arrayPoint) {
     RenderBarChart = new Chart(ctx, config);
 }
 
-/*****************************
- * Send data without saving db
- *****************************/
+/**************************************
+ * Send data without saving to database
+ **************************************/
 function sendDataWithoutSaveDB() {
-    // Get valid details
+    // Initialize an empty array to store inspection data
     let requests = [];
+
+    // Loop through all input elements with an ID that starts with "hidInspectionId"
     $('input[id^=hidInspectionId]').each(function() {
+        // Extract the inspection ID and the count of evidence for this inspection
         let id = $(this).val();
         let count_evidence = $('#countEvidence_'+id).attr('data-count')
+
+        // Get the inspection date from a datepicker input field and format it as "yy-mm-dd"
         let inspection_date = "";
         let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
         if (getdate && getdate instanceof Date) {
           inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
         }
+
+        // Extract the area ID
         let area_id = $("#hidAreaId").val();
+
+        // Loop through all input elements with an ID that starts with "hidLocationId_"
         $('input[id^=hidLocationId_]').each(function(_i, l) {
-          let location_id = $(l).val();
-          let area_location_index = $('#hidAreaLocationIndex_'+location_id).val();
-          $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(_k, e) {
-            let method = $(e).data('5s');
-            let point_value = $(e).find(":selected").val();
-            let inspection = {
-              'inspection_id': id,
-              'inspection_date': inspection_date,
-              'area_id': area_id,
-              'location_id': location_id,
-              '5s': method,
-              'point_value': point_value,
-              'count_evidence': count_evidence,
-            };
-            // Add inspection to request
-            requests.push(inspection);
-          });
+            // Extract the location ID and the area location index
+            let location_id = $(l).val();
+            let area_location_index = $('#hidAreaLocationIndex_'+location_id).val();
+
+            // Look for all select elements with an ID that starts with "selPointValue-" and includes the inspection ID and area location index
+            $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(_k, e) {
+                // Extract the method ("5s") and the selected value of the select element
+                let method = $(e).data('5s');
+                let point_value = $(e).find(":selected").val();
+
+                // Construct an object that includes all of the extracted data for this inspection
+                let inspection = {
+                    'inspection_id': id,
+                    'inspection_date': inspection_date,
+                    'area_id': area_id,
+                    'location_id': location_id,
+                    '5s': method,
+                    'point_value': point_value,
+                    'count_evidence': count_evidence,
+                };
+
+                // Add this inspection object to the requests array
+                requests.push(inspection);
+            });
         });
     });
+
+    // Return the requests array, which contains all of the inspection data
     return requests;
 }
 
 // Add column click
-// $("#btnAdd").click(function () {
 function addColumn() {
+    // Get the parameter data for the inspection
     let data = setParam();
+
+    // Get any inspection data that has already been entered and is currently being displayed
     let presentData = sendDataWithoutSaveDB();
-    // Load data
+
+    // Load inspection data for the new column, using the parameter data, the present data, and a mode of "new"
     loadInspectionData(data, MODE_NEW, presentData);
 }
 
