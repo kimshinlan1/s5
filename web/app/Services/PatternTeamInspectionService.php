@@ -104,14 +104,11 @@ class PatternTeamInspectionService extends BaseService
         ->select([
             "$table.inspection_id as inspection_id",
             'inspection.inspection_date as inspection_date',
+            'inspection.uploaded_evidence_block_number as count_evidence',
             'areas.id as area_id',
             "$table.location_id as location_id",
             "$table.point as 5s",
             "$table.point_value as point_value",
-
-            DB::raw("(SELECT count(inspection_images.id) FROM inspection_images
-            WHERE inspection_images.inspection_id = $table.inspection_id
-            ) as count_evidence")
         ])
         ->leftJoin('inspection', 'inspection.id', '=', "$table.inspection_id")
         ->leftJoin('locations', 'locations.id', '=', "$table.location_id")
