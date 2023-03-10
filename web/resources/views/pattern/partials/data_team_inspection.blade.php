@@ -1,4 +1,3 @@
-
 <script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script>
 <script type="text/javascript">
     var inspIds = {{ Js::from($inspectionIds ?? []) }};
@@ -17,7 +16,7 @@
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
             <td colspan="3" style="text-align: center">
-                <button style="font-size: 0.75rem; border: 0rem; border-radius: 6px;" type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
+                <input style="font-size: 0.75rem; border: 0rem; border-radius: 6px;" class="btn btn-primary" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: center">

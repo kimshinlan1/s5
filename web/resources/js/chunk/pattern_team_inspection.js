@@ -33,13 +33,13 @@ function setParam() {
  * Check mode: MODE_NEW = Add column, MODE_REMOVE_NEW = Remove column
  * data: departmentId, teamId
  ********************************************************************/
-function loadInspectionData(data, mode = '') {
+function loadInspectionData(data, mode = '', presentData = '') {
     showLoading();
     let params = {
         dept_id: data.dept_id,
         team_id: data.team_id,
+        present_data: {presentData}
     };
-
     let count = $('#hidCountInspection').val();
     if (mode == MODE_NEW) {
         params['new_total_column'] = parseInt(count) + 1;
@@ -48,7 +48,7 @@ function loadInspectionData(data, mode = '') {
     }
 
     let url = "/pattern_team_inspection/data";
-    let method = "GET";
+    let method = "POST";
 
     let doneCallback = function (datas, _textStatus, _jqXHR) {
         $("#content").html("");
@@ -493,6 +493,52 @@ function createBarChart(arrayPoint) {
     RenderBarChart = new Chart(ctx, config);
 }
 
+/*****************************
+ * Send data without saving db
+ *****************************/
+function sendDataWithoutSaveDB() {
+    // Get valid details
+    let requests = [];
+    $('input[id^=hidInspectionId]').each(function() {
+        let id = $(this).val();
+        let inspection_date = "";
+        let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
+        if (getdate && getdate instanceof Date) {
+          inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
+        }
+        let area_id = $("#hidAreaId").val();
+        $('input[id^=hidLocationId_]').each(function(_i, l) {
+          let location_id = $(l).val();
+          let area_location_index = $('#hidAreaLocationIndex_'+location_id).val();
+          $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(_k, e) {
+            let method = $(e).data('5s');
+            let point_value = $(e).find(":selected").val();
+            let inspection = {
+              'inspection_id': id,
+              'inspection_date': inspection_date,
+              'area_id': area_id,
+              'location_id': location_id,
+              '5s': method,
+              'point_value': point_value,
+              'count_evidence': '',
+            };
+            // Add inspection to request
+            requests.push(inspection);
+          });
+        });
+    });
+    return requests;
+}
+
+// Add column click
+// $("#btnAdd").click(function () {
+function addColumn() {
+    let data = setParam();
+    let presentData = sendDataWithoutSaveDB();
+    // Load data
+    loadInspectionData(data, MODE_NEW, presentData);
+}
+
 //********************//---DOCUMENT---CREATE---CHART---END---//********************//
 //*********************************************************************************//
 
@@ -549,13 +595,6 @@ $(function () {
     $("#modalSaveInspectionData").on('hidden.bs.modal', function (e) {
         $("#modalSaveInspectionData").removeClass("show");
     })
-
-    // Add column click
-    $("#btnAdd").click(function () {
-        let data = setParam();
-        // Load data
-        loadInspectionData(data, MODE_NEW);
-    });
 
     if ($("#hidTeamId").val()) {
         let data = setParam();
