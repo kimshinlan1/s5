@@ -16,8 +16,8 @@
     <table id="tableDetailInspection" class="table table-bordered">
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
-            <td colspan="3">
-
+            <td colspan="3" style="text-align: center">
+                <button style="font-size: 0.75rem; border: 0rem; border-radius: 6px;" type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: center">
@@ -82,9 +82,9 @@
 
         {{-- 平均 --}}
         <tr>
-            <td rowspan="5" style="width: 20px">平均</td>
+            <td rowspan="5" style="width: 20px; text-align: center;">平均</td>
             <td style="width: 30px; text-align: center;">整理</td>
-            <td style="width: 30px">1S</td>
+            <td style="width: 30px; text-align: center;">1S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_1s_{{ $inspectionId }}">0</label>
@@ -93,7 +93,7 @@
         </tr>
         <tr>
             <td style="text-align: center;">整頓</td>
-            <td>2S</td>
+            <td style="text-align: center;">2S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_2s_{{ $inspectionId }}">0</label>
@@ -102,7 +102,7 @@
         </tr>
         <tr>
             <td style="text-align: center;">清掃</td>
-            <td>3S</td>
+            <td style="text-align: center;">3S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_3s_{{ $inspectionId }}">0</label>
@@ -111,7 +111,7 @@
         </tr>
         <tr>
             <td style="text-align: center;">清潔</td>
-            <td>4S</td>
+            <td style="text-align: center;">4S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_4s_{{ $inspectionId }}">0</label>
@@ -120,7 +120,7 @@
         </tr>
         <tr>
             <td style="text-align: center;">躾</td>
-            <td>5S</td>
+            <td style="text-align: center;">5S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_5s_{{ $inspectionId }}">0</label>
@@ -130,9 +130,9 @@
 
         {{-- 点検実施日 --}}
         <tr>
-            <td rowspan="2">No</td>
+            <td rowspan="2" style="text-align: center;">No</td>
             <td rowspan="2" style="text-align: center;">点検箇所</td>
-            <td rowspan="2">ポイント</td>
+            <td rowspan="2" style="text-align: center;">ポイント</td>
             @for ($i = 0; $i < $countInspection; $i++)
             <td style="text-align: center;">
                 <strong>点検実施日</strong>
@@ -173,7 +173,7 @@
 
                 {{-- Area --}}
                 @if (!in_array($row['area_id'], $areas))
-                <td rowspan="{{ $row['area_rowspan'] }}" class="area">
+                <td rowspan="{{ $row['area_rowspan'] }}" class="area" style="text-align: center">
                     {{ $row['area_name'] }}
                 </td>
                 <?php $areas[] = $row['area_id'] ?>
@@ -184,7 +184,7 @@
 
                 {{-- Locations --}}
                 @if (!in_array($locaitonIdToCheck, $locations))
-                <td rowspan="{{ $row['location_rowspan'] }}" class="location">
+                <td rowspan="{{ $row['location_rowspan'] }}" class="location" style="text-align: center">
                     {{ $row['location_name'] }}
                 </td>
                 <?php $locations[] = $locaitonIdToCheck ?>
@@ -195,7 +195,7 @@
                 @endif
 
                 {{-- Point --}}
-                <td id="level_tooltip">
+                <td id="level_tooltip" style="text-align: center">
                     {{ Constant::NAME_5S[$row['5s']] }}
                 </td>
                 {{-- Point Value --}}
