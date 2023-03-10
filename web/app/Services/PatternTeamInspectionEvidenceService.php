@@ -264,6 +264,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
             [
                 'team_id' => $teamId,
                 'inspection_date' => null,
+                'uploaded_evidence_block_number' => '0',
                 'avg_point' => "1.0|1.0|1.0|1.0|1.0",
             ]
         );
@@ -349,5 +350,29 @@ class PatternTeamInspectionEvidenceService extends BaseService
         $res = $res->save();
 
         // return $res
+    }
+
+    /**
+     * Update number of evidences in inspection table
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function updateEvidenceCount(Request $request)
+    {
+        $count = $request->get('count');
+        $inspectionId = $request->get('inspectionId');
+        $inspection = Inspection::findOrFail($inspectionId);
+        if ($inspection) {
+            $inspection->update([
+                'uploaded_evidence_block_number' => $count,
+            ]);
+            $inspection->save();
+        } else {
+            return [
+                'invalid' => true,
+            ];
+        }
     }
 }

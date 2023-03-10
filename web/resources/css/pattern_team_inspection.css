@@ -36,3 +36,7 @@
 .toast.show {
     opacity: 1;
 }
+
+.modal-backdrop {
+    opacity: 0.5 !important;
+}

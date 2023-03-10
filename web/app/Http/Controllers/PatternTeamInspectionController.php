@@ -248,4 +248,16 @@ class PatternTeamInspectionController extends Controller
         }
         return $data;
     }
+
+     /**
+     * Update number of evidences in inspection table
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return object
+     */
+    public function updateEvidenceCount(Request $request)
+    {
+        return $this->evidenceService->updateEvidenceCount($request);
+    }
 }
