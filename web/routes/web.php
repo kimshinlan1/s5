@@ -142,6 +142,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_team_inspection/evidence', [PatternTeamInspectionController::class, 'getEvidence']);
         Route::get('/pattern_team_inspection/{id}', [PatternTeamInspectionController::class, 'edit']);
         Route::post('/pattern_team_inspection/save', [PatternTeamInspectionController::class, 'saveInspection']);
+        Route::post('/pattern_team_inspection/update_count_evidence', [PatternTeamInspectionController::class, 'updateEvidenceCount']);
         Route::delete('/pattern_team_inspection/destroy/{id}', [PatternTeamInspectionController::class, 'destroy']);
         Route::get('/pattern_team_inspection/evidence/addblock', [PatternTeamInspectionController::class, 'addBlock']);
         Route::delete('/pattern_team_inspection/evidence/{id}', [PatternTeamInspectionController::class, 'removeBlock']);

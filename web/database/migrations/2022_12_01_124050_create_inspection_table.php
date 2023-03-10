@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('team_id');
             $table->string('avg_point', 50)->nullable();
+            $table->integer('uploaded_evidence_block_number');
             $table->timestamp('inspection_date')->nullable();
             $table->timestamps();
         });

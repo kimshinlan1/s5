@@ -287,6 +287,21 @@ function hideAllModals() {
     })
 }
 
+/*---------------------
+* Get Count Evidence
+---------------------- */
+function getCountEvidence() {
+    let count = 0;
+    $('.evidences-body').find('.count-block').each (function(i,ele) {
+        let isBeforeNotEmpty = $('#' + ele.id).find('#img_before' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
+        let isAfterNotEmpty = $('#' + ele.id).find('#img_after' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
+        if (isBeforeNotEmpty && isAfterNotEmpty) {
+            count++;
+        }
+    })
+    return count;
+}
+
 /**
  * Handle click OK button on confirmmation dialog. There are 2 cases: close dialog case and save case
  *
@@ -379,19 +394,31 @@ function handleConfirmOkBtn(isSaveMode) {
      ---------------------- */
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         setTimeout(function() {
-            let count = 0;
             let inspectionId = $(openEvidenceBtn).attr('data-id');
+            let count = getCountEvidence();
             let postfix = $('#registeredInspectionId').val();
-            $('.evidences-body').find('.count-block').each (function(i,ele) {
-                let isBeforeNotEmpty = $('#' + ele.id).find('#img_before' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
-                let isAfterNotEmpty = $('#' + ele.id).find('#img_after' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
-                if (isBeforeNotEmpty && isAfterNotEmpty) {
-                    count++;
-                }
-            })
 
             $('#countEvidence_' + inspectionId).text(count + postfix);
             $("#patternEvidenceDialog").find(".evidences-body").html('');
+            $('#countEvidence_' + inspectionId).attr('data-count', count);
+
+
+            let params = {
+                count : count,
+                inspectionId : inspectionId,
+            };
+
+            let url = "/pattern_team_inspection/update_count_evidence";
+            let method = "POST";
+
+            let doneCallback = function (_data, _textStatus, _jqXHR) {
+            };
+
+            let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+                failAjax(jqXHR, _textStatus, _errorThrown);
+            };
+
+            runAjax(url, method, params, doneCallback, failCallback);
         }, 10);
     });
 
