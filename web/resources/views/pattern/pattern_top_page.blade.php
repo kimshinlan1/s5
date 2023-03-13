@@ -36,6 +36,8 @@
 <div id="topPageChart">
 
 </div>
+@include('pattern.partials.evidence_dialog')
+@include('layouts.confirm')
 
     {{-- @include('pattern.pattern_top_page_table') --}}
 

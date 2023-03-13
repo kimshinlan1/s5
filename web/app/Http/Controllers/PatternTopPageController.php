@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
+use App\Models\Department;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
 use App\Services\DepartmentService;
@@ -54,13 +55,16 @@ class PatternTopPageController extends Controller
 
 
         foreach ($deptList as $key => $dept) {
+            $deptPatternId = Department::find($dept['id'])->dept_pattern_id;
+            $locationIds = $this->service->getLocationsByDeptPattern($deptPatternId);
             // Build struture
             $inspectionData[$key] = [
                 'dept_id' => $dept['id'],
                 'dept_no' => $dept['no'],
                 'dept_name' => $dept['name'],
                 'dept_avgPoint' => '',
-                'teams' => []
+                'teams' => [],
+                'locationIds' => $locationIds
             ];
 
             // Get inspection from team

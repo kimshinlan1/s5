@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Area;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,5 +50,18 @@ class BaseService
         $data = $this->model::find($id);
         $data->delete();
         return $data;
+    }
+
+    /**
+     * Get array of location ids by department Id
+     *
+     * @param  int  $deptPatternId
+     * @return array
+     */
+    public function getLocationsByDeptPattern($deptPatternId)
+    {
+        $areaIds = Area::where('dept_pattern_id', $deptPatternId)->distinct()->pluck('id')->toArray();
+        $locationIds = Location::whereIn('area_id', $areaIds)->distinct()->pluck('id')->toArray();
+        return $locationIds;
     }
 }

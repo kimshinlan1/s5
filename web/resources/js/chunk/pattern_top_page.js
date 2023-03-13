@@ -203,5 +203,4 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
-
 });

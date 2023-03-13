@@ -13,6 +13,7 @@
 
 @section('sidebar')
     @include('layouts.manage_sidebar')
+    {{-- @include('layouts.success') --}}
 @endsection
 
 @section('content')
@@ -25,22 +26,6 @@
 @if (!$teamId)
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ __('TeamInspection_Input') }}</div>
-
-    <!-- My Toast -->
-    <div class="toast hide align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
-        <div class="d-flex">
-            <div class="toast-body">
-                {{ __('Message_Save_Success') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast hide align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast2">
-        <div class="d-flex">
-            <div class="toast-body">
-                {{ __('Message_Delete_Success') }}
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="d-flex justify-content-start mt-1" style="width: 55%;">
@@ -62,22 +47,6 @@
 @else
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ $teamName }}{{ __('TeamInspection_5S_Level_Transition') }}</div>
-
-    <!-- My Toast -->
-    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
-        <div class="d-flex">
-            <div class="toast-body">
-                {{ __('Message_Save_Success') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast2">
-        <div class="d-flex">
-            <div class="toast-body">
-                {{ __('Message_Delete_Success') }}
-            </div>
-        </div>
-    </div>
 </div>
 @endif
 <div><br/></div>

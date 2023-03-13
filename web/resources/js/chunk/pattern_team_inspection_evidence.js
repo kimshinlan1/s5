@@ -79,7 +79,7 @@ function addBlock() {
     let params = {
         inspectionId: inspectionId,
         locationArr: locationArr,
-        teamId: $('#selectTeamList').val()
+        teamId: $('#selectTeamList').val() ? $('#selectTeamList').val() : $('#hidTeamId').val()
     };
     let url = "/pattern_team_inspection/evidence/addblock";
     let method = "GET";
@@ -132,7 +132,7 @@ function deleteBlock(blockId) {
 }
 
 /*---------------------
-* Load data
+* Load Evidence
 ---------------------- */
 function loadEvidence(inspection_id) {
     // showLoading();
@@ -400,8 +400,21 @@ function handleConfirmOkBtn(isSaveMode) {
 
             $('#countEvidence_' + inspectionId).text(count + postfix);
             $("#patternEvidenceDialog").find(".evidences-body").html('');
-            $('#countEvidence_' + inspectionId).attr('data-count', count);
+            if ($('#countEvidence_' + inspectionId).length > 0) $('#countEvidence_' + inspectionId).attr('data-count', count);
 
+            // Disable open evidence button in Top Page if there is no evidence
+            if ($('#openEvidenceBtn1').length > 0 && count == 0) {
+                $('#openEvidenceBtn1').prop("disabled", true);
+                $('#openEvidenceBtn1').removeClass("btn-evidence");
+                $('#openEvidenceBtn1').addClass("btn-secondary");
+            }
+
+            // Disable open evidence button in Top Page if there is at least 1 evidence
+            if ($('#openEvidenceBtn1').length > 0 && count > 0) {
+                $('#openEvidenceBtn1').prop("disabled", false);
+                $('#openEvidenceBtn1').removeClass("btn-secondary");
+                $('#openEvidenceBtn1').addClass("btn-evidence");
+            }
 
             let params = {
                 count : count,
@@ -412,6 +425,7 @@ function handleConfirmOkBtn(isSaveMode) {
             let method = "POST";
 
             let doneCallback = function (_data, _textStatus, _jqXHR) {
+
             };
 
             let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -461,12 +475,25 @@ function handleConfirmOkBtn(isSaveMode) {
      * Get current clicked evidence link selector
      * Set common value here
      ---------------------- */
-    $("body").off('click').on('click','#openEvidenceBtn', function(e) {
+    $("body").on('click','#openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
         confirmMsg = $('#confirmDeleteMsgId').val();
         formData = new FormData()
     })
 
+    /*---------------------
+     * Get current clicked evidence link selector
+     * Set common value here
+     ---------------------- */
+    $("body").on('click','#openEvidenceBtn1', function(e) {
+        openEvidenceBtn = e.currentTarget;
+        confirmMsg = $('#confirmDeleteMsgId').val();
+        formData = new FormData()
+    })
+
+    /*---------------------
+     * Handle close evidence dialog button
+     ---------------------- */
     $("body #patternEvidenceDialog").find('#cancelEvidenceBtnId').click(function () {
         if ($("[class*='file_']").length > 0) {
             $("#confirmDialog3").modal('show');
@@ -478,6 +505,9 @@ function handleConfirmOkBtn(isSaveMode) {
         }
     });
 
+    /*---------------------
+     * Handle save button in evidence dialog
+     ---------------------- */
     $("body #patternEvidenceDialog").find('#btnEvidenceSave').click(function () {
         if ($('.evidences-body').find('.count-block').length > 0) {
             $("#confirmDialog3").modal('show');
@@ -486,6 +516,9 @@ function handleConfirmOkBtn(isSaveMode) {
         }
     });
 
+    /*---------------------
+     * Handle OK button in confirmation dialog
+     ---------------------- */
     $("body #confirmDialog3").find('#okBtn').click(function (e) {
         // Check add or close dialog mode
         let isSaveMode = $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode') == "true" ? true : false;
