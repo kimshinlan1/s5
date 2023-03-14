@@ -274,7 +274,7 @@ window.openEditDeptPattern = function(id) {
    if (checklistId.length != 0) {
        window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&patternId=' + selectedPatId + '&pageDept=1' + '&targetDept=' + id;
    } else {
-       $('.error-messages').text($('#messageNoSelectedData').val());
+       $('.error-messages').text($('#messageNoSelectedPattern').val());
        $('#errorDialog').modal('show');
    }
 }
