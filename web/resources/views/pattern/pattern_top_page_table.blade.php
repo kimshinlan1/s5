@@ -33,11 +33,11 @@ $width_data = '250px';
                 </tr>
 
                 {{-- Bar Chart --}}
-                <tr>
+                {{-- <tr>
                     <td colspan="{{ $countInspection }}">
                         <canvas class="barChart" style="width: 10px; height: 10px;" id="barchart_dept_{{ $inspection['dept_id'] }}"></canvas>
                     </td>
-                </tr>
+                </tr> --}}
             </table>
 
             <fieldset class="form-group border border-collapse" id="fiestSetId">
@@ -86,13 +86,13 @@ $width_data = '250px';
                             </tr>
 
                             {{-- Bar Chart --}}
-                            <tr class="rows"
+                            {{-- <tr class="rows"
                                 id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart"
                                 style="display: none; border-bottom-color: transparent;">
                                 <td colspan="{{ $countInspection }}">
                                     <canvas class="barChart" style="width: 10px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
                                 </td>
-                            </tr>
+                            </tr> --}}
 
                             {{-- 改善結果を見る --}}
                             <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-info"

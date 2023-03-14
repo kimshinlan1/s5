@@ -42,13 +42,13 @@
         </tr>
 
         {{-- Bar Chart --}}
-        <tr style="height: 220px; max-height:220px; border-color: transparent;">
+        {{-- <tr style="height: 220px; max-height:220px; border-color: transparent;">
             <td colspan="3" class="title-chart" style="vertical-align: middle;">
             </td>
             <td style="padding: 0px;" colspan="{{ $countInspection }}">
                 <canvas id="myBarChart" class="myBarChart" height= "220px"></canvas>
             </td>
-        </tr>
+        </tr> --}}
 
         {{-- 改善結果を見る --}}
         <tr class="tr-row-evidence">
