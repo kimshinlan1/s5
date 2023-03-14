@@ -38,9 +38,9 @@ function uploadFile(input, block, is_before, albumId) {
                     $('#img_after' + block).children('img').remove();
                     fileId = "file_after_block" + block + "_" + (++countAfter);
                 }
-
+                let deleteImageTooltipMsg = $('#deleteMsgTooltipId').val();
                 let divClass = (index == input.files.length - 1) ? 'item active ' + fileId : 'item ' + fileId;
-                let img = '<div class="' + divClass + '" id="item' + fileId + '" data-id="' + fileId + '">' + '<button type="submit" class="close-image" id="removeImage' +
+                let img = '<div class="' + divClass + '" id="item' + fileId + '" data-id="' + fileId + '">' + '<button type="submit" title="' + deleteImageTooltipMsg + '" class="close-image" id="removeImage' +
                 fileId + '" onclick="removeImage(`' + fileId + '`,`'+albumId+'`,' +true+',`' + fileId + '`)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
                 '<img class="img-size" src="' + image.src + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + image.src + '`)"/></div>';
 
@@ -70,38 +70,45 @@ function addBlock() {
     // showLoading();
     let inspectionId = $(openEvidenceBtn).attr('data-id');
     let locationArr = [];
-    $('input[id^=hidLocationId_]').each(function(i, l) {
-        locationArr.push($(l).val());
-    })
-    if ($('#noDataId').length > 0) {
-        $('#noDataId').remove();
+    let mode5s = $('#mode5S').val();
+    if ($('.evidences-body').find('.count-block').length > 0 && mode5s == CONFIG.get('5S_MODE').FREE )  {
+       $('#errorDialog').modal('show');
+       $('#errorDialog').find('.error-messages').text($('#onlyOneBlockForFreeAccId').val());
     }
-    let params = {
-        inspectionId: inspectionId,
-        locationArr: locationArr,
-        teamId: $('#selectTeamList').val() ? $('#selectTeamList').val() : $('#hidTeamId').val()
-    };
-    let url = "/pattern_team_inspection/evidence/addblock";
-    let method = "GET";
-
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        $("#patternEvidenceDialog").find(".evidences-body").append(data);
-        let inspectionId = $('#hidNewInspectionId').val();
-        $(openEvidenceBtn).attr('data-id', inspectionId);
-        let time = $(openEvidenceBtn).attr('data-time');
-
-        $('input[id^=hidInspectionId_]').each(function(i, l) { //todo
-            if (i == time) {
-                $(l).val(inspectionId);
-                $(l).attr('id', 'hidInspectionId_'+inspectionId);
-            }
+    else {
+        $('input[id^=hidLocationId_]').each(function(i, l) {
+            locationArr.push($(l).val());
         })
-        $("#patternEvidenceDialog").find('.evidences-body').animate({
-            scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
-        }, 1500);
-    };
+        if ($('#noDataId').length > 0) {
+            $('#noDataId').remove();
+        }
+        let params = {
+            inspectionId: inspectionId,
+            locationArr: locationArr,
+            teamId: $('#selectTeamList').val() ? $('#selectTeamList').val() : $('#hidTeamId').val()
+        };
+        let url = "/pattern_team_inspection/evidence/addblock";
+        let method = "GET";
 
-    runAjax(url, method, params, doneCallback);
+        let doneCallback = function (data, _textStatus, _jqXHR) {
+            $("#patternEvidenceDialog").find(".evidences-body").append(data);
+            let inspectionId = $('#hidNewInspectionId').val();
+            $(openEvidenceBtn).attr('data-id', inspectionId);
+            let time = $(openEvidenceBtn).attr('data-time');
+
+            $('input[id^=hidInspectionId_]').each(function(i, l) { //todo
+                if (i == time) {
+                    $(l).val(inspectionId);
+                    $(l).attr('id', 'hidInspectionId_'+inspectionId);
+                }
+            })
+            $("#patternEvidenceDialog").find('.evidences-body').animate({
+                scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
+            }, 1500);
+        };
+
+        runAjax(url, method, params, doneCallback);
+    }
 }
 
 /*---------------------
@@ -395,6 +402,7 @@ function handleConfirmOkBtn(isSaveMode) {
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         setTimeout(function() {
             let inspectionId = $(openEvidenceBtn).attr('data-id');
+            let key = $(openEvidenceBtn).attr('data-time');
             let count = getCountEvidence();
             let postfix = $('#registeredInspectionId').val();
 
@@ -403,17 +411,17 @@ function handleConfirmOkBtn(isSaveMode) {
             if ($('#countEvidence_' + inspectionId).length > 0) $('#countEvidence_' + inspectionId).attr('data-count', count);
 
             // Disable open evidence button in Top Page if there is no evidence
-            if ($('#openEvidenceBtn1').length > 0 && count == 0) {
-                $('#openEvidenceBtn1').prop("disabled", true);
-                $('#openEvidenceBtn1').removeClass("btn-evidence");
-                $('#openEvidenceBtn1').addClass("btn-secondary");
+            if ($('#openEvidenceBtn' + key).length > 0 && count == 0) {
+                $('#openEvidenceBtn' + key).prop("disabled", true);
+                $('#openEvidenceBtn' + key).removeClass("btn-evidence");
+                $('#openEvidenceBtn' + key).addClass("btn-secondary");
             }
 
             // Disable open evidence button in Top Page if there is at least 1 evidence
-            if ($('#openEvidenceBtn1').length > 0 && count > 0) {
-                $('#openEvidenceBtn1').prop("disabled", false);
-                $('#openEvidenceBtn1').removeClass("btn-secondary");
-                $('#openEvidenceBtn1').addClass("btn-evidence");
+            if ($('#openEvidenceBtn' + key).length > 0 && count > 0) {
+                $('#openEvidenceBtn' + key).prop("disabled", false);
+                $('#openEvidenceBtn' + key).removeClass("btn-secondary");
+                $('#openEvidenceBtn' + key).addClass("btn-evidence");
             }
 
             let params = {
@@ -485,7 +493,7 @@ function handleConfirmOkBtn(isSaveMode) {
      * Get current clicked evidence link selector
      * Set common value here
      ---------------------- */
-    $("body").on('click','#openEvidenceBtn1', function(e) {
+    $("body").on('click','.openEvidenceBtn', function(e) {
         openEvidenceBtn = e.currentTarget;
         confirmMsg = $('#confirmDeleteMsgId').val();
         formData = new FormData()

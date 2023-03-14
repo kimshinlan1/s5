@@ -33,3 +33,5 @@
 <input type="hidden" id="confirmDeleteMsgId" name="confirmDeleteMsgId" value="{{ __('Common_Are_You_Sure_Delete') }}"/>
 <input type="hidden" id="confirmSaveMsgId" name="confirmSaveMsgId" value="{{ __('Confirm_Message_Save_Data') }}"/>
 <input type="hidden" id="closeDialogMsgId" name="closeDialogMsgId" value="{{ __('Evidence_Close_Dialog_Warning') }}"/>
+<input type="hidden" id="onlyOneBlockForFreeAccId" name="onlyOneBlockForFreeAccId" value="{{ __('Evidence_Only_One_Block_For_Free') }}"/>
+<input type="hidden" id="deleteMsgTooltipId" name="deleteMsgTooltipId" value="{{ __('Evidence_Delete_Image_Tooltip') }}"/>

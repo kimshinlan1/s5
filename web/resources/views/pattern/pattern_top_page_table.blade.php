@@ -103,14 +103,14 @@ $width_data = '250px';
                                         $avgPoint = isset($inspections[$i]['avg_point']) ? $inspections[$i]['avg_point'] : '';
                                         $inspectionId = isset($inspections[$i]['inspection_id']) ? $inspections[$i]['inspection_id'] : '';
                                         $locationIds = isset($inspections[$i]['locationIds']) ? $inspections[$i]['locationIds'] : '';
-
                                     @endphp
 
                                     <td style="text-align: center;">
                                         @if ($countImgs)
-                                            <input id="openEvidenceBtn1" type="button" class="rounded-3 btn-evidence"
+                                            <input id="openEvidenceBtn{{ $i }}" type="button" class="rounded-3 btn-evidence openEvidenceBtn"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
                                                 onclick=""
+                                                data-time="{{ $i }}"
                                                 data-id="{{ $inspectionId }}"
                                                 data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" />
                                         @else
