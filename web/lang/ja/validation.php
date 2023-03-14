@@ -107,7 +107,7 @@ return [
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
     'regex' => ':attribute形式が無効です。',
-    'required' => ':attributeが必要です。',
+    'required' => ':attributeを入力してください。',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -157,8 +157,14 @@ return [
             'team_id' => '係',
         ],
         'companies' => [
-            'name' => '会社名',
+            'name' => '契約会社名',
             'no'   => '会社コード',
+        ],
+        'deparments' => [
+            'name' => '部門名',
+        ],
+        'teams' => [
+            'name' => '係追加',
         ],
         'common' => [
             'name' => '名前',
