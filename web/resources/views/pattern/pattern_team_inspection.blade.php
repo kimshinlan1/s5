@@ -55,7 +55,6 @@
 <div id="content"></div>
 
 <button type="button" class="btn btn-success" id="btnSave">{{ __('Common_button_save') }}</button>
-<button type="button" class="btn btn-primary" id="btnAdd">{{ __('TeamInspection_Add_Inspection_Point') }}</button>
 
 <div><br/></div>
 <!-- Modal confirm save data -->
