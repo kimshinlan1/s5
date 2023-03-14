@@ -32,8 +32,7 @@
 
         {{-- Radar Chart --}}
         <tr style="height: 220px; max-height:220px; border-color: transparent;">
-            <td colspan="3" class="title-chart" style="background-color: #DAEEF3; vertical-align: middle;">
-                {{ __('TeamInspection_Illustration_Here') }}
+            <td colspan="3" class="title-chart" style="vertical-align: middle;">
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: -webkit-center;">
@@ -44,8 +43,7 @@
 
         {{-- Bar Chart --}}
         <tr style="height: 220px; max-height:220px; border-color: transparent;">
-            <td colspan="3" class="title-chart" style="background-color: #FDE9D9; vertical-align: middle;">
-                {{ __('TeamInspection_Illustration_Here') }}
+            <td colspan="3" class="title-chart" style="vertical-align: middle;">
             </td>
             <td style="padding: 0px;" colspan="{{ $countInspection }}">
                 <canvas id="myBarChart" class="myBarChart" height= "220px"></canvas>
