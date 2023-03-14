@@ -369,6 +369,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
                 'uploaded_evidence_block_number' => $count,
             ]);
             $inspection->save();
+            return true;
         } else {
             return [
                 'invalid' => true,
