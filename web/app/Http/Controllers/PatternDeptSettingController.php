@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
-use App\Models\User;
-use App\Services\EmployeeService;
+use App\Models\DeptPattern;
 use Illuminate\Http\Request;
 use App\Services\PatternDeptSettingService;
+use App\Services\PatternService;
 
 class PatternDeptSettingController extends Controller
 {
     /** @var patterndetailservice */
     private $service;
-    private $serviceEmployee;
+    private $servicePattern;
 
     public function __construct(PatternDeptSettingService $service)
     {
         $this->service = $service;
-        $this->serviceEmployee = app(EmployeeService::class);
-        $this->user = app(User::class);
+        $this->servicePattern = app(PatternService::class);
     }
 
     /**
@@ -106,13 +105,11 @@ class PatternDeptSettingController extends Controller
             // Case: Delete rows
             // Get and re generate html after delete rows
             $data = json_decode($request->get('rows'), true);
-
         } else {
             // Case: Edit
             // Get database for edit follow by below structure
             $id = $request->get('id');
             $data = $this->service->getData($id);
-
             // Convert StdClass to Array
             $data = json_decode(json_encode($data), true);
         }
@@ -172,7 +169,7 @@ class PatternDeptSettingController extends Controller
     public function destroy($id)
     {
         try {
-            $data = $this->service->destroyPatternByMode($id);
+            $data = $this->servicePattern->destroyPatternByMode($id);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([

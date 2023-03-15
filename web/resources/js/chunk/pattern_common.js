@@ -16,7 +16,7 @@ const DEPT_CHART_COLOR = 'rgb(255,165,0, 0.5)';
 const TEAM_CHART_COLOR = 'rgb(54, 162, 235, 0.5)';
 
 // Select 5S - 改善ポイントの選択
-window.select5S = function (ele) {
+window.select5S = function (_ele) {
     selected_5s = [];
     $('.check_5s').find('input').each(function(){
         if ($(this).is(':checked')) {
@@ -27,7 +27,6 @@ window.select5S = function (ele) {
 
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index) {
-
     setTimeout(() => {
         // Get tr info
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
@@ -381,7 +380,7 @@ window.getCompanyId = function() {
 function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
     //Validate all rows and Get param to submit
     let valid = true;
-
+    debugger
     if (selected_5s.length == 0) {
         select5S();
     }

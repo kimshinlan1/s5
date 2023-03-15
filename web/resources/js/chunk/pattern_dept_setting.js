@@ -51,6 +51,9 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         ispattern: ispattern ? ispattern : -1,
         department_id: $('#departmentId').find(':selected').val(),
         company_id: compId,
+        pattern_5s_selected: JSON.stringify(selected_5s),
+        pattern_created_at: dateFormat($('#dateCreate').datepicker("getDate")),
+        pattern_updated_at: dateFormat($('#dateUpdate').datepicker("getDate"))
     }
     let paramDatas = isFree ? freeData : {data: data} ;
 
@@ -96,7 +99,7 @@ function setValueTest() {
 /**
  * List department list
  */
-window.loadDeptList = function(id, patternId = null) {
+window.loadDeptList = function(id, patternId = null, isPattern = null) {
     let url = '/departments/list/' + id;
     let method = "GET";
     let doneCallback = function (data, _textStatus, _jqXHR) {
@@ -111,9 +114,8 @@ window.loadDeptList = function(id, patternId = null) {
                 }
             }
             $('#departmentId').html(html);
-            let ispattern = patternId ? true : null;
             let selectedCompId = getCompanyId();
-            loadPatternList(selectedCompId, patternId, ispattern);
+            loadPatternList(selectedCompId, patternId, isPattern);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -128,7 +130,7 @@ window.loadDeptList = function(id, patternId = null) {
  * @param patternId dept pattern id
  */
 var pattern_list_data = null;
-window.loadPatternList = function(id, patternId = null, isPattern = null ) {
+window.loadPatternList = function(id, patternId = null, isPattern = null) {
     let url = '/pattern_list/getlist_by_department/' + id;
     let method = "GET";
     isPattern = isPattern ? true : false;
@@ -274,8 +276,8 @@ window.initLoadPage = function() {
         ispattern = ispattern == "true" ? true : false;
         // set seleted value for company
         selectedCompId = compId ? compId : selectedCompId;
-        loadDeptList(selectedCompId);
-        loadPatternList(selectedCompId, hidPatternId);
+        loadDeptList(selectedCompId, hidPatternId);
+        // loadPatternList(selectedCompId, hidPatternId);
         if (!deptId) {
             $('#departmentTitle').hide();
             $('#patternTitle').hide();
@@ -315,13 +317,13 @@ window.initLoadPage = function() {
     // Add new mode
     else {
         if (compId) {
-            loadDeptList(compId, selectedPatId);
-            loadPatternList(compId, selectedPatId, true);
+            loadDeptList(compId, selectedPatId, true);
+            // loadPatternList(compId, selectedPatId, true);
             $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
             $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
         } else {
-            loadDeptList(loginCompid);
-            loadPatternList(selectedCompId);
+            loadDeptList(selectedCompId);
+            // loadPatternList(selectedCompId);
         }
         let patId = $('#selectPatternIds').find(':selected').val();
         if (!patId) {
@@ -456,7 +458,6 @@ $(function () {
         } else {
             validateAndGetDataTable(isSelectedFree);
         }
-
     });
 
     // Remove click
