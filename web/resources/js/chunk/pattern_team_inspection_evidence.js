@@ -23,8 +23,9 @@ function uploadFile(input, block, is_before, albumId) {
     if (input.files && input.files[0]) {
         // Loop each file
         input.files.forEach((element, index) => {
-            var reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = function (_e) {
+                let fileId = '';
                 const image = new Image();
                 image.src = reader.result;
 
@@ -391,9 +392,16 @@ function handleConfirmOkBtn(isSaveMode) {
     /*---------------------
      * DIALOG ON SHOW/HIDE
      ---------------------- */
+    let isShown = false;
+    let isFirstShown = true;
     $("#patternEvidenceDialog").on("show.bs.modal", function (e) {
         let id = $(e.relatedTarget).attr("data-id");
         loadEvidence(id);
+        if (isFirstShown) {
+            isFirstShown = false;
+        } else {
+            isShown = true;
+        }
     });
 
     /*---------------------
@@ -401,47 +409,52 @@ function handleConfirmOkBtn(isSaveMode) {
      ---------------------- */
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         setTimeout(function() {
-            let inspectionId = $(openEvidenceBtn).attr('data-id');
-            let key = $(openEvidenceBtn).attr('data-time');
-            let count = getCountEvidence();
-            let postfix = $('#registeredInspectionId').val();
+            if (!isShown) {
+                let inspectionId = $(openEvidenceBtn).attr('data-id');
+                let key = $(openEvidenceBtn).attr('data-time');
+                let count = getCountEvidence();
+                let postfix = $('#registeredInspectionId').val();
 
-            $('#countEvidence_' + inspectionId).text(count + postfix);
-            $("#patternEvidenceDialog").find(".evidences-body").html('');
-            if ($('#countEvidence_' + inspectionId).length > 0) $('#countEvidence_' + inspectionId).attr('data-count', count);
+                $('#countEvidence_' + inspectionId).text(count + postfix);
+                $("#patternEvidenceDialog").find(".evidences-body").html('');
+                if ($('#countEvidence_' + inspectionId).length > 0) $('#countEvidence_' + inspectionId).attr('data-count', count);
 
-            // Disable open evidence button in Top Page if there is no evidence
-            if ($('#openEvidenceBtn' + key).length > 0 && count == 0) {
-                $('#openEvidenceBtn' + key).prop("disabled", true);
-                $('#openEvidenceBtn' + key).removeClass("btn-evidence");
-                $('#openEvidenceBtn' + key).addClass("btn-secondary");
+                // Disable open evidence button in Top Page if there is no evidence
+                if ($('#openEvidenceBtn' + key).length > 0 && count == 0) {
+                    $('#openEvidenceBtn' + key).prop("disabled", true);
+                    $('#openEvidenceBtn' + key).removeClass("btn-evidence");
+                    $('#openEvidenceBtn' + key).addClass("btn-secondary");
+                }
+
+                // Disable open evidence button in Top Page if there is at least 1 evidence
+                if ($('#openEvidenceBtn' + key).length > 0 && count > 0) {
+                    $('#openEvidenceBtn' + key).prop("disabled", false);
+                    $('#openEvidenceBtn' + key).removeClass("btn-secondary");
+                    $('#openEvidenceBtn' + key).addClass("btn-evidence");
+                }
+
+                let params = {
+                    count : count,
+                    inspectionId : inspectionId,
+                };
+
+                let url = "/pattern_team_inspection/update_count_evidence";
+                let method = "POST";
+
+                let doneCallback = function (_data, _textStatus, _jqXHR) {
+
+                };
+
+                let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+                    failAjax(jqXHR, _textStatus, _errorThrown);
+                };
+
+                runAjax(url, method, params, doneCallback, failCallback);
+            } else {
+                isShown = false;
             }
-
-            // Disable open evidence button in Top Page if there is at least 1 evidence
-            if ($('#openEvidenceBtn' + key).length > 0 && count > 0) {
-                $('#openEvidenceBtn' + key).prop("disabled", false);
-                $('#openEvidenceBtn' + key).removeClass("btn-secondary");
-                $('#openEvidenceBtn' + key).addClass("btn-evidence");
-            }
-
-            let params = {
-                count : count,
-                inspectionId : inspectionId,
-            };
-
-            let url = "/pattern_team_inspection/update_count_evidence";
-            let method = "POST";
-
-            let doneCallback = function (_data, _textStatus, _jqXHR) {
-
-            };
-
-            let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-                failAjax(jqXHR, _textStatus, _errorThrown);
-            };
-
-            runAjax(url, method, params, doneCallback, failCallback);
         }, 10);
+
     });
 
     /*---------------------
