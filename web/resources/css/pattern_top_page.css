@@ -71,3 +71,9 @@ body {
     height: 220px !important;
     max-height: 220px !important;
 }
+
+.btn-evidence {
+    background-color: deepskyblue;
+    color: aliceblue;
+    border-color: deepskyblue;
+}

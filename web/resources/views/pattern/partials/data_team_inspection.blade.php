@@ -31,26 +31,24 @@
         </tr>
 
         {{-- Radar Chart --}}
-        <tr style="border-color: transparent;">
-            <td colspan="3" class="title-chart" style="background-color: #DAEEF3; vertical-align: middle;">
-                {{ __('TeamInspection_Illustration_Here') }}
+        <tr style="height: 220px; max-height:220px; border-color: transparent;">
+            <td colspan="3" class="title-chart" style="vertical-align: middle;">
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: -webkit-center;">
-                <canvas id="myChart_{{ $inspectionId }}" height= "150px" width= "150px"></canvas>
+                <canvas id="myChart_{{ $inspectionId }}" height= "220px" width= "220px"></canvas>
             </td>
             @endforeach
         </tr>
 
         {{-- Bar Chart --}}
-        <tr style="height: 200px; border-color: transparent;">
-            <td colspan="3" class="title-chart" style="background-color: #FDE9D9; vertical-align: middle;">
-                {{ __('TeamInspection_Illustration_Here') }}
+        {{-- <tr style="height: 220px; max-height:220px; border-color: transparent;">
+            <td colspan="3" class="title-chart" style="vertical-align: middle;">
             </td>
             <td style="padding: 0px;" colspan="{{ $countInspection }}">
-                <canvas id="myBarChart" height= "200px"></canvas>
+                <canvas id="myBarChart" class="myBarChart" height= "220px"></canvas>
             </td>
-        </tr>
+        </tr> --}}
 
         {{-- 改善結果を見る --}}
         <tr class="tr-row-evidence">
@@ -63,10 +61,10 @@
                 ? $inspectionData[$inspectionId]['count_evidence'] : 0;
             @endphp
             <td>
-                @if (strpos($inspectionId, "new"))
-                <input style="background-color: #FDE9D9;" type="button" class="btn-success btn-evidence" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""/>
+                @if ($countImgs < 1)
+                <input id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-secondary btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""  data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" disabled/>
                 @else
-                <input style="background-color: deepskyblue; color: aliceblue" type="button" class="btn-evidence" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""/>
+                <input id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-evidence btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick="" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog"/>
                 @endif
 
                 <br>

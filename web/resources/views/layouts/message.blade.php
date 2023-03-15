@@ -2,6 +2,7 @@
 <input type="hidden" id="messageWaitSearch" name="messageWaitSearch" value="{{ __('Message_Waiting_Search') }}"/>
 <input type="hidden" id="messageNoData" name="messageNoData" value="{{ __('Message_No_Data') }}"/>
 <input type="hidden" id="messageNoSelectedData" name="messageNoSelectedData" value="{{ __('Message_No_Selected_Data') }}"/>
+<input type="hidden" id="messageNoSelectedPattern" name="messageNoSelectedPattern" value="{{ __('Message_No_Selected_Pattern') }}"/>
 <input type="hidden" id="messageAlarmEmptyTable" name="messageNoData" value="{{ __('Message_Alarm_Empty_Table') }}"/>
 <input type="hidden" id="messageDelete" name="messageDelete" value="{{ __('Confirm_Delete') }}"/>
 <input type="hidden" id="messageCopy" name="messageCopy" value="{{ __('Confirm_Copy') }}"/>
@@ -33,3 +34,5 @@
 <input type="hidden" id="confirmDeleteMsgId" name="confirmDeleteMsgId" value="{{ __('Common_Are_You_Sure_Delete') }}"/>
 <input type="hidden" id="confirmSaveMsgId" name="confirmSaveMsgId" value="{{ __('Confirm_Message_Save_Data') }}"/>
 <input type="hidden" id="closeDialogMsgId" name="closeDialogMsgId" value="{{ __('Evidence_Close_Dialog_Warning') }}"/>
+<input type="hidden" id="onlyOneBlockForFreeAccId" name="onlyOneBlockForFreeAccId" value="{{ __('Evidence_Only_One_Block_For_Free') }}"/>
+<input type="hidden" id="deleteMsgTooltipId" name="deleteMsgTooltipId" value="{{ __('Evidence_Delete_Image_Tooltip') }}"/>

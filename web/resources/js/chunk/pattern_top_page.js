@@ -53,7 +53,7 @@ function loadBarChart(id, mapObj, count) {
  * Render chart for each teams in a dept
  */
 function renderTeamChart(deptId, teamId) {
-    let count = $('#hidCountInspection').val();
+    // let count = $('#hidCountInspection').val();
     let mapObj = new Map();
     mapObj.set("s1", []);
     mapObj.set("s2", []);
@@ -73,8 +73,8 @@ function renderTeamChart(deptId, teamId) {
         let id = 'radarchart_team_' + teamId + '-' + i;
         loadRadarChart(id, avgPointArr, 0);
     });
-    let barChartId = 'barchart_team_' + teamId;
-    loadBarChart(barChartId, mapObj, count);
+    // let barChartId = 'barchart_team_' + teamId;
+    // loadBarChart(barChartId, mapObj, count);
 }
 
 /**
@@ -106,8 +106,8 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
     }
 
     /** Loop Dept Bar Chart **/
-    let barChartId = 'barchart_dept_' + deptId;
-    loadBarChart(barChartId, deptMapBarData, countMaxInspection);
+    // let barChartId = 'barchart_dept_' + deptId;
+    // loadBarChart(barChartId, deptMapBarData, countMaxInspection);
 }
 
 function loadCharts() {
@@ -203,5 +203,4 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
-
 });

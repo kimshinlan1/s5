@@ -43,10 +43,7 @@ class PatternTopPageService extends BaseService
             "$table.id as inspection_id",
             "$table.inspection_date as inspection_date",
             "$table.avg_point as avg_point",
-
-            DB::raw("(SELECT count(inspection_images.id) FROM inspection_images
-            WHERE inspection_images.inspection_id = $table.id
-            ) as count_evidence")
+            "$table.uploaded_evidence_block_number as count_evidence",
         ])
         ->orderBy("$table.id");
         if ($teamId) {

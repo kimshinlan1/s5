@@ -10,6 +10,7 @@
     <script src="{!! url('assets/jquery/chart.min.js') !!}" type="text/javascript"></script>
     <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script src="{{ mix('/js/pattern_top_page.js') }}"></script>
+    <script src="{{ mix('/js/pattern_team_inspection_evidence.js') }}"></script>
 @endpush
 
 @section('sidebar')
@@ -36,6 +37,9 @@
 <div id="topPageChart">
 
 </div>
+@include('pattern.partials.evidence_dialog')
+@include('layouts.confirm')
+@include('layouts.error')
 
     {{-- @include('pattern.pattern_top_page_table') --}}
 

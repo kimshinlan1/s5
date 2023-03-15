@@ -14,6 +14,12 @@ $width_data = '250px';
                     {{-- Hidden --}}
                     <input type="hidden" id="hidDeptId_{{ $inspection['dept_id'] }}" value="{{ $inspection['dept_id'] }}"
                         data-avgPoint="{{ $inspection['dept_avgPoint'] }}" />
+
+                    @if (count($inspection['locationIds']))
+                        @foreach ($inspection['locationIds'] as $locationId)
+                            <input type="hidden" id="hidLocationId_{{ $locationId }}" value="{{ $locationId }}"/>
+                        @endforeach
+                    @endif
                 </tr>
 
                 {{-- Radar Chart --}}
@@ -27,11 +33,11 @@ $width_data = '250px';
                 </tr>
 
                 {{-- Bar Chart --}}
-                <tr>
+                {{-- <tr>
                     <td colspan="{{ $countInspection }}">
                         <canvas class="barChart" style="width: 10px; height: 10px;" id="barchart_dept_{{ $inspection['dept_id'] }}"></canvas>
                     </td>
-                </tr>
+                </tr> --}}
             </table>
 
             <fieldset class="form-group border border-collapse" id="fiestSetId">
@@ -61,7 +67,7 @@ $width_data = '250px';
                                 style="display:none">
                                 <td colspan="{{ $countInspection }}" style="padding-left: 1rem;">
                                     <strong>{{ __('Team') }}: {{ $team['team_name'] }}</strong>
-                                    <input type="button" class="btn-info rounded-3" id="btnInput"
+                                    <input type="button" class="btn-success rounded-3" id="btnInput"
                                         value="{{ __('TopPage_Evidence_Button') }}"
                                         onclick="gotoInspectionPage('{{ $team['team_id'] }}')" />
                                 </td>
@@ -80,13 +86,13 @@ $width_data = '250px';
                             </tr>
 
                             {{-- Bar Chart --}}
-                            <tr class="rows"
+                            {{-- <tr class="rows"
                                 id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-barchart"
                                 style="display: none; border-bottom-color: transparent;">
                                 <td colspan="{{ $countInspection }}">
                                     <canvas class="barChart" style="width: 10px; height: 10px;" id="barchart_team_{{ $team['team_id'] }}"></canvas>
                                 </td>
-                            </tr>
+                            </tr> --}}
 
                             {{-- 改善結果を見る --}}
                             <tr id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-info"
@@ -95,17 +101,22 @@ $width_data = '250px';
                                     @php
                                         $countImgs = isset($inspections[$i]['count_evidence']) ? $inspections[$i]['count_evidence'] : 0;
                                         $avgPoint = isset($inspections[$i]['avg_point']) ? $inspections[$i]['avg_point'] : '';
+                                        $inspectionId = isset($inspections[$i]['inspection_id']) ? $inspections[$i]['inspection_id'] : '';
+                                        $locationIds = isset($inspections[$i]['locationIds']) ? $inspections[$i]['locationIds'] : '';
                                     @endphp
 
                                     <td style="text-align: center;">
                                         @if ($countImgs)
-                                            <input type="button" class="btn-primary rounded-3"
+                                            <input id="openEvidenceBtn{{ $i }}" type="button" class="rounded-3 btn-evidence openEvidenceBtn"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
-                                                onclick="" />
+                                                onclick=""
+                                                data-time="{{ $i }}"
+                                                data-id="{{ $inspectionId }}"
+                                                data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" />
                                         @else
                                             <input type="button" class="btn-secondary rounded-3"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
-                                                onclick="" />
+                                                onclick="" disabled/>
                                         @endif
                                     </td>
 

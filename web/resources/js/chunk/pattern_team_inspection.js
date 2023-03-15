@@ -76,7 +76,7 @@ function loadInspectionData(data, mode = '', presentData = '') {
             for (let e of inspIds) {
                 RenderRadarChart[e].destroy();
             }
-            RenderBarChart.destroy();
+            // RenderBarChart.destroy();
             initChart();
         });
 
@@ -483,8 +483,8 @@ function initChart() {
     createRadarChart(array5s);
 
     //---Create bar chart---//
-    let arrayPoint = coverDataBarChart(array5s);
-    createBarChart(arrayPoint);
+    // let arrayPoint = coverDataBarChart(array5s);
+    // createBarChart(arrayPoint);
 }
 
 /********************

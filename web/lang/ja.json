@@ -51,6 +51,7 @@
     "Message_Waiting_Search": "読み込んでいます...しばらくお待ちください。",
     "Message_No_Data": "データが見つかりません。",
     "Message_No_Selected_Data": "オプションを選択してください。",
+    "Message_No_Selected_Pattern": "5Sパターンを選択してください。",
     "Message_Alarm_Empty_Table": "1つ以上のスキルマップを設定する必要があります。",
     "Confirm_Delete": "のデータを削除してよろしいですか。",
     "Confirm_Copy": "コピーしますか？",
@@ -297,7 +298,10 @@
     "Evidence_Add_Block_Btn": "ブロックを追加",
     "Evidence_Existed_Image": "画像は存在した",
     "Evidence_No_File_To_Upload": "アップロードするファイルがありません",
+    "Evidence_Only_One_Block_For_Free": "あなたのアカウントは 1 つの証拠しか持つことができません",
     "Evidence_Close_Dialog_Warning": "このウィンドウを閉じると、新しくアップロードされたファイルが失われます。ウィンドウを閉じますか?",
+    "Evidence_Delete_Album_Tooltip": "すべての画像を削除",
+    "Evidence_Delete_Image_Tooltip": "この画像を削除",
     "=====  BLOCK_EVIDENCE_END =====": ""
 
 

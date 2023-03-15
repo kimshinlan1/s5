@@ -25,3 +25,12 @@
         </div>
     </div>
 </div>
+
+<!-- My Toast -->
+<div class="toast hide align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
+    <div class="d-flex">
+        <div class="toast-body">
+            {{ __('Message_Save_Success') }}
+        </div>
+    </div>
+</div>
