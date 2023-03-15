@@ -76,10 +76,26 @@ class PatternTeamInspectionController extends Controller
             $inspectionDetails = json_decode(json_encode($inspectionDetails), true);
         }
 
+        // Get Rows: patterns
+        // $data = $this->service->getPatternDataByDept($deptId);
+        // $data = json_decode(json_encode($data), true);
+
         $data = [];
         // Pending cache
-        $data = $this->service->getPatternDataByDept($deptId);
-        $data = json_decode(json_encode($data), true);
+        // $key = "pattern_data_{$deptId}_{$teamId}";
+        // if (!Cache::get($key)) {
+            $data = $this->service->getPatternDataByDept($deptId);
+            $data = json_decode(json_encode($data), true);
+        // Cache::put($key, $data);
+        // } else {
+        //     $data = Cache::get($key);
+        // }
+
+        // todo: Check empty
+        // if (empty($inspectionDetails) || empty($data)) {
+        //     // todo:
+        //     return;
+        // }
 
         // Rebuild structure to render
         $inspectionData = [];
@@ -89,6 +105,15 @@ class PatternTeamInspectionController extends Controller
             $inspectionData[$inspection['inspection_id']]['count_evidence'] = $inspection['count_evidence'] ?: 0;
             $inspectionData[$inspection['inspection_id']][$index] = $inspection['point_value'];
         }
+
+        // Sample Structure
+        // $structure = [
+        //     'inspection_id' => [ // 1 inspection_id = 1 column
+        //         'inspection_date' => '',
+        //         'count_evidence' => '',
+        //         'area_id_location_id_5s' => 'point_value'
+        //     ]
+        // ];
 
         // Get ids to render columns
         $inspectionIds = array_keys($inspectionData);

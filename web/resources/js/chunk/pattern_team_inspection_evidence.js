@@ -189,7 +189,7 @@ function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
             $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
         }
         // Check if the deleted image is temporarily uploaded or not, if it is  , remove it from formdata so as not to store in DB
-        if (formData.has(fileId) & isTempImage) {
+        if (formData.has(fileId) && isTempImage) {
             formData.delete(fileId);
         }
         if (!isTempImage) {
