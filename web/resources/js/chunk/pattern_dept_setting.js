@@ -277,7 +277,6 @@ window.initLoadPage = function() {
         // set seleted value for company
         selectedCompId = compId ? compId : selectedCompId;
         loadDeptList(selectedCompId, hidPatternId);
-        // loadPatternList(selectedCompId, hidPatternId);
         if (!deptId) {
             $('#departmentTitle').hide();
             $('#patternTitle').hide();
@@ -318,12 +317,10 @@ window.initLoadPage = function() {
     else {
         if (compId) {
             loadDeptList(compId, selectedPatId, true);
-            // loadPatternList(compId, selectedPatId, true);
             $('#companyOptionId  option[value=' + compId + ']').attr('selected','selected');
             $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
         } else {
             loadDeptList(selectedCompId);
-            // loadPatternList(selectedCompId);
         }
         let patId = $('#selectPatternIds').find(':selected').val();
         if (!patId) {

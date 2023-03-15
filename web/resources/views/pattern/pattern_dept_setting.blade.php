@@ -21,7 +21,7 @@
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-7">
+                <div class="col-8">
                     @if(auth()->user()->isAdmin())
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header_dept_setting">

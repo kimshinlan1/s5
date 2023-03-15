@@ -126,31 +126,25 @@ class PatternDeptSettingService extends BaseService
 
 
         // Step: Insert new pattern
-        $deptPattern = $this->model::updateOrCreate(
-            [
-                'id' => $data['info']['pattern_id']
-            ],
-            [
-                'company_id' => $request->data['company'],
-                'name' => $data['info']['pattern_name'],
-                'note' => $data['info']['pattern_note'],
-                '5s' => $data['info']['pattern_5s_selected'],
-                'created_at' => $data['info']['pattern_created_at'],
-                'updated_at' => $data['info']['pattern_updated_at'],
-            ]
-        );
+        $patternData = [
+            'company_id' => $request->data['company'],
+            'name' => $data['info']['pattern_name'],
+            'note' => $data['info']['pattern_note'],
+            '5s' => $data['info']['pattern_5s_selected'],
+            'created_at' => $data['info']['pattern_created_at'],
+            'updated_at' => $data['info']['pattern_updated_at'],
+        ];
+
         if (!$data['info']['pattern_id']) {
-            $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
-            $deptPattern->no = $no;
-            $deptPattern->save();
-        }
-        $deptPatternId = $deptPattern->id;
-        if (isset($data['department'])) {
-            $dept = Department::find($data['department']);
-            $dept->dept_pattern_id = $deptPatternId;
-            $dept->save();
+            $no = Utility::generateUniqueId(new Pattern(), "no", "CKL", 5);
+            $patternData['no'] = $no;
         }
 
+        $deptPattern = $this->model::updateOrCreate(
+            ['id' => $data['info']['pattern_id']],
+            $patternData
+        );
+        $deptPatternId = $deptPattern->id;
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
             // Step: Insert new Area

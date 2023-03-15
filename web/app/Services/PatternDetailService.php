@@ -114,23 +114,23 @@ class PatternDetailService extends BaseService
         }
 
         // Step: Insert new pattern
-        $patternId = Pattern::updateOrCreate(
-            [
-                'id' => $data['info']['pattern_id']
-            ],
-            [
-                'name' => $data['info']['pattern_name'],
-                'note' => $data['info']['pattern_note'],
-                '5s' => $data['info']['pattern_5s_selected'],
-                'created_at' => $data['info']['pattern_created_at'],
-                'updated_at' => $data['info']['pattern_updated_at'],
-            ]
-        );
+        $patternData = [
+            'name' => $data['info']['pattern_name'],
+            'note' => $data['info']['pattern_note'],
+            '5s' => $data['info']['pattern_5s_selected'],
+            'created_at' => $data['info']['pattern_created_at'],
+            'updated_at' => $data['info']['pattern_updated_at'],
+        ];
+
         if (!$data['info']['pattern_id']) {
             $no = Utility::generateUniqueId(new Pattern(), "no", "CKL", 5);
-            $patternId->no = $no;
-            $patternId->save();
+            $patternData['no'] = $no;
         }
+
+        $patternId = Pattern::updateOrCreate(
+            ['id' => $data['info']['pattern_id']],
+            $patternData
+        );
         $patternId = $patternId->id;
 
         // Loop to insert Areas

@@ -380,7 +380,6 @@ window.getCompanyId = function() {
 function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
     //Validate all rows and Get param to submit
     let valid = true;
-    debugger
     if (selected_5s.length == 0) {
         select5S();
     }
