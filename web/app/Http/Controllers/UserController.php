@@ -124,9 +124,7 @@ class UserController extends Controller
             $data = $this->service->destroy($id);
             return response()->json($data);
         } catch (\Throwable $th) {
-            return response()->json([
-                'errors' => __(Constant::MESSAGES['SYSTEM_ERROR'])
-            ], 500);
+            return $this->responseException();
         }
     }
 }

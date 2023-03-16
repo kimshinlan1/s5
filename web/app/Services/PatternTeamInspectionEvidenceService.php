@@ -177,7 +177,6 @@ class PatternTeamInspectionEvidenceService extends BaseService
      */
     public function saveData(Request $request)
     {
-        $imageExtentions = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'png', 'bmp'];
         $count = $request->get('count');
         $inspecionId = $request->get('inspecionId');
         $before = explode(',', $request->get('before'));
@@ -202,7 +201,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
             if ($keyArrayBefore[0]) {
                 foreach ($keyArrayBefore as $key) {
                     $image = $request->file($key);
-                    if (!in_array(strtolower($image->getClientOriginalExtension()), $imageExtentions)) {
+                    if (!in_array(strtolower($image->getClientOriginalExtension()), Constant::VALID_IMAGE_EXTENSION)) {
                         return [
                             'invalid_format' => true,
                         ];
@@ -225,7 +224,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
             if ($keyArrayAfter[0]) {
                 foreach ($keyArrayAfter as $key) {
                     $image = $request->file($key);
-                    if (substr($image->getMimeType(), 0, 5) != 'image') {
+                    if (!in_array(strtolower($image->getClientOriginalExtension()), Constant::VALID_IMAGE_EXTENSION)) {
                         return [
                             'invalid_format' => true,
                         ];
