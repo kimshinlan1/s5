@@ -95,8 +95,6 @@ class PatternDeptSettingService extends BaseService
      */
     public function save(Request $request)
     {
-        // todo: Update => Call from DeptPatternService, use common. If diffence, update here
-        // use:  dept_patterns, dept_patterns_details
         $data = $request->get('data');
         $companyId = $request->data['company'];
         if ($data['department']) {
@@ -107,18 +105,6 @@ class PatternDeptSettingService extends BaseService
                 ];
             }
         }
-        /**
-         * Step: Remove old data
-         *
-         * Loop data:
-         *    Step: Insert new pattern
-         *    Step: Insert new Area
-         *    Step: Inert new Location
-         *    Step: Insert new pattern_detail
-         *
-         *    Note: array data must be created in valid structure
-         *
-         */
 
         // Step: Remove old data by pattern_id
         if ($data['info']['pattern_id']) {
@@ -133,37 +119,32 @@ class PatternDeptSettingService extends BaseService
         //     (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
         // }
 
+        // Check if free account has dept pattern or not. Delete old dept pattern if existed
         if ($request->data['isSelectedFree'] == 'free') {
             $this->deleteOldDeptPattern($companyId);
         }
 
 
         // Step: Insert new pattern
-        $deptPattern = $this->model::updateOrCreate(
-            [
-                'id' => $data['info']['pattern_id']
-            ],
-            [
-                'company_id' => $request->data['company'],
-                'name' => $data['info']['pattern_name'],
-                'note' => $data['info']['pattern_note'],
-                '5s' => $data['info']['pattern_5s_selected'],
-                'created_at' => $data['info']['pattern_created_at'],
-                'updated_at' => $data['info']['pattern_updated_at'],
-            ]
-        );
+        $patternData = [
+            'company_id' => $request->data['company'],
+            'name' => $data['info']['pattern_name'],
+            'note' => $data['info']['pattern_note'],
+            '5s' => $data['info']['pattern_5s_selected'],
+            'created_at' => $data['info']['pattern_created_at'],
+            'updated_at' => $data['info']['pattern_updated_at'],
+        ];
+
         if (!$data['info']['pattern_id']) {
-            $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
-            $deptPattern->no = $no;
-            $deptPattern->save();
-        }
-        $deptPatternId = $deptPattern->id;
-        if (isset($data['department'])) {
-            $dept = Department::find($data['department']);
-            $dept->dept_pattern_id = $deptPatternId;
-            $dept->save();
+            $no = Utility::generateUniqueId(new Pattern(), "no", "CKL", 5);
+            $patternData['no'] = $no;
         }
 
+        $deptPattern = $this->model::updateOrCreate(
+            ['id' => $data['info']['pattern_id']],
+            $patternData
+        );
+        $deptPatternId = $deptPattern->id;
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
             // Step: Insert new Area
@@ -259,6 +240,9 @@ class PatternDeptSettingService extends BaseService
         $deptPatternName = $request->get('name');
         $deptPatternId = $request->get('deptPatternId');
         $deptId = $request->get('department_id');
+        $createdDate = $request->get('pattern_created_at');
+        $updatedDate = $request->get('pattern_updated_at');
+        $selected5s = $request->get('pattern_5s_selected');
 
         $isUnique = $this->checkUniqueName($deptId, $deptPatternId);
         if (!$isUnique) {
@@ -279,13 +263,16 @@ class PatternDeptSettingService extends BaseService
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
         $this->deleteOldDeptPattern($companyId);
 
-
         $pattern['id'] = null;
         $pattern['name'] = $deptPatternName;
         $pattern['company_id'] = $companyId;
         $pattern['no'] = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
+        $pattern['5s'] = $selected5s;
+        $pattern['created_at'] = $createdDate;
+        $pattern['updated_at'] = $updatedDate;
         $deptPattern = $this->model::create($pattern);
 
+        // Replace old dept pattern to new dept pattern in department
         $deptPatternId = $deptPattern->id;
         $dept = Department::find((int)$deptId);
         $dept->dept_pattern_id = $deptPatternId;
@@ -347,19 +334,6 @@ class PatternDeptSettingService extends BaseService
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return object
-     */
-    public function destroyPatternByMode($id)
-    {
-        $data = $this->model::find($id);
-        return $data->delete();
-    }
-
-    /**
      * Remove old dept-pattern
      *
      * @param  $companyId
@@ -372,7 +346,7 @@ class PatternDeptSettingService extends BaseService
         ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (count($depPatternIds)) {
             foreach ($depPatternIds as $depPatternId) {
-                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, null, Constant::PAGE_PATTERN_LIST_CUSTOMER);
+                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, Constant::PAGE_PATTERN_LIST_CUSTOMER);
             }
         }
     }

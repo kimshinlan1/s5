@@ -21,7 +21,7 @@
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-7">
+                <div class="col-8">
                     @if(auth()->user()->isAdmin())
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header_dept_setting">
@@ -97,23 +97,23 @@
             <fieldset style="display: flex;" class="check_5s">
                 <legend class="legend_5s"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
                 <div class="checkbox">
-                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" @if((count($selected5s) < 1) || ((count($selected5s) > 0) && in_array("s1", $selected5s))) checked @endif>
                     <label class="label_5s" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" @if((count($selected5s) < 1) || ((count($selected5s) > 0) && in_array("s2", $selected5s))) checked @endif>
                     <label class="label_5s" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" @if((count($selected5s) < 1) || ((count($selected5s) > 0) && in_array("s3", $selected5s))) checked @endif>
                     <label class="label_5s" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" @if((count($selected5s) < 1) || ((count($selected5s) > 0) && in_array("s4", $selected5s))) checked @endif>
                     <label class="label_5s" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" @if((count($selected5s) < 1) || ((count($selected5s) > 0) && in_array("s5", $selected5s))) checked @endif>
                     <label class="label_5s" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>

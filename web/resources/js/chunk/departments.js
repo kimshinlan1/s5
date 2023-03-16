@@ -390,14 +390,14 @@ window.saveDataDepartment = function () {
 /** ------------------
 *  Load department list
 --------------------- */
-window.loadDeptListByComp = function(id) {
+window.loadDeptListByComp = function(id, deptId) {
    $.ajax({
        type: 'GET',
        url: '/departments/list/' + id,
        success: function (res) {
            let html = '';
            for (let e of res) {
-               html += '<option value="' + e.id + '">' + e.name + '</option>';
+               html += (deptId == e.id) ? '<option value="' + e.id + '" selected>' + e.name + '</option>' : '<option value="' + e.id + '">' + e.name + '</option>';
            }
 
            $('#teamDepartment').html(html);
@@ -489,12 +489,14 @@ $(function () {
    /*---------------------
     * Show Registration Team Dialog
     ---------------------- */
-    $("#teamEditDialog").on("show.bs.modal", function () {
+    $("#teamEditDialog").on("show.bs.modal", function (e) {
        clearDialog();
        let id = $('#companyListID').val();
+       let $button = $(e.relatedTarget);
+       let deptId = $button.attr('data-id');
        $("#teamEditDialog .modal-title.edit").hide();
        $("#teamEditDialog .modal-title.add").show();
-       loadDeptListByComp(id)
+       loadDeptListByComp(id, deptId)
        setTimeout(function (){
            $('#teamName').focus();
        }, 100);

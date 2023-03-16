@@ -1,6 +1,5 @@
 
 // 改善ポイントの選択 - Select 5S methods
-var selected_5s = [];
 var select_location_to_delete = [];
 var count_method_delete = 0;
 var params = {};

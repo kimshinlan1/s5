@@ -51,11 +51,7 @@ class PatternController extends Controller
      */
     public function indexCustomer()
     {
-        /** @var User */
-        $user = Auth::user();
-        if (!$user->is5SModeFree()) {
-            return view('pattern.pattern_list_customer');
-        }
+        return view('pattern.pattern_list_customer');
     }
 
     /**

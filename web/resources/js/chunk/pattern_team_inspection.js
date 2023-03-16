@@ -33,7 +33,7 @@ function setParam() {
  * Check mode: MODE_NEW = Add column, MODE_REMOVE_NEW = Remove column
  * data: departmentId, teamId
  ********************************************************************/
-function loadInspectionData(data, mode = '', presentData = '') {
+function loadInspectionData(data, mode = '', presentData = '', isAddColumn = false) {
     showLoading();
     let params = {
         dept_id: data.dept_id,
@@ -53,6 +53,14 @@ function loadInspectionData(data, mode = '', presentData = '') {
     let doneCallback = function (datas, _textStatus, _jqXHR) {
         $("#content").html("");
         $("#content").append(datas);
+        if (isAddColumn) {
+            $('#addColumnId').prop('disabled', true);
+            showToast($('#toast1'), 2000, true);
+            setTimeout(() => {
+                $('#addColumnId').prop('disabled', false);
+            }, 1000);
+        }
+
 
         // Config init calendar
         $('input[id^=txtInspectionDate_]').each(function() {
@@ -84,7 +92,7 @@ function loadInspectionData(data, mode = '', presentData = '') {
         initChart();
     };
 
-    runAjax(url, method, params, doneCallback);
+    runAjax(url, method, params, doneCallback, null, null, false);
 }
 
 /***************
@@ -309,15 +317,6 @@ function checkEmptyDeptPattern() {
             }
         }
     });
-}
-
-
-/***************
- * Open Evidence
- ***************/
-function openEvidenceDialog(_inspection_id) {
-    // todo:
-    alert("open evidence");
 }
 
 /*********************************
@@ -577,7 +576,7 @@ function addColumn() {
     let presentData = sendDataWithoutSaveDB();
 
     // Load inspection data for the new column, using the parameter data, the present data, and a mode of "new"
-    loadInspectionData(data, MODE_NEW, presentData);
+    loadInspectionData(data, MODE_NEW, presentData, true);
 }
 
 //********************//---DOCUMENT---CREATE---CHART---END---//********************//

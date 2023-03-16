@@ -16,7 +16,7 @@
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
             <td colspan="3" style="text-align: center">
-                <input style="font-size: 0.75rem; border: 0rem; border-radius: 6px;" class="btn btn-primary" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
+                <input id="addColumnId" style="font-size: 0.75rem; border: 0rem; border-radius: 6px;" class="btn btn-primary" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: center">

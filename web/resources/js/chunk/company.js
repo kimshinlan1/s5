@@ -362,6 +362,7 @@ $(function () {
             type: "DELETE",
         })
             .done(function (company, _textStatus, _jqXHR) {
+                showToast($('#toast2'), 2000, true);
                 $("#companyTable").bootstrapTable("remove", {
                     field: "id",
                     values: [company.id],

@@ -4,6 +4,7 @@ var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":
 var highlight = '#ced4da';
 var select_location_to_delete = [];
 var count_method_delete = '';
+var selected_5s = [];
 const maxCnt5s = 5;
 const labels = [
     'S1',
@@ -16,7 +17,7 @@ const DEPT_CHART_COLOR = 'rgb(255,165,0, 0.5)';
 const TEAM_CHART_COLOR = 'rgb(54, 162, 235, 0.5)';
 
 // Select 5S - 改善ポイントの選択
-window.select5S = function (ele) {
+window.select5S = function (_ele) {
     selected_5s = [];
     $('.check_5s').find('input').each(function(){
         if ($(this).is(':checked')) {
@@ -27,7 +28,6 @@ window.select5S = function (ele) {
 
 // Add Location 点検箇所
 window.addLocation = function (area_id, location_id, area_index) {
-
     setTimeout(() => {
         // Get tr info
         let tr = $("#area_"+area_id+"_location_"+location_id+"_row_"+area_index);
@@ -381,7 +381,6 @@ window.getCompanyId = function() {
 function validateAndGetDataTable(isSelectedFree=null, selectedPatId=null) {
     //Validate all rows and Get param to submit
     let valid = true;
-
     if (selected_5s.length == 0) {
         select5S();
     }
@@ -525,7 +524,7 @@ function cancelRemoveLocation() {
  * Config create/update date with calendar
  */
 function configCalendarPattern() {
-    updatedAtChanged = '';
+    let updatedAtChanged = '';
     $('#dateCreate').datepicker({
         autoclose: true,
         dateFormat: 'yy年mm月dd日',

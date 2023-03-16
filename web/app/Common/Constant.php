@@ -77,4 +77,5 @@ class Constant
     public const NO_IMAGE_PATH = '/assets/img/no_image.jpg';
     public const IMAGE_LIMIT_SIZE_BYTE = 10485760;
     public const IMAGE_LIMIT_SIZE = 10;
+    public const VALID_IMAGE_EXTENSION = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'png', 'bmp'];
 }

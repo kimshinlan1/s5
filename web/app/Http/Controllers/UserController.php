@@ -111,4 +111,20 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $data = $this->service->destroy($id);
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            return $this->responseException();
+        }
+    }
 }

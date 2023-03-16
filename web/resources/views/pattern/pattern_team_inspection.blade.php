@@ -13,7 +13,6 @@
 
 @section('sidebar')
     @include('layouts.manage_sidebar')
-    {{-- @include('layouts.success') --}}
 @endsection
 
 @section('content')
@@ -26,6 +25,7 @@
 @if (!$teamId)
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ __('TeamInspection_Input') }}</div>
+    @include('layouts.success')
 </div>
 
 <div class="d-flex justify-content-start mt-1" style="width: 55%;">
@@ -47,6 +47,7 @@
 @else
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ $teamName }}{{ __('TeamInspection_5S_Level_Transition') }}</div>
+    @include('layouts.success')
 </div>
 @endif
 <div><br/></div>

@@ -23,13 +23,12 @@
 .btn-evidence1 {
     border-radius: 6px;
     width: 100%;
-    border-color: transparent;
+    border-color: transparent !important;
 }
 
 .btn-evidence {
     background-color: deepskyblue;
     color: aliceblue;
-    border-color: deepskyblue;
 }
 
 .toast {
@@ -50,4 +49,8 @@
 .myBarChart {
     height: 220px !important;
     max-height: 220px !important;
+}
+
+.btn {
+    /* padding: unset !important; */
 }

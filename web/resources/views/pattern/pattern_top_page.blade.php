@@ -18,7 +18,10 @@
 @endsection
 
 @section('content')
-    <div class="h-title">5Sトップページ</div>
+    <div class="d-flex justify-content-between">
+        <div class="h-title">{{ __('Pattern_TopPage_Management') }}</div>
+        @include('layouts.success')
+    </div>
 
 @if(auth()->user()->isAdmin())
 <div class="" style="margin-bottom: 0.5%;">

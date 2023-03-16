@@ -31,7 +31,7 @@ class PatternService extends BaseService
      */
     public function getDataById($id)
     {
-        return $this->model::where('id', $id)->get()->first()?->toArray();
+        return $this->model::where('id', $id)->get()->first()->toArray();
     }
 
     /**
