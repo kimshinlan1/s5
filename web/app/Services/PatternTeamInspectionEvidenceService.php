@@ -177,7 +177,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
      */
     public function saveData(Request $request)
     {
-        $imageExtentions = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'png'];
+        $imageExtentions = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'png', 'bmp'];
         $count = $request->get('count');
         $inspecionId = $request->get('inspecionId');
         $before = explode(',', $request->get('before'));

@@ -4,6 +4,7 @@ var name_5s = {"s1":"整理", "s2":"整頓", "s3":"清掃", "s4":"清潔", "s5":
 var highlight = '#ced4da';
 var select_location_to_delete = [];
 var count_method_delete = '';
+var selected_5s = [];
 const maxCnt5s = 5;
 const labels = [
     'S1',
@@ -523,7 +524,7 @@ function cancelRemoveLocation() {
  * Config create/update date with calendar
  */
 function configCalendarPattern() {
-    updatedAtChanged = '';
+    let updatedAtChanged = '';
     $('#dateCreate').datepicker({
         autoclose: true,
         dateFormat: 'yy年mm月dd日',
