@@ -311,15 +311,6 @@ function checkEmptyDeptPattern() {
     });
 }
 
-
-/***************
- * Open Evidence
- ***************/
-function openEvidenceDialog(_inspection_id) {
-    // todo:
-    alert("open evidence");
-}
-
 /*********************************
  * evidenceDialog from each column
  *********************************/

@@ -15,30 +15,26 @@ var formData = null;
 * Upload file
 ---------------------- */
 function uploadFile(input, block, is_before, albumId) {
-    // let inspecionId = $(openEvidenceBtn).attr('data-id');
     let countBefore = parseInt($('#beforeUploadedIndex').val());
     let countAfter = parseInt($('#afterUploadedIndex').val());
-
     // Check if file is exists
     if (input.files && input.files[0]) {
+        // Inactive current image, check if No Image in order remove it and set class for temporary image
+        if (is_before) {
+            $('#img_before' + block).find('.active').removeClass('active');
+            $('#img_before' + block).children('img').remove();
+        } else {
+            $('#img_after' + block).find('.active').removeClass('active');
+            $('#img_after' + block).children('img').remove();
+        }
         // Loop each file
         input.files.forEach((element, index) => {
             let reader = new FileReader();
             reader.onload = function (_e) {
-                let fileId = '';
+                let fileId = is_before ? "file_before_block" + block + "_" + (++countBefore) : "file_after_block" + block + "_" + (++countAfter);
                 const image = new Image();
                 image.src = reader.result;
 
-                // Inactive current image, check if No Image in order remove it and set class for temporary image
-                if (is_before) {
-                    $('#img_before' + block).find('.active').removeClass('active');
-                    $('#img_before' + block).children('img').remove();
-                    fileId = "file_before_block" + block + "_" + (++countBefore);
-                } else {
-                    $('#img_after' + block).find('.active').removeClass('active');
-                    $('#img_after' + block).children('img').remove();
-                    fileId = "file_after_block" + block + "_" + (++countAfter);
-                }
                 let deleteImageTooltipMsg = $('#deleteMsgTooltipId').val();
                 let divClass = (index == input.files.length - 1) ? 'item active ' + fileId : 'item ' + fileId;
                 let img = '<div class="' + divClass + '" id="item' + fileId + '" data-id="' + fileId + '">' + '<button type="submit" title="' + deleteImageTooltipMsg + '" class="close-image" id="removeImage' +
@@ -54,14 +50,15 @@ function uploadFile(input, block, is_before, albumId) {
                 }
                 $('#beforeUploadedIndex').val(countBefore);
                 $('#afterUploadedIndex').val(countAfter);
-
             }
 
-        reader.readAsDataURL(input.files[index]);
-        input.value.replace(/^.*\\/, "");
-    });
-
+            reader.readAsDataURL(input.files[index]);
+            input.value.replace(/^.*\\/, "");
+        });
     }
+    setTimeout(() => {
+        input.value = null;
+    }, 100);
 }
 
 /*---------------------
@@ -389,6 +386,9 @@ function handleConfirmOkBtn(isSaveMode) {
  * DOCUMENT READY
  */
  $(function () {
+    $("#btnUpload").on("click", function(){
+        $(".file-after").val("");
+    });
     /*---------------------
      * DIALOG ON SHOW/HIDE
      ---------------------- */
