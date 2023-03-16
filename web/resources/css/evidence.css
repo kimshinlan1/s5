@@ -136,7 +136,6 @@ and (orientation : landscape)
 .btn-primary:hover {
     color: #fff !important;
     background-color: #0b5ed7 !important;
-    border-color: #0a58ca !important;
 }
 
 .btn-primary {
@@ -148,37 +147,31 @@ and (orientation : landscape)
 .btn-secondary {
     color: #fff !important;
     background-color: #6c757d !important;
-    border-color: #6c757d !important;
 }
 
 .btn-secondary:hover {
     color: #fff !important;
     background-color: #5c636a !important;
-    border-color: #565e64 !important;
 }
 
 .btn-success {
     color: #fff !important;
     background-color: #198754 !important;
-    border-color: #198754 !important;
 }
 
 .btn-success:hover {
     color: #fff !important;
     background-color: #157347 !important;
-    border-color: #157347 !important;
 }
 
 .btn-danger {
     color: #fff !important;
     background-color: #dc3545 !important;
-    border-color: #dc3545 !important;
 }
 
 .btn-danger:hover {
     color: #fff !important;
     background-color: #bb2d3b !important;
-    border-color: #157347 !important;
 }
 
 .carousel-control {

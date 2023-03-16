@@ -75,5 +75,7 @@ body {
 .btn-evidence {
     background-color: deepskyblue;
     color: aliceblue;
-    border-color: deepskyblue;
+}
+.toppage-button {
+    border-color: transparent !important;
 }

@@ -323,6 +323,7 @@ $(function(){
                     values: id
                 }).bootstrapTable('refresh');
             }
+            showToast($('#toast2'), 2000, true);
         }).fail(function(jqXHR, _textStatus, _errorThrown){
             // show errors
             if (jqXHR.responseJSON && jqXHR.responseJSON.errors) {

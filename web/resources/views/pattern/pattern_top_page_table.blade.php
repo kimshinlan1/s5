@@ -43,7 +43,7 @@ $width_data = '250px';
             <fieldset class="form-group border border-collapse" id="fiestSetId">
                 @if (count($inspection['teams']))
                     <legend class="float-none w-auto">
-                        <button style="font-size: 14.4px;" class="btn-danger rounded-3 btnTeamInspection" id="btnTeamInspection_{{ $inspection['dept_id'] }}"
+                        <button style="font-size: 14.4px;" class="btn-danger rounded-3 btnTeamInspection toppage-button" id="btnTeamInspection_{{ $inspection['dept_id'] }}"
                             value="{{ __('TopPage_Expand_Button') }}"
                             onclick="showHideTeam('{{ $inspection['dept_id'] }}')">
                             <i class="fa fa-plus" aria-hidden="true"></i> {{ __('TopPage_Expand_Button') }}
@@ -67,7 +67,7 @@ $width_data = '250px';
                                 style="display:none">
                                 <td colspan="{{ $countInspection }}" style="padding-left: 1rem;">
                                     <strong>{{ __('Team') }}: {{ $team['team_name'] }}</strong>
-                                    <input type="button" class="btn-success rounded-3" id="btnInput"
+                                    <input type="button" class="btn-info rounded-3 toppage-button" id="btnInput"
                                         value="{{ __('TopPage_Evidence_Button') }}"
                                         onclick="gotoInspectionPage('{{ $team['team_id'] }}')" />
                                 </td>
@@ -107,14 +107,14 @@ $width_data = '250px';
 
                                     <td style="text-align: center;">
                                         @if ($countImgs)
-                                            <input id="openEvidenceBtn{{ $i }}" type="button" class="rounded-3 btn-evidence openEvidenceBtn"
+                                            <input id="openEvidenceBtn{{ $i }}" type="button" class="rounded-3 btn-evidence openEvidenceBtn toppage-button"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
                                                 onclick=""
                                                 data-time="{{ $i }}"
                                                 data-id="{{ $inspectionId }}"
                                                 data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" />
                                         @else
-                                            <input type="button" class="btn-secondary rounded-3"
+                                            <input type="button" class="btn-secondary rounded-3 toppage-button"
                                                 value="{{ __('TopPage_Redirect_Inspection_Button') }}"
                                                 onclick="" disabled/>
                                         @endif
