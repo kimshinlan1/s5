@@ -59,6 +59,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_detail/{id}', [PatternDetailController::class, 'edit']);
         Route::post('/pattern_save', [PatternDetailController::class, 'savePattern']);
 
+        // Company
+        Route::resource('/company', CompanyController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('/company/list', [CompanyController::class, 'list']);
+        Route::get('/company/get_companies', [CompanyController::class, 'getAll']);
+
+        // Pattern_list
+        Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('pattern_list/data', [PatternController::class, 'list']);
+
     });
 
     // Route with middleware all user
@@ -68,11 +77,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/skillmaps_detail', [SkillMapController::class, 'store'])->name('skillmaps-add');
         Route::get('/skillmaps_detail/list/{id}', [SkillMapController::class, 'list']);
         Route::get('/skillmaps_detail/skill_level_list', [SkillMapController::class, 'skillLevelList']);
-
-        // Company
-        Route::resource('/company', CompanyController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::get('/company/list', [CompanyController::class, 'list']);
-        Route::get('/company/get_companies', [CompanyController::class, 'getAll']);
 
         //Multiskill map list
         Route::get('/skillmaps_list', [SkillMapController::class, 'indexSkillMap'])->name('skillmap_list');
@@ -109,10 +113,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
         Route::get('/teams/dept_id', [TeamController::class, 'getTeamsByDepartmentId']);
         Route::get('teams/list', [TeamController::class, 'list']);
-
-        // Pattern_list
-        Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::get('pattern_list/data', [PatternController::class, 'list']);
 
         // Pattern_List_Customer
         Route::get('/pattern_list_customer', [PatternController::class, 'indexCustomer']);
