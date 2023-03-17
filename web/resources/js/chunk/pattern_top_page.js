@@ -21,8 +21,22 @@ function showHideTeam(deptId) {
 /**
  * Go to Inspection Page
  */
-function gotoInspectionPage(teamId) {
-    window.location = '/pattern_team_inspection/' + teamId;
+function gotoInspectionPage(teamId, deptId) {
+    // window.location = '/pattern_team_inspection/' + teamId;
+    $.ajax({
+      type: 'GET',
+      url: '/departments/getDeptPattern',
+      data: { department_id: deptId },
+      success: function (res) {
+          let deptPatternId = res.dept_pattern_id;
+          if (deptPatternId) {
+              window.location = '/pattern_team_inspection/' + teamId;
+          } else {
+            $('.confirmMessage').text($('#messageChoosePatternForThisDepartment').val());
+            $('#confirmDialog').modal('show');
+          }
+      }
+  });
 }
 /**
  * Load radar chart

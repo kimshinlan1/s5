@@ -66,7 +66,7 @@
                                     <strong>{{ __('Team') }}: {{ $team['team_name'] }}</strong>
                                     <input type="button" class="btn-info rounded-3 toppage-button" id="btnInput"
                                         value="{{ __('TopPage_Evidence_Button') }}"
-                                        onclick="gotoInspectionPage('{{ $team['team_id'] }}')" />
+                                        onclick="gotoInspectionPage('{{ $team['team_id'] }}', {{ $inspection['dept_id'] }})" />
                                 </td>
                             </tr>
 

@@ -34,3 +34,12 @@
         </div>
     </div>
 </div>
+
+<!-- Add Column -->
+<div class="toast hide align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="toast3">
+    <div class="d-flex">
+        <div class="toast-body">
+            {{ __('Message_Add_Column') }}
+        </div>
+    </div>
+</div>

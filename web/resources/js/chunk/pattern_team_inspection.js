@@ -55,7 +55,7 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
         $("#content").append(datas);
         if (isAddColumn) {
             $('#addColumnId').prop('disabled', true);
-            showToast($('#toast1'), 2000, true);
+            showToast($('#toast3'), 2000, true);
             setTimeout(() => {
                 $('#addColumnId').prop('disabled', false);
             }, 1000);

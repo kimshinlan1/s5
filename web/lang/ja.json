@@ -56,6 +56,7 @@
     "Confirm_Delete": "のデータを削除してよろしいですか。",
     "Confirm_Copy": "コピーしますか？",
     "Confirm_Message_Save_Data": "データを保存しますか。",
+    "Message_Add_Column": "追加された列",
     "===== BLOCK_ERROR_MESSAGE_END =====": "",
 
     "===== BLOCK_PAGE_SAMPLE_START =====": "",

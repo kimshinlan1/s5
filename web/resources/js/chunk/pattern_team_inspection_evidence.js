@@ -371,7 +371,7 @@ function handleConfirmOkBtn(isSaveMode) {
 
             runAjax(url, method, formData, doneCallback, failCallback, false);
         } else {
-            $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
+            hideAllModals();
         }
     }
     else {
@@ -534,6 +534,8 @@ function handleConfirmOkBtn(isSaveMode) {
             $("#confirmDialog3").modal('show');
             $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
             $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
+        } else {
+            hideAllModals();
         }
     });
 
