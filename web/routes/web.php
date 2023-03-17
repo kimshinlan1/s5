@@ -61,8 +61,6 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Company
         Route::resource('/company', CompanyController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::get('/company/list', [CompanyController::class, 'list']);
-        Route::get('/company/get_companies', [CompanyController::class, 'getAll']);
 
         // Pattern_list
         Route::resource('/pattern_list', PatternController::class)->only(['index', 'store', 'update', 'destroy']);
@@ -100,6 +98,10 @@ Route::group(['middleware' => ['auth']], function () {
         // print pdf
         Route::post('/skillmap_pdf/html/', [PdfController::class, 'getHtmlPDF'])->name('skillmap_html');
         Route::get('/skillmap_pdf', [PdfController::class, 'exportPDF'])->name('skillmap_pdf');
+
+        // Company
+        Route::get('/company/list', [CompanyController::class, 'list']);
+        Route::get('/company/get_companies', [CompanyController::class, 'getAll']);
 
         // Employee
         Route::resource('/employee', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
