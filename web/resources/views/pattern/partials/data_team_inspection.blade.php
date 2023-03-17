@@ -36,7 +36,7 @@
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: -webkit-center;">
-                <canvas id="myChart_{{ $inspectionId }}" height= "220px" width= "220px"></canvas>
+                <canvas id="myChart_{{ $inspectionId }}" class="radarChart"></canvas>
             </td>
             @endforeach
         </tr>

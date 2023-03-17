@@ -5,6 +5,27 @@
     max-height: 220px !important;
     margin: 0 auto;
 }
+.width-data {
+    width: 250px !important;
+}
+.container {
+    max-width: 1290px !important;
+}
+
+/* Portrait mode */
+@media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
+    /* CSS rules for portrait mode and landscape mode on iPad */
+    .radarChart {
+        width: 155px !important;
+        height: 155px !important;
+        max-width: 155px !important;
+        max-height: 155px !important;
+        margin: 0 auto;
+    }
+    .width-data {
+        width: 180px !important;
+    }
+}
 
 #emptyRow {
     height: 3rem;
@@ -14,10 +35,10 @@
 #scrolling {
     overflow-x: scroll;
     overflow-y: scroll;
-    height:80vh;
+    height:75vh;
 }
 
-#deptRadarChart td:first-child {
+/* #deptRadarChart td:first-child {
     padding-left: 3rem !important;
     width: 268px !important;
     max-width: 268px !important;
@@ -27,7 +48,7 @@
     padding-left: 3rem !important;
     width: 268px !important;
     max-width: 268px !important;
-}
+} */
 
 table tr {
     border-color: transparent;
@@ -67,10 +88,10 @@ body {
     overflow: hidden
 }
 
-.barChart {
+/* .barChart {
     height: 220px !important;
     max-height: 220px !important;
-}
+} */
 
 .btn-evidence {
     background-color: deepskyblue;

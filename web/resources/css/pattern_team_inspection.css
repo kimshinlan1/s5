@@ -46,11 +46,29 @@
     opacity: 0.5 !important;
 }
 
-.myBarChart {
+.radarChart {
+    width: 220px !important;
     height: 220px !important;
+    max-width: 220px !important;
     max-height: 220px !important;
+    margin: 0 auto;
 }
 
-.btn {
-    /* padding: unset !important; */
+.container {
+    max-width: 1400px !important;
+}
+
+/* Portrait mode */
+@media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
+    /* CSS rules for portrait mode and landscape mode on iPad */
+    .radarChart {
+        width: 155px !important;
+        height: 155px !important;
+        max-width: 155px !important;
+        max-height: 155px !important;
+        margin: 0 auto;
+    }
+    .width-data {
+        width: 160px !important;
+    }
 }

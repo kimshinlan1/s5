@@ -21,9 +21,9 @@
                 <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
             </div>
             @else
-            <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Menu') }}</a>
-            <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
-            <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Menu') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
+            <a class="list-group-item list-group-item-action style-list @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
             @endif
 
 
@@ -37,11 +37,11 @@
             </div>
         </a>
         <div id='subMenu2' class="collapse sidebar-submenu">
-            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black">
-                <span class="menu-collapsed">Sub1</span>
+            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black style-list">
+                <span class="menu-collapsed">設定なし 1</span>
             </a>
-            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black">
-                <span class="menu-collapsed">Sub2</span>
+            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black style-list">
+                <span class="menu-collapsed">設定なし 2</span>
             </a>
         </div>
 

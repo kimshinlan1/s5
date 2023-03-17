@@ -1,6 +1,3 @@
-<?php
-$width_data = '250px';
-?>
 <div id="scrolling">
     <div style="width: 100%; height: auto;">
         @foreach ($inspectionData as $inspection)
@@ -25,7 +22,7 @@ $width_data = '250px';
                 {{-- Radar Chart --}}
                 <tr id="deptRadarChart">
                     @for ($i = 0; $i < $countInspection; $i++)
-                        <td style="width: {{ $width_data }}">
+                        <td class="width-data">
                             <canvas class="radarChart"
                                 id="radarchart_dept_{{ $inspection['dept_id'] }}-{{ $i }}"></canvas>
                         </td>
@@ -78,7 +75,7 @@ $width_data = '250px';
                                 id="dept_{{ $inspection['dept_id'] }}-team_{{ $team['team_id'] }}-radarchart"
                                 style="display: none">
                                 @for ($i = 0; $i < $countInspection; $i++)
-                                    <td style="width: {{ $width_data }}">
+                                    <td class="width-data">
                                         <canvas class="radarChart"
                                             id="radarchart_team_{{ $team['team_id'] }}-{{ $i }}"></canvas>
                                     </td>
