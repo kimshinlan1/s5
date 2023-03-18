@@ -59,11 +59,11 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
     let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
         setTimeout(() => {
-            location.replace(document.referrer);
+            location.href = '/pattern_list_customer';
         }, 200);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        showToast($('#toast8'), 2000, true);
+        failAjax(jqXHR, _textStatus, _errorThrown);
         let msgJson = JSON.parse(jqXHR.responseText);
         if (jqXHR.status == 422) {
             $('#patternName').addClass("is-invalid");

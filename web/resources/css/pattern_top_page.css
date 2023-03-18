@@ -25,6 +25,9 @@
     .width-data {
         width: 180px !important;
     }
+    .container {
+        width: 82% !important;
+    }
 }
 
 #emptyRow {

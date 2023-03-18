@@ -297,7 +297,7 @@ function hideAllModals() {
 ---------------------- */
 function getCountEvidence() {
     let count = 0;
-    $('.evidences-body').find('.count-block').each (function(i,ele) {
+    $('.evidences-body').find('.count-block').each (function(_i,ele) {
         let isBeforeNotEmpty = $('#' + ele.id).find('#img_before' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
         let isAfterNotEmpty = $('#' + ele.id).find('#img_after' + ele.dataset.id).find('.item-count').length > 0 ? true : false;
         if (isBeforeNotEmpty && isAfterNotEmpty) {
@@ -371,7 +371,7 @@ function handleConfirmOkBtn(isSaveMode) {
 
             runAjax(url, method, formData, doneCallback, failCallback, false);
         } else {
-            $('#patternEvidenceDialog').find('#hideEvidenceBtnId').click();
+            hideAllModals();
         }
     }
     else {
@@ -411,13 +411,14 @@ function handleConfirmOkBtn(isSaveMode) {
         setTimeout(function() {
             if (!isShown) {
                 let inspectionId = $(openEvidenceBtn).attr('data-id');
+                let countEvidenceId = $(openEvidenceBtn).attr('data-countEvidenceId');
                 let key = $(openEvidenceBtn).attr('data-time');
                 let count = getCountEvidence();
                 let postfix = $('#registeredInspectionId').val();
 
-                $('#countEvidence_' + inspectionId).text(count + postfix);
+                $('#' + countEvidenceId).text(count + postfix);
                 $("#patternEvidenceDialog").find(".evidences-body").html('');
-                if ($('#countEvidence_' + inspectionId).length > 0) $('#countEvidence_' + inspectionId).attr('data-count', count);
+                if ($('#' + countEvidenceId).length > 0) $('#' + countEvidenceId).attr('data-count', count);
 
                 // Disable open evidence button in Top Page if there is no evidence
                 if ($('#openEvidenceBtn' + key).length > 0 && count == 0) {
@@ -534,6 +535,8 @@ function handleConfirmOkBtn(isSaveMode) {
             $("#confirmDialog3").modal('show');
             $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
             $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
+        } else {
+            hideAllModals();
         }
     });
 

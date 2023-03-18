@@ -130,9 +130,12 @@ class PatternDeptSettingController extends Controller
     public function saveDeptPattern(Request $request)
     {
         // todo: Check not exist data
-        $data = $request->get('data');
-        if (!isset($data['info']) || !isset($data['data'])) {
+        $requestData = $request->get('data');
+        if (!isset($requestData['info'])) {
             return $this->responseException();
+        }
+        if (!isset($requestData['data'])) {
+            return $this->responseException('Cannot empty area', 500);
         }
         $data = $this->service->save($request);
         if ($data['invalid']) {
