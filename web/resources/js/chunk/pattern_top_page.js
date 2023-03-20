@@ -32,12 +32,13 @@ function gotoInspectionPage(teamId, deptId) {
           if (deptPatternId) {
               window.location = '/pattern_team_inspection/' + teamId;
           } else {
-            $('.confirmMessage').text($('#messageChoosePatternForThisDepartment').val());
             $('#confirmDialog').modal('show');
+            $(".confirmMessage").html(CONFIG.get('MESSAGE_CHOOSE_PATTERN_FOR_THIS_DEPARTMENT'));
           }
       }
   });
 }
+
 /**
  * Load radar chart
  */

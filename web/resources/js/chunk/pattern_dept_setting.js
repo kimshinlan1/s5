@@ -55,12 +55,18 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         pattern_updated_at: dateFormat($('#dateUpdate').datepicker("getDate"))
     }
     let paramDatas = isFree ? freeData : {data: data} ;
-
+    let pageDept = urlParams.get('pageDept');
     let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
-        setTimeout(() => {
-            location.href = '/pattern_list_customer';
-        }, 200);
+        if (pageDept) {
+            setTimeout(() => {
+                location.href = '/departments';
+            }, 200);
+        } else {
+            setTimeout(() => {
+                location.href = '/pattern_list_customer';
+            }, 200);
+        }
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
