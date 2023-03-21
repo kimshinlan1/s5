@@ -327,152 +327,150 @@ window.reloadDataDepartment = function () {
 *    Save data department
 --------------------- */
 window.saveDataDepartment = function () {
-   let id = $("#departmentId").val();
-   let name = $("#departmentName").val();
-   let no = $("#noID").val();
-   let company_id = $('#companyListID').find(":selected").val();
-   let data = null;
-   let dialog = '#successAddDialog';
-   if (id) {
-       dialog = '#successUpdateDialog';
-       data = {
-           id: id,
-           name: name,
-           no: no,
-           company_id: company_id
-       };
-   } else {
-       data = {
-           name: name,
-           no: "",
-           company_id: company_id
-       };
-   }
+    let id = $("#departmentId").val();
+    let name = $("#departmentName").val();
+    let no = $("#noID").val();
+    let company_id = $('#companyListID').find(":selected").val();
+    let data = null;
+    let dialog = '#successAddDialog';
+    if (id) {
+        dialog = '#successUpdateDialog';
+        data = {
+            id: id,
+            name: name,
+            no: no,
+            company_id: company_id
+        };
+    } else {
+        data = {
+            name: name,
+            no: "",
+            company_id: company_id
+        };
+    }
 
-   showLoading();
+    showLoading();
 
-   // save
-   $.ajax({
-       url: id ? "/departments/" + id : "/departments",
-       type: id ? "PUT" : "POST",
-       data: data,
-   }).done(function (result, _textStatus, _jqXHR) {
-       if(!result['valid']){
-           $('#departmentName').addClass('is-invalid').siblings('.invalid-feedback').html(result['errors']);
-       }
-       else {
-           reloadDataDepartment();
-           $("#departmentEditDialog").modal("hide");
-           showToast($(dialog), 2000, true);
-           $("#departmentTable").bootstrapTable("refresh");
-       }}).fail(function (jqXHR, _textStatus, _errorThrown) {
-           // show errors
-           if (jqXHR.responseJSON && jqXHR.responseJSON.errors) {
-               if(jqXHR.status == 500 || jqXHR.status == 404) {
-                   $("#departmentEditDialog").modal('hide');
-                   $('#errorDialog .modal-body .error-messages').html(jqXHR.responseJSON.errors);
-                   $("#errorDialog").modal('show');
-               } else {
-                   for (let error in jqXHR.responseJSON.errors) {
-                       $('#' + window.toCamelCase('department_' + error)).addClass('is-invalid').siblings('.invalid-feedback').html(jqXHR.responseJSON.errors[error]);
-                   }
-               }
-           } else if (jqXHR.responseJSON && jqXHR.status == 500 && jqXHR.responseJSON.message) {
-               // Check and show other error on page error 500 (handled in server)
-               handleSystemError($("#departmentEditDialog"));
-           }
-       }).always(function () {
-           // hide loading
-           hideLoading();
-       });
+    // save
+    $.ajax({
+        url: id ? "/departments/" + id : "/departments",
+        type: id ? "PUT" : "POST",
+        data: data,
+    }).done(function (result, _textStatus, _jqXHR) {
+        if (!result['valid']) {
+            $('#departmentName').addClass('is-invalid').siblings('.invalid-feedback').html(result['errors']);
+        } else {
+            reloadDataDepartment();
+            $("#departmentEditDialog").modal("hide");
+            showToast($(dialog), 2000, true);
+            $("#departmentTable").bootstrapTable("refresh");
+    }}).fail(function (jqXHR, _textStatus, _errorThrown) {
+        // show errors
+        if (jqXHR.responseJSON && jqXHR.responseJSON.errors) {
+            if (jqXHR.status == 500 || jqXHR.status == 404) {
+                $("#departmentEditDialog").modal('hide');
+                $('#errorDialog .modal-body .error-messages').html(jqXHR.responseJSON.errors);
+                $("#errorDialog").modal('show');
+            } else {
+                for (let error in jqXHR.responseJSON.errors) {
+                    $('#' + window.toCamelCase('department_' + error)).addClass('is-invalid').siblings('.invalid-feedback').html(jqXHR.responseJSON.errors[error]);
+                }
+            }
+        } else if (jqXHR.responseJSON && jqXHR.status == 500 && jqXHR.responseJSON.message) {
+           // Check and show other error on page error 500 (handled in server)
+            handleSystemError($("#departmentEditDialog"));
+        }
+    }).always(function () {
+        // hide loading
+        hideLoading();
+    });
 }
 
 /** ------------------
 *  Load department list
 --------------------- */
 window.loadDeptListByComp = function(id, deptId) {
-   $.ajax({
-       type: 'GET',
-       url: '/departments/list/' + id,
-       success: function (res) {
-           let html = '';
-           for (let e of res) {
-               html += (deptId == e.id) ? '<option value="' + e.id + '" selected>' + e.name + '</option>' : '<option value="' + e.id + '">' + e.name + '</option>';
-           }
-
-           $('#teamDepartment').html(html);
-       },
-       error: function(textStatus, errorThrown) {
-       },
-   });
+    $.ajax({
+        type: 'GET',
+        url: '/departments/list/' + id,
+        success: function (res) {
+            let html = '';
+            for (let e of res) {
+                html += (deptId == e.id) ? '<option value="' + e.id + '" selected>' + e.name + '</option>' : '<option value="' + e.id + '">' + e.name + '</option>';
+            }
+            $('#teamDepartment').html(html);
+        },
+        error: function(textStatus, errorThrown) {
+        },
+    });
 }
 
 /* ==============================
     jQuery
 ==============================*/
 $(function () {
-   loadCompanyList($('#companyListID'), true);
-   $("#departmentTable").bootstrapTable({
-       pagination: "true",
-       paginationParts: "['pageList']",
-       sidePagination: "server",
-       uniqueId: "id",
-       escape: "true",
-       queryParams:"queryParams",
-       onLoadSuccess: function (data) {
-           reloadBoostrapTable(data, $("#departmentTable"));
-       },
-   });
+    loadCompanyList($('#companyListID'), true);
+    $("#departmentTable").bootstrapTable({
+        pagination: "true",
+        paginationParts: "['pageList']",
+        sidePagination: "server",
+        uniqueId: "id",
+        escape: "true",
+        queryParams:"queryParams",
+        onLoadSuccess: function (data) {
+            reloadBoostrapTable(data, $("#departmentTable"));
+        },
+    });
 
-   if ($("#errorDialog .modal-body .error-messages").length) {
-       $("#errorDialog .modal-body .error-messages").html("");
-   }
+    if ($("#errorDialog .modal-body .error-messages").length) {
+        $("#errorDialog .modal-body .error-messages").html("");
+    }
 
-   $('#companyListID').on('change',function () {
-       checkDeptPattern = '';
-       checkPatternOnly = false;
-       $('#departmentTable').bootstrapTable('refresh', {url:'/departments/comp_list'});
-       $('#departmentTable').on('load-success.bs.table.bs.table', function (_e, _result, _status, _jqXHR) {
-           // hide loading modal
-           $('.md-loading').modal('hide');
-       });
-       $('#departmentTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
+    $('#companyListID').on('change',function () {
+        checkDeptPattern = '';
+        checkPatternOnly = false;
+        $('#departmentTable').bootstrapTable('refresh', {url:'/departments/comp_list'});
+        $('#departmentTable').on('load-success.bs.table.bs.table', function (_e, _result, _status, _jqXHR) {
+            // hide loading modal
+            $('.md-loading').modal('hide');
+        });
+        $('#departmentTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
 
-       // Reset for next loop
-       if (pattern_list_data) {
-           pattern_list_data = null;
-       }
-   });
+        // Reset for next loop
+        if (pattern_list_data) {
+            pattern_list_data = null;
+        }
+    });
 
-   reloadDataDepartment();
+    reloadDataDepartment();
 
-   $('body').on('click', '#okBtn', function() {
-       let compId = $('#okBtn').attr('data-compId');
-       let deptId = $('#okBtn').attr('data-deptid');
-       let patternId = $('#okBtn').attr('data-patternid');
-       let isPattern = $('#okBtn').attr('data-isPattern');
-       let id = $('#okBtn').val();
-       if (isEmptyOption) {
-           unbindDeptPattern(patternId, deptId);
-       }
-       else if (isExistedOption) {
-           bindDeptPattern(patternId, deptId, id);
-       } else {
-           window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
-       }
+    $('body').on('click', '#okBtn', function() {
+        let compId = $('#okBtn').attr('data-compId');
+        let deptId = $('#okBtn').attr('data-deptid');
+        let patternId = $('#okBtn').attr('data-patternid');
+        let isPattern = $('#okBtn').attr('data-isPattern');
+        // let id = $('#okBtn').val();
+        let id = "";
+        if (isEmptyOption) {
+            unbindDeptPattern(patternId, deptId);
+        }
+        else if (isExistedOption) {
+            bindDeptPattern(patternId, deptId, id);
+        } else {
+            window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
+        }
+    })
 
-   })
-
-   $('#cancelBtn').on('click', function() {
-       let deptId = $('#okBtn').attr('data-deptid');
-       let oldPatternSelected = $(this).attr('data-deptid-old');
-       $('#checklist5sID' + deptId).siblings().attr('data-selectedPatternId', oldPatternSelected);
-       $("#checklist5sID" + deptId).val(oldPatternSelected);
-       if (oldPatternSelected == '') {
-           checkPatternOnly = false;
-           checkDeptPattern = '';
-       }
-   })
+    $('#cancelBtn').on('click', function() {
+        let deptId = $('#okBtn').attr('data-deptid');
+        let oldPatternSelected = $(this).attr('data-deptid-old');
+        $('#checklist5sID' + deptId).siblings().attr('data-selectedPatternId', oldPatternSelected);
+        $("#checklist5sID" + deptId).val(oldPatternSelected);
+        if (oldPatternSelected == '') {
+            checkPatternOnly = false;
+            checkDeptPattern = '';
+        }
+    })
 
    /** ------------------
      *    Add dialog show

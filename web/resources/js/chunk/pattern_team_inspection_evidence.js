@@ -479,19 +479,19 @@ function handleConfirmOkBtn(isSaveMode) {
         $('#errorDialog').modal('hide');
     })
 
-    /*---------------------
-     * Close button on confirmation dialog
-     ---------------------- */
-    $("body").on('click','#confirmDialog button', function() {
-        $('#confirmDialog').modal('hide');
-    })
+    // /*---------------------
+    //  * Close button on confirmation dialog
+    //  ---------------------- */
+    // $("body").on('click','#confirmDialog button', function() {
+    //     $('#confirmDialog').modal('hide');
+    // })
 
-    /*---------------------
-     * Handle hide event for the confirmation dialog
-     ---------------------- */
-    $("#confirmDialog").on("hide.bs.modal", function () {
-        $("#confirmDialog").find(".modal-body").html('');
-    });
+    // /*---------------------
+    //  * Handle hide event for the confirmation dialog
+    //  ---------------------- */
+    // $("#confirmDialog").on("hide.bs.modal", function () {
+    //     $("#confirmDialog").find(".modal-body").html('');
+    // });
 
     /*---------------------
      * Get current clicked evidence link selector

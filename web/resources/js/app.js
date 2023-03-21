@@ -52,6 +52,7 @@ window.CONFIG = (function () {
         'PAGE_PATTERN_LIST': 0,
         'PAGE_PATTERN_LIST_CUSTOMER': 1,
         'RADAR_CHART_LABEL': $('#radarLabel').val(),
+        'MESSAGE_CHOOSE_PATTERN_FOR_THIS_DEPARTMENT': $('#messageChoosePatternForThisDepartment').val(),
 
     };
     return {

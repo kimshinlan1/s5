@@ -7,11 +7,11 @@ var count_method_delete = '';
 var selected_5s = [];
 const maxCnt5s = 5;
 const labels = [
-    'S1',
-    'S2',
-    'S3',
-    'S4',
-    'S5',
+    '整理',
+    '整頓',
+    '清掃',
+    '清潔',
+    '躾',
 ];
 const DEPT_CHART_COLOR = 'rgb(255,165,0, 0.5)';
 const TEAM_CHART_COLOR = 'rgb(54, 162, 235, 0.5)';
