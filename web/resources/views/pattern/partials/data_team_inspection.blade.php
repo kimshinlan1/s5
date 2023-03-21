@@ -9,7 +9,7 @@
     $pointValues = Constant::POINT_VALUE_5S;
 ?>
 
-<div style="width: 100%; height: auto; overflow: auto; ">
+<div style="width: 100%; height: auto; overflow: auto; " id="scrollTable">
   <form id="formFormsInput">
     {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
     <table id="tableDetailInspection" class="table table-bordered">
@@ -20,12 +20,7 @@
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: center">
-                @if (is_int($inspectionId))
                 <input class="btn-remove-column" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"/>
-                @else
-                <input class="btn-remove-column" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn(-1)"/>
-                @endif
-
             </td>
             @endforeach
         </tr>
@@ -142,7 +137,6 @@
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";
-
                 ?>
                 <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
                 <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
