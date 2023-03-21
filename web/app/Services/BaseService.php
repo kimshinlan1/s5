@@ -77,29 +77,21 @@ class BaseService
      */
     public function removeInspectionDataByDeptId($deptId)
     {
-        $teamIds = Team::where("department_id", $deptId)->pluck('id')->toArray();
-        if ($teamIds) {
+        try {
+            $teamIds = Team::where("department_id", $deptId)->pluck('id')->toArray();
             $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
-            if ($inspectionIds) {
-                $blockIds = InspectionImageBlock::whereIn("inspection_id", $inspectionIds)->pluck('id')->toArray();
-                if ($blockIds) {
-                    $images = InspectionImage::whereIn("block_id", $blockIds)->pluck('id')->toArray();
-                    if ($images) {
-                        InspectionImage::whereIn("id", $images)->delete();
-                        InspectionImageBlock::whereIn("id", $blockIds)->delete();
-                        InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
-                        Inspection::whereIn("id", $inspectionIds)->delete();
-                    } else {
-                        InspectionImageBlock::whereIn("id", $blockIds)->delete();
-                        InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
-                        Inspection::whereIn("id", $inspectionIds)->delete();
-                    }
-                } else {
-                    InspectionImageBlock::whereIn("id", $blockIds)->delete();
-                    Inspection::whereIn("id", $inspectionIds)->delete();
-                }
-            }
+            $blockIds = InspectionImageBlock::whereIn("inspection_id", $inspectionIds)->pluck('id')->toArray();
+            $images = InspectionImage::whereIn("block_id", $blockIds)->pluck('id')->toArray();
+
+            // Remove redundant data
+            InspectionImage::whereIn("id", $images)->delete();
+            InspectionImageBlock::whereIn("id", $blockIds)->delete();
+            InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
+            Inspection::whereIn("id", $inspectionIds)->delete();
+        } catch (\Exception $e) {
+            return false;
         }
+
         return true;
     }
 }
