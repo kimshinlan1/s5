@@ -121,7 +121,7 @@ function acceptRemoveColumn() {
     $("#modalRemoveColumn").modal('hide');
     let param = setParam();
     let inspection_id = inspectionIdBtnRemove;
-    let presentData = sendDataWithoutSaveDB(inspection_id);
+    let presentData = prepareSendDataToRenderHTML(inspection_id);
     showLoading();
 
     // Case: Remove new/empty column
@@ -524,7 +524,7 @@ function createBarChart(arrayPoint) {
 /**************************************
  * Send data without saving to database
  **************************************/
-function sendDataWithoutSaveDB(inspection_id = '') {
+function prepareSendDataToRenderHTML(inspection_id = '') {
     // Initialize an empty array to store inspection data
     let requests = [];
 
@@ -586,7 +586,7 @@ function addColumn() {
     let data = setParam();
 
     // Get any inspection data that has already been entered and is currently being displayed
-    let presentData = sendDataWithoutSaveDB();
+    let presentData = prepareSendDataToRenderHTML();
 
     // Load inspection data for the new column, using the parameter data, the present data, and a mode of "new"
     loadInspectionData(data, MODE_NEW, presentData, true);
