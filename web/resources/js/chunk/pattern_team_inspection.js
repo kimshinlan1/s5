@@ -56,6 +56,7 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
         if (isAddColumn) {
             $('#addColumnId').prop('disabled', true);
             showToast($('#toast3'), 2000, true);
+            autoScrollTable();
             setTimeout(() => {
                 $('#addColumnId').prop('disabled', false);
             }, 1000);
@@ -95,6 +96,15 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
     runAjax(url, method, params, doneCallback, null, null, false);
 }
 
+window.autoScrollTable = function() {
+    let myDiv = document.getElementById("scrollTable");
+    myDiv.scrollTo({
+        top: 0,
+        left: myDiv.scrollWidth,
+        behavior: "smooth",
+      });
+};
+
 /***************
  * Remove column
  ***************/
@@ -111,12 +121,12 @@ function acceptRemoveColumn() {
     $("#modalRemoveColumn").modal('hide');
     let param = setParam();
     let inspection_id = inspectionIdBtnRemove;
-
+    let presentData = prepareSendDataToRenderHTML(inspection_id);
     showLoading();
 
     // Case: Remove new/empty column
-    if (inspection_id == MODE_REMOVE_NEW) {
-        loadInspectionData(param, MODE_REMOVE_NEW);
+    if (inspection_id.indexOf('new_') !== -1) {
+        loadInspectionData(param, MODE_REMOVE_NEW, presentData);
         return;
     }
 
@@ -126,7 +136,7 @@ function acceptRemoveColumn() {
 
     let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#toast2'), 2000, true);
-        loadInspectionData(param);
+        loadInspectionData(param, mode = '', presentData);
     };
 
     let failCallback = function (_jqXHR, _textStatus, _errorThrown) {
@@ -514,7 +524,7 @@ function createBarChart(arrayPoint) {
 /**************************************
  * Send data without saving to database
  **************************************/
-function sendDataWithoutSaveDB() {
+function prepareSendDataToRenderHTML(inspection_id = '') {
     // Initialize an empty array to store inspection data
     let requests = [];
 
@@ -522,45 +532,48 @@ function sendDataWithoutSaveDB() {
     $('input[id^=hidInspectionId]').each(function() {
         // Extract the inspection ID and the count of evidence for this inspection
         let id = $(this).val();
-        let count_evidence = $('#countEvidence_'+id).attr('data-count')
+        if (id == inspection_id) {
 
-        // Get the inspection date from a datepicker input field and format it as "yy-mm-dd"
-        let inspection_date = "";
-        let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
-        if (getdate && getdate instanceof Date) {
-          inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
-        }
+        } else {
+            let count_evidence = $('#countEvidence_'+id).attr('data-count')
+            // Get the inspection date from a datepicker input field and format it as "yy-mm-dd"
+            let inspection_date = "";
+            let getdate = $('#txtInspectionDate_'+id).datepicker("getDate");
+            if (getdate && getdate instanceof Date) {
+            inspection_date = $.datepicker.formatDate("yy-mm-dd", getdate);
+            }
 
-        // Extract the area ID
-        let area_id = $("#hidAreaId").val();
+            // Extract the area ID
+            let area_id = $("#hidAreaId").val();
 
-        // Loop through all input elements with an ID that starts with "hidLocationId_"
-        $('input[id^=hidLocationId_]').each(function(_i, l) {
-            // Extract the location ID and the area location index
-            let location_id = $(l).val();
-            let area_location_index = $('#hidAreaLocationIndex_'+location_id).val();
+            // Loop through all input elements with an ID that starts with "hidLocationId_"
+            $('input[id^=hidLocationId_]').each(function(_i, l) {
+                // Extract the location ID and the area location index
+                let location_id = $(l).val();
+                let area_location_index = $('#hidAreaLocationIndex_'+location_id).val();
 
-            // Look for all select elements with an ID that starts with "selPointValue-" and includes the inspection ID and area location index
-            $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(_k, e) {
-                // Extract the method ("5s") and the selected value of the select element
-                let method = $(e).data('5s');
-                let point_value = $(e).find(":selected").val();
+                // Look for all select elements with an ID that starts with "selPointValue-" and includes the inspection ID and area location index
+                $('select[id^=selPointValue-'+id+'-'+area_location_index+']').each(function(_k, e) {
+                    // Extract the method ("5s") and the selected value of the select element
+                    let method = $(e).data('5s');
+                    let point_value = $(e).find(":selected").val();
 
-                // Construct an object that includes all of the extracted data for this inspection
-                let inspection = {
-                    'inspection_id': id,
-                    'inspection_date': inspection_date,
-                    'area_id': area_id,
-                    'location_id': location_id,
-                    '5s': method,
-                    'point_value': point_value,
-                    'count_evidence': count_evidence,
-                };
+                    // Construct an object that includes all of the extracted data for this inspection
+                    let inspection = {
+                        'inspection_id': id,
+                        'inspection_date': inspection_date,
+                        'area_id': area_id,
+                        'location_id': location_id,
+                        '5s': method,
+                        'point_value': point_value,
+                        'count_evidence': count_evidence,
+                    };
 
-                // Add this inspection object to the requests array
-                requests.push(inspection);
+                    // Add this inspection object to the requests array
+                    requests.push(inspection);
+                });
             });
-        });
+        }
     });
 
     // Return the requests array, which contains all of the inspection data
@@ -573,7 +586,7 @@ function addColumn() {
     let data = setParam();
 
     // Get any inspection data that has already been entered and is currently being displayed
-    let presentData = sendDataWithoutSaveDB();
+    let presentData = prepareSendDataToRenderHTML();
 
     // Load inspection data for the new column, using the parameter data, the present data, and a mode of "new"
     loadInspectionData(data, MODE_NEW, presentData, true);
