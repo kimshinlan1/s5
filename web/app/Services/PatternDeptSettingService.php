@@ -10,6 +10,7 @@ use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
 use App\Models\Company;
+use App\Models\InspectionDetail;
 use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
@@ -34,7 +35,7 @@ class PatternDeptSettingService extends BaseService
      * @param  int  $patternId
      * @return object
      */
-    public function deleteByPatternId($patternId)
+    public function deleteDetailsByPatternId($patternId)
     {
         // todo: Update => Call from DeptPatternService, use common. If diffence, update here
         $data = $this->modelDetail::where("dept_pattern_id", $patternId);
@@ -109,21 +110,13 @@ class PatternDeptSettingService extends BaseService
         // Step: Remove old data by pattern_id
         if ($data['info']['pattern_id']) {
             // Remove Pattern Detail
-            $this->deleteByPatternId($data['info']['pattern_id']);
+            $this->deleteDetailsByPatternId($data['info']['pattern_id']);
         }
-
-        //     // Remove Location
-        //     (app()->get(LocationService::class))->deleteByAreaId($data['old_areas']);
-
-        //     // Remove Area
-        //     (app()->get(AreaService::class))->deleteByPatternId($data['info']['pattern_id']);
-        // }
 
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
         if ($request->data['isSelectedFree'] == 'free') {
             $this->deleteOldDeptPattern($companyId);
         }
-
 
         // Step: Insert new pattern
         $patternData = [
@@ -211,6 +204,72 @@ class PatternDeptSettingService extends BaseService
                 }
             }
         }
+
+        $deletedData = $request->get('data')['data'];
+        $initData = $request->get('data')['initAreaArray'];
+        $areaIds = array_map(function ($deletedData) {
+            return $deletedData['area_id'];
+        }, $deletedData);
+
+        $initAreaIds = array_map(function ($initData) {
+            return $initData['area_id'];
+        }, $initData);
+
+        $deleledAreaIds = array_diff($initAreaIds, $areaIds);
+
+
+        // In case that there is any whole area is deleted
+        if ($deleledAreaIds) {
+            foreach ($deleledAreaIds as $deleledAreaId) {
+                // Remove redundant data in dept pattern detail
+                $this->modelDetail->where('dept_pattern_id', $deleledAreaId)->delete();
+                // Get location ids
+                $locationIds = DB::table('locations')->where('area_id', intval($deleledAreaId))->pluck('id')->toArray();
+                // Remove redundant data in inspection detail
+                InspectionDetail::whereIn('location_id', $locationIds)->delete();
+                // Remove data in locations
+                (app()->get(LocationService::class))->deleteByAreaId($deleledAreaId);
+                // Remove data in areas
+                (app()->get(AreaService::class))->destroy($deleledAreaId);
+            }
+        }
+
+        $remainAreaIds = array_intersect($initAreaIds, $areaIds);
+
+        // Check if there is any locations being removed
+        if ($remainAreaIds) {
+            foreach ($remainAreaIds as $remainAreaId) {
+                $arr1 = [];
+                $arr2 = [];
+                $arr1 = array_filter($deletedData, function ($val) use ($remainAreaId) {
+                    return $val['area_id'] == $remainAreaId;
+                });
+                $selectedLocationIds = array_shift($arr1)['locations'];
+                $selectedLocationIds = array_map(function ($arr) {
+                    return $arr['location_id'];
+                }, $selectedLocationIds);
+
+                $arr2 = array_filter($initData, function ($val) use ($remainAreaId) {
+                    return $val['area_id'] == $remainAreaId;
+                });
+                $initLocationsIds = array_shift($arr2)['locations'];
+                $initLocationsIds = array_map(function ($arr) {
+                    return $arr['location_id'];
+                }, $initLocationsIds);
+
+                $deleledLocationsIds = array_diff($initLocationsIds, $selectedLocationIds);
+
+                if ($deleledLocationsIds) {
+                    // Remove redundant data in inspection detail
+                    InspectionDetail::whereIn('location_id', $deleledLocationsIds)->delete();
+                    // Remove data in locations
+                    (app()->get(LocationService::class))->deleteByLocationIdArr($deleledLocationsIds);
+                }
+            }
+        }
+
+        $remainLocationds = array_intersect($initLocationsIds, $selectedLocationIds);
+
         return $deptPattern;
     }
 
@@ -287,7 +346,6 @@ class PatternDeptSettingService extends BaseService
         $trackAreaId = -1;
         $locationId = -1;
         foreach ($data as $area) {
-
             $area = json_decode(json_encode($area, true), true);
             // Step: Insert new Area
             if ($area['area_id'] != $trackAreaId) {
@@ -297,7 +355,6 @@ class PatternDeptSettingService extends BaseService
                 ]);
                 $areaId = $areaId->id;
                 $trackAreaId = $area['area_id'];
-
             }
 
             // Loop to insert Locations
