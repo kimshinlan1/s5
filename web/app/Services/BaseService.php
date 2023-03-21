@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Common\LogUtil;
 use App\Models\Area;
 use App\Models\Inspection;
 use App\Models\InspectionDetail;
@@ -11,6 +12,7 @@ use App\Models\Location;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 
 class BaseService
 {
@@ -75,7 +77,7 @@ class BaseService
      * @param  int  $deptId
      * @return object
      */
-    public function removeInspectionDataByDeptId($deptId)
+    public function removeRedundantDataByDeptId($deptId)
     {
         try {
             $teamIds = Team::where("department_id", $deptId)->pluck('id')->toArray();
@@ -88,10 +90,15 @@ class BaseService
             InspectionImageBlock::whereIn("id", $blockIds)->delete();
             InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
             Inspection::whereIn("id", $inspectionIds)->delete();
+        } catch (QueryException $e) {
+            LogUtil::setClassName(__TRAIT__);
+            LogUtil::logError(__FUNCTION__, $e->getMessage());
+            return false;
         } catch (\Exception $e) {
+            LogUtil::setClassName(__CLASS__);
+            LogUtil::logError(__FUNCTION__, $e->getMessage());
             return false;
         }
-
         return true;
     }
 }

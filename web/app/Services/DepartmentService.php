@@ -180,7 +180,7 @@ class DepartmentService extends BaseService
     public function unbindDeptPatternFromDept(Request $request)
     {
         $id = $request->get('id');
-        $res = parent::removeInspectionDataByDeptId($id);
+        $res = parent::removeRedundantDataByDeptId($id);
         if (!$res) {
             return false;
         }
@@ -199,7 +199,7 @@ class DepartmentService extends BaseService
     {
         $id = $request->get('id');
         $patternId = $request->get('pattern_id');
-        $res = parent::removeInspectionDataByDeptId($id);
+        $res = parent::removeRedundantDataByDeptId($id);
         if (!$res) {
             return false;
         }

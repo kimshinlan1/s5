@@ -115,7 +115,7 @@ class PatternDeptSettingService extends BaseService
             // Remove Pattern Detail
             $this->deleteDetailsByPatternId($data['info']['pattern_id']);
         } else {
-            $res = parent::removeInspectionDataByDeptId($data['department']);
+            $res = parent::removeRedundantDataByDeptId($data['department']);
             if (!$res) {
                 return false;
             }
@@ -278,14 +278,14 @@ class PatternDeptSettingService extends BaseService
         if ($isPattern != '-1') {
             $pattern  = Pattern::find($patternId)->toArray();
             $data = (app()->get(PatternDetailService::class))->getData((int)$patternId);
-            $res = parent::removeInspectionDataByDeptId($deptId);
+            $res = parent::removeRedundantDataByDeptId($deptId);
             if (!$res) {
                 return false;
             }
         } else {
             $pattern  = DeptPattern::find($patternId)->toArray();
             $data = $this->getData((int)$patternId);
-            $res = parent::removeInspectionDataByDeptId($deptId);
+            $res = parent::removeRedundantDataByDeptId($deptId);
             if (!$res) {
                 return false;
             }
