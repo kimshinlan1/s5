@@ -221,7 +221,7 @@ window.checkDeptPatternExist = function(id) {
 /**
  * Add new area to table
  */
-function addAreaToTable(mode = null, id = null, isPattern = null) {
+function addAreaToTable(mode = null, id = null, isPattern = null, isInitEdit = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
@@ -245,7 +245,9 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
         } else {
             $("#table-content tbody").append(data);
         }
-        getInitialAreaData();
+        if (isInitEdit) {
+            getInitialAreaData();
+        }
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -376,7 +378,7 @@ window.initLoadPage = function() {
                 $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
                 $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             } else {
-                addAreaToTable('edit', hidPatternId, ispattern);
+                addAreaToTable('edit', hidPatternId, ispattern, true);
             }
         }
         if (pageDept) {
