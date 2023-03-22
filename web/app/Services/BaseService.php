@@ -75,14 +75,14 @@ class BaseService
     }
 
      /**
-     * Remove the inspection data and evidence data by dept id
+     * Remove the inspection data and evidence data by dept id or team id
      * @param  int  $deptId
      * @return object
      */
-    public function removeRedundantDataByDeptId($deptId)
+    public function removeRedundantDataById($deptId, $teamId = null)
     {
         try {
-            $teamIds = Team::where("department_id", $deptId)->pluck('id')->toArray();
+            $teamIds = $teamId ? [$teamId] : Team::where("department_id", $deptId)->pluck('id')->toArray();
             $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
             $blockIds = InspectionImageBlock::whereIn("inspection_id", $inspectionIds)->pluck('id')->toArray();
             $images = InspectionImage::whereIn("block_id", $blockIds)->pluck('id')->toArray();

@@ -13,7 +13,6 @@ use App\Models\InspectionDetail;
 use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use App\Common\LogUtil;
 
@@ -112,7 +111,7 @@ class PatternDeptSettingService extends BaseService
             // Remove Pattern Detail
             $this->deleteDetailsByPatternId($data['info']['pattern_id']);
         } else {
-            $res = parent::removeRedundantDataByDeptId($data['department']);
+            $res = parent::removeRedundantDataById($data['department']);
             if (!$res) {
                 return false;
             }
@@ -217,7 +216,6 @@ class PatternDeptSettingService extends BaseService
         *    Then comes to areas that are not removed, check if any location in each is removed, remove its redundant data
         *    Then comes to locations that are not removed, check if any 5s points in each is removed, remove its redundant data
         */
-
         if (array_key_exists('initAreaArray', $request->get('data'))) {
             $afterData = $request->get('data')['data'];
             $initData = $request->get('data')['initAreaArray'];
@@ -275,14 +273,14 @@ class PatternDeptSettingService extends BaseService
         if ($isPattern != '-1') {
             $pattern  = Pattern::find($patternId)->toArray();
             $data = (app()->get(PatternDetailService::class))->getData((int)$patternId);
-            $res = parent::removeRedundantDataByDeptId($deptId);
+            $res = parent::removeRedundantDataById($deptId);
             if (!$res) {
                 return false;
             }
         } else {
             $pattern  = DeptPattern::find($patternId)->toArray();
             $data = $this->getData((int)$patternId);
-            $res = parent::removeRedundantDataByDeptId($deptId);
+            $res = parent::removeRedundantDataById($deptId);
             if (!$res) {
                 return false;
             }
@@ -461,6 +459,29 @@ class PatternDeptSettingService extends BaseService
                         // Remove data in locations
                         (app()->get(LocationService::class))->deleteByLocationIdArr($deleledLocationsIds);
                     }
+                    // Get location id array that is not removed
+                    $remainLocations = array_intersect($selectedLocationIds, $afterLocationIds);
+
+                    foreach ($remainLocations as $remainLocation) {
+                        $targetLocation = array_filter($selectedLocations, function ($val) use ($remainLocation) {
+                            return $val['location_id'] == $remainLocation;
+                        });
+                        $targetAfterLocation = array_filter($afterLocations, function ($val) use ($remainLocation) {
+                            return $val['location_id'] == $remainLocation;
+                        });
+                        $initRows = array_shift($targetLocation)['rows'];
+                        $initRows = array_keys($initRows);
+                        $afterRows = array_shift($targetAfterLocation)['rows'];
+                        $afterRows = array_keys($afterRows);
+
+                        // Check if any 5s point is removed and get its value
+                        $deletedRows = array_diff($initRows, $afterRows);
+
+                        // Remove redundant point data in inspection detail
+                        if (count($deletedRows) > 0) {
+                            InspectionDetail::where('location_id', $remainLocation)->whereIn('point', $deletedRows)->delete();
+                        }
+                    }
                 }
             } catch (\Exception $e) {
                 LogUtil::setClassName(__CLASS__);
@@ -469,27 +490,6 @@ class PatternDeptSettingService extends BaseService
             }
         }
 
-        // Get location id array that is not removed
-        $remainLocations = array_intersect($selectedLocationIds, $afterLocationIds);
-
-        foreach ($remainLocations as $remainLocation) {
-            $targetLocation = array_filter($selectedLocations, function ($val) use ($remainLocation) {
-                return $val['location_id'] == $remainLocation;
-            });
-            $targetAfterLocation = array_filter($afterLocations, function ($val) use ($remainLocation) {
-                return $val['location_id'] == $remainLocation;
-            });
-            $initRows = array_shift($targetLocation)['rows'];
-            $initRows = array_keys($initRows);
-            $afterRows = array_shift($targetAfterLocation)['rows'];
-            $afterRows = array_keys($afterRows);
-
-            // Check if any 5s point is removed and get its value
-            $deletedRows = array_diff($initRows, $afterRows);
-
-            // Remove redundant point data in inspection detail
-            InspectionDetail::where('location_id', $remainLocation)->whereIn('point', $deletedRows)->delete();
-        }
         return true;
     }
 }

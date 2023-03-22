@@ -7,6 +7,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Requests\DepartmentRequest;
 use App\Common\Utility;
+use App\Models\Team;
 
 class DepartmentService extends BaseService
 {
@@ -103,6 +104,10 @@ class DepartmentService extends BaseService
      */
     public function destroyByCompany($companyId)
     {
+        $deptIds = Team::where('company_id', $companyId)->pluck('id')->toArray();
+        foreach ($deptIds as $deptId) {
+            $this->destroyDepartment($deptId);
+        }
         $data = $this->model::where("company_id", $companyId);
         $data->delete();
         return $data;
@@ -180,7 +185,7 @@ class DepartmentService extends BaseService
     public function unbindDeptPatternFromDept(Request $request)
     {
         $id = $request->get('id');
-        $res = parent::removeRedundantDataByDeptId($id);
+        $res = parent::removeRedundantDataById($id);
         if (!$res) {
             return false;
         }
@@ -199,7 +204,7 @@ class DepartmentService extends BaseService
     {
         $id = $request->get('id');
         $patternId = $request->get('pattern_id');
-        $res = parent::removeRedundantDataByDeptId($id);
+        $res = parent::removeRedundantDataById($id);
         if (!$res) {
             return false;
         }
@@ -246,5 +251,23 @@ class DepartmentService extends BaseService
     {
         $departmentId = $request->input('department_id');
         return $this->model->where('id', $departmentId)->orderBy('dept_pattern_id')->first();
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id department id
+     * @return object
+     */
+    public function destroyDepartment($id)
+    {
+        $teamIds = Team::where('department_id', $id)->pluck('id')->toArray();
+
+        foreach ($teamIds as $teamId) {
+            (app()->get(TeamService::class))->destroyTeam($teamId);
+        }
+        $data = $this->model::find($id);
+        $data->delete();
+        return $data;
     }
 }
