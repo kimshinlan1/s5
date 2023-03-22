@@ -406,40 +406,33 @@ class PatternDeptSettingService extends BaseService
      */
     private function removeRedundantData($afterData, $initData)
     {
-        $afterAreaIds = array_map(function ($afterData) {
-            return $afterData['area_id'];
-        }, $afterData);
-
-        $initAreaIds = array_map(function ($initData) {
-            return $initData['area_id'];
-        }, $initData);
+        $afterAreaIds = array_column($afterData, 'area_id');
+        $initAreaIds = array_column($initData, 'area_id');
 
         // Check if any area is removed and get its id
         $deleledAreaIds = array_diff($initAreaIds, $afterAreaIds);
 
         // In case that there is any area is deleted
         if ($deleledAreaIds) {
-            foreach ($deleledAreaIds as $deleledAreaId) {
-                try {
+            try {
+                foreach ($deleledAreaIds as $deleledAreaId) {
                     // Remove redundant data in dept pattern detail
                     $this->modelDetail->where('dept_pattern_id', $deleledAreaId)->delete();
                     // Get location ids
-                    $locationIds = DB::table('locations')->where('area_id', intval($deleledAreaId))->pluck('id')->toArray();
+                    $locationIds = DB::table('locations')
+                    ->where('area_id', intval($deleledAreaId))
+                    ->pluck('id')->toArray();
                     // Remove redundant data in inspection detail
                     InspectionDetail::whereIn('location_id', $locationIds)->delete();
                     // Remove data in locations
                     (app()->get(LocationService::class))->deleteByAreaId($deleledAreaId);
                     // Remove data in areas
                     (app()->get(AreaService::class))->destroy($deleledAreaId);
-                } catch (QueryException $e) {
-                    LogUtil::setClassName(__TRAIT__);
-                    LogUtil::logError(__FUNCTION__, $e->getMessage());
-                    return false;
-                } catch (\Exception $e) {
-                    LogUtil::setClassName(__CLASS__);
-                    LogUtil::logError(__FUNCTION__, $e->getMessage());
-                    return false;
                 }
+            } catch (\Exception $e) {
+                LogUtil::setClassName(__CLASS__);
+                LogUtil::logError(__FUNCTION__, $e->getMessage());
+                return false;
             }
         }
 
@@ -448,49 +441,31 @@ class PatternDeptSettingService extends BaseService
 
         // For area id array that is not removed, Check if there is any locations being removed
         if ($remainAreaIds) {
-            foreach ($remainAreaIds as $remainAreaId) {
-                try {
-                    $afterLocations = array_shift($afterData)['locations'];
-                    $afterLocationIds = array_map(function ($arr) {
-                        return $arr['location_id'];
-                    }, $afterLocations);
+            try {
+                foreach ($remainAreaIds as $remainAreaId) {
+                        $afterLocations = array_shift($afterData)['locations'];
+                        $afterLocationIds =  array_column($afterLocations, 'location_id');
 
-                    $selectedLocations = array_filter($initData, function ($val) use ($remainAreaId) {
-                        return $val['area_id'] == $remainAreaId;
-                    });
-                    $selectedLocations = array_shift($selectedLocations)['locations'];
-                    $selectedLocationIds = array_map(function ($arr) {
-                        return $arr['location_id'];
-                    }, $selectedLocations);
-                } catch (QueryException $e) {
-                    LogUtil::setClassName(__TRAIT__);
-                    LogUtil::logError(__FUNCTION__, $e->getMessage());
-                    return false;
-                } catch (\Exception $e) {
-                    LogUtil::setClassName(__CLASS__);
-                    LogUtil::logError(__FUNCTION__, $e->getMessage());
-                    return false;
-                }
+                        $selectedLocations = array_filter($initData, function ($val) use ($remainAreaId) {
+                            return $val['area_id'] == $remainAreaId;
+                        });
+                        $selectedLocations = array_shift($selectedLocations)['locations'];
+                        $selectedLocationIds = array_column($selectedLocations, 'location_id');
 
-                // Check if any location is removed and get its id
-                $deleledLocationsIds = array_diff($selectedLocationIds, $afterLocationIds);
+                    // Check if any location is removed and get its id
+                    $deleledLocationsIds = array_diff($selectedLocationIds, $afterLocationIds);
 
-                if ($deleledLocationsIds) {
-                    try {
+                    if ($deleledLocationsIds) {
                         // Remove redundant location_id and point data in inspection detail
                         InspectionDetail::whereIn('location_id', $deleledLocationsIds)->delete();
                         // Remove data in locations
                         (app()->get(LocationService::class))->deleteByLocationIdArr($deleledLocationsIds);
-                    } catch (QueryException $e) {
-                        LogUtil::setClassName(__TRAIT__);
-                        LogUtil::logError(__FUNCTION__, $e->getMessage());
-                        return false;
-                    } catch (\Exception $e) {
-                        LogUtil::setClassName(__CLASS__);
-                        LogUtil::logError(__FUNCTION__, $e->getMessage());
-                        return false;
                     }
                 }
+            } catch (\Exception $e) {
+                LogUtil::setClassName(__CLASS__);
+                LogUtil::logError(__FUNCTION__, $e->getMessage());
+                return false;
             }
         }
 
