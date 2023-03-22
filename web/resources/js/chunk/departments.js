@@ -180,10 +180,10 @@ window.bindDeptPattern = function(patternId, deptId, oldId) {
    };
 
    let doneCallback = function (_data, _textStatus, _jqXHR) {
-       showToast($("#successUpdateDialog"), 2000, true);
+       showToast($("#successUpdateDialog"), 1000, true);
        setTimeout(() => {
            location.reload();
-       }, 1000);
+       }, 500);
    };
    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
        failAjax(jqXHR, _textStatus, _errorThrown);

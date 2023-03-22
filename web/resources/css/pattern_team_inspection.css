@@ -55,7 +55,10 @@
 }
 
 .container {
-    max-width: 1400px !important;
+    margin: auto 0;
+    padding: 0;
+    max-width: calc(98% - 13.5%);
+    padding-bottom: 1.5rem;
 }
 
 /* Portrait mode */
@@ -67,5 +70,12 @@
         max-width: 155px !important;
         max-height: 155px !important;
         margin: 0 auto;
+    }
+
+    .container {
+        margin: auto 0;
+        padding: 0;
+        max-width: calc(88% - 13.5%);
+        padding-bottom: 1.5rem;
     }
 }

@@ -68,7 +68,7 @@ class PatternTeamInspectionController extends Controller
         $teamId = $request->get('team_id');
         $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
 
-        if (($request->get('new_total_column')) && ($request->get('present_data')['presentData'])) {
+        if ($request->get('present_data')['presentData']) {
             $inspectionDetails = $request->get('present_data')['presentData'];
         } else {
             // Get Columns: Inspection detail and render structure todo:
