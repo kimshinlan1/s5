@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Common\Constant;
 use App\Common\LogUtil;
 use App\Models\Area;
 use App\Models\Inspection;
@@ -13,6 +14,7 @@ use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\File;
 
 class BaseService
 {
@@ -90,6 +92,14 @@ class BaseService
             InspectionImageBlock::whereIn("id", $blockIds)->delete();
             InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
             Inspection::whereIn("id", $inspectionIds)->delete();
+
+            // Remove redundant directories
+            foreach ($inspectionIds as $inspectionId) {
+                $path = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId;
+                if (File::exists($path)) {
+                    File::deleteDirectory($path);
+                }
+            }
         } catch (QueryException $e) {
             LogUtil::setClassName(__TRAIT__);
             LogUtil::logError(__FUNCTION__, $e->getMessage());

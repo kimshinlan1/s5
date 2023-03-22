@@ -9,16 +9,13 @@ use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
-use App\Models\Company;
-use App\Models\Inspection;
 use App\Models\InspectionDetail;
-use App\Models\InspectionImage;
-use App\Models\InspectionImageBlock;
 use App\Models\Pattern;
-use App\Models\Team;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use App\Common\LogUtil;
 
 class PatternDeptSettingService extends BaseService
 {
@@ -434,7 +431,13 @@ class PatternDeptSettingService extends BaseService
                     (app()->get(LocationService::class))->deleteByAreaId($deleledAreaId);
                     // Remove data in areas
                     (app()->get(AreaService::class))->destroy($deleledAreaId);
+                } catch (QueryException $e) {
+                    LogUtil::setClassName(__TRAIT__);
+                    LogUtil::logError(__FUNCTION__, $e->getMessage());
+                    return false;
                 } catch (\Exception $e) {
+                    LogUtil::setClassName(__CLASS__);
+                    LogUtil::logError(__FUNCTION__, $e->getMessage());
                     return false;
                 }
             }
@@ -459,7 +462,13 @@ class PatternDeptSettingService extends BaseService
                     $selectedLocationIds = array_map(function ($arr) {
                         return $arr['location_id'];
                     }, $selectedLocations);
+                } catch (QueryException $e) {
+                    LogUtil::setClassName(__TRAIT__);
+                    LogUtil::logError(__FUNCTION__, $e->getMessage());
+                    return false;
                 } catch (\Exception $e) {
+                    LogUtil::setClassName(__CLASS__);
+                    LogUtil::logError(__FUNCTION__, $e->getMessage());
                     return false;
                 }
 
@@ -472,7 +481,13 @@ class PatternDeptSettingService extends BaseService
                         InspectionDetail::whereIn('location_id', $deleledLocationsIds)->delete();
                         // Remove data in locations
                         (app()->get(LocationService::class))->deleteByLocationIdArr($deleledLocationsIds);
+                    } catch (QueryException $e) {
+                        LogUtil::setClassName(__TRAIT__);
+                        LogUtil::logError(__FUNCTION__, $e->getMessage());
+                        return false;
                     } catch (\Exception $e) {
+                        LogUtil::setClassName(__CLASS__);
+                        LogUtil::logError(__FUNCTION__, $e->getMessage());
                         return false;
                     }
                 }
@@ -483,7 +498,6 @@ class PatternDeptSettingService extends BaseService
         $remainLocations = array_intersect($selectedLocationIds, $afterLocationIds);
 
         foreach ($remainLocations as $remainLocation) {
-            // $targetLocation = [];
             $targetLocation = array_filter($selectedLocations, function ($val) use ($remainLocation) {
                 return $val['location_id'] == $remainLocation;
             });
