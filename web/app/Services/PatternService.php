@@ -138,10 +138,7 @@ class PatternService extends BaseService
 
                 // If the selected dept pattern has been linking to a department, remove its redundant inspection data
                 if ($linkdedDeptId) {
-                    $res = parent::removeRedundantDataById($linkdedDeptId);
-                    if (!$res) {
-                        return false;
-                    }
+                    parent::removeRedundantDataById($linkdedDeptId);
                 }
 
                 // Remove related areas, locations, dept pattern details

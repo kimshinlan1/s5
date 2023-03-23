@@ -128,10 +128,7 @@ class TeamService extends BaseService
     public function destroyTeam($id)
     {
         $employeeIds = Employee::where('team_id', $id)->pluck('id')->toArray();
-        $res = parent::removeRedundantDataById(null, $id);
-        if (!$res) {
-            return false;
-        }
+        parent::removeRedundantDataById(null, $id);
         Employee::whereIn('id', $employeeIds)->delete();
         $data = $this->model::find($id);
         $data->delete();

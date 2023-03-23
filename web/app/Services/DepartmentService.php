@@ -185,10 +185,7 @@ class DepartmentService extends BaseService
     public function unbindDeptPatternFromDept(Request $request)
     {
         $id = $request->get('id');
-        $res = parent::removeRedundantDataById($id);
-        if (!$res) {
-            return false;
-        }
+        parent::removeRedundantDataById($id);
         $data = $this->model::find($id);
         $data->dept_pattern_id = null;
         return $data->save();
@@ -204,10 +201,8 @@ class DepartmentService extends BaseService
     {
         $id = $request->get('id');
         $patternId = $request->get('pattern_id');
-        $res = parent::removeRedundantDataById($id);
-        if (!$res) {
-            return false;
-        }
+        parent::removeRedundantDataById($id);
+
         $unbindOldData = $this->unbindDeptPatternFromDept($request);
         if (empty($unbindOldData)) {
             return [
