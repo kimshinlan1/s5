@@ -8,6 +8,8 @@ use App\Models\Department;
 use App\Models\Pattern;
 use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
+use App\Models\Location;
+use App\Models\PatternDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -130,12 +132,32 @@ class PatternService extends BaseService
         if ($pageDest == Constant::PAGE_PATTERN_LIST_CUSTOMER) {
             $data = DeptPattern::where('id', $id);
             if ($data->delete()) {
-                Area::where('dept_pattern_id', $id)->delete();
+                $areaIds = Area::where('dept_pattern_id', $id)->pluck('id')->toArray();
+                $locationIds = Location::whereIn('area_id', $areaIds)->pluck('id')->toArray();
+                $linkdedDeptId = Department::where('dept_pattern_id', $id)->value('id');
+
+                // If the selected dept pattern has been linking to a department, remove its redundant inspection data
+                if ($linkdedDeptId) {
+                    parent::removeRedundantDataById($linkdedDeptId);
+                }
+
+                // Remove related areas, locations, dept pattern details
+                Location::whereIn("id", $locationIds)->delete();
+                Area::whereIn("id", $areaIds)->delete();
+                $deptPatternIds = DeptPatternDetail::where('dept_pattern_id', $id)->pluck('dept_pattern_id')->toArray();
+                DeptPatternDetail::whereIn('dept_pattern_id', $deptPatternIds)->delete();
+
+                // Unbind dept pattern if exist
                 Department::where('dept_pattern_id', $id)->update(['dept_pattern_id' => null]);
-                $deptDetails = DeptPatternDetail::where('dept_pattern_id', $id)->pluck('dept_pattern_id')->toArray();
-                DeptPatternDetail::whereIn('dept_pattern_id', $deptDetails)->delete();
             }
         } else {
+            $areaIds = Area::where('pattern_id', $id)->pluck('id')->toArray();
+            $locationIds = Location::whereIn('area_id', $areaIds)->pluck('id')->toArray();
+            Location::whereIn("id", $locationIds)->delete();
+            Area::whereIn("id", $areaIds)->delete();
+            $patternIds = PatternDetail::where('pattern_id', $id)->pluck('pattern_id')->toArray();
+            PatternDetail::whereIn('pattern_id', $patternIds)->delete();
+
             $data = $this->model::find($id);
         }
         return $data->delete();

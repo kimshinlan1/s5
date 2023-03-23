@@ -2,6 +2,7 @@
 // 改善ポイントの選択 - Select 5S methods
 var params = {};
 var select_location_to_delete = [];
+var initAreaArray = [];
 var count_method_delete = 0;
 var department_id = null;
 var loginCompid = null;
@@ -53,6 +54,9 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         pattern_5s_selected: JSON.stringify(selected_5s),
         pattern_created_at: dateFormat($('#dateCreate').datepicker("getDate")),
         pattern_updated_at: dateFormat($('#dateUpdate').datepicker("getDate"))
+    }
+    if (data) {
+        data['initAreaArray'] = initAreaArray;
     }
     let paramDatas = isFree ? freeData : {data: data} ;
     let pageDept = urlParams.get('pageDept');
@@ -217,7 +221,7 @@ window.checkDeptPatternExist = function(id) {
 /**
  * Add new area to table
  */
-function addAreaToTable(mode = null, id = null, isPattern = null) {
+function addAreaToTable(mode = null, id = null, isPattern = null, isInitEdit = null) {
     // Add Area
     let locationNo = $('#locationNo').val();
     let areaName = $('#rowArea').val();
@@ -241,6 +245,9 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
         } else {
             $("#table-content tbody").append(data);
         }
+        if (isInitEdit) {
+            getInitialAreaData();
+        }
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -252,6 +259,70 @@ function addAreaToTable(mode = null, id = null, isPattern = null) {
     };
 
     runAjax(url, method, paramDatas, doneCallback, failCallback, alwaysCallback, false);
+}
+
+window.getInitialAreaData = function() {
+    // Loop main area
+    $("#table-content tbody").find("tr.main_area").each(function() {
+        // New Area
+        // get area name
+        let areaName = $(this).find("#area").val();
+        let areaId = $(this).find('#hidAreaId').val();
+        // if area is empty
+        if (areaName.trim().length === 0) {
+            valid = false;
+            $(this).find("#area").addClass('is-invalid');
+        } else {
+            $(this).find("#area").removeClass('is-invalid');
+        }
+        let area = {
+            'area_id': areaId,
+            'area_name': areaName,
+            'locations': [],
+            'old_locations': []
+        };
+
+        // Loop all locations
+        let trid = $(this).attr("id").split('_location_')[0];
+        $('[id*='+trid+']').filter('.main_location').each(function(_i, ele) {
+            // New location
+            // get location name on each row
+            let locName = $(ele).find("#location").val();
+            let locationId = $(ele).find('#hidLocationId').val();
+            // if location is empty
+            if (locName.trim().length === 0) {
+                valid = false;
+                $(ele).find("#location").addClass('is-invalid');
+            } else {
+                $(ele).find("#location").removeClass('is-invalid');
+            }
+            let location = {
+                'location_id': locationId,
+                'location_name': locName,
+                'rows':{}
+            };
+            // Loop all rows in location
+            let trid_location = $(ele).attr("id").split('_row_')[0];
+            $('[id*='+trid_location+']').each(function(_index, e) {
+                // Case Valid
+                // Add levels in 1 methos 5S (1 row)
+                let row = {};
+                for (let cnt = 1; cnt <= maxCnt5s; cnt++) {
+                    let levelName = $(e).find("#level_"  + cnt).val();
+
+                    // if level is empty
+                    if (levelName.trim().length === 0) {
+                        row["level_" + cnt] = "";
+                    } else {
+                        row["level_" + cnt] = levelName;
+                    }
+                }
+                location['rows'][$(e).find("#hid5S").val()] = row;
+            });
+            area['locations'].push(location);
+        });
+        initAreaArray.push(area);
+    });
 }
 
 window.initLoadPage = function() {
@@ -307,7 +378,7 @@ window.initLoadPage = function() {
                 $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
                 $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             } else {
-                addAreaToTable('edit', hidPatternId, ispattern);
+                addAreaToTable('edit', hidPatternId, ispattern, true);
             }
         }
         if (pageDept) {

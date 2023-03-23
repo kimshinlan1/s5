@@ -121,7 +121,7 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         try {
-            $data = $this->service->destroy($id);
+            $data = $this->service->destroyDepartment($id);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([

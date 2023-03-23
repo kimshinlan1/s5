@@ -51,7 +51,6 @@ class PatternDeptSettingController extends Controller
         }
         if (!empty($info)) {
             $selected5s = json_decode($info['5s']);
-
         }
 
         $data = [
