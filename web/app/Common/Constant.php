@@ -78,4 +78,5 @@ class Constant
     public const IMAGE_LIMIT_SIZE_BYTE = 10485760;
     public const IMAGE_LIMIT_SIZE = 10;
     public const VALID_IMAGE_EXTENSION = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'png', 'bmp'];
+    public const THE_FIRST_TIME = '回目';
 }

@@ -7,6 +7,8 @@
     $areas = [];
     $locations = [];
     $pointValues = Constant::POINT_VALUE_5S;
+    $countFirstTime = 0;
+    $theFirstTime = Constant::THE_FIRST_TIME;
 ?>
 
 <div style="width: 100%; height: auto; overflow: auto; " id="scrollTable">
@@ -16,10 +18,13 @@
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
             <td colspan="3" style="text-align: center">
-                <input id="addColumnId" style="font-size: 0.75rem; border: 0rem; border-radius: 6px;" class="btn btn-primary" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
+                <input id="addColumnId" class="btn btn-primary btn-add-inspection" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
             @foreach ($inspectionIds as $inspectionId)
+            <?php $countFirstTime++ ?>
             <td style="text-align: center">
+                <label><strong>{{ $countFirstTime }}{{ $theFirstTime }}</strong></label>
+                <br>
                 <input class="btn-remove-column" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"/>
             </td>
             @endforeach
@@ -74,9 +79,9 @@
 
         {{-- 平均 --}}
         <tr>
-            <td rowspan="5" style="width: 20px; text-align: center;">平均</td>
-            <td style="width: 30px; text-align: center;">整理</td>
-            <td style="width: 30px; text-align: center;">1S</td>
+            <td rowspan="5" style="width: 20px; text-align: center; background: #F2F2F2;">平均</td>
+            <td style="width: 30px; text-align: center; background: #F2F2F2;">整理</td>
+            <td style="width: 30px; text-align: center; background: #F2F2F2;">1S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_1s_{{ $inspectionId }}">0</label>
@@ -84,8 +89,8 @@
             @endforeach
         </tr>
         <tr>
-            <td style="text-align: center;">整頓</td>
-            <td style="text-align: center;">2S</td>
+            <td style="text-align: center; background: #F2F2F2;">整頓</td>
+            <td style="text-align: center; background: #F2F2F2;">2S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_2s_{{ $inspectionId }}">0</label>
@@ -93,8 +98,8 @@
             @endforeach
         </tr>
         <tr>
-            <td style="text-align: center;">清掃</td>
-            <td style="text-align: center;">3S</td>
+            <td style="text-align: center; background: #F2F2F2;">清掃</td>
+            <td style="text-align: center; background: #F2F2F2;">3S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_3s_{{ $inspectionId }}">0</label>
@@ -102,8 +107,8 @@
             @endforeach
         </tr>
         <tr>
-            <td style="text-align: center;">清潔</td>
-            <td style="text-align: center;">4S</td>
+            <td style="text-align: center; background: #F2F2F2;">清潔</td>
+            <td style="text-align: center; background: #F2F2F2;">4S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_4s_{{ $inspectionId }}">0</label>
@@ -111,8 +116,8 @@
             @endforeach
         </tr>
         <tr>
-            <td style="text-align: center;">躾</td>
-            <td style="text-align: center;">5S</td>
+            <td style="text-align: center; background: #F2F2F2;">躾</td>
+            <td style="text-align: center; background: #F2F2F2;">5S</td>
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_5s_{{ $inspectionId }}">0</label>
@@ -121,7 +126,7 @@
         </tr>
 
         {{-- 点検実施日 --}}
-        <tr>
+        <tr style="background: #F2F2F2;">
             <td rowspan="2" style="text-align: center;">No</td>
             <td rowspan="2" style="text-align: center;">点検箇所</td>
             <td rowspan="2" style="text-align: center;">ポイント</td>

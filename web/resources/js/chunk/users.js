@@ -68,10 +68,10 @@ window.getUserTableList = function (params) {
  --------------------- */
  window.userTableActions = function (_value, row, _index) {
     if(row.role_id == CONFIG.get('ROLE_ADMIN_ID') || row.id == $('#hidAuthUserId').val()) {
-        return '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
+        return '<button style="margin: 4px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
             '<button type="button" class="btn btn-danger btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog" disabled>削除</button>';
     } else {
-        return '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
+        return '<button style="margin: 4px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
             '<button type="button" class="btn btn-danger btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog">削除</button>';
     }
 }

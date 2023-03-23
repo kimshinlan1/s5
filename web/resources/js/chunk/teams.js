@@ -64,6 +64,7 @@ $(function () {
                 url: '/teams/comp_list?company_id='+parseInt($(this).val()),
                 success: function (res) {
                     let html = '';
+                    html += '<option value=-1></option>';
                     listDepartment = res;
                     for (let e of res) {
                         html += '<option value="' + e.id + '">' + e.name + '</option>';
@@ -102,6 +103,7 @@ $(function () {
         url: '/teams/comp_list?company_id='+parseInt($("#hidCompanyId").val()),
         success: function (res) {
             let html = '';
+            html += '<option value=-1></option>';
             listDepartment = res;
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
