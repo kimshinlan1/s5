@@ -11,8 +11,6 @@ use App\Models\InspectionImage;
 use App\Models\InspectionDetail;
 use App\Models\InspectionImageBlock;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\ImageManagerStatic as Image;
 
 class PatternTeamInspectionService extends BaseService
 {

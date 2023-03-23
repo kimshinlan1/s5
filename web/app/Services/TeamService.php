@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TeamRequest;
 use App\Common\Utility;
 use App\Models\Department;
+use App\Models\Employee;
 
 class TeamService extends BaseService
 {
@@ -116,5 +117,21 @@ class TeamService extends BaseService
         $departmentId = $request->input('department_id');
         return $this->model::where('department_id', $departmentId)->with('department:id,name')
         ->orderBy('id')->get()->toArray();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  $id teamid
+     * @return object
+     */
+    public function destroyTeamAndRelatedData($id)
+    {
+        $employeeIds = Employee::where('team_id', $id)->pluck('id')->toArray();
+        parent::removeRedundantDataById(null, $id);
+        Employee::whereIn('id', $employeeIds)->delete();
+        $data = $this->model::find($id);
+        $data->delete();
+        return $data;
     }
 }

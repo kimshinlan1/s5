@@ -27,4 +27,17 @@ class LocationService extends BaseService
         $data->delete();
         return $data;
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $arrayId
+     * @return object
+     */
+    public function deleteByLocationIdArr($arrayId)
+    {
+        $data = $this->model::whereIn("id", $arrayId);
+        $data->delete();
+        return $data;
+    }
 }

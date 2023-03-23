@@ -1,4 +1,4 @@
-<div id="errorDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+<div id="errorDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">

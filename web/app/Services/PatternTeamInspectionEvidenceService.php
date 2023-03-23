@@ -19,7 +19,6 @@ class PatternTeamInspectionEvidenceService extends BaseService
 
     public function __construct(InspectionImage $imageModel, InspectionImageBlock $imageBlockModel)
     {
-        // todo: update
         $this->imageModel = $imageModel;
         $this->imageBlockModel = $imageBlockModel;
     }
@@ -111,7 +110,6 @@ class PatternTeamInspectionEvidenceService extends BaseService
                 'invalid' => true,
             ];
         }
-
         return $data;
     }
 
@@ -243,9 +241,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
                     }
                 }
             }
-
         }
-
         return true;
     }
 
@@ -290,7 +286,6 @@ class PatternTeamInspectionEvidenceService extends BaseService
                 ]);
             }
         }
-
         return $inspectionId;
     }
 
@@ -305,7 +300,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
      */
     private function inspectionImagePath($isBefore, $inspectionId, $blockId)
     {
-        if ($isBefore != null) {
+        if ($isBefore != null || $isBefore === false) {
             return $isBefore ?
             Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/before/':
             Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $blockId . '/after/';
@@ -348,9 +343,7 @@ class PatternTeamInspectionEvidenceService extends BaseService
 
         $res = $this->imageModel::create($data);
         $res = $res->save();
-
-        // return $res
-      }
+    }
 
     /**
      * Update number of evidences in inspection table

@@ -2,10 +2,19 @@
 
 namespace App\Services;
 
+use App\Common\Constant;
+use App\Common\LogUtil;
 use App\Models\Area;
+use App\Models\Inspection;
+use App\Models\InspectionDetail;
+use App\Models\InspectionImage;
+use App\Models\InspectionImageBlock;
 use App\Models\Location;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\File;
 
 class BaseService
 {
@@ -63,5 +72,33 @@ class BaseService
         $areaIds = Area::where('dept_pattern_id', $deptPatternId)->distinct()->pluck('id')->toArray();
         $locationIds = Location::whereIn('area_id', $areaIds)->distinct()->pluck('id')->toArray();
         return $locationIds;
+    }
+
+     /**
+     * Remove the inspection data and evidence data by dept id or team id
+     * @param  int  $deptId
+     * @return object
+     */
+    public function removeRedundantDataById($deptId, $teamId = null)
+    {
+        $teamIds = $teamId ? [$teamId] : Team::where("department_id", $deptId)->pluck('id')->toArray();
+        $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
+        $blockIds = InspectionImageBlock::whereIn("inspection_id", $inspectionIds)->pluck('id')->toArray();
+        $images = InspectionImage::whereIn("block_id", $blockIds)->pluck('id')->toArray();
+
+        // Remove redundant data
+        InspectionImage::whereIn("id", $images)->delete();
+        InspectionImageBlock::whereIn("id", $blockIds)->delete();
+        InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
+        Inspection::whereIn("id", $inspectionIds)->delete();
+
+        // Remove redundant directories
+        foreach ($inspectionIds as $inspectionId) {
+            $path = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId;
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
+            }
+        }
+        return true;
     }
 }
