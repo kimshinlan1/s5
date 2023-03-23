@@ -7,10 +7,10 @@
  * GLOBAL FUNCTIONS
  =========================*/
 function setSession(menu) {
-    if (menu == 'menu1') sessionStorage.setItem("mainMenu1", "show");
-    if (menu == 'menu2') sessionStorage.setItem("mainMenu2", "show");
-    if (menu == 'menu3') sessionStorage.setItem("mainMenu3", "show");
-    if (menu == 'menu4') sessionStorage.setItem("mainMenu4", "show");
+    if (menu == 'mainMenu1') sessionStorage.setItem("mainMenu", "mainMenu1");
+    if (menu == 'mainMenu2') sessionStorage.setItem("mainMenu", "mainMenu2");
+    if (menu == 'mainMenu3') sessionStorage.setItem("mainMenu", "mainMenu3");
+    if (menu == 'mainMenu4') sessionStorage.setItem("mainMenu", "mainMenu4");
 }
 
 
