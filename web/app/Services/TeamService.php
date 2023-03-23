@@ -125,7 +125,7 @@ class TeamService extends BaseService
      * @param  $id teamid
      * @return object
      */
-    public function destroyTeam($id)
+    public function destroyTeamAndRelatedData($id)
     {
         $employeeIds = Employee::where('team_id', $id)->pluck('id')->toArray();
         parent::removeRedundantDataById(null, $id);

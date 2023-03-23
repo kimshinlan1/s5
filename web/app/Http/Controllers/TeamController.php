@@ -87,7 +87,7 @@ class TeamController extends Controller
     public function destroy($id)
     {
         try {
-            $data = $this->service->destroyTeam($id);
+            $data = $this->service->destroyTeamAndRelatedData($id);
             return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json([

@@ -106,7 +106,7 @@ class DepartmentService extends BaseService
     {
         $deptIds = Team::where('company_id', $companyId)->pluck('id')->toArray();
         foreach ($deptIds as $deptId) {
-            $this->destroyDepartment($deptId);
+            $this->destroyDepartmentAndRelatedData($deptId);
         }
         $data = $this->model::where("company_id", $companyId);
         $data->delete();
@@ -254,12 +254,12 @@ class DepartmentService extends BaseService
      * @param $id department id
      * @return object
      */
-    public function destroyDepartment($id)
+    public function destroyDepartmentAndRelatedData($id)
     {
         $teamIds = Team::where('department_id', $id)->pluck('id')->toArray();
 
         foreach ($teamIds as $teamId) {
-            (app()->get(TeamService::class))->destroyTeam($teamId);
+            (app()->get(TeamService::class))->destroyTeamAndRelatedData($teamId);
         }
         $data = $this->model::find($id);
         $data->delete();
