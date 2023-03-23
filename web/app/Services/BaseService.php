@@ -81,33 +81,23 @@ class BaseService
      */
     public function removeRedundantDataById($deptId, $teamId = null)
     {
-        try {
-            $teamIds = $teamId ? [$teamId] : Team::where("department_id", $deptId)->pluck('id')->toArray();
-            $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
-            $blockIds = InspectionImageBlock::whereIn("inspection_id", $inspectionIds)->pluck('id')->toArray();
-            $images = InspectionImage::whereIn("block_id", $blockIds)->pluck('id')->toArray();
+        $teamIds = $teamId ? [$teamId] : Team::where("department_id", $deptId)->pluck('id')->toArray();
+        $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
+        $blockIds = InspectionImageBlock::whereIn("inspection_id", $inspectionIds)->pluck('id')->toArray();
+        $images = InspectionImage::whereIn("block_id", $blockIds)->pluck('id')->toArray();
 
-            // Remove redundant data
-            InspectionImage::whereIn("id", $images)->delete();
-            InspectionImageBlock::whereIn("id", $blockIds)->delete();
-            InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
-            Inspection::whereIn("id", $inspectionIds)->delete();
+        // Remove redundant data
+        InspectionImage::whereIn("id", $images)->delete();
+        InspectionImageBlock::whereIn("id", $blockIds)->delete();
+        InspectionDetail::whereIn("inspection_id", $inspectionIds)->delete();
+        Inspection::whereIn("id", $inspectionIds)->delete();
 
-            // Remove redundant directories
-            foreach ($inspectionIds as $inspectionId) {
-                $path = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId;
-                if (File::exists($path)) {
-                    File::deleteDirectory($path);
-                }
+        // Remove redundant directories
+        foreach ($inspectionIds as $inspectionId) {
+            $path = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId;
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
             }
-        } catch (QueryException $e) {
-            LogUtil::setClassName(__TRAIT__);
-            LogUtil::logError(__FUNCTION__, $e->getMessage());
-            return false;
-        } catch (\Exception $e) {
-            LogUtil::setClassName(__CLASS__);
-            LogUtil::logError(__FUNCTION__, $e->getMessage());
-            return false;
         }
         return true;
     }
