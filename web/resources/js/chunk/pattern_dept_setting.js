@@ -50,7 +50,9 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { /
     let note = $('#patternNote').val();
     let compId = $('#userCompanyId').val() == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
     let currentDeptId = $("#departmentId").find(":selected").val();
-    changeDeptCase = currentDeptId ? 2 : 1;
+    if (initDeptId != currentDeptId) {
+        changeDeptCase = currentDeptId ? 2 : 1;
+    }
     let freeData = {
         pattern_id: patId,
         name: name,
@@ -596,11 +598,6 @@ $(function () {
     $('#companyOptionId').change(function() {
         let compID = $("#companyOptionId").find(":selected").val();
         loadDeptList(compID);
-    });
-
-    $("#confirmDialog3").find('#okBtn').click(function() {
-        // Replace department
-        changeDeptCase = 2;
     });
 
     $("#confirmDialog3").find('#cancelBtn').click(function() {

@@ -136,7 +136,7 @@ class PatternTeamInspectionService extends BaseService
 
         if ($data) {
             // Remove redundant data
-            InspectionImage::whereIn("id", $images)->delete();
+            InspectionImage::where("inspection_id", $inspectionId)->delete();
             InspectionImageBlock::whereIn("id", $blockIds)->delete();
             InspectionDetail::where("inspection_id", $inspectionId)->delete();
             // Remove redundant directories
