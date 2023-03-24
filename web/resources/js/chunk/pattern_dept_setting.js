@@ -588,7 +588,7 @@ $(function () {
         let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
         if (deptPatternId && deptPatternId != '-1') {
             $("#confirmDialog3").modal("show");
-            $(".confirmMessage3").html('Dept nay da co lien ket roi. Muon thay doi lien ket ?');
+            $(".confirmMessage3").html($('#changeDeptWarningMsgId').val());
         }
     });
 

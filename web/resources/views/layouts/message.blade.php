@@ -37,3 +37,4 @@
 <input type="hidden" id="onlyOneBlockForFreeAccId" name="onlyOneBlockForFreeAccId" value="{{ __('Evidence_Only_One_Block_For_Free') }}"/>
 <input type="hidden" id="deleteMsgTooltipId" name="deleteMsgTooltipId" value="{{ __('Evidence_Delete_Image_Tooltip') }}"/>
 <input type="hidden" id="messageChoosePatternForThisDepartment" name="messageChoosePatternForThisDepartment" value="{{ __('TeamInspection_Please_Choose_Pattern_For_This_Department') }}"/>
+<input type="hidden" id="changeDeptWarningMsgId" name="changeDeptWarningMsgId" value="{{ __('Pattern_Change_Department_Warning') }}"/>
