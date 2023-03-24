@@ -9,8 +9,10 @@ use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
+use App\Models\Inspection;
 use App\Models\InspectionDetail;
 use App\Models\Pattern;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
@@ -231,8 +233,8 @@ class PatternDeptSettingService extends BaseService
             $afterData = $request->get('data')['data'];
             $initData = $request->get('data')['initAreaArray'];
             $removeRedundantData = $this->removeRedundantData($afterData, $initData);
-            if (!$removeRedundantData) {
-                return false;
+            if ($changeDeptCase == '0' && $initDeptId && $removeRedundantData) {
+                $this->calculateAvgPoint($initDeptId);
             }
         }
 
@@ -399,6 +401,36 @@ class PatternDeptSettingService extends BaseService
             'isCheckData' => $checkDataUsed,
         ];
         return $data;
+    }
+
+    /**
+     * Calculate avg point
+     *
+     * @param  $id departmentId
+     *
+     * @return void
+     */
+    public function calculateAvgPoint($deptId)
+    {
+        $teamIds = Team::where('department_id', $deptId)->distinct()->pluck('id')->toArray();
+        $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
+        foreach ($inspectionIds as $inspectionId) {
+            $avgPoint = [];
+            for ($i=1; $i <=5; $i++) {
+                $total = InspectionDetail::where('inspection_id', $inspectionId)->where('point', 's'.$i)->sum('point_value');
+                $count = InspectionDetail::where('inspection_id', $inspectionId)->where('point', 's'.$i)->count();
+                if ($count != 0) {
+                    $avgPoint[] = round($total/$count, 1);
+                } else {
+                    $avgPoint[] = 0;
+                }
+
+            }
+            $avgStr = implode('|', $avgPoint);
+            $inspection = Inspection::find($inspectionId);
+            $inspection->avg_point = $avgStr;
+            $inspection->save();
+        }
     }
 
     /**
