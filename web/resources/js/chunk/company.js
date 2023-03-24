@@ -37,11 +37,11 @@ window.getCompanyTableList = function (params) {
  *    Actions
  --------------------- */
 window.companyTableActions = function (_value, row, _index) {
-    let html = '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+    let html = '<button style="margin: 4px;" type="button" class="btn btn-primary btn-sm" data-id="' +
     row.id + '" data-bs-toggle="modal" data-bs-target="#companyEditDialog" >編集</button> ';
 
     if (row.mode != 0) {
-        html += '<button type="button" class="btn btn-danger btn-sm" data-id="' +
+        html += '<button style="margin: 4px;" type="button" class="btn btn-danger btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#companyDeleteDialog">削除</button>';
     }
     return html;

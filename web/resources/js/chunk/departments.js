@@ -18,11 +18,11 @@ var isFreeWarning = false;
  --------------------- */
 window.departmentTableActions = function (_value, row, _index) {
    return (
-       '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
+       '<button  style="margin: 4px; width: 55px; height 30px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
        row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog">係追加</button> ' +
-        '<button style="margin-right: 10px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> ' +
-        '<button type="button" class="btn btn-danger btn-sm" data-id="' +
+        '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-danger btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentDeleteDialog" >削除</button>'
     );
 };
@@ -32,7 +32,7 @@ window.departmentTableActions = function (_value, row, _index) {
  --------------------- */
 let pattern_list_data = null;
 window.department5SChecklistActions = function (_value, row, _index) {
-   let options = '<select class=" form-select px-2" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 50%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
+   let options = '<select class=" form-select px-2" id="checklist5sID' + row.id + '" onchange="selectPattern(' + row.id + ')" style="width: 65%; padding: 0; background-position: right 0.2rem center; display: inline-block;margin-inline-end: 30px;">';
    options += '<option> </option>';
    let selectedDeptPatternId = row.dept_pattern_id;
    if (row.dept_pattern_id) {
@@ -61,13 +61,13 @@ window.department5SChecklistActions = function (_value, row, _index) {
        if (!ele.isPattern && ele.id == selectedDeptPatternId) {
            options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
            dataId = 1;
-           btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
-           +'" data-companyId="'+ row.company_id +'" data-deptId="'+ row.id +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+           btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-success btn-sm" style="width: 80px; font-size: 0.65rem;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
+           +'" data-companyId="'+ row.company_id +'" data-deptId="'+ row.id +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">チェックリスト編集</button> ';
        } else {
            options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
        }
    });
-   btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-secondary btn-sm" style="width: 55px;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">編集</button> ';
+   btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-success btn-sm" style="width: 80px; font-size: 0.65rem;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">チェックリスト編集</button> ';
    options += " </select>";
    options += btn;
 

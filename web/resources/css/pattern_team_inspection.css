@@ -61,6 +61,13 @@
     padding-bottom: 1.5rem;
 }
 
+.btn-add-inspection {
+    font-size: inherit;
+    border: 0rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
 /* Portrait mode */
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */
