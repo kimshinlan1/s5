@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constant;
-use App\Models\DeptPattern;
 use Illuminate\Http\Request;
 use App\Services\PatternDeptSettingService;
 use App\Services\PatternService;

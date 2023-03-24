@@ -37,15 +37,15 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}" disabled>
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
-                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
+                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日" style="background-color: #e9ecef; opacity: 1;"
                                 data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateCreate')" data-toggle="tooltip"
-                                title="{{ __('Common_Click_To_Select_Date') }}" value="">
+                                title="{{ __('Common_Click_To_Select_Date') }}" value="" disabled>
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
@@ -54,15 +54,15 @@
                             <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
                         </div>
                         <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}" disabled>
                         </div>
                         <div class="label_header">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
                             <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
-                                title="{{ __('Common_Click_To_Select_Date') }}" value="">
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"  style="background-color: #e9ecef; opacity: 1;"
+                                title="{{ __('Common_Click_To_Select_Date') }}" value="" disabled>
                             <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
                         </div>
                     </div>

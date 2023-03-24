@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Common\Constant;
-use App\Common\LogUtil;
 use App\Models\Area;
 use App\Models\Inspection;
 use App\Models\InspectionDetail;
@@ -13,7 +12,6 @@ use App\Models\Location;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\File;
 
 class BaseService

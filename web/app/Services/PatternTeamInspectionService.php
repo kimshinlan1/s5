@@ -11,6 +11,7 @@ use App\Models\InspectionImage;
 use App\Models\InspectionDetail;
 use App\Models\InspectionImageBlock;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class PatternTeamInspectionService extends BaseService
 {
@@ -129,19 +130,21 @@ class PatternTeamInspectionService extends BaseService
      */
     public function destroyInspections($inspectionId)
     {
-        // Remove inspection
-        $data = Inspection::find($inspectionId)->delete();
+        $data = Inspection::find($inspectionId);
+        $blockIds = InspectionImageBlock::where("inspection_id", $inspectionId)->pluck('id')->toArray();
+        $images = InspectionImage::where("block_id", $inspectionId)->pluck('id')->toArray();
 
-        // Remove Inspection details
-        InspectionDetail::where('inspection_id', $inspectionId)->delete();
-
-         // todo: Remove Inspection images
-        // InspectionImage::where('inspection_id', $inspectionId)->delete();
-
-        // todo: Remove all images on disk
         if ($data) {
-            // todo: Check exists img in inspectionId (ex: public/uploads/inspections/imgs/{inspectionId}/*)
-            // $this->inspectionImagePath;
+            // Remove redundant data
+            InspectionImage::whereIn("id", $images)->delete();
+            InspectionImageBlock::whereIn("id", $blockIds)->delete();
+            InspectionDetail::where("inspection_id", $inspectionId)->delete();
+            // Remove redundant directories
+            $path = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId;
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
+            }
+            $data = $data->delete();
         }
         return $data;
     }

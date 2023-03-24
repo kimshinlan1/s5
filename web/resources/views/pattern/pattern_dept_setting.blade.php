@@ -53,9 +53,6 @@
                             aria-label="Pattern select" id="selectPatternIds" >
                             </select>
                         </div>
-                        <div class="label_header_dept_setting_1" hidden>
-                            <input type="text" class="form-control" id="patternNote" value="">
-                        </div>
                     </div>
                     <div class="input-group">
                         <div class="label_header_dept_setting">
@@ -69,7 +66,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="input-group" style="margin-bottom: 0.5%;">
+                    <div class="input-group" style="margin-bottom: 1%;">
                         <div class="label_header_dept_setting" style="width: 45%;">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
@@ -80,7 +77,7 @@
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
-                    <div class="input-group" style="margin-bottom: 0.5%;">
+                    <div class="input-group" style="margin-bottom: 1%;">
                         <div class="label_header_dept_setting" style="width: 45%;">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
@@ -89,6 +86,16 @@
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
                             <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="label_header_dept_setting" style="width: 45%;">
+                            <span class="input-group-text">{{ __('Pattern_Note') }}</span>
+                        </div>
+                        <div class="">
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                 </div>

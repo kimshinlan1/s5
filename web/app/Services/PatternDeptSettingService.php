@@ -14,7 +14,6 @@ use App\Models\Pattern;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
-use App\Common\LogUtil;
 
 class PatternDeptSettingService extends BaseService
 {
@@ -96,6 +95,8 @@ class PatternDeptSettingService extends BaseService
     public function save(Request $request)
     {
         $data = $request->get('data');
+        $changeDeptCase = $data['changeDeptCase'];
+        $initDeptId =$data['initDeptId'];
         $companyId = $request->data['company'];
         if ($data['department']) {
             $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
@@ -138,11 +139,24 @@ class PatternDeptSettingService extends BaseService
             $patternData
         );
         $deptPatternId = $deptPattern->id;
+        // Update dept pattern in departments table
         if (isset($data['department'])) {
             $dept = Department::find($data['department']);
             $dept->dept_pattern_id = $deptPatternId;
             $dept->save();
         };
+
+        // Note: default $changeDeptCase equals 0 -> do nothing
+        // changeDeptCase equals 1 -> Unbind department from the dept pattern
+        if ($changeDeptCase == 1) {
+            (app()->get(DepartmentService::class))->unbindDeptFromDeptPattern($initDeptId);
+        }
+        // changeDeptCase equals 2 -> replace the connection between the department and pattern with another department.
+        if ($changeDeptCase == 2) {
+            (app()->get(DepartmentService::class))
+            ->changeDeptFromDeptPattern($data['department'], $initDeptId, $data['info']['pattern_id']);
+        }
+
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
             // Step: Insert new Area
@@ -253,6 +267,7 @@ class PatternDeptSettingService extends BaseService
         $patternId = $request->get('pattern_id');
         $companyId = $request->get('company_id');
         $deptPatternName = $request->get('name');
+        $deptPatternNote = $request->get('note');
         $deptPatternId = $request->get('deptPatternId');
         $deptId = $request->get('department_id');
         $createdDate = $request->get('pattern_created_at');
@@ -282,6 +297,7 @@ class PatternDeptSettingService extends BaseService
 
         $pattern['id'] = null;
         $pattern['name'] = $deptPatternName;
+        $pattern['note'] = $deptPatternNote;
         $pattern['company_id'] = $companyId;
         $pattern['no'] = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $pattern['5s'] = $selected5s;

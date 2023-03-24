@@ -192,6 +192,20 @@ class DepartmentService extends BaseService
     }
 
     /**
+     * Unbind department from deptpattern
+     *
+     * @param  id
+     * @return object
+     */
+    public function unbindDeptFromDeptPattern($deptId)
+    {
+        $data = $this->model::find($deptId);
+        parent::removeRedundantDataById($deptId);
+        $data->dept_pattern_id = null;
+        return $data->save();
+    }
+
+    /**
      * Bind deptpattern from department
      *
      * @param  id
@@ -201,7 +215,6 @@ class DepartmentService extends BaseService
     {
         $id = $request->get('id');
         $patternId = $request->get('pattern_id');
-        parent::removeRedundantDataById($id);
 
         $unbindOldData = $this->unbindDeptPatternFromDept($request);
         if (empty($unbindOldData)) {
@@ -213,6 +226,36 @@ class DepartmentService extends BaseService
         $data = $this->model::find($id);
         if ($data) {
             $data->dept_pattern_id =  $patternId;
+        } else {
+            return [
+                'invalid' => true,
+            ];
+        }
+
+        return $data->save();
+    }
+
+    /**
+     * Bind deptpattern from department
+     *
+     * @param  id
+     * @return object
+     */
+    public function changeDeptFromDeptPattern($deptId, $oldDeptId, $deptPatternId)
+    {
+        if ($oldDeptId) {
+            $unbindOldData = $this->unbindDeptFromDeptPattern($oldDeptId);
+        }
+        $unbindOldData = $this->unbindDeptFromDeptPattern($deptId);
+        if (empty($unbindOldData)) {
+            return [
+                'invalid' => true,
+            ];
+        }
+
+        $data = $this->model::find($deptId);
+        if ($data) {
+            $data->dept_pattern_id =  $deptPatternId;
         } else {
             return [
                 'invalid' => true,

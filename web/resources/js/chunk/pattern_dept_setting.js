@@ -1,6 +1,9 @@
 
 // 改善ポイントの選択 - Select 5S methods
 var params = {};
+var previousDeptId = -1;
+var initDeptId = -1;
+var changeDeptCase = 0;
 var select_location_to_delete = [];
 var initAreaArray = [];
 var count_method_delete = 0;
@@ -40,23 +43,32 @@ window.loadData = function() {
 
 // Save
 
-window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
+window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { //todo
     let url = isFree ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
     let method = "POST";
     let name = $('#patternName').val();
+    let note = $('#patternNote').val();
     let compId = $('#userCompanyId').val() == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
+    let currentDeptId = $("#departmentId").find(":selected").val();
+    changeDeptCase = currentDeptId ? 2 : 1;
     let freeData = {
         pattern_id: patId,
         name: name,
+        note: note,
         ispattern: ispattern ? ispattern : -1,
         department_id: $('#departmentId').find(':selected').val(),
         company_id: compId,
         pattern_5s_selected: JSON.stringify(selected_5s),
         pattern_created_at: dateFormat($('#dateCreate').datepicker("getDate")),
-        pattern_updated_at: dateFormat($('#dateUpdate').datepicker("getDate"))
+        pattern_updated_at: dateFormat($('#dateUpdate').datepicker("getDate")),
+        changeDeptCase: changeDeptCase,
+        initDeptId: initDeptId
     }
     if (data) {
         data['initAreaArray'] = initAreaArray;
+        data['changeDeptCase'] = changeDeptCase;
+        data['initDeptId'] = initDeptId;
+        data['info']['pattern_note'] = $('#patternNote').val();
     }
     let paramDatas = isFree ? freeData : {data: data} ;
     let pageDept = urlParams.get('pageDept');
@@ -91,7 +103,7 @@ function cancelBackPage() {
 }
 
 /**
- * todo: Test => Remove when release
+ * Remove when release
  */
 function setValueTest() {
     // Loop main area
@@ -115,16 +127,25 @@ window.loadDeptList = function(id, patternId = null, isPattern = null) {
         let html = '';
         let deptId = urlParams.get('departmentId');
         let companyId = urlParams.get('companyId');
-            if (!deptId && companyId) {
-                html += '<option value="' + '">' + '</option>';
+        if (patternId && companyId) {
+            if (!deptId) {
+                html += '<option value="' + '" selected>' + '</option>';
             } else {
-                for (let e of data) {
-                    html += '<option value="' + e.id + '">' + e.name + '</option>';
-                }
+                html += '<option value="' + '">' + '</option>';
             }
-            $('#departmentId').html(html);
-            let selectedCompId = getCompanyId();
-            loadPatternList(selectedCompId, patternId, isPattern);
+        }
+        for (let e of data) {
+            let dept_pattern_id = e.dept_pattern_id == null ? '-1' : e.dept_pattern_id
+            if (e.id == patternId && deptId) {
+                html += '<option value="' + e.id + '" data-deptPatternId="' + dept_pattern_id + '" selected>' + e.name + '</option>';
+            } else {
+                html += '<option value="' + e.id + '" data-deptPatternId="' + dept_pattern_id + '" >' + e.name + '</option>';
+            }
+        }
+
+        $('#departmentId').html(html);
+        let selectedCompId = getCompanyId();
+        loadPatternList(selectedCompId, patternId, isPattern);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
@@ -322,6 +343,7 @@ window.getInitialAreaData = function() {
             area['locations'].push(location);
         });
         initAreaArray.push(area);
+        initDeptId = $('#departmentId').find(":selected").val();
     });
 }
 
@@ -340,6 +362,7 @@ window.initLoadPage = function() {
     let companyId = urlParams.get('companyId');
     if (isPatternSelection) {
         $('#patternName').val('');
+        $('#patternNote').val('');
     }
     if (companyId) {
         $('#companyOptionId option[value='+companyId+']').prop("selected", true);
@@ -353,12 +376,9 @@ window.initLoadPage = function() {
         // set seleted value for company
         selectedCompId = compId ? compId : selectedCompId;
         loadDeptList(selectedCompId, hidPatternId);
-        if (!deptId) {
-            $('#departmentTitle').hide();
-            $('#patternTitle').hide();
-        } else {
-            $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
-        }
+
+        $('#departmentId  option[value=' + deptId + ']').attr('selected','selected');
+
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             $('#selectPatternIds  option[value=' + selectedPatId + ']').filter("[data-ispattern=" + isPatternSelection + "]").attr('selected','selected');
             let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
@@ -385,7 +405,7 @@ window.initLoadPage = function() {
             $('#departmentId  option[value=' + targetDept + ']').attr('selected','selected');
         }
         $('#companyOptionId').prop( "disabled",true);
-        $('#departmentId').prop( "disabled",true);
+        $('#departmentId').prop( "disabled",false);
         $('#selectPatternIds').prop( "disabled",true);
 
     }
@@ -490,7 +510,7 @@ $(function () {
 
     // Add New Area
     $("#openModal").click(function () {
-        // todo: Check 5S (empty, ...)
+        // Check 5S (empty, ...)
         $('#rowArea').val('');
         $('#locationNo').val('');
         $('#rowArea').focus();
@@ -560,9 +580,31 @@ $(function () {
         }
     });
 
+    // Department options change event //todo
+    $('#departmentId').on('focus', function () {
+        // Store the current value on focus and on change
+        previousDeptId = this.value;
+    }).change(function() {
+        let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
+        if (deptPatternId && deptPatternId != '-1') {
+            $("#confirmDialog3").modal("show");
+            $(".confirmMessage3").html('Dept nay da co lien ket roi. Muon thay doi lien ket ?');
+        }
+    });
+
     // Company options change event
     $('#companyOptionId').change(function() {
         let compID = $("#companyOptionId").find(":selected").val();
         loadDeptList(compID);
+    });
+
+    $("#confirmDialog3").find('#okBtn').click(function() {
+        // Replace department
+        changeDeptCase = 2;
+    });
+
+    $("#confirmDialog3").find('#cancelBtn').click(function() {
+        // Replace department
+        $("#departmentId").val(previousDeptId);
     });
 });
