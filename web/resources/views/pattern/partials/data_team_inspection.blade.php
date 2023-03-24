@@ -66,13 +66,10 @@
                 @else
                 <input id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-evidence btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick="" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog"/>
                 @endif
-
                 <br>
-                <a style="color: black;" id="countEvidence_{{ $inspectionId }}" data-countEvidenceId="countEvidence_{{ $inspectionId }}" data-count="{{ $countImgs }}" href="javascript:void(0);">{{ $countImgs }}{{ __('TeamInspection_Registered') }}</a>
+                <a style="color: black; text-decoration: none;" id="countEvidence_{{ $inspectionId }}" data-countEvidenceId="countEvidence_{{ $inspectionId }}" data-count="{{ $countImgs }}" href="javascript:void(0);">{{ $countImgs }}{{ __('TeamInspection_Registered') }}</a>
                 <br>
-                {{-- <a style="color: black;" href="javascript:evidenceDialog('{{ is_int($inspectionId) ? $inspectionId : null }}')" >新しく登録する</a> --}}
                 <a style="color: black;" href="javascript:void(0)" data-countEvidenceId="countEvidence_{{ $inspectionId }}" id="openEvidenceBtn" data-time={{ $key }} data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" >{{ __('TeamInspection_Register_New') }}</a>
-
             </td>
             @endforeach
         </tr>
