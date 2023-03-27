@@ -2,7 +2,7 @@
 // 改善ポイントの選択 - Select 5S methods
 var params = {};
 var previousDeptId = -1;
-var initDeptId = -1;
+var initDeptId = null;
 var changeDeptCase = 0;
 var select_location_to_delete = [];
 var initAreaArray = [];
@@ -55,7 +55,7 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { /
     // Case 0: department selection is unchanged
     // Case 1: selecting null option
     // Case 2: select another department option => replace or add the selected department option to the dept pattern
-    if (initDeptId != currentDeptId) {
+    if (initDeptId && initDeptId != currentDeptId) {
         changeDeptCase = currentDeptId ? 2 : 1;
     }
     let freeData = {

@@ -44,10 +44,10 @@ class PatternTeamInspectionEvidenceService extends BaseService
             foreach ($images as $image) {
                 if ($image->is_before == 1) {
                     $hasBefore = true;
-                };
+                }
                 if ($image->is_before == 0) {
                     $hasAfter = true;
-                };
+                }
             }
             $block->hasBefore = $hasBefore;
             $block->hasAfter = $hasAfter;
@@ -188,10 +188,6 @@ class PatternTeamInspectionEvidenceService extends BaseService
                     'problem_after' => $after[$i],
                 ]);
                 $block->save();
-            } else {
-                return [
-                    'invalid' => true,
-                ];
             }
             $keyArrayBefore = explode(',', $request->get('keyArrayBefore_block' . $block->id));
             $keyArrayAfter = explode(',', $request->get('keyArrayAfter_block' . $block->id));

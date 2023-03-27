@@ -259,9 +259,6 @@ class PatternTeamInspectionController extends Controller
     public function save(Request $request)
     {
         $data = $this->evidenceService->saveData($request);
-        if (isset($data['invalid'])) {
-            return $this->responseException();
-        }
         if (isset($data['invalid_format'])) {
             return $this->responseException(Constant::MESSAGES['INVALID_EXTENSION_ERROR']);
         }

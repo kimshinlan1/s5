@@ -100,53 +100,54 @@ class PatternDeptSettingService extends BaseService
         $changeDeptCase = $data['changeDeptCase'];
         $initDeptId = $data['initDeptId'];
         $companyId = $request->data['company'];
-        if ($data['department']) {
-            $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
-            if (!$isUnique) {
-                return [
-                    'invalid' => true,
-                ];
-            }
-        }
-
-        // Step: Remove old data by pattern_id
-        if ($data['info']['pattern_id']) {
-            // Remove Pattern Detail
-            $this->deleteDetailsByPatternId($data['info']['pattern_id']);
-        } else {
-            parent::removeRedundantDataById($data['department']);
-        }
+        $patternName = $data['info']['pattern_name'];
+        $patternId = $data['info']['pattern_id'];
 
         // Check if free account has dept pattern or not. Delete old dept pattern if existed
         if ($request->data['isSelectedFree'] == 'free') {
             $this->deleteOldDeptPattern($companyId);
         }
+        // Check dept pattern name is unique within its department
+        $isUnique = $this->checkUniqueName($data['department'], $patternId);
+        if (!$isUnique) {
+            return [
+                'invalid' => true,
+            ];
+        }
 
-        // Step: Insert new pattern
+        // Step: Create data for new pattern
         $patternData = [
             'company_id' => $request->data['company'],
-            'name' => $data['info']['pattern_name'],
+            'name' => $patternName,
             'note' => $data['info']['pattern_note'],
             '5s' => $data['info']['pattern_5s_selected'],
             'created_at' => $data['info']['pattern_created_at'],
             'updated_at' => $data['info']['pattern_updated_at'],
         ];
 
-        if (!$data['info']['pattern_id']) {
+        // Step: Remove old data by pattern_id
+        if ($patternId) {
+            // Remove Pattern Detail
+            $this->deleteDetailsByPatternId($patternId);
+        } else {
+            parent::removeRedundantDataById($data['department']);
             $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
             $patternData['no'] = $no;
-        };
+        }
+
+        // Step: Insert data to the pattern
         $deptPattern = $this->model::updateOrCreate(
-            ['id' => $data['info']['pattern_id']],
+            ['id' => $patternId],
             $patternData
         );
         $deptPatternId = $deptPattern->id;
+
         // Update dept pattern in departments table
         if (isset($data['department'])) {
             $dept = Department::find($data['department']);
             $dept->dept_pattern_id = $deptPatternId;
             $dept->save();
-        };
+        }
 
         // Note: default $changeDeptCase equals 0 -> do nothing
         if ($changeDeptCase == 1) {
@@ -155,79 +156,18 @@ class PatternDeptSettingService extends BaseService
         } elseif ($changeDeptCase == 2) {
             // changeDeptCase equals 2 -> replace the link between the department, pattern with another department.
             (app()->get(DepartmentService::class))
-            ->changeDeptFromDeptPattern($data['department'], $initDeptId, $data['info']['pattern_id']);
+            ->changeDeptFromDeptPattern($data['department'], $initDeptId, $patternId);
         }
 
         // Loop to insert Areas
-        foreach ($data['data'] as $area) {
-            // Step: Insert new Area
-            $areaId = null;
-            if (($data['info']['pattern_id']) && (isset($area['area_id']) && is_numeric($area['area_id']))) {
-                $areaId = $area['area_id'];
-                Area::updateOrCreate(
-                    [
-                        'id' => $areaId,
-                    ],
-                    [
-                        'name' => $area['area_name'],
-                        'dept_pattern_id' => $deptPatternId
-                    ]
-                );
-            } else {
-                $newArea = Area::create([
-                    'name' => $area['area_name'],
-                    'dept_pattern_id' => $deptPatternId
-                ]);
-                $areaId = $newArea->id;
-            }
-
-            // Loop to insert Locations
-            foreach ($area['locations'] as $location) {
-                // Step: Insert new location
-                $locationId = null;
-                if (($data['info']['pattern_id']) && (isset($location['location_id'])
-                && is_numeric($location['location_id']))) {
-                    $locationId = $location['location_id'];
-                    Location::updateOrCreate(
-                        [
-                            'id' => $locationId,
-                        ],
-                        [
-                            'name' => $location['location_name'],
-                            'area_id' => $areaId
-                    ]);
-                } else {
-                    $newLocation = Location::create([
-                        'name' => $location['location_name'],
-                        'area_id' => $areaId
-                    ]);
-                    $locationId = $newLocation->id;
-                }
-
-                // Loop to insert detail rows
-                foreach ($location['rows'] as $key => $row) {
-                    // Step: Insert new content of method
-                    DeptPatternDetail::create([
-                        'area_id' => $areaId,
-                        'dept_pattern_id' => $deptPatternId,
-                        'location_id' => $locationId,
-                        'point' => $key,
-                        'level_1' => $row['level_1'],
-                        'level_2' => $row['level_2'],
-                        'level_3' => $row['level_3'],
-                        'level_4' => $row['level_4'],
-                        'level_5' => $row['level_5'],
-                    ]);
-                }
-            }
-        }
+        $this->insertAreaData($data['data'], $patternId, $deptPatternId);
 
         /*
         * DELETE REDUNDANT DATA
         * Steps:
-        *    Check if any area is removed, remove its redundant data
-        *    Then comes to areas that are not removed, check if any location in each is removed, remove its redundant data
-        *    Then comes to locations that are not removed, check if any 5s points in each is removed, remove its redundant data
+        *  Check if any area is removed, remove its redundant data
+        *  Then comes to remaining areas, check if any location in each is removed, remove its redundant data
+        *  Then comes to remaining locations, check if any 5s points in each is removed, remove its redundant data
         */
         if (array_key_exists('initAreaArray', $request->get('data'))) {
             $afterData = $request->get('data')['data'];
@@ -253,16 +193,20 @@ class PatternDeptSettingService extends BaseService
      * @param $patternName
      * @return boolean
      */
-    public function checkUniqueName($deptId, $deptPatternName, $currentPatternId = null) {
+    public function checkUniqueName($deptId, $deptPatternName, $currentPatternId = null)
+    {
+        if (!$deptId) {
+            return true;
+        }
         $compId = Department::find($deptId)->company_id;
-        $dept_pattern = null;
+        $deptPattern = null;
         $deptPatternIds = Department::where('company_id', $compId)
         ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (!empty($deptPatternIds)) {
-            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)
+            $deptPattern = DeptPattern::whereIn('id', $deptPatternIds)
             ->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
         }
-        return $dept_pattern ? false: true;
+        return $deptPattern ? false: true;
     }
 
     /**
@@ -405,10 +349,9 @@ class PatternDeptSettingService extends BaseService
         ->join('teams', 'teams.department_id', '=', 'departments.id')
         ->join('inspection', 'inspection.team_id', '=', 'teams.id')
         ->get();
-        $data = [
+        return [
             'isCheckData' => $checkDataUsed,
         ];
-        return $data;
     }
 
     /**
@@ -456,21 +399,20 @@ class PatternDeptSettingService extends BaseService
         $deleledAreaIds = array_diff($initAreaIds, $afterAreaIds);
 
         // In case that there is any area is deleted
-        if ($deleledAreaIds) {
-            foreach ($deleledAreaIds as $deleledAreaId) {
-                // Remove redundant data in dept pattern detail
-                $this->modelDetail->where('dept_pattern_id', $deleledAreaId)->delete();
-                // Get location ids
-                $locationIds = DB::table('locations')
-                ->where('area_id', intval($deleledAreaId))
-                ->pluck('id')->toArray();
-                // Remove redundant data in inspection detail
-                InspectionDetail::whereIn('location_id', $locationIds)->delete();
-                // Remove data in locations
-                (app()->get(LocationService::class))->deleteByAreaId($deleledAreaId);
-                // Remove data in areas
-                (app()->get(AreaService::class))->destroy($deleledAreaId);
-            }
+
+        foreach ($deleledAreaIds as $deleledAreaId) {
+            // Remove redundant data in dept pattern detail
+            $this->modelDetail->where('dept_pattern_id', $deleledAreaId)->delete();
+            // Get location ids
+            $locationIds = DB::table('locations')
+            ->where('area_id', intval($deleledAreaId))
+            ->pluck('id')->toArray();
+            // Remove redundant data in inspection detail
+            InspectionDetail::whereIn('location_id', $locationIds)->delete();
+            // Remove data in locations
+            (app()->get(LocationService::class))->deleteByAreaId($deleledAreaId);
+            // Remove data in areas
+            (app()->get(AreaService::class))->destroy($deleledAreaId);
         }
 
         // Get area id array that is not removed
@@ -525,5 +467,79 @@ class PatternDeptSettingService extends BaseService
         }
 
         return true;
+    }
+
+    /**
+     * Insert area data to dept pattern
+     *
+     * @param  $id departmentId
+     *
+     * @return void
+     */
+    private function insertAreaData($areaIds, $patternId, $deptPatternId)
+    {
+        foreach ($areaIds as $area) {
+            // Step: Insert new Area
+            $areaId = null;
+            if (($patternId) && (isset($area['area_id']) && is_numeric($area['area_id']))) {
+                $areaId = $area['area_id'];
+                Area::updateOrCreate(
+                    [
+                        'id' => $areaId,
+                    ],
+                    [
+                        'name' => $area['area_name'],
+                        'dept_pattern_id' => $deptPatternId
+                    ]
+                );
+            } else {
+                $newArea = Area::create([
+                    'name' => $area['area_name'],
+                    'dept_pattern_id' => $deptPatternId
+                ]);
+                $areaId = $newArea->id;
+            }
+
+            // Loop to insert Locations
+            foreach ($area['locations'] as $location) {
+                // Step: Insert new location
+                $locationId = null;
+                if (($patternId) && (isset($location['location_id'])
+                && is_numeric($location['location_id']))) {
+                    $locationId = $location['location_id'];
+                    Location::updateOrCreate(
+                        [
+                            'id' => $locationId,
+                        ],
+                        [
+                            'name' => $location['location_name'],
+                            'area_id' => $areaId
+                        ]
+                    );
+                } else {
+                    $newLocation = Location::create([
+                        'name' => $location['location_name'],
+                        'area_id' => $areaId
+                    ]);
+                    $locationId = $newLocation->id;
+                }
+
+                // Loop to insert detail rows
+                foreach ($location['rows'] as $key => $row) {
+                    // Step: Insert new content of method
+                    DeptPatternDetail::create([
+                        'area_id' => $areaId,
+                        'dept_pattern_id' => $deptPatternId,
+                        'location_id' => $locationId,
+                        'point' => $key,
+                        'level_1' => $row['level_1'],
+                        'level_2' => $row['level_2'],
+                        'level_3' => $row['level_3'],
+                        'level_4' => $row['level_4'],
+                        'level_5' => $row['level_5'],
+                    ]);
+                }
+            }
+        }
     }
 }

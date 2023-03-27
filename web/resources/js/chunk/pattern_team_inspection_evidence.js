@@ -424,7 +424,7 @@ function handleConfirmOkBtn(isSaveMode) {
                 if ($('#openEvidenceBtn' + key).length > 0 && count == 0) {
                     $('#openEvidenceBtn' + key).prop("disabled", true);
                     $('#openEvidenceBtn' + key).removeClass("btn-evidence");
-                    $('#openEvidenceBtn' + key).addClass("btn-secondary");``
+                    $('#openEvidenceBtn' + key).addClass("btn-secondary");
                 }
 
                 // Disable open evidence button in Top Page if there is at least 1 evidence
