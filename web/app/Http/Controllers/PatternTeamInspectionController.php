@@ -63,7 +63,6 @@ class PatternTeamInspectionController extends Controller
      */
     public function generateDataHtml(Request $request)
     {
-        // todo:
         $deptId = $request->get('dept_id');
         $teamId = $request->get('team_id');
         $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
