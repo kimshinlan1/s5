@@ -9,12 +9,13 @@ use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
 use App\Models\Location;
 use App\Common\Utility;
+use App\Models\Inspection;
 use App\Models\InspectionDetail;
 use App\Models\Pattern;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
 use Illuminate\Support\Facades\DB;
-use App\Common\LogUtil;
 
 class PatternDeptSettingService extends BaseService
 {
@@ -96,6 +97,8 @@ class PatternDeptSettingService extends BaseService
     public function save(Request $request)
     {
         $data = $request->get('data');
+        $changeDeptCase = $data['changeDeptCase'];
+        $initDeptId = $data['initDeptId'];
         $companyId = $request->data['company'];
         if ($data['department']) {
             $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
@@ -138,11 +141,23 @@ class PatternDeptSettingService extends BaseService
             $patternData
         );
         $deptPatternId = $deptPattern->id;
+        // Update dept pattern in departments table
         if (isset($data['department'])) {
             $dept = Department::find($data['department']);
             $dept->dept_pattern_id = $deptPatternId;
             $dept->save();
         };
+
+        // Note: default $changeDeptCase equals 0 -> do nothing
+        if ($changeDeptCase == 1) {
+            // changeDeptCase equals 1 -> Unbind department from the dept pattern
+            (app()->get(DepartmentService::class))->unbindDeptFromDeptPattern($initDeptId);
+        } elseif ($changeDeptCase == 2) {
+            // changeDeptCase equals 2 -> replace the link between the department, pattern with another department.
+            (app()->get(DepartmentService::class))
+            ->changeDeptFromDeptPattern($data['department'], $initDeptId, $data['info']['pattern_id']);
+        }
+
         // Loop to insert Areas
         foreach ($data['data'] as $area) {
             // Step: Insert new Area
@@ -170,7 +185,8 @@ class PatternDeptSettingService extends BaseService
             foreach ($area['locations'] as $location) {
                 // Step: Insert new location
                 $locationId = null;
-                if (($data['info']['pattern_id']) && (isset($location['location_id']) && is_numeric($location['location_id']))) {
+                if (($data['info']['pattern_id']) && (isset($location['location_id'])
+                && is_numeric($location['location_id']))) {
                     $locationId = $location['location_id'];
                     Location::updateOrCreate(
                         [
@@ -217,8 +233,13 @@ class PatternDeptSettingService extends BaseService
             $afterData = $request->get('data')['data'];
             $initData = $request->get('data')['initAreaArray'];
             $removeRedundantData = $this->removeRedundantData($afterData, $initData);
-            if (!$removeRedundantData) {
-                return false;
+            /*
+            * Precondition: Check if the link between department and dept pattern still remains
+            * and the proccess of redundant data removal completed
+            * Action: recalculate the average point in inspections table
+            */
+            if ($changeDeptCase == '0' && $initDeptId && $removeRedundantData) {
+                $this->calculateAvgPoint($initDeptId);
             }
         }
 
@@ -235,9 +256,11 @@ class PatternDeptSettingService extends BaseService
     public function checkUniqueName($deptId, $deptPatternName, $currentPatternId = null) {
         $compId = Department::find($deptId)->company_id;
         $dept_pattern = null;
-        $deptPatternIds = Department::where('company_id', $compId)->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+        $deptPatternIds = Department::where('company_id', $compId)
+        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (!empty($deptPatternIds)) {
-            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
+            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)
+            ->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
         }
         return $dept_pattern ? false: true;
     }
@@ -253,6 +276,7 @@ class PatternDeptSettingService extends BaseService
         $patternId = $request->get('pattern_id');
         $companyId = $request->get('company_id');
         $deptPatternName = $request->get('name');
+        $deptPatternNote = $request->get('note');
         $deptPatternId = $request->get('deptPatternId');
         $deptId = $request->get('department_id');
         $createdDate = $request->get('pattern_created_at');
@@ -282,6 +306,7 @@ class PatternDeptSettingService extends BaseService
 
         $pattern['id'] = null;
         $pattern['name'] = $deptPatternName;
+        $pattern['note'] = $deptPatternNote;
         $pattern['company_id'] = $companyId;
         $pattern['no'] = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
         $pattern['5s'] = $selected5s;
@@ -361,7 +386,8 @@ class PatternDeptSettingService extends BaseService
         ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (count($depPatternIds)) {
             foreach ($depPatternIds as $depPatternId) {
-                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, Constant::PAGE_PATTERN_LIST_CUSTOMER);
+                app()->get(PatternService::class)
+                ->destroyPatternByMode($depPatternId, Constant::PAGE_PATTERN_LIST_CUSTOMER);
             }
         }
     }
@@ -383,6 +409,35 @@ class PatternDeptSettingService extends BaseService
             'isCheckData' => $checkDataUsed,
         ];
         return $data;
+    }
+
+    /**
+     * Calculate avg point
+     *
+     * @param  $id departmentId
+     *
+     * @return void
+     */
+    public function calculateAvgPoint($deptId)
+    {
+        $teamIds = Team::where('department_id', $deptId)->distinct()->pluck('id')->toArray();
+        $inspectionIds = Inspection::whereIn("team_id", $teamIds)->pluck('id')->toArray();
+        foreach ($inspectionIds as $inspectionId) {
+            $avgPoint = [];
+            for ($i=1; $i <=5; $i++) {
+                $avg = InspectionDetail::where('inspection_id', $inspectionId)
+                ->where('point', 's'.$i)->avg('point_value');
+                if ($avg) {
+                    $avgPoint[] = round($avg, 1);
+                } else {
+                    $avgPoint[] = 0;
+                }
+            }
+            $avgStr = implode('|', $avgPoint);
+            $inspection = Inspection::find($inspectionId);
+            $inspection->avg_point = $avgStr;
+            $inspection->save();
+        }
     }
 
     /**
@@ -462,7 +517,8 @@ class PatternDeptSettingService extends BaseService
 
                     // Remove redundant point data in inspection detail
                     if (count($deletedRows) > 0) {
-                        InspectionDetail::where('location_id', $remainLocation)->whereIn('point', $deletedRows)->delete();
+                        InspectionDetail::where('location_id', $remainLocation)
+                        ->whereIn('point', $deletedRows)->delete();
                     }
                 }
             }

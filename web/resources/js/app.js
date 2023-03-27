@@ -665,7 +665,6 @@ window.toggleDeptMenu = function() {
     // Check if sub menu is hiding, add status to storage and change icon
     $('#extraSubDeptMenuId').off('hide.bs.collapse').on("hide.bs.collapse", function (e) {
         e.stopPropagation();
-        sessionStorage.setItem("deptMenu", "hide");
         $('body').find('#extraSubDeptMenuId').removeClass('show').removeClass('in');
         $('body').find('#subIcon1').addClass("fa-caret-right");
         $('body').find('#subIcon1').removeClass("fa-caret-down");
@@ -679,13 +678,25 @@ window.toggleDeptMenu = function() {
  --------------------- */
 window.handleToggle = function(status, order) {
     if (status == 'show') {
-        sessionStorage.setItem("mainMenu" + order, "show");
+        // Hide other menus
+        $('.menu').each((i, ele) => {
+            if ((i+1) != order) {
+                $('#subMenu' + (i+1)).collapse('hide');
+                if ((i+1) == 1) {
+                    sessionStorage.setItem("deptMenu", "hide");
+                    $('#extraSubDeptMenuId').collapse('hide');
+                    $('body').find('#subIcon1').addClass("fa-caret-right");
+                    $('body').find('#subIcon1').removeClass("fa-caret-down");
+                }
+            }
+        });
+        sessionStorage.setItem("mainMenu", "mainMenu" + order);
         $('body').find('#subMenu' + order).addClass('show').removeClass('in');
         $('#icon' + order).addClass("fa-caret-down");
         $('#icon' + order).removeClass("fa-caret-right");
     }
     else {
-        sessionStorage.setItem("mainMenu" + order, "hide");
+        sessionStorage.setItem("mainMenu", "");
         $('body').find('#subMenu' + order).removeClass('show').removeClass('in');
         $('#icon' + order).addClass("fa-caret-right");
         $('#icon' + order).removeClass("fa-caret-down");
@@ -718,18 +729,10 @@ $(function(){
             }
         });
 
-        if (sessionStorage.getItem((ele.id)) == "show") {
+        if (sessionStorage.getItem("mainMenu") == ele.id) {
             $('#subMenu' + (i+1)).collapse('show');
-        } else {
-            $('#subMenu' + (i+1)).collapse('hide');
         }
     });
-
-    // Handle department href link
-    // $('body').on('click', '#subDeptMenu', function(ev) {
-    //     ev.stopPropagation();
-
-    // })
 
     if (sessionStorage.getItem("deptMenu") == "show") {
         $('#extraSubDeptMenuId').collapse('show');
