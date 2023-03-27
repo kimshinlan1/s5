@@ -132,7 +132,6 @@ class PatternTeamInspectionService extends BaseService
     {
         $data = Inspection::find($inspectionId);
         $blockIds = InspectionImageBlock::where("inspection_id", $inspectionId)->pluck('id')->toArray();
-        $images = InspectionImage::where("block_id", $inspectionId)->pluck('id')->toArray();
 
         if ($data) {
             // Remove redundant data

@@ -41,8 +41,9 @@ window.loadData = function() {
     });
 }
 
-// Save
-
+/**
+ * Save Data
+ */
 window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { //todo
     let url = isFree ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
     let method = "POST";
@@ -50,6 +51,10 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { /
     let note = $('#patternNote').val();
     let compId = $('#userCompanyId').val() == $('#kaizenbaseID').val() ? $('#companyOptionId').find(':selected').val() : $('#userCompanyId').val();
     let currentDeptId = $("#departmentId").find(":selected").val();
+    // Set case for department selection box.
+    // Case 0: department selection is unchanged
+    // Case 1: selecting null option
+    // Case 2: select another department option => replace or add the selected department option to the dept pattern
     if (initDeptId != currentDeptId) {
         changeDeptCase = currentDeptId ? 2 : 1;
     }
@@ -110,7 +115,6 @@ function cancelBackPage() {
 function setValueTest() {
     // Loop main area
     $("#table-content tbody input[type=text]").each(function() {
-
         $(this).val("test");
     });
 

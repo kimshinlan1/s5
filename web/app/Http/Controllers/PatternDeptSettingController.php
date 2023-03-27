@@ -127,7 +127,7 @@ class PatternDeptSettingController extends Controller
      */
     public function saveDeptPattern(Request $request)
     {
-        // todo: Check not exist data
+        // Check not exist data
         $requestData = $request->get('data');
         if (!isset($requestData['info'])) {
             return $this->responseException();
@@ -139,7 +139,6 @@ class PatternDeptSettingController extends Controller
         if ($data['invalid']) {
             return $this->responseException(Constant::MESSAGES['UNIQUE_PATTERN_NAME'], 422);
         }
-
         return response()->json($data);
     }
 
@@ -152,7 +151,7 @@ class PatternDeptSettingController extends Controller
      */
     public function saveDeptPatternForFree(Request $request)
     {
-        // todo: Check not exist data
+        // Check not exist data
         $data = $this->service->saveForFree($request);
         if ($data['invalid']) {
             return $this->responseException(Constant::MESSAGES['UNIQUE_PATTERN_NAME'], 422);

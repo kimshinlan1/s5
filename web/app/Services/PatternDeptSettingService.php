@@ -98,7 +98,7 @@ class PatternDeptSettingService extends BaseService
     {
         $data = $request->get('data');
         $changeDeptCase = $data['changeDeptCase'];
-        $initDeptId =$data['initDeptId'];
+        $initDeptId = $data['initDeptId'];
         $companyId = $request->data['company'];
         if ($data['department']) {
             $isUnique = $this->checkUniqueName($data['department'], $data['info']['pattern_name'], $data['info']['pattern_id']);
@@ -149,12 +149,11 @@ class PatternDeptSettingService extends BaseService
         };
 
         // Note: default $changeDeptCase equals 0 -> do nothing
-        // changeDeptCase equals 1 -> Unbind department from the dept pattern
         if ($changeDeptCase == 1) {
+            // changeDeptCase equals 1 -> Unbind department from the dept pattern
             (app()->get(DepartmentService::class))->unbindDeptFromDeptPattern($initDeptId);
-        }
-        // changeDeptCase equals 2 -> replace the connection between the department and pattern with another department.
-        if ($changeDeptCase == 2) {
+        } elseif ($changeDeptCase == 2) {
+            // changeDeptCase equals 2 -> replace the link between the department, pattern with another department.
             (app()->get(DepartmentService::class))
             ->changeDeptFromDeptPattern($data['department'], $initDeptId, $data['info']['pattern_id']);
         }
@@ -186,7 +185,8 @@ class PatternDeptSettingService extends BaseService
             foreach ($area['locations'] as $location) {
                 // Step: Insert new location
                 $locationId = null;
-                if (($data['info']['pattern_id']) && (isset($location['location_id']) && is_numeric($location['location_id']))) {
+                if (($data['info']['pattern_id']) && (isset($location['location_id'])
+                && is_numeric($location['location_id']))) {
                     $locationId = $location['location_id'];
                     Location::updateOrCreate(
                         [
@@ -233,6 +233,11 @@ class PatternDeptSettingService extends BaseService
             $afterData = $request->get('data')['data'];
             $initData = $request->get('data')['initAreaArray'];
             $removeRedundantData = $this->removeRedundantData($afterData, $initData);
+            /*
+            * Precondition: Check if the link between department and dept pattern still remains
+            * and the proccess of redundant data removal completed
+            * Action: recalculate the average point in inspections table
+            */
             if ($changeDeptCase == '0' && $initDeptId && $removeRedundantData) {
                 $this->calculateAvgPoint($initDeptId);
             }
@@ -417,14 +422,12 @@ class PatternDeptSettingService extends BaseService
         foreach ($inspectionIds as $inspectionId) {
             $avgPoint = [];
             for ($i=1; $i <=5; $i++) {
-                $total = InspectionDetail::where('inspection_id', $inspectionId)->where('point', 's'.$i)->sum('point_value');
-                $count = InspectionDetail::where('inspection_id', $inspectionId)->where('point', 's'.$i)->count();
-                if ($count != 0) {
-                    $avgPoint[] = round($total/$count, 1);
+                $avg = InspectionDetail::where('inspection_id', $inspectionId)->where('point', 's'.$i)->avg('point_value');
+                if ($avg) {
+                    $avgPoint[] = round($avg, 1);
                 } else {
                     $avgPoint[] = 0;
                 }
-
             }
             $avgStr = implode('|', $avgPoint);
             $inspection = Inspection::find($inspectionId);
