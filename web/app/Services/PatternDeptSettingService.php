@@ -256,9 +256,11 @@ class PatternDeptSettingService extends BaseService
     public function checkUniqueName($deptId, $deptPatternName, $currentPatternId = null) {
         $compId = Department::find($deptId)->company_id;
         $dept_pattern = null;
-        $deptPatternIds = Department::where('company_id', $compId)->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
+        $deptPatternIds = Department::where('company_id', $compId)
+        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (!empty($deptPatternIds)) {
-            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
+            $dept_pattern = DeptPattern::whereIn('id', $deptPatternIds)
+            ->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
         }
         return $dept_pattern ? false: true;
     }
@@ -384,7 +386,8 @@ class PatternDeptSettingService extends BaseService
         ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
         if (count($depPatternIds)) {
             foreach ($depPatternIds as $depPatternId) {
-                app()->get(PatternService::class)->destroyPatternByMode($depPatternId, Constant::PAGE_PATTERN_LIST_CUSTOMER);
+                app()->get(PatternService::class)
+                ->destroyPatternByMode($depPatternId, Constant::PAGE_PATTERN_LIST_CUSTOMER);
             }
         }
     }
@@ -422,7 +425,8 @@ class PatternDeptSettingService extends BaseService
         foreach ($inspectionIds as $inspectionId) {
             $avgPoint = [];
             for ($i=1; $i <=5; $i++) {
-                $avg = InspectionDetail::where('inspection_id', $inspectionId)->where('point', 's'.$i)->avg('point_value');
+                $avg = InspectionDetail::where('inspection_id', $inspectionId)
+                ->where('point', 's'.$i)->avg('point_value');
                 if ($avg) {
                     $avgPoint[] = round($avg, 1);
                 } else {
@@ -513,7 +517,8 @@ class PatternDeptSettingService extends BaseService
 
                     // Remove redundant point data in inspection detail
                     if (count($deletedRows) > 0) {
-                        InspectionDetail::where('location_id', $remainLocation)->whereIn('point', $deletedRows)->delete();
+                        InspectionDetail::where('location_id', $remainLocation)
+                        ->whereIn('point', $deletedRows)->delete();
                     }
                 }
             }
