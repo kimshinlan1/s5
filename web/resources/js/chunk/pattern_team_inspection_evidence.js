@@ -65,7 +65,6 @@ function uploadFile(input, block, is_before, albumId) {
 * Add Block
 ---------------------- */
 function addBlock() {
-    // showLoading();
     let inspectionId = $(openEvidenceBtn).attr('data-id');
     let locationArr = [];
     let mode5s = $('#mode5S').val();
@@ -94,12 +93,22 @@ function addBlock() {
             $(openEvidenceBtn).attr('data-id', inspectionId);
             let time = $(openEvidenceBtn).attr('data-time');
 
-            $('input[id^=hidInspectionId_]').each(function(i, l) { //todo
+            $('input[id^=hidInspectionId_]').each(function(i, l) {
                 if (i == time) {
                     $(l).val(inspectionId);
                     $(l).attr('id', 'hidInspectionId_'+inspectionId);
                 }
             })
+
+            $($("[id*='point_avg_1s_']")[time]).attr('id', 'point_avg_1s_' + inspectionId);
+            $($("[id*='point_avg_2s_']")[time]).attr('id', 'point_avg_2s_' + inspectionId);
+            $($("[id*='point_avg_3s_']")[time]).attr('id', 'point_avg_3s_' + inspectionId);
+            $($("[id*='point_avg_4s_']")[time]).attr('id', 'point_avg_4s_' + inspectionId);
+            $($("[id*='point_avg_5s_']")[time]).attr('id', 'point_avg_5s_' + inspectionId);
+            $($("[id*='countEvidence_']")[time]).attr('id', 'countEvidence_' + inspectionId);
+            $($("[id*='countEvidence_']")[time]).attr('data-id', inspectionId);
+            $($("[id*='countEvidence_']")[time]).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
+
             $("#patternEvidenceDialog").find('.evidences-body').animate({
                 scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
             }, 1500);
@@ -424,7 +433,7 @@ function handleConfirmOkBtn(isSaveMode) {
                 if ($('#openEvidenceBtn' + key).length > 0 && count == 0) {
                     $('#openEvidenceBtn' + key).prop("disabled", true);
                     $('#openEvidenceBtn' + key).removeClass("btn-evidence");
-                    $('#openEvidenceBtn' + key).addClass("btn-secondary");``
+                    $('#openEvidenceBtn' + key).addClass("btn-secondary");
                 }
 
                 // Disable open evidence button in Top Page if there is at least 1 evidence
@@ -478,20 +487,6 @@ function handleConfirmOkBtn(isSaveMode) {
     $("body").on('click','#errorDialog button', function() {
         $('#errorDialog').modal('hide');
     })
-
-    // /*---------------------
-    //  * Close button on confirmation dialog
-    //  ---------------------- */
-    // $("body").on('click','#confirmDialog button', function() {
-    //     $('#confirmDialog').modal('hide');
-    // })
-
-    // /*---------------------
-    //  * Handle hide event for the confirmation dialog
-    //  ---------------------- */
-    // $("#confirmDialog").on("hide.bs.modal", function () {
-    //     $("#confirmDialog").find(".modal-body").html('');
-    // });
 
     /*---------------------
      * Get current clicked evidence link selector
