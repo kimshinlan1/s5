@@ -91,6 +91,7 @@ function addBlock() {
             $("#patternEvidenceDialog").find(".evidences-body").append(data);
             let inspectionId = $('#hidNewInspectionId').val();
             $(openEvidenceBtn).attr('data-id', inspectionId);
+            $(openEvidenceBtn).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
             let time = $(openEvidenceBtn).attr('data-time');
 
             $('input[id^=hidInspectionId_]').each(function(i, l) {
@@ -108,6 +109,16 @@ function addBlock() {
             $($("[id*='countEvidence_']")[time]).attr('id', 'countEvidence_' + inspectionId);
             $($("[id*='countEvidence_']")[time]).attr('data-id', inspectionId);
             $($("[id*='countEvidence_']")[time]).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
+
+            $('.col_order_' + (parseInt(time) + 1)).each((_i, e) => {
+                let dataInspectionId = $(e).find('.selPointValue').attr('data-inspection_id');
+                let id = $(e).find('.selPointValue').attr('id');
+                let newId = id.replace(dataInspectionId, inspectionId);
+                $(e).find('.selPointValue').attr('id', newId);
+                $(e).find('.selPointValue').attr('data-inspection_id', inspectionId);
+            });
+
+            $($('.date_' + (parseInt(time) + 1))).find("[id*='txtInspectionDate']").attr('id', 'txtInspectionDate_' + inspectionId);
 
             $("#patternEvidenceDialog").find('.evidences-body').animate({
                 scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
