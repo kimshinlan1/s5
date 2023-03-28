@@ -135,7 +135,7 @@
         </tr>
         <tr id="hidInspectionRow">
             @foreach ($inspectionIds as $key => $inspectionId)
-            <td style="text-align: center; vertical-align: middle;" data-time="{{  $key }}">
+            <td style="text-align: center; vertical-align: middle;" data-time="{{ $key }}" class="date_{{ $key + 1}}">
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";
@@ -192,8 +192,8 @@
                     {{ Constant::NAME_5S[$row['5s']] }}
                 </td>
                 {{-- Point Value --}}
-                @foreach ($inspectionIds as $inspectionId)
-                <td>
+                @foreach ($inspectionIds as $key => $inspectionId)
+                <td class="col_order_{{ $key }}">
                     <select class="form-select selPointValue" id="selPointValue-{{ $inspectionId .'-'. $index }}" data-5s="{{ $row['5s'] }}" data-inspection_id="{{ $inspectionId }}">
                         @foreach ($pointValues as $value)
                         <?php

@@ -31,15 +31,28 @@
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-9">
+                <div class="col-7">
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
-                        <div class="label_header_1">
+                        <div class="label_header_dept_setting_1">
                             <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}" disabled>
                         </div>
-                        <div class="label_header">
+                    </div>
+
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
+                            <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
+                        </div>
+                        <div class="label_header_dept_setting_1">
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
@@ -49,14 +62,9 @@
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
-                        </div>
-                        <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}" disabled>
-                        </div>
-                        <div class="label_header">
+
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
@@ -67,28 +75,29 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
             <br />
             <fieldset style="display: flex;" class="check_5s">
                 <legend class="legend_5s"><strong>{{ __('Pattern_Detail_Selection_Of_Improvement_Points') }}</strong></legend>
                 <div class="checkbox">
-                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s1" name="s1" value="s1" onchange="select5S(this)" checked disabled>
                     <label class="label_5s" for="s1">{{ __('Pattern_Detail_S1') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s2" name="s2" value="s2" onchange="select5S(this)" checked disabled>
                     <label class="label_5s" for="s2">{{ __('Pattern_Detail_S2') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s3" name="s3" value="s3" onchange="select5S(this)" checked disabled>
                     <label class="label_5s" for="s3">{{ __('Pattern_Detail_S3') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s4" name="s4" value="s4" onchange="select5S(this)" checked disabled>
                     <label class="label_5s" for="s4">{{ __('Pattern_Detail_S4') }}</label>
                 </div>
                 <div class="checkbox">
-                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" checked>
+                    <input type="checkbox" id="s5" name="s5" value="s5" onchange="select5S(this)" checked disabled>
                     <label class="label_5s" for="s5">{{ __('Pattern_Detail_S5') }}</label>
                 </div>
             </fieldset>
