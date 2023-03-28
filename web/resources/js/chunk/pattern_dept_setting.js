@@ -541,7 +541,10 @@ $(function () {
 
     // Save click
     $("#save").click(function () {
-        let patternName = $('#patternName').val();
+        let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
+        $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text()
+        : $('#patternName').val();
+        $('#patternName').val(patternName);
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
             $('#patternName').focus();

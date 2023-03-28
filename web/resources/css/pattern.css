@@ -25,12 +25,16 @@
 }
 
 .label_header_dept_setting {
-    margin-right: 0.5%;
-    width: 27%;
+    margin-right: 1.5%;
+    width: 200px;
 }
 
 .label_header_1 {
     margin-right: 2%;
+    width: 40%;
+}
+
+.date {
     width: 40%;
 }
 

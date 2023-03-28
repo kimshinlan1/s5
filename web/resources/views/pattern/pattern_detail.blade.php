@@ -21,15 +21,27 @@
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-9">
+                <div class="col-7">
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
                         </div>
-                        <div class="label_header_1">
+                        <div class="label_header_dept_setting_1">
                             <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
                         </div>
-                        <div class="label_header">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
+                            <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
+                        </div>
+                        <div class="label_header_dept_setting_1">
+                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
@@ -39,14 +51,8 @@
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <div class="label_header">
-                            <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
-                        </div>
-                        <div class="label_header_1">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
-                        </div>
-                        <div class="label_header">
+                    <div class="input-group" style="margin-bottom: 0.5%;">
+                        <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
