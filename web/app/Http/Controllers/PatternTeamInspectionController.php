@@ -215,9 +215,9 @@ class PatternTeamInspectionController extends Controller
      *
      * @return object
      */
-    public function removeBlock($id, Request $request)
+    public function removeBlock(Request $request)
     {
-        $data = $this->evidenceService->removeExistingBlock($id, $request);
+        $data = $this->evidenceService->removeExistingBlock($request);
         if (isset($data['invalid'])) {
             return $this->responseException();
         }

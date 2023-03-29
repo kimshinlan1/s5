@@ -26,15 +26,18 @@
         }
     </style>
 
-    <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Preview') }}</div>
+    <div class="d-flex">
+        <div class="h-title">{{ __('Pattern_Detail_5S_Checklist_Pattern_Preview') }}</div>
+        <div style="margin-top: -0.2rem;">@include('layouts.mode_badge')</div>
+    </div>
     <div class="row">
         <div class="col-12">
             {{-- Option --}}
             <div style="display: flex">
-                <div class="col-7">
+                <div class="col-8">
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header_dept_setting">
-                            <span class="input-group-text">{{ __('Pattern_Detail_Name') }}</span>
+                            <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
                             <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}" disabled>
@@ -50,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col-4">
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header_dept_setting">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>

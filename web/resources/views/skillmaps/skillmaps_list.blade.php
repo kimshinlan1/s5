@@ -9,8 +9,9 @@
 @endsection
 
 @section('content')
-<div class="d-flex justify-content-between">
+<div class="d-flex">
     <div class="h-title">{{ __('SkillMap_List') }}</div>
+    <div style="margin-top: -0.2rem;">@include('layouts.mode_badge')</div>
     <!-- My Toast -->
     <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive"
         aria-atomic="true" id="toast1">

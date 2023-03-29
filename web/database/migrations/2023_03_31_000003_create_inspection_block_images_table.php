@@ -26,6 +26,10 @@ return new class extends Migration
             $table->integer('inspection_id');
             $table->string('problem_before', 255)->nullable();
             $table->string('problem_after', 255)->nullable();
+            $table->timestamp('date_before')->nullable();
+            $table->timestamp('date_after')->nullable();
+            $table->string('location_before', 255)->nullable();
+            $table->string('location_after', 255)->nullable();
             $table->timestamps();
         });
     }
