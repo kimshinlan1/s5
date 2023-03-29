@@ -18,6 +18,9 @@
             <i class="fa fa-cog mx-1" aria-hidden="true"></i>
             {{ __('TopPage_Common_Management') }}
         </a>
+        <div style="width: 250px; text-align: center; margin-top: 20px;">
+            {{-- @include('layouts.mode_badge') --}}
+        </div>
     </div>
     @endif
     <div class="col-sm">
@@ -25,18 +28,27 @@
             <i class="fa fa-graduation-cap mx-1" aria-hidden="true"></i>
             {{ __('TopPage_Study_Plan_Management') }}
         </a>
+        <div style="width: 250px; text-align: center; margin-top: 20px;">
+            {{-- @include('layouts.mode_badge') --}}
+        </div>
     </div>
     <div class="col-sm">
         <a onclick="setSession('mainMenu3')" id="skillMapLinkId" class="main-menu list-group-item list-group-item-action @if(str_contains(request()->path(), 'skillmaps'))active @endif" href="{{ route('skillmap_list') }}">
             <i class="fa fa-line-chart mx-1" aria-hidden="true"></i>
             {{ __('TopPage_Skill_Map') }}
         </a>
+        <div style="width: 250px; text-align: center; margin-top: 20px;">
+            {{-- @include('layouts.mode_badge') --}}
+        </div>
     </div>
     <div class="col-sm">
         <a onclick="setSession('mainMenu4')" id="topPageLinkId" class="main-menu list-group-item list-group-item-action style-list @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">
             <i class="fa fa-bar-chart mx-1" aria-hidden="true"></i>
             {{ __('TopPage_5S_System') }}
         </a>
+        <div style="width: 250px; text-align: center; margin-top: 20px;">
+            {{-- @include('layouts.mode_badge') --}}
+        </div>
     </div>
   </div>
 @endsection

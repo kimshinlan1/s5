@@ -11,6 +11,31 @@ var formData = null;
 * GLOBAL FUNCTION
 ---------------------- */
 
+/**
+ * Config create/update date with calendar
+ */
+function configCalendarById(id) {
+    $('#' + id).datepicker({
+        autoclose: true,
+        dateFormat: 'yy年mm月dd日',
+        language: 'ja',
+        changeYear: true
+    });
+
+    let date_create = new Date();
+
+    if ($('#hidPatternId').val()) {
+        date_create = new Date(dateFormat($('#hidDateCreate').val()));
+    }
+
+    $('#dateCreate').datepicker("setDate", date_create);
+}
+
+function triggerCalendar(id) {
+    configCalendarById(id);
+    $('#' + id).datepicker("show");
+}
+
 /*---------------------
 * Upload file
 ---------------------- */
@@ -132,15 +157,24 @@ function addBlock() {
 /*---------------------
 * Delete Block
 ---------------------- */
-function deleteBlock(blockId) {
+function deleteBlock() {
+    let blockIds = $('input[type="checkbox"]:checked').map(function() {
+        return $(this).attr('data-id');
+    }).get();
     let inspectionId = $(openEvidenceBtn).attr('data-id');
     if (confirm(confirmMsg)) {
-        let url = "/pattern_team_inspection/evidence/" + blockId + "?inspectionId=" + inspectionId;
-        let method = "DELETE";
+        let url = "/pattern_team_inspection/evidence/removeBLocks?inspectionId=" + inspectionId;
+        let method = "POST";
 
+        let data = {
+            ids : blockIds
+        }
         let doneCallback = function (_data, _textStatus, _jqXHR) {
-            $('#block_'+blockId).remove();
-            $('#block_content_'+blockId).remove();
+            blockIds.forEach(blockId => {
+                $('#block_'+blockId).remove();
+                $('#block_content_'+blockId).remove();
+            });
+
             if ($('.evidences-body').find('.count-block').length == 0) {
                 let noDataMsg = $('#messageNoData').val()
                 $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
@@ -152,7 +186,7 @@ function deleteBlock(blockId) {
             failAjax(jqXHR, _textStatus, _errorThrown);
         };
 
-        runAjax(url, method, null, doneCallback, failCallback);
+        runAjax(url, method, data, doneCallback, failCallback);
     }
 }
 
@@ -340,6 +374,10 @@ function handleConfirmOkBtn(isSaveMode) {
         let inspecionId = $(openEvidenceBtn).attr('data-id');
         let problemBeforeArray = [];
         let problemAfterArray = [];
+        let dateBeforeArray = [];
+        let dateAfterArray = [];
+        let locationBeforeArray = [];
+        let locationAfterArray = [];
         let blockIdArray = [];
 
         // Check if evidence dialog contains any blocks. If not, do nothing and close the dialog when click save button
@@ -369,12 +407,27 @@ function handleConfirmOkBtn(isSaveMode) {
                 let problemAfter = $(blocks).find('#problemAfter' + blockId).val();
                 problemBeforeArray.push(problemBefore);
                 problemAfterArray.push(problemAfter);
+                // Add text area and block ids contents to array
+                let dateCreateBefore = $.datepicker.formatDate("yy-mm-dd", $(blocks).find('#dateCreateBefore' + blockId).datepicker("getDate"));
+                let dateCreateAfter = $.datepicker.formatDate("yy-mm-dd", $(blocks).find('#dateCreateAfter' + blockId).datepicker("getDate"));
+                dateBeforeArray.push(dateCreateBefore);
+                dateAfterArray.push(dateCreateAfter);
+                // Add text area and block ids contents to array
+                let locationBefore = $(blocks).find('#locationBefore' + blockId).val();
+                let locationAfter = $(blocks).find('#locationAfter' + blockId).val();
+                locationBeforeArray.push(locationBefore);
+                locationAfterArray.push(locationAfter);
+
                 blockIdArray.push(blockId);
             }
             // Append data for saving text area content
             formData.append("count", blocks.length);
             formData.append("before", problemBeforeArray);
             formData.append("after", problemAfterArray);
+            formData.append("dateBeforeArray", dateBeforeArray);
+            formData.append("dateAfterArray", dateAfterArray);
+            formData.append("locationBeforeArray", locationBeforeArray);
+            formData.append("locationAfterArray", locationAfterArray);
             formData.append("blockIds", blockIdArray);
             formData.append("inspecionId", inspecionId);
 
@@ -406,6 +459,10 @@ function handleConfirmOkBtn(isSaveMode) {
  * DOCUMENT READY
  */
  $(function () {
+    $("#datepicker").datepicker({
+        dateFormat: "dd/mm/yy",
+        minDate: 0 // to set minimum date as today
+    });
     $("#btnUpload").on("click", function(){
         $(".file-after").val("");
     });
@@ -523,6 +580,20 @@ function handleConfirmOkBtn(isSaveMode) {
      * Handle close evidence dialog button
      ---------------------- */
     $("body #patternEvidenceDialog").find('#cancelEvidenceBtnId').click(function () {
+        if ($("[class*='file_']").length > 0) {
+            $("#confirmDialog3").modal('show');
+            $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);
+            $("#confirmDialog3").find('.confirmMessage3').text($('#closeDialogMsgId').val());
+        } else {
+            // Close dialog Case
+            hideAllModals();
+        }
+    });
+
+    /*---------------------
+     * Handle close evidence dialog button
+     ---------------------- */
+    $("body #patternEvidenceDialog").find('#closeEvidenceBtnId').click(function () {
         if ($("[class*='file_']").length > 0) {
             $("#confirmDialog3").modal('show');
             $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);

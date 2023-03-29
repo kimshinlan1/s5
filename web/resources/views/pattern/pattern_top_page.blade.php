@@ -18,8 +18,9 @@
 @endsection
 
 @section('content')
-    <div class="d-flex justify-content-between">
+    <div class="d-flex">
         <div class="h-title">{{ __('Pattern_TopPage_Management') }}</div>
+        <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
         @include('layouts.success')
     </div>
 

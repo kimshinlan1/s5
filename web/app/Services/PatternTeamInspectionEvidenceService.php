@@ -121,26 +121,30 @@ class PatternTeamInspectionEvidenceService extends BaseService
      *
      * @return object
      */
-    public function removeExistingBlock($id, Request $request)
+    public function removeExistingBlock(Request $request)
     {
-        $data = $this->imageBlockModel->find($id);
-        if ($request->has('inspectionId')) {
-            $inspectionId = $request->get('inspectionId');
-        } else {
-            return [
-                'invalid' => true,
-            ];
-        }
-        if ($data) {
-            $imageIds = $this->imageModel->where('block_id', $id)->select('id')->get()->toArray();
-            $this->imageModel::whereIn('id', $imageIds)->delete();
-            $sourcePath = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $id;
-            if (File::exists($sourcePath)) {
-                File::deleteDirectory($sourcePath);
+        $blockIds = $request->get('ids');
+        foreach ($blockIds as $id) {
+            $data = $this->imageBlockModel->find($id);
+            if ($request->has('inspectionId')) {
+                $inspectionId = $request->get('inspectionId');
+            } else {
+                return [
+                    'invalid' => true,
+                ];
             }
-            $data = $data->delete();
+            if ($data) {
+                $imageIds = $this->imageModel->where('block_id', $id)->select('id')->get()->toArray();
+                $this->imageModel::whereIn('id', $imageIds)->delete();
+                $sourcePath = Constant::INSPECTION_IMAGE_PATH . '/inspection' . $inspectionId . '/block' . $id;
+                if (File::exists($sourcePath)) {
+                    File::deleteDirectory($sourcePath);
+                }
+                $data = $data->delete();
+            }
         }
-        return $data;
+
+        return true;
     }
 
      /**
@@ -179,13 +183,21 @@ class PatternTeamInspectionEvidenceService extends BaseService
         $inspecionId = $request->get('inspecionId');
         $before = explode(',', $request->get('before'));
         $after = explode(',', $request->get('after'));
+        $dateBeforeArray = explode(',', $request->get('dateBeforeArray'));
+        $dateAfterArray = explode(',', $request->get('dateAfterArray'));
+        $locationBeforeArray = explode(',', $request->get('locationBeforeArray'));
+        $locationAfterArray = explode(',', $request->get('locationAfterArray'));
         $blockIds = explode(',', $request->get('blockIds'));
         for ($i=0; $i < $count; $i++) {
             $block = InspectionImageBlock::findOrFail($blockIds[$i]);
             if ($block) {
                 $block->update([
-                    'problem_before' => "$before[$i]",
+                    'problem_before' => $before[$i],
                     'problem_after' => $after[$i],
+                    'date_before' => $dateBeforeArray[$i] == "" ? null : $dateBeforeArray[$i],
+                    'date_after' => $dateAfterArray[$i] == "" ? null : $dateAfterArray[$i],
+                    'location_before' => $locationBeforeArray[$i],
+                    'location_after' => $locationAfterArray[$i],
                 ]);
                 $block->save();
             }

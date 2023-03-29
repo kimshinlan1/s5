@@ -122,7 +122,7 @@ and (orientation : landscape)
 }
 
 .after-label {
-    background-color: rgb(231, 168, 51);
+    background-color: rgb(0 135 87);
     width: 30%;
     font-size: 2rem;
 }

@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="d-flex justify-content-between">
+    <div class="d-flex">
         <div class="h-title">{{ __('Company_Management') }}</div>
         @include('layouts.success')
     </div>

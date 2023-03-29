@@ -9,8 +9,9 @@
 @endsection
 
 @section('content')
-<div class="d-flex justify-content-between">
+<div class="d-flex">
     <div class="h-title">{{ __('Team_Management') }}</div>
+    <div style="margin-top: -0.2rem;">@include('layouts.mode_badge')</div>
     @include('layouts.success')
 </div>
 @if (Auth::user()->isAdmin())

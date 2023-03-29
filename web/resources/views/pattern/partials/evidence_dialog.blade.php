@@ -23,16 +23,23 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-danger fw-bold fs-1">{{ __('Evidence_Title') }}</h4>
+                <h4 class="modal-title text-danger fw-bold fs-1" style="margin: 0 auto;">{{ __('Evidence_Title') }}</h4>
+                <button type="button" id="closeEvidenceBtnId" class="btn btn-secondary">&times;</button>
             </div>
 
             {{-- Render evidence data here from inspectionId  --}}
             <div class="modal-body evidences-body"></div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="btnEvidenceSave">{{ __('Common_button_save') }}</button>
-                <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock">{{ __('Evidence_Add_Block_Btn') }}</button>
-                <button type="button" id="cancelEvidenceBtnId" class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
+            <div class="modal-footer" style="display: flex; flex-direction: column; align-items: end;">
+                <div>
+                    <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteBlock()" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Remove_Block_Btn') }}</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-success" id="btnEvidenceSave" style="width: 125px;">{{ __('Common_button_save') }}</button>
+                    <button type="button" id="cancelEvidenceBtnId" class="btn btn-secondary" style="width: 125px;">{{ __('Common_button_cancel') }}</button>
+
+                </div>
                 {{-- Hidden --}}
                 <input type="hidden" id="hidInspectionId" value=""/>
             </div>

@@ -7,14 +7,15 @@
 {{-- Cross Button --}}
 <div class="row" id="block_{{ $evidence['id'] }}">
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn-close" aria-label="Close" onclick="deleteBlock('{{ $evidence['id'] }}')"></button>
+        {{-- <button type="button" class="btn-close" aria-label="Close" onclick="deleteBlock('{{ $evidence['id'] }}')"></button> --}}
+        <input type="checkbox" data-id="{{ $evidence['id'] }}" class="remove-blocks" style="margin-right: 1.7rem; transform: scale(2);">
     </div>
 </div>
 
 <input type="hidden" id="hidNewInspectionId" value="{{ $evidence['inspection_id'] }}"/>
 
 <div class="row count-block" id="block_content_{{ $evidence['id'] }}" data-id="{{ $evidence['id'] }}">
-    <div class="col" style="padding-left: 3rem;">
+    <div class="col-5" style="padding-left: 3rem;">
         {{-- Before --}}
         <input type="hidden" id="beforeUploadedIndex" value="0"/>
         <div class="before-title">
@@ -39,8 +40,19 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
                 <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button>
+            </div>
+        </div>
+        <br>
+        <div class="row" style="padding-left: 1rem;">
+            <div class="col-5">
+                <input type="text" class="form-control" id="dateCreateBefore{{ $evidence['id'] }}" placeholder="yyyy年MM月dd日"
+                data-date-format="YYYY-MM-DD" onclick="triggerCalendar('dateCreateBefore{{ $evidence['id'] }}')" data-toggle="tooltip"
+                title="{{ __('Common_Click_To_Select_Date') }}">
+            </div>
+            <div class="col-5">
+                <input type="text" id="locationBefore{{ $evidence['id'] }}" class="form-control" placeholder="入力場所">
             </div>
         </div>
         <br>
@@ -49,8 +61,13 @@
         </span>
         <textarea id="problemBefore{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>
     </div>
-
-    <div class="col">
+    <div class="col-2" style="text-align: center;">
+        <div class="row" style="height: 50px"></div>
+        <div class="row" style="height:350px; display: flex; justify-content: center; align-items: center;">
+            <i class="fa fa-caret-right right-arrow" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="col-5">
         {{-- After --}}
         <input type="hidden" id="afterUploadedIndex" value="0"/>
         <div class="after-title">
@@ -75,8 +92,19 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-success btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file file-after" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file file-after" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
                 <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button>
+            </div>
+        </div>
+        <br>
+        <div class="row" style="padding-left: 1rem;">
+            <div class="col-5">
+                <input type="text" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="yyyy年MM月dd日"
+                data-date-format="YYYY-MM-DD" onclick="triggerCalendar('dateCreateAfter{{ $evidence['id'] }}')" data-toggle="tooltip"
+                title="{{ __('Common_Click_To_Select_Date') }}">
+            </div>
+            <div class="col-5">
+                <input type="text" id="locationAfter{{ $evidence['id'] }}" class="form-control" placeholder="入力場所">
             </div>
         </div>
         <br>
