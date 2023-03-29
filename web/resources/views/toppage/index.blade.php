@@ -19,7 +19,7 @@
             {{ __('TopPage_Common_Management') }}
         </a>
         <div style="width: 250px; text-align: center; margin-top: 20px;">
-            @include('layouts.mode_badge')
+            {{-- @include('layouts.mode_badge') --}}
         </div>
     </div>
     @endif
@@ -29,7 +29,7 @@
             {{ __('TopPage_Study_Plan_Management') }}
         </a>
         <div style="width: 250px; text-align: center; margin-top: 20px;">
-            @include('layouts.mode_badge')
+            {{-- @include('layouts.mode_badge') --}}
         </div>
     </div>
     <div class="col-sm">
@@ -38,7 +38,7 @@
             {{ __('TopPage_Skill_Map') }}
         </a>
         <div style="width: 250px; text-align: center; margin-top: 20px;">
-            @include('layouts.mode_badge')
+            {{-- @include('layouts.mode_badge') --}}
         </div>
     </div>
     <div class="col-sm">
@@ -47,7 +47,7 @@
             {{ __('TopPage_5S_System') }}
         </a>
         <div style="width: 250px; text-align: center; margin-top: 20px;">
-            @include('layouts.mode_badge')
+            {{-- @include('layouts.mode_badge') --}}
         </div>
     </div>
   </div>

@@ -15,7 +15,6 @@
 
 @section('content')
 <div class="h-title">{{ __('My_Page') }}</div>
-<div style="margin-top: -0.2rem;">@include('layouts.mode_badge')</div>
 <br>
 <table id="userTable" class="table table-hover table-bordered">
     <tbody>
