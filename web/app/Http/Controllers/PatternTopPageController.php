@@ -93,7 +93,7 @@ class PatternTopPageController extends Controller
         }
 
         $params = [
-            'countInspection' => $maxColumn > Constant::INSPECTION_DEFAULT_COLUMN_NUMBER ? $maxColumn : Constant::INSPECTION_DEFAULT_COLUMN_NUMBER,
+            'countInspection' => Constant::INSPECTION_DEFAULT_COLUMN_NUMBER,
             'inspectionData' => $inspectionData,
             'companies' => $companies
         ];

@@ -45,11 +45,11 @@ class PatternTopPageService extends BaseService
             "$table.avg_point as avg_point",
             "$table.uploaded_evidence_block_number as count_evidence",
         ])
-        ->orderBy("$table.id");
+        ->orderBy("$table.id", 'desc');
         if ($teamId) {
             $sql->where('inspection.team_id', $teamId)->whereNotNull('avg_point');
         }
 
-        return $sql->get()->toArray();
+        return $sql->take(3)->get()->toArray();
     }
 }

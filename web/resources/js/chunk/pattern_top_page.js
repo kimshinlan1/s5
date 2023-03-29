@@ -42,7 +42,7 @@ function gotoInspectionPage(teamId, deptId) {
 /**
  * Load radar chart
  */
-function loadRadarChart(id, avgPointArr, isDept) {
+function loadRadarChart(id, avgPointArr, isDept) { //todo
     let config = configRadarChart(avgPointArr, isDept);
     const ctx = document.getElementById(id);
     radarChart = new Chart(ctx, config);
@@ -67,7 +67,7 @@ function loadBarChart(id, mapObj, count) {
 /**
  * Render chart for each teams in a dept
  */
-function renderTeamChart(deptId, teamId) {
+function renderTeamChart(deptId, teamId) { //todo
     // let count = $('#hidCountInspection').val();
     let mapObj = new Map();
     mapObj.set("s1", []);
@@ -95,7 +95,7 @@ function renderTeamChart(deptId, teamId) {
 /**
  * Render overall dept chart representing average value of each inspection
  */
-function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData, deptId, countMaxInspection) {
+function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData, deptId, countMaxInspection) { //todo
     /** Load Dept Radar Chart and calculate data structure for rendering dept bar chart **/
     for (let index = 0; index < countMaxInspection; index++) {
       let key = 'inspection' + index;
