@@ -261,7 +261,7 @@
     "Pattern_Confirm_Message_Remove_Data_Used": "検証際の入力でデータが存在しているので、回復できずに削除してもよろしいでしょうか。",
     "Pattern_Confirm_Message_Please_Add_New_Or_Confirm_Admin": "元のパターンがありません。新規追加するか、管理者を確認してください。",
     "Pattern_TopPage_Management": "5Sトップページ",
-    "Pattern_Change_Department_Warning": "この部門はパターンに接続されています。データが失われる可能性があります。続けたいですか?",
+    "Pattern_Change_Department_Warning": "この部門はパターンに接続されています。 データが失われる可能性があります. ",
     "=====  BLOCK_PATTERN_DETAIL_END =====": "",
 
     "=====  BLOCK_PATTERN_TEAM_INSPECTION_START =====": "",
