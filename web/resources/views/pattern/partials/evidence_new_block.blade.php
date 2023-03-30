@@ -46,13 +46,13 @@
         </div>
         <br>
         <div class="row" style="padding-left: 1rem;">
-            <div class="col-5">
-                <input type="text" class="form-control" id="dateCreateBefore{{ $evidence['id'] }}" placeholder="yyyy年MM月dd日"
+            <div class="col-4">
+                <input type="text" class="form-control" id="dateCreateBefore{{ $evidence['id'] }}" placeholder="日付"
                 data-date-format="YYYY-MM-DD" onclick="triggerCalendar('dateCreateBefore{{ $evidence['id'] }}')" data-toggle="tooltip"
                 title="{{ __('Common_Click_To_Select_Date') }}">
             </div>
-            <div class="col-5">
-                <input type="text" id="locationBefore{{ $evidence['id'] }}" class="form-control" placeholder="入力場所">
+            <div class="col-8">
+                <input type="text" style="width: 98%;" id="locationBefore{{ $evidence['id'] }}" class="form-control" placeholder="場所">
             </div>
         </div>
         <br>
@@ -98,13 +98,13 @@
         </div>
         <br>
         <div class="row" style="padding-left: 1rem;">
-            <div class="col-5">
-                <input type="text" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="yyyy年MM月dd日"
+            <div class="col-4">
+                <input type="text" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="日付"
                 data-date-format="YYYY-MM-DD" onclick="triggerCalendar('dateCreateAfter{{ $evidence['id'] }}')" data-toggle="tooltip"
                 title="{{ __('Common_Click_To_Select_Date') }}">
             </div>
-            <div class="col-5">
-                <input type="text" id="locationAfter{{ $evidence['id'] }}" class="form-control" placeholder="入力場所">
+            <div class="col-8">
+                <input type="text" style="width: 98%;" id="locationAfter{{ $evidence['id'] }}" class="form-control" placeholder="場所">
             </div>
         </div>
         <br>

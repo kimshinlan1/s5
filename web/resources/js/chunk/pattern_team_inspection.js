@@ -3,6 +3,7 @@
  **********/
 const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
+var isUnsavedData = false;
 var RenderRadarChart = [];
 var RenderBarChart = [];
 var inspectionIdBtnRemove = [];
@@ -53,6 +54,9 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
     let doneCallback = function (datas, _textStatus, _jqXHR) {
         $("#content").html("");
         $("#content").append(datas);
+        if (mode != '') {
+            isUnsavedData = true;
+        }
         if (isAddColumn) {
             $('#addColumnId').prop('disabled', true);
             showToast($('#toast3'), 2000, true);
@@ -69,7 +73,14 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
                 autoclose: true,
                 dateFormat: 'yy年mm月dd日',
                 language: 'ja',
-                changeYear: true
+                changeYear: true,
+                onSelect: function(dateText, inst) {
+                    let prevDate = inst.lastVal;
+                    // Ensure that date is changed
+                    if (dateText != prevDate) {
+                        isUnsavedData = true;
+                    }
+                }
             });
 
             // Check and get from DB
@@ -85,6 +96,7 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
             for (let e of inspIds) {
                 RenderRadarChart[e].destroy();
             }
+            isUnsavedData = true;
             // RenderBarChart.destroy();
             initChart();
         });
@@ -175,6 +187,7 @@ function saveInspectionData() {
     let param = setParam();
     let doneCallback = function (data, _textStatus, _jqXHR) {
         showToast($('#toast1'), 2000, true);
+        isUnsavedData = false;
         // Load data
         if ($("#hidTeamId").val()){
             window.location = "/pattern_top_page";
@@ -659,4 +672,10 @@ $(function () {
         $("#modalRemoveColumn").removeClass("fade");
         $("#modalRemoveColumn").removeClass("in");
     })
+
+    $(window).on('beforeunload', function(e) {
+        if (isUnsavedData) {
+            return "You have unsaved changes. Please save them before leaving.";
+        }
+    });
 });

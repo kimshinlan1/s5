@@ -38,6 +38,7 @@
     "Common_Created_Date": "作成日",
     "Common_Last_Update_Date": "最終更新日",
     "Common_Are_You_Sure_Delete": "本当に削除しますか?",
+    "Common_Unsaved_Data_Warning": "保存されていない変更があります。退会してもよろしいですか？?",
     "===== BLOCK_COMMON_END =====": "",
 
     "===== BLOCK_ERROR_MESSAGE_START =====": "",
@@ -308,6 +309,7 @@
     "Evidence_Close_Dialog_Warning": "このウィンドウを閉じると、新しくアップロードされたファイルが失われます。ウィンドウを閉じますか?",
     "Evidence_Delete_Album_Tooltip": "すべての画像を削除",
     "Evidence_Delete_Image_Tooltip": "この画像を削除",
+    "Evidence_No_Selected_Block": "ブロックが選択されていません",
     "=====  BLOCK_EVIDENCE_END =====": ""
 
 }
