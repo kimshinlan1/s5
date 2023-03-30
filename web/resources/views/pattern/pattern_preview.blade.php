@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-4">
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting">
+                        <div class="label_header_dept_setting" style="width: 25%">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting">
+                        <div class="label_header_dept_setting" style="width: 25%">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
