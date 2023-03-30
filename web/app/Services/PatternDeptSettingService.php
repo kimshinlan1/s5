@@ -129,6 +129,8 @@ class PatternDeptSettingService extends BaseService
         if ($patternId) {
             // Remove Pattern Detail
             $this->deleteDetailsByPatternId($patternId);
+            $no = 'CKL' . str_pad($patternId, 5, '0', STR_PAD_LEFT);
+            $patternData['no'] = $no;
         } else {
             parent::removeRedundantDataById($data['department']);
             $no = Utility::generateUniqueId(new DeptPattern(), "no", "CKL", 5);
