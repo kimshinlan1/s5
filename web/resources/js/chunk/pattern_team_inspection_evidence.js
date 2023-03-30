@@ -5,6 +5,7 @@ var openEvidenceBtn = null;
 var numberOfEvidences = 0;
 var confirmMsg = '';
 var formData = null;
+var isAddNewEvidenceOpen = false;
 /////////////////////////////////////////////////////////////////////////////
 
 /*---------------------
@@ -175,9 +176,8 @@ function deleteBlock() {
 
             if ($('.evidences-body').find('.count-block').length == 0) {
                 let noDataMsg = $('#messageNoData').val()
-                $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
+                $('.evidences-body').append('<div class="h4" id="noDataTextId" style="text-align: center;">' + noDataMsg + '</div>');
             }
-            showToast($('#toast2'), 2000, true);
         };
 
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -206,7 +206,14 @@ function loadEvidence(inspection_id) {
     let doneCallback = function (data, _textStatus, _jqXHR) {
         $("#patternEvidenceDialog .evidences-body").append(data);
         $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val(inspection_id);
-        addBlock();
+        if ($('.evidences-body').find('.count-block').length == 0 && !isAddNewEvidenceOpen) {
+            let noDataMsg = $('#messageNoData').val()
+            $('.evidences-body').append('<div class="h4" id="noDataTextId" style="text-align: center;">' + noDataMsg + '</div>');
+        }
+        if (isAddNewEvidenceOpen) {
+            addBlock();
+            isAddNewEvidenceOpen = false;
+        }
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -257,8 +264,6 @@ function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
                 if ($(albumID).find('.item').length == 0) {
                     $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
                 }
-
-                showToast($('#toast2'), 2000, true);
             };
 
             let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -312,7 +317,7 @@ function removeAlbum(albumID, blockID, isBefore) {
             inspectionId: inspectionId,
         }
         let doneCallback = function (data, _textStatus, _jqXHR) {
-            showToast($('#toast2'), 2000, true);
+
         };
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
             failAjax(jqXHR, _textStatus, _errorThrown);
@@ -477,6 +482,7 @@ function handleConfirmOkBtn(isSaveMode) {
     let isFirstShown = true;
     $("#patternEvidenceDialog").on("show.bs.modal", function (e) {
         let id = $(e.relatedTarget).attr("data-id");
+
         loadEvidence(id);
         if (isFirstShown) {
             isFirstShown = false;
@@ -491,6 +497,7 @@ function handleConfirmOkBtn(isSaveMode) {
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         setTimeout(function() {
             if (!isShown) {
+                $('.evidences-body').find('#noDataTextId').remove();
                 let inspectionId = $(openEvidenceBtn).attr('data-id');
                 let countEvidenceId = $(openEvidenceBtn).attr('data-countEvidenceId');
                 let key = $(openEvidenceBtn).attr('data-time');
@@ -565,6 +572,7 @@ function handleConfirmOkBtn(isSaveMode) {
      * Set common value here
      ---------------------- */
     $("body").on('click','#openEvidenceBtn', function(e) {
+        isAddNewEvidenceOpen = true
         openEvidenceBtn = e.currentTarget;
         confirmMsg = $('#confirmDeleteMsgId').val();
         formData = new FormData()

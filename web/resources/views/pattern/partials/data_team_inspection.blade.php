@@ -128,7 +128,7 @@
             <td rowspan="2" style="text-align: center;">点検箇所</td>
             <td rowspan="2" style="text-align: center;">改善ポイント</td>
             @for ($i = 0; $i < $countInspection; $i++)
-            <td style="text-align: center;">
+            <td style="text-align: center; vertical-align: middle;">
                 <strong>点検実施日</strong>
             </td>
             @endfor
