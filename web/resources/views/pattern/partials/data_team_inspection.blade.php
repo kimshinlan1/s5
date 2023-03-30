@@ -124,9 +124,9 @@
 
         {{-- 点検実施日 --}}
         <tr style="background: #F2F2F2;">
-            <td rowspan="2" style="text-align: center;">No</td>
+            <td rowspan="2" style="text-align: center;">点検エリア</td>
             <td rowspan="2" style="text-align: center;">点検箇所</td>
-            <td rowspan="2" style="text-align: center;">ポイント</td>
+            <td rowspan="2" style="text-align: center;">改善ポイント</td>
             @for ($i = 0; $i < $countInspection; $i++)
             <td style="text-align: center;">
                 <strong>点検実施日</strong>
