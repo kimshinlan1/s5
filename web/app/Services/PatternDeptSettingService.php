@@ -108,7 +108,7 @@ class PatternDeptSettingService extends BaseService
             $this->deleteOldDeptPattern($companyId);
         }
         // Check dept pattern name is unique within its department
-        $isUnique = $this->checkUniqueName($data['department'], $patternId);
+        $isUnique = $this->checkUniqueName($data['department'], $patternName, $patternId);
         if (!$isUnique) {
             return [
                 'invalid' => true,
@@ -227,7 +227,7 @@ class PatternDeptSettingService extends BaseService
         $updatedDate = $request->get('pattern_updated_at');
         $selected5s = $request->get('pattern_5s_selected');
 
-        $isUnique = $this->checkUniqueName($deptId, $deptPatternId);
+        $isUnique = $this->checkUniqueName($deptId, $deptPatternName, $deptPatternId);
         if (!$isUnique) {
             return [
                 'invalid' => true,
