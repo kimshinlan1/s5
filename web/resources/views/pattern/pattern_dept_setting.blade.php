@@ -356,7 +356,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body">
-                    <div><span style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
+                    <div><span id="saveMsgId" style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="saveDataPattern()"

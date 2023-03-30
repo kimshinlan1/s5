@@ -38,13 +38,13 @@
     <div class="d-flex">
         <div class="h-title">{{ __('SkillMap') }}</div>
         <div class="" style="margin-top: -0.2rem;">
-            @if(auth()->user()->is5SModeFree())
+            @if(auth()->user()->isModeFree())
                 <button class="btn btn-warning"
                 style="opacity: 1; min-width: unset; border-radius: 0.25rem!important;" disabled>
                     {{ __('Common_Free_Badge') }}
                 </button>
             @endif
-            @if(!auth()->user()->is5SModeFree())
+            @if(!auth()->user()->isModeFree())
                 <button class="btn btn-success"
                 style="opacity: 1; min-width: unset; border-radius: 0.25rem!important;" disabled>
                     {{ __('Common_Paid_Badge') }}

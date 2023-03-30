@@ -541,6 +541,12 @@ $(function () {
 
     // Save click
     $("#save").click(function () {
+        if (!$('#hidPatternId').val()) {
+            let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
+            if (deptPatternId && deptPatternId > 0) {
+                $("#modalSaveData").find('#saveMsgId').prepend ($('#changeDeptWarningMsgId').val());
+            }
+        }
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
         $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text()
         : $('#patternName').val();

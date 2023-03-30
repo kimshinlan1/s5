@@ -17,18 +17,11 @@ var formData = null;
 function configCalendarById(id) {
     $('#' + id).datepicker({
         autoclose: true,
+        defaultDate: new Date(),
         dateFormat: 'yy年mm月dd日',
         language: 'ja',
         changeYear: true
     });
-
-    let date_create = new Date();
-
-    if ($('#hidPatternId').val()) {
-        date_create = new Date(dateFormat($('#hidDateCreate').val()));
-    }
-
-    $('#dateCreate').datepicker("setDate", date_create);
 }
 
 function triggerCalendar(id) {
@@ -161,6 +154,11 @@ function deleteBlock() {
     let blockIds = $('input[type="checkbox"]:checked').map(function() {
         return $(this).attr('data-id');
     }).get();
+    if (blockIds.length == 0) {
+        $('#confirmDialog2').modal('show');
+        $('#confirmDialog2').find('.confirmMessage').html($('#noSelectedBlock').val());
+        return;
+    }
     let inspectionId = $(openEvidenceBtn).attr('data-id');
     if (confirm(confirmMsg)) {
         let url = "/pattern_team_inspection/evidence/removeBLocks?inspectionId=" + inspectionId;
@@ -208,9 +206,7 @@ function loadEvidence(inspection_id) {
     let doneCallback = function (data, _textStatus, _jqXHR) {
         $("#patternEvidenceDialog .evidences-body").append(data);
         $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val(inspection_id);
-        if ($('.evidences-body').find('.count-block').length == 0) {
-            addBlock();
-        }
+        addBlock();
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -409,7 +405,15 @@ function handleConfirmOkBtn(isSaveMode) {
                 problemAfterArray.push(problemAfter);
                 // Add text area and block ids contents to array
                 let dateCreateBefore = $.datepicker.formatDate("yy-mm-dd", $(blocks).find('#dateCreateBefore' + blockId).datepicker("getDate"));
+                if (dateCreateBefore == '') {
+                    let parts = $(blocks).find('#dateCreateBefore' + blockId).val().split("年").join("-").split("月").join("-").split("日");
+                    dateCreateBefore = parts[0];
+                }
                 let dateCreateAfter = $.datepicker.formatDate("yy-mm-dd", $(blocks).find('#dateCreateAfter' + blockId).datepicker("getDate"));
+                if (dateCreateAfter == '') {
+                    let parts = $(blocks).find('#dateCreateAfter' + blockId).val().split("年").join("-").split("月").join("-").split("日");
+                    dateCreateAfter = parts[0];
+                }
                 dateBeforeArray.push(dateCreateBefore);
                 dateAfterArray.push(dateCreateAfter);
                 // Add text area and block ids contents to array
@@ -631,4 +635,8 @@ function handleConfirmOkBtn(isSaveMode) {
         $("#confirmDialog3").modal('hide');
     });
 
+    // Click Ok button on confirm dialog 2
+    $("#confirmDialog2").find('#dialogOkBtn2').click(function () {
+        $("#confirmDialog2").modal('hide');
+    });;
  });
