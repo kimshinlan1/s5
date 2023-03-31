@@ -40,7 +40,7 @@
                             <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}" disabled>
+                            <input style="height: 100%;" type="text" class="form-control responsive-text" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}" disabled>
                         </div>
                     </div>
 
@@ -49,17 +49,17 @@
                             <span class="input-group-text">{{ __('Pattern_Note') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}" disabled>
+                            <input style="height: 100%;" type="text" class="form-control responsive-text" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}" disabled>
                         </div>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting" style="width: 25%">
+                        <div class="label_header_dept_setting" style="width: 44%">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
-                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日" style="background-color: #e9ecef; opacity: 1;"
+                            <input type="text" class="form-control responsive-text" id="dateCreate" placeholder="yyyy年MM月dd日" style="background-color: #e9ecef; opacity: 1;"
                                 data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}" value="" disabled>
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
@@ -67,11 +67,11 @@
                     </div>
 
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting" style="width: 25%">
+                        <div class="label_header_dept_setting" style="width: 44%">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
-                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
+                            <input type="text" class="form-control responsive-text" id="dateUpdate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"  style="background-color: #e9ecef; opacity: 1;"
                                 title="{{ __('Common_Click_To_Select_Date') }}" value="" disabled>
                             <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
@@ -133,8 +133,8 @@
                     </div>
                 </div>
             </div>
-            <br />
-            <div class="action-btn" style="justify-content: flex-start">
+            <br/>
+            <div style="padding-top: 30px;" class="action-btn" style="justify-content: flex-start">
                 @if (!auth()->user()->is5SModeFree())
                 <button type="button" id="btnEditPreview" class="btn btn-primary" >
                     {{ __('Common_Edit') }}
