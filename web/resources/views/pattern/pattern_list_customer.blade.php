@@ -46,7 +46,7 @@
             <tr style="text-align: center;">
                 <th data-field="id" data-visible="false">{{ __('Pattern_ID') }}</th>
                 <th data-align="center" data-field="no">{{ __('Pattern_ID') }}</th>
-                <th data-field="name">{{ __('Pattern_Name') }}</th>
+                <th data-width="120" data-field="name">{{ __('Pattern_Name') }}</th>
                 <th data-field="note">{{ __('Pattern_Note') }}</th>
                 <th data-field="deptName">{{ __('Deparment_Name') }}</th>
                 @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
