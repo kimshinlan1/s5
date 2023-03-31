@@ -80,7 +80,7 @@
                 </div>
                 <div class="col-4">
                     <div class="input-group" style="margin-bottom: 0.75%;">
-                        <div class="label_header_dept_setting">
+                        <div class="label_header_dept_setting" style="width: 25%">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <div class="label_header_dept_setting">
+                        <div class="label_header_dept_setting" style="width: 25%">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
@@ -356,7 +356,7 @@
                     <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body">
-                    <div><span style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
+                    <div><span id="saveMsgId" style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="saveDataPattern()"

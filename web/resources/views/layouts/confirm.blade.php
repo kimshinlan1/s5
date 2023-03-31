@@ -17,7 +17,7 @@
 </div>
 
 {{-- Confirm dialog 2 --}}
-<div id="confirmDialog2" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+<div id="confirmDialog2" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,7 +28,7 @@
                 <div class="confirmMessage"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_ok') }}</button>
+                <button type="button" id="dialogOkBtn2" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>

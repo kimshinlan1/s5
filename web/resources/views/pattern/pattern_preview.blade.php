@@ -46,7 +46,7 @@
 
                     <div class="input-group" style="margin-bottom: 0.5%;">
                         <div class="label_header_dept_setting">
-                            <span class="input-group-text">{{ __('Pattern_Detail_Explanation') }}</span>
+                            <span class="input-group-text">{{ __('Pattern_Note') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
                             <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}" disabled>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-4">
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting">
+                        <div class="label_header_dept_setting" style="width: 25%">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="input-group" style="margin-bottom: 0.5%;">
-                        <div class="label_header_dept_setting">
+                        <div class="label_header_dept_setting" style="width: 25%">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">

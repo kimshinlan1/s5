@@ -5,6 +5,7 @@ var openEvidenceBtn = null;
 var numberOfEvidences = 0;
 var confirmMsg = '';
 var formData = null;
+var isAddNewEvidenceOpen = false;
 /////////////////////////////////////////////////////////////////////////////
 
 /*---------------------
@@ -17,18 +18,11 @@ var formData = null;
 function configCalendarById(id) {
     $('#' + id).datepicker({
         autoclose: true,
+        defaultDate: new Date(),
         dateFormat: 'yy年mm月dd日',
         language: 'ja',
         changeYear: true
     });
-
-    let date_create = new Date();
-
-    if ($('#hidPatternId').val()) {
-        date_create = new Date(dateFormat($('#hidDateCreate').val()));
-    }
-
-    $('#dateCreate').datepicker("setDate", date_create);
 }
 
 function triggerCalendar(id) {
@@ -161,6 +155,11 @@ function deleteBlock() {
     let blockIds = $('input[type="checkbox"]:checked').map(function() {
         return $(this).attr('data-id');
     }).get();
+    if (blockIds.length == 0) {
+        $('#confirmDialog2').modal('show');
+        $('#confirmDialog2').find('.confirmMessage').html($('#noSelectedBlock').val());
+        return;
+    }
     let inspectionId = $(openEvidenceBtn).attr('data-id');
     if (confirm(confirmMsg)) {
         let url = "/pattern_team_inspection/evidence/removeBLocks?inspectionId=" + inspectionId;
@@ -177,9 +176,8 @@ function deleteBlock() {
 
             if ($('.evidences-body').find('.count-block').length == 0) {
                 let noDataMsg = $('#messageNoData').val()
-                $('.evidences-body').append('<div class="h4" id="noDataId" style="text-align: center;">' + noDataMsg + '</div>');
+                $('.evidences-body').append('<div class="h4" id="noDataTextId" style="text-align: center;">' + noDataMsg + '</div>');
             }
-            showToast($('#toast2'), 2000, true);
         };
 
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -208,8 +206,13 @@ function loadEvidence(inspection_id) {
     let doneCallback = function (data, _textStatus, _jqXHR) {
         $("#patternEvidenceDialog .evidences-body").append(data);
         $("#patternEvidenceDialog").find(".modal-footer #hidInspectionId").val(inspection_id);
-        if ($('.evidences-body').find('.count-block').length == 0) {
+        if ($('.evidences-body').find('.count-block').length == 0 && !isAddNewEvidenceOpen) {
+            let noDataMsg = $('#messageNoData').val()
+            $('.evidences-body').append('<div class="h4" id="noDataTextId" style="text-align: center;">' + noDataMsg + '</div>');
+        }
+        if (isAddNewEvidenceOpen) {
             addBlock();
+            isAddNewEvidenceOpen = false;
         }
     };
 
@@ -261,8 +264,6 @@ function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
                 if ($(albumID).find('.item').length == 0) {
                     $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="" id="noImg">');
                 }
-
-                showToast($('#toast2'), 2000, true);
             };
 
             let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -316,7 +317,7 @@ function removeAlbum(albumID, blockID, isBefore) {
             inspectionId: inspectionId,
         }
         let doneCallback = function (data, _textStatus, _jqXHR) {
-            showToast($('#toast2'), 2000, true);
+
         };
         let failCallback = function (jqXHR, _textStatus, _errorThrown) {
             failAjax(jqXHR, _textStatus, _errorThrown);
@@ -409,7 +410,15 @@ function handleConfirmOkBtn(isSaveMode) {
                 problemAfterArray.push(problemAfter);
                 // Add text area and block ids contents to array
                 let dateCreateBefore = $.datepicker.formatDate("yy-mm-dd", $(blocks).find('#dateCreateBefore' + blockId).datepicker("getDate"));
+                if (dateCreateBefore == '') {
+                    let parts = $(blocks).find('#dateCreateBefore' + blockId).val().split("年").join("-").split("月").join("-").split("日");
+                    dateCreateBefore = parts[0];
+                }
                 let dateCreateAfter = $.datepicker.formatDate("yy-mm-dd", $(blocks).find('#dateCreateAfter' + blockId).datepicker("getDate"));
+                if (dateCreateAfter == '') {
+                    let parts = $(blocks).find('#dateCreateAfter' + blockId).val().split("年").join("-").split("月").join("-").split("日");
+                    dateCreateAfter = parts[0];
+                }
                 dateBeforeArray.push(dateCreateBefore);
                 dateAfterArray.push(dateCreateAfter);
                 // Add text area and block ids contents to array
@@ -473,6 +482,7 @@ function handleConfirmOkBtn(isSaveMode) {
     let isFirstShown = true;
     $("#patternEvidenceDialog").on("show.bs.modal", function (e) {
         let id = $(e.relatedTarget).attr("data-id");
+
         loadEvidence(id);
         if (isFirstShown) {
             isFirstShown = false;
@@ -487,6 +497,7 @@ function handleConfirmOkBtn(isSaveMode) {
      $("body").find("#patternEvidenceDialog").on("hide.bs.modal", function (e) {
         setTimeout(function() {
             if (!isShown) {
+                $('.evidences-body').find('#noDataTextId').remove();
                 let inspectionId = $(openEvidenceBtn).attr('data-id');
                 let countEvidenceId = $(openEvidenceBtn).attr('data-countEvidenceId');
                 let key = $(openEvidenceBtn).attr('data-time');
@@ -561,6 +572,7 @@ function handleConfirmOkBtn(isSaveMode) {
      * Set common value here
      ---------------------- */
     $("body").on('click','#openEvidenceBtn', function(e) {
+        isAddNewEvidenceOpen = true
         openEvidenceBtn = e.currentTarget;
         confirmMsg = $('#confirmDeleteMsgId').val();
         formData = new FormData()
@@ -631,4 +643,8 @@ function handleConfirmOkBtn(isSaveMode) {
         $("#confirmDialog3").modal('hide');
     });
 
+    // Click Ok button on confirm dialog 2
+    $("#confirmDialog2").find('#dialogOkBtn2').click(function () {
+        $("#confirmDialog2").modal('hide');
+    });;
  });
