@@ -186,4 +186,17 @@ class PatternDeptSettingController extends Controller
     {
         return $this->service->checkDataUsed($id);
     }
+
+     /**
+      * Check if data is linked or not
+      *
+      * @param \App\Http\Requests $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkBinding(Request $request)
+    {
+        $isBinding = $this->service->checkBindingData($request);
+        return response()->json(['success' => $isBinding]);
+    }
 }

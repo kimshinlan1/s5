@@ -357,6 +357,23 @@ class PatternDeptSettingService extends BaseService
     }
 
     /**
+      * Check if data is linked or not
+      *
+      * @param \App\Http\Requests $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkBindingData(Request $request)
+    {
+        $deptId = $request->get('deptId');
+        $patternId = $request->get('patternId');
+        $isLinkedDept = Department::where('id', $deptId)->whereNotNull('dept_pattern_id')->count() > 0 ? true : false;
+        $isLinkedPatttern = $patternId == '-1' ? false : Department::where('dept_pattern_id', $patternId)->exists();
+
+        return $isLinkedDept || $isLinkedPatttern ? true : false;
+    }
+
+    /**
      * Calculate avg point
      *
      * @param  $id departmentId

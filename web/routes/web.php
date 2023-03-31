@@ -130,6 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/pattern_dept_setting/freeUserSave', [PatternDeptSettingController::class, 'saveDeptPatternForFree']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);
         Route::get('/pattern_dept_setting_check_data_used/{id}', [PatternDeptSettingController::class, 'checkDataUsed']);
+        Route::post('/pattern_dept_setting/check_binding', [PatternDeptSettingController::class, 'checkBinding']);
 
         // Pattern detail (all users)
         Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);

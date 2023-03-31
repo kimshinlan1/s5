@@ -739,6 +739,7 @@ $(function(){
             let url = $(this).attr("href");
             let newTag = window.open(url, "_blank");
             newTag.onload = function() {
+                // Do an action in the new tab
                 $('.menu').each((i, ele) => {
                     if (sessionStorage.getItem("mainMenu") == ele.id) {
                         $('#subMenu' + (i+1)).collapse('show');
