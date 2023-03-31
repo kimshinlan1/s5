@@ -43,7 +43,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @stack('css')
 </head>
-<body>
+<body style="overflow-x: hidden;">
     <div id="app">
         @include('layouts.header')
         <div class="main">

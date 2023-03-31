@@ -18,9 +18,20 @@
 @endsection
 
 @section('content')
-    <div class="d-flex">
-        <div class="h-title">{{ __('Pattern_TopPage_Management') }}</div>
-        <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
+    <div class="d-flex justify-content-between">
+        <div class="h-title">
+            <span style="margin-right: 0.5rem"> {{ __('Pattern_TopPage_Management') }} </span>
+            @if(auth()->user()->is5SModeFree())
+            <button class="btn btn-warning" style="opacity: 1; margin-top: -0.4rem;" disabled>
+                {{ __('Common_Free_Badge') }}
+            </button>
+            @endif
+            @if(!auth()->user()->is5SModeFree() && !auth()->user()->isAdmin())
+                <button class="btn btn-success" style="opacity: 1; margin-top: -0.4rem;" disabled>
+                    {{ __('Common_Paid_Badge') }}
+                </button>
+            @endif
+        </div>
         @include('layouts.success')
     </div>
 

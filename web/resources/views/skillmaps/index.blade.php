@@ -35,9 +35,9 @@
 @endsection
 
 @section('content')
-    <div class="d-flex">
-        <div class="h-title">{{ __('SkillMap') }}</div>
-        <div class="" style="margin-top: -0.2rem;">
+    <div class="d-flex justify-content-between">
+        <div class="h-title">
+            <span style="margin-right: 0.5rem">{{ __('SkillMap') }}</span>
             @if(auth()->user()->isModeFree())
                 <button class="btn btn-warning"
                 style="opacity: 1; min-width: unset; border-radius: 0.25rem!important;" disabled>
