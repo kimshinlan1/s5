@@ -734,7 +734,7 @@ $(function(){
         }
     });
     $("body").find('.middle-click').on("mousedown", function(eve) {
-        // Check if middle click is trigger or not
+        // Check if middle click is trigger or not. eve.which === 2 refers to an event that is triggered when the user presses the middle mouse button
         if (eve.which === 2) {
             let url = $(this).attr("href");
             let newTag = window.open(url, "_blank");

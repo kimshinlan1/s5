@@ -583,10 +583,7 @@ $(function () {
             return;
         }
         if (isWarning && !$('#hidPatternId').val()) {
-            let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
-            if (deptPatternId && deptPatternId > 0) {
-                $("#modalSaveData").find('#saveMsgId').prepend($('#changeDeptWarningMsgId').val());
-            }
+            $("#modalSaveData").find('#saveMsgId').prepend($('#changeDeptWarningMsgId').val());
         }
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;

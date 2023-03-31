@@ -367,10 +367,10 @@ class PatternDeptSettingService extends BaseService
     {
         $deptId = $request->get('deptId');
         $patternId = $request->get('patternId');
-        $isLinkedDept = Department::where('id', $deptId)->whereNotNull('dept_pattern_id')->count() > 0 ? true : false;
-        $isLinkedPatttern = $patternId == '-1' ? false : Department::where('dept_pattern_id', $patternId)->exists();
+        $isLinkedDept = Department::where('id', $deptId)->whereNotNull('dept_pattern_id')->count();
+        $isLinkedPatttern = Department::where('dept_pattern_id', $patternId)->exists();
 
-        return $isLinkedDept || $isLinkedPatttern ? true : false;
+        return $isLinkedDept > 0 || $isLinkedPatttern ? true : false;
     }
 
     /**
