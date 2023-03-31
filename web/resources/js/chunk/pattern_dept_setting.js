@@ -4,6 +4,7 @@ var params = {};
 var isWarning = null;
 var isFirstSelectPattern = false;
 var isFirstSelectDept = false;
+var isFirstInit = true;
 var previousDeptId = -1;
 var initDeptId = null;
 var initPatternId = null;
@@ -361,6 +362,7 @@ window.initLoadPage = function() {
     if (loginCompid == $('#kaizenbaseID').val()) {
         loadCompany(loginCompid);
     }
+
     let hidPatternId = $('#hidPatternId').val()
     let deptId = urlParams.get('departmentId');
     let pageDept = urlParams.get('pageDept');
@@ -439,6 +441,19 @@ window.initLoadPage = function() {
             loadDataPreview(pageDest, patId);
         } else {
             addAreaToTable('edit', patId, ispattern);
+        }
+    }
+
+    if (isFirstInit) {
+        if ($('#selectPatternIds').find(':selected').attr("data-isPattern") == 'true') {
+            $("#save").prop("disabled", false);
+        }
+        else {
+            if ($("#departmentId").find(":selected").attr('data-deptpatternid') != $('#selectPatternIds').find(':selected').val()) {
+                $("#save").prop("disabled", false);
+            } else {
+                $("#save").prop("disabled", true);
+            }
         }
     }
 }
@@ -569,11 +584,12 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let deptOptionId = $("#departmentId").find(":selected").val();
+        let now = new Date();
         let patternOptionId = $("#selectPatternIds").find(":selected").val();
         let isPattern = $("#selectPatternIds").find(":selected").attr('data-ispattern');
         let isWarning = isPattern == "true" ? checkBindDeptPattern(deptOptionId, null) : checkBindDeptPattern(deptOptionId, patternOptionId);
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
-        $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text()
+        $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text() + ' - ' + now.toISOString()
         : $('#patternName').val();
         $('#patternName').val(patternName);
         if (!patternName || patternName === '') {
