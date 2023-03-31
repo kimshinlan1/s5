@@ -16,7 +16,7 @@
             </a>
 
             <div id='extraSubDeptMenuId' class="collapse sidebar-submenu">
-                <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-lis middle-clickt @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Menu') }}</a>
+                <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-lis middle-click @if(request()->path()==='departments')active @endif" href="/departments">{{ __('Department_Menu') }}</a>
                 <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='teams')active @endif" href="/teams">{{ __('Team_Management') }}</a>
                 <a style="padding-left: 50px;" class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='employee')active @endif" href="/employee">{{ __('Employee') }}</a>
             </div>

@@ -736,6 +736,7 @@ $(function(){
     $("body").find('.middle-click').on("mousedown", function(eve) {
         // Check if middle click is trigger or not. eve.which === 2 refers to an event that is triggered when the user presses the middle mouse button
         if (eve.which === 2) {
+            let subDeptArr = ['/teams', '/employee', '/departments'];
             let url = $(this).attr("href");
             let newTag = window.open(url, "_blank");
             newTag.onload = function() {
@@ -745,9 +746,15 @@ $(function(){
                         $('#subMenu' + (i+1)).collapse('show');
                     }
                 });
+                if (subDeptArr.includes(url)) {
+                    sessionStorage.setItem("deptMenu", "show");
+                    $('#extraSubDeptMenuId').collapse('show');
+                    $('body').find('#subIcon1').addClass("fa-caret-down");
+                    $('body').find('#subIcon1').removeClass("fa-caret-right");
+                }
             }
         }
-      });
+    });
 
     if (sessionStorage.getItem("deptMenu") == "show") {
         $('#extraSubDeptMenuId').collapse('show');
