@@ -733,6 +733,21 @@ $(function(){
             $('#subMenu' + (i+1)).collapse('show');
         }
     });
+    $("body").find('.middle-click').on("mousedown", function(eve) {
+        // Check if middle click is trigger or not. eve.which === 2 refers to an event that is triggered when the user presses the middle mouse button
+        if (eve.which === 2) {
+            let url = $(this).attr("href");
+            let newTag = window.open(url, "_blank");
+            newTag.onload = function() {
+                // Do an action in the new tab
+                $('.menu').each((i, ele) => {
+                    if (sessionStorage.getItem("mainMenu") == ele.id) {
+                        $('#subMenu' + (i+1)).collapse('show');
+                    }
+                });
+            }
+        }
+      });
 
     if (sessionStorage.getItem("deptMenu") == "show") {
         $('#extraSubDeptMenuId').collapse('show');

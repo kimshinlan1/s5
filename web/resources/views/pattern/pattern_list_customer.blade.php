@@ -14,9 +14,20 @@
 @endsection
 
 @section('content')
-    <div class="d-flex">
-        <div class="h-title">{{ __('Pattern_List_Customer') }}</div>
-        <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
+    <div class="d-flex justify-content-between">
+        <div class="h-title">
+            <span style="margin-right: 0.5rem">{{ __('Pattern_List_Customer') }}</span>
+            @if(auth()->user()->is5SModeFree())
+            <button class="btn btn-warning" style="opacity: 1; margin-top: -0.4rem;" disabled>
+                {{ __('Common_Free_Badge') }}
+            </button>
+            @endif
+            @if(!auth()->user()->is5SModeFree() && !auth()->user()->isAdmin())
+                <button class="btn btn-success" style="opacity: 1; margin-top: -0.4rem;" disabled>
+                    {{ __('Common_Paid_Badge') }}
+                </button>
+            @endif
+        </div>
         <!-- My Toast -->
         @include('layouts.success')
     </div>
@@ -35,7 +46,7 @@
             <tr style="text-align: center;">
                 <th data-field="id" data-visible="false">{{ __('Pattern_ID') }}</th>
                 <th data-align="center" data-field="no">{{ __('Pattern_ID') }}</th>
-                <th data-field="name">{{ __('Pattern_Name') }}</th>
+                <th data-width="120" data-field="name">{{ __('Pattern_Name') }}</th>
                 <th data-field="note">{{ __('Pattern_Note') }}</th>
                 <th data-field="deptName">{{ __('Deparment_Name') }}</th>
                 @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))

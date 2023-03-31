@@ -237,8 +237,6 @@
     "Pattern_Detail_Level_5": "大変良い（レベル5）",
     "Pattern_Add_Inspection_Point": "点検エリアの追加",
     "Pattern_Adding_A_Pattern_Name_Is_Mandatory": "パターン名の追加は必須です。",
-    "Pattern_Adding_An_Area_Name_Is_Mandatory": "エリア名の追加は必須です。",
-    "Pattern_Adding_The_Location_Name_Is_Mandatory": "ロケーション名の追加は必須です。",
     "Pattern_At_Least_One_Verification_Point_Must_Be_Configured": "少なくとも1つのエリアを構成する必要があります。",
     "Pattern_Label_Modal_Save_Pattern": "パターンを保存しますか。",
     "Pattern_Save_Successfully": "パターンを保存しました。",

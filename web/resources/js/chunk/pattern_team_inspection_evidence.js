@@ -129,7 +129,7 @@ function addBlock() {
             $($("[id*='countEvidence_']")[time]).attr('data-id', inspectionId);
             $($("[id*='countEvidence_']")[time]).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
 
-            $('.col_order_' + (parseInt(time) + 1)).each((_i, e) => {
+            $('.col_order_' + time).each((_i, e) => {
                 let dataInspectionId = $(e).find('.selPointValue').attr('data-inspection_id');
                 let id = $(e).find('.selPointValue').attr('id');
                 let newId = id.replace(dataInspectionId, inspectionId);

@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
         <div class="h-title">{{ __('Pattern_List') }}</div>
         <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
         <!-- My Toast -->

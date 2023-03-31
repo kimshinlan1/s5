@@ -31,7 +31,7 @@
                             <span class="input-group-text">{{ __('Company') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box responsive-text"
                             aria-label="Company select" id="companyOptionId" >
                             </select>
                         </div>
@@ -42,7 +42,7 @@
                             <span class="input-group-text">{{ __('Pattern_Department_Label') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box responsive-text"
                             aria-label="Department select" id="departmentId" >
                             </select>
                         </div>
@@ -52,7 +52,7 @@
                             <span class="input-group-text">{{ __('Dept_Pattern_Detail_Name') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <select style="text-align-last: center;" class="form-select form-select-arrow search-box"
+                            <select style="text-align-last: center; height: 100%;" class="form-select form-select-arrow search-box responsive-text"
                             aria-label="Pattern select" id="selectPatternIds" >
                             </select>
                         </div>
@@ -62,7 +62,7 @@
                             <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <input type="text" class="form-control" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <input style="height: 100%;" type="text" class="form-control responsive-text" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                             <span class="input-group-text">{{ __('Pattern_Note') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <input type="text" class="form-control" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
+                            <input style="height: 100%;" type="text" class="form-control responsive-text" id="patternNote" value="{{ isset($info['note']) ? $info['note'] : '' }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -80,22 +80,22 @@
                 </div>
                 <div class="col-4">
                     <div class="input-group" style="margin-bottom: 0.75%;">
-                        <div class="label_header_dept_setting" style="width: 25%">
+                        <div class="label_header_dept_setting" style="width: 44%">
                             <span class="input-group-text">{{ __('Common_Created_Date') }}</span>
                         </div>
                         <div class="date">
-                            <input type="text" class="form-control" id="dateCreate" placeholder="yyyy年MM月dd日"
+                            <input type="text" class="form-control responsive-text" id="dateCreate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
                     </div>
                     <div class="input-group">
-                        <div class="label_header_dept_setting" style="width: 25%">
+                        <div class="label_header_dept_setting" style="width: 44%">
                             <span class="input-group-text">{{ __('Common_Last_Update_Date') }}</span>
                         </div>
                         <div class="date">
-                            <input type="text" class="form-control" id="dateUpdate" placeholder="yyyy年MM月dd日"
+                            <input type="text" class="form-control responsive-text" id="dateUpdate" placeholder="yyyy年MM月dd日"
                                 data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
                             <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
@@ -166,7 +166,7 @@
             <br><br><br>
             @endif
             <div class="action-btn" style="justify-content: flex-start">
-                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
+                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;" @if(auth()->user()->is5SModeFree()) disabled @endif>
                     <div class="inside-btn">
                         {{ __('Common_button_save') }}
                     </div>
@@ -200,22 +200,6 @@
         <div class="d-flex">
             <div class="toast-body" id="body-danger-1">
                 {{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="areaNameErr">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('Pattern_Adding_An_Area_Name_Is_Mandatory') }}
-            </div>
-        </div>
-    </div>
-    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-        aria-atomic="true" id="locationNameErr">
-        <div class="d-flex">
-            <div class="toast-body" id="body-danger-1">
-                {{ __('Pattern_Adding_The_Location_Name_Is_Mandatory') }}
             </div>
         </div>
     </div>

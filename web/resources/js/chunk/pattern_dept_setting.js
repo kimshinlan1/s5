@@ -1,8 +1,12 @@
 
 // 改善ポイントの選択 - Select 5S methods
 var params = {};
+var isWarning = null;
+var isFirstSelectPattern = false;
+var isFirstSelectDept = false;
 var previousDeptId = -1;
 var initDeptId = null;
+var initPatternId = null;
 var changeDeptCase = 0;
 var select_location_to_delete = [];
 var initAreaArray = [];
@@ -494,6 +498,29 @@ window.confirmRemoveData = function() {
     removeLocation();
 }
 
+// Check if dept or pattern has a connection
+window.checkBindDeptPattern = function(deptId, patternId) {
+    let res = null;
+    let url = '/pattern_dept_setting/check_binding';
+
+    let method = "POST";
+
+    let data = {
+            deptId: deptId,
+            patternId: patternId ? patternId : -1
+    };
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+            res = data['success'];
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+    return res;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -541,12 +568,10 @@ $(function () {
 
     // Save click
     $("#save").click(function () {
-        if (!$('#hidPatternId').val()) {
-            let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
-            if (deptPatternId && deptPatternId > 0) {
-                $("#modalSaveData").find('#saveMsgId').prepend ($('#changeDeptWarningMsgId').val());
-            }
-        }
+        let deptOptionId = $("#departmentId").find(":selected").val();
+        let patternOptionId = $("#selectPatternIds").find(":selected").val();
+        let isPattern = $("#selectPatternIds").find(":selected").attr('data-ispattern');
+        let isWarning = isPattern == "true" ? checkBindDeptPattern(deptOptionId, null) : checkBindDeptPattern(deptOptionId, patternOptionId);
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
         $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text()
         : $('#patternName').val();
@@ -556,6 +581,9 @@ $(function () {
             $('#patternName').focus();
             $('#patternName').addClass('is-invalid');
             return;
+        }
+        if (isWarning && !$('#hidPatternId').val()) {
+            $("#modalSaveData").find('#saveMsgId').prepend($('#changeDeptWarningMsgId').val());
         }
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
@@ -567,6 +595,10 @@ $(function () {
             validateAndGetDataTable(isSelectedFree);
         }
     });
+
+    $("#modalSaveData").on('hide.bs.modal', function(){
+        $("#modalSaveData").find('#saveMsgId').html($('#savePatternMsgId').val());
+      });
 
     // Remove click
     $("#removeLocation").click(function () {
@@ -581,14 +613,25 @@ $(function () {
     // $("#backPage").click(function () {
     //     $("#modalBackPage").modal('show');
     // })
-    $('#selectPatternIds').change(function() {
+    $('#selectPatternIds').on('focus', function () {
+        if (!isFirstSelectPattern) {
+            initPatternId = $('#selectPatternIds').find(":selected").val();
+            isFirstSelectPattern = true;
+        }
+    }).change(function() {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
         let note = $('#selectPatternIds').find(':selected').attr("data-note");
+        let currentDeptId = $('#departmentId').find(":selected").val();
         $('#patternNote').val(note);
         isPattern = isPattern == "true" ? true : false;
         let pageDest = isPattern ? null : 1;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
+                $("#save").prop("disabled", true);
+            } else {
+                $("#save").prop("disabled", false);
+            }
             loadDataPreview(pageDest, patternid);
         } else {
             addAreaToTable('edit', patternid, isPattern);
@@ -597,13 +640,26 @@ $(function () {
 
     // Department options change event //todo
     $('#departmentId').on('focus', function () {
+        if (!isFirstSelectDept && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            initDeptId = $('#departmentId').find(":selected").val();
+            isFirstSelectDept = true;
+        }
         // Store the current value on focus and on change
         previousDeptId = this.value;
     }).change(function() {
+        let patternid = $('#selectPatternIds').find(':selected').val();
+        let currentDeptId = $('#departmentId').find(":selected").val();
         let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
         if (deptPatternId && deptPatternId != '-1') {
             $("#confirmDialog3").modal("show");
             $(".confirmMessage3").html($('#changeDeptWarningMsgId').val());
+        }
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
+                $("#save").prop("disabled", true);
+            } else {
+                $("#save").prop("disabled", false);
+            }
         }
     });
 
