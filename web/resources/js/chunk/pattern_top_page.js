@@ -43,7 +43,80 @@ function gotoInspectionPage(teamId, deptId) {
  * Load radar chart
  */
 function loadRadarChart(id, avgPointArr, isDept) { //todo
-    let config = configRadarChart(avgPointArr, isDept);
+  debugger
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: '111',
+        data: avgPointArr[0],
+        fill: true,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: 'rgb(255, 99, 132)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      },
+      {
+        label: '222',
+        data: avgPointArr[1],
+        fill: true,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgb(54, 162, 235)',
+        pointBackgroundColor: 'rgb(54, 162, 235)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      },
+      {
+        label: '333',
+        data: avgPointArr[2],
+        fill: true,
+        backgroundColor: 'rgba(54, 202, 145, 0.2)',
+        borderColor: 'rgb(54, 44, 215)',
+        pointBackgroundColor: 'rgb(54, 02, 235)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      },
+
+  ]
+};
+const config = {
+    type: 'radar',
+    data: data,
+    options: {
+        maintainAspectRatio: false,
+        responsive: false,
+        elements: {
+            point:{
+                radius: 0
+            }
+        },
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            r: {
+                angleLines: {
+                    display: false
+                },
+                suggestedMin: 0,
+                suggestedMax: 5,
+                beginAtZero: true,
+                ticks: {
+                    backdropPadding: {
+                        y: 1
+                    },
+                    stepSize: 1
+                },
+            }
+        },
+    },
+};
     const ctx = document.getElementById(id);
     radarChart = new Chart(ctx, config);
 }
@@ -69,6 +142,7 @@ function loadBarChart(id, mapObj, count) {
  */
 function renderTeamChart(deptId, teamId) { //todo
     // let count = $('#hidCountInspection').val();
+    let myArray = [];
     let mapObj = new Map();
     mapObj.set("s1", []);
     mapObj.set("s2", []);
@@ -86,8 +160,12 @@ function renderTeamChart(deptId, teamId) { //todo
             });
         }
         let id = 'radarchart_team_' + teamId + '-' + i;
-        loadRadarChart(id, avgPointArr, 0);
+        myArray.push(avgPointArr);
     });
+    debugger
+    let id = 'radarchart_team_' + teamId + '-' + 1;
+    loadRadarChart(id, myArray, 0);
+
     // let barChartId = 'barchart_team_' + teamId;
     // loadBarChart(barChartId, mapObj, count);
 }
@@ -97,6 +175,7 @@ function renderTeamChart(deptId, teamId) { //todo
  */
 function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData, deptId, countMaxInspection) { //todo
     /** Load Dept Radar Chart and calculate data structure for rendering dept bar chart **/
+    let myArray = [];
     for (let index = 0; index < countMaxInspection; index++) {
       let key = 'inspection' + index;
       let avgPointArr = null;
@@ -117,8 +196,11 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
 
       /** Loop Dept Radar Chart **/
       let radarchartId = 'radarchart_dept_' + deptId + '-' + index;
-      loadRadarChart(radarchartId, avgPointArr, 1);
+      myArray.push(avgPointArr);
     }
+    debugger
+    let radarchartId = 'radarchart_dept_' + deptId + '-' + 1;
+      loadRadarChart(radarchartId, myArray, 1);
 
     /** Loop Dept Bar Chart **/
     // let barChartId = 'barchart_dept_' + deptId;
