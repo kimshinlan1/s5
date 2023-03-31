@@ -166,7 +166,7 @@
             <br><br><br>
             @endif
             <div class="action-btn" style="justify-content: flex-start">
-                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
+                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;" @if(auth()->user()->is5SModeFree()) disabled @endif>
                     <div class="inside-btn">
                         {{ __('Common_button_save') }}
                     </div>

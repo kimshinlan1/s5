@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_list/patern_list_by_company', [PatternController::class, 'getPatternByCompanyId']);
         Route::get('/pattern_list/getlist_by_department/{id}', [PatternController::class, 'listPattern']);
         Route::get('/pattern_list/check_pattern_exist/{id}', [PatternController::class, 'checkDeptPatternExist']);
+        Route::delete('/pattern_list/delete_pattern/{id}', [PatternController::class, 'destroy']);
 
         // Dept pattern setting
         Route::resource('/pattern_dept_setting', PatternDeptSettingController::class)->only(['index', 'store', 'update', 'destroy']);
@@ -129,6 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/pattern_dept_setting/freeUserSave', [PatternDeptSettingController::class, 'saveDeptPatternForFree']);
         Route::get('/pattern_dept_setting_generate_area', [PatternDeptSettingController::class, 'generateAreaHtml']);
         Route::get('/pattern_dept_setting_check_data_used/{id}', [PatternDeptSettingController::class, 'checkDataUsed']);
+        Route::post('/pattern_dept_setting/check_binding', [PatternDeptSettingController::class, 'checkBinding']);
 
         // Pattern detail (all users)
         Route::get('/pattern_detail_generate_area', [PatternDetailController::class, 'generateAreaHtml']);
