@@ -142,7 +142,6 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        'Barryvdh\Debugbar\ServiceProvider',
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -198,7 +197,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
-        'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
