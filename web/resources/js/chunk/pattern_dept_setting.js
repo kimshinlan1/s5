@@ -633,9 +633,7 @@ $(function () {
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            let patId = $('#selectPatternIds').val();
-            let ispattern = $('#selectPatternIds').find(':selected').data('ispattern');
-            saveAjax(null, patId, ispattern, true);
+            $("#modalSaveData").modal('show');
         } else {
             validateAndGetDataTable(isSelectedFree);
         }
