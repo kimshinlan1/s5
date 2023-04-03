@@ -185,13 +185,20 @@ window.loadPatternList = function(id, patternId = null, isPattern = null) {
                 $('#patternNote').val(e.note);
             }
             let checkNoteNull = e.note?? '';
-            if(e.id == patternId && e.isPattern == isPattern) {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
-                $('#patternNote').val(e.note);
+            if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+                if (e.isPattern) {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+                }
+            } else {
+                if(e.id == patternId && e.isPattern == isPattern) {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+                    $('#patternNote').val(e.note);
+                }
+                else {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
+                }
             }
-            else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
-            }
+
         });
         $('#selectPatternIds').html(html);
         $('#selectPatternIds').change();
