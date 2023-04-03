@@ -444,7 +444,7 @@ window.initLoadPage = function() {
         }
     }
 
-    if (isFirstInit) {
+    if (isFirstInit && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
         if ($('#selectPatternIds').find(':selected').attr("data-isPattern") == 'true') {
             $("#save").prop("disabled", false);
         }
