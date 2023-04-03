@@ -536,6 +536,34 @@ window.checkBindDeptPattern = function(deptId, patternId) {
     return res;
 }
 
+window.getNow = function() {
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth() + 1;
+    let day = now.getDate();
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+    let second = now.getSeconds();
+
+    if (month.toString().length === 1) {
+    month = '0' + month;
+    }
+    if (day.toString().length === 1) {
+    day = '0' + day;
+    }
+    if (hour.toString().length === 1) {
+    hour = '0' + hour;
+    }
+    if (minute.toString().length === 1) {
+    minute = '0' + minute;
+    }
+    if (second.toString().length === 1) {
+    second = '0' + second;
+    }
+
+    return year.toString().substr(-2) + month + day + hour + minute + second;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -584,14 +612,13 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let deptOptionId = $("#departmentId").find(":selected").val();
-        let now = new Date();
         let patternOptionId = $("#selectPatternIds").find(":selected").val();
         let isPattern = $("#selectPatternIds").find(":selected").attr('data-ispattern');
         let isWarning = isPattern == "true" ? checkBindDeptPattern(deptOptionId, null) : checkBindDeptPattern(deptOptionId, patternOptionId);
         let isContainInspection = checkContainInspection(deptOptionId, patternOptionId);
 
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
-        $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text() + ' - ' + now.toISOString()
+        "チェックリスト【無償】- " + getNow()
         : $('#patternName').val();
         $('#patternName').val(patternName);
         if (!patternName || patternName === '') {
@@ -667,11 +694,7 @@ $(function () {
     }).change(function() {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let currentDeptId = $('#departmentId').find(":selected").val();
-        let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
-        if (deptPatternId && deptPatternId != '-1') {
-            $("#confirmDialog3").modal("show");
-            $(".confirmMessage3").html($('#changeDeptWarningMsgId').val());
-        }
+
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
                 $("#save").prop("disabled", true);
@@ -685,10 +708,5 @@ $(function () {
     $('#companyOptionId').change(function() {
         let compID = $("#companyOptionId").find(":selected").val();
         loadDeptList(compID);
-    });
-
-    $("#confirmDialog3").find('#cancelBtn').click(function() {
-        // Replace department
-        $("#departmentId").val(previousDeptId);
     });
 });
