@@ -172,6 +172,7 @@ window.loadDeptList = function(id, patternId = null, isPattern = null) {
  */
 var pattern_list_data = null;
 window.loadPatternList = function(id, patternId = null, isPattern = null) {
+    let isSelectFirstOption = true;
     let url = '/pattern_list/getlist_by_department/' + id;
     let method = "GET";
     isPattern = isPattern ? true : false;
@@ -185,13 +186,25 @@ window.loadPatternList = function(id, patternId = null, isPattern = null) {
                 $('#patternNote').val(e.note);
             }
             let checkNoteNull = e.note?? '';
-            if(e.id == patternId && e.isPattern == isPattern) {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
-                $('#patternNote').val(e.note);
+            if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+                if (e.isPattern == true) {
+                    if (isSelectFirstOption) {
+                        html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+                        isSelectFirstOption = false
+                    } else {
+                        html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
+                    }
+                }
+            } else {
+                if(e.id == patternId && e.isPattern == isPattern) {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+                    $('#patternNote').val(e.note);
+                }
+                else {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
+                }
             }
-            else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
-            }
+
         });
         $('#selectPatternIds').html(html);
         $('#selectPatternIds').change();
