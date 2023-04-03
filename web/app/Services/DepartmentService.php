@@ -244,14 +244,9 @@ class DepartmentService extends BaseService
     public function changeDeptFromDeptPattern($deptId, $oldDeptId, $deptPatternId)
     {
         if ($oldDeptId) {
-            $unbindOldData = $this->unbindDeptFromDeptPattern($oldDeptId);
+            $unbindOldDeptData = $this->unbindDeptFromDeptPattern($oldDeptId);
         }
         $unbindOldData = $this->unbindDeptFromDeptPattern($deptId);
-        if (empty($unbindOldData)) {
-            return [
-                'invalid' => true,
-            ];
-        }
 
         $data = $this->model::find($deptId);
         if ($data) {

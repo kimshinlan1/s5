@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_list/getlist_by_department/{id}', [PatternController::class, 'listPattern']);
         Route::get('/pattern_list/check_pattern_exist/{id}', [PatternController::class, 'checkDeptPatternExist']);
         Route::delete('/pattern_list/delete_pattern/{id}', [PatternController::class, 'destroy']);
+        Route::post('/pattern_list/check_inspection_binding', [PatternController::class, 'checkContainInspection']);
 
         // Dept pattern setting
         Route::resource('/pattern_dept_setting', PatternDeptSettingController::class)->only(['index', 'store', 'update', 'destroy']);

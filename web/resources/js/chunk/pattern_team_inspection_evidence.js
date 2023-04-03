@@ -108,6 +108,7 @@ function addBlock() {
 
         let doneCallback = function (data, _textStatus, _jqXHR) {
             $("#patternEvidenceDialog").find(".evidences-body").append(data);
+            $('.evidences-body').find('#noDataTextId').remove();
             let inspectionId = $('#hidNewInspectionId').val();
             $(openEvidenceBtn).attr('data-id', inspectionId);
             $(openEvidenceBtn).attr('data-countevidenceid', 'countEvidence_' + inspectionId);

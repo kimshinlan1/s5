@@ -8,8 +8,10 @@ use App\Models\Department;
 use App\Models\Pattern;
 use App\Models\DeptPattern;
 use App\Models\DeptPatternDetail;
+use App\Models\Inspection;
 use App\Models\Location;
 use App\Models\PatternDetail;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -173,6 +175,30 @@ class PatternService extends BaseService
     public function getDataDeptPatternById($id)
     {
         return DeptPattern::where('id', $id)->get()->first()?->toArray();
+    }
+
+    /**
+      * Check if data is linked or not
+      *
+      * @param \App\Http\Requests $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkContainInspection(Request $request)
+    {
+        // Check if dept contain inspection
+        $deptId = $request->get('deptId');
+        $patternId = $request->get('patternId');
+        $teamIds = Team::where('department_id', $deptId)->pluck('id')->toArray();
+        $isDeptContainInspection = Inspection::whereIn('team_id', $teamIds)->exists();
+
+        $selectedDept = Department::where('dept_pattern_id', $patternId)->value('id');
+        $isPatternContainInspection = null;
+
+        $selectTeamIds = Team::where('department_id', $selectedDept)->pluck('id')->toArray();
+        $isPatternContainInspection = Inspection::whereIn('team_id', $selectTeamIds)->exists();
+
+        return ($isDeptContainInspection || $isPatternContainInspection);
     }
 
 }
