@@ -41,3 +41,4 @@
 <input type="hidden" id="noSelectedBlock" name="noSelectedBlock" value="{{ __('Evidence_No_Selected_Block') }}"/>
 <input type="hidden" id="unsavedDataWarning" name="unsavedDataWarning" value="{{ __('Common_Unsaved_Data_Warning') }}"/>
 <input type="hidden" id="savePatternMsgId" name="savePatternMsgId" value="{{ __('Pattern_Label_Modal_Save_Pattern') }}"/>
+<input type="hidden" id="deletePatternWarningMsg" name="deletePatternWarningMsg" value="{{ __('Pattern_Delete_Warning') }}"/>

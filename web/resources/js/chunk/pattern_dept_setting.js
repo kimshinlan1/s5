@@ -588,6 +588,8 @@ $(function () {
         let patternOptionId = $("#selectPatternIds").find(":selected").val();
         let isPattern = $("#selectPatternIds").find(":selected").attr('data-ispattern');
         let isWarning = isPattern == "true" ? checkBindDeptPattern(deptOptionId, null) : checkBindDeptPattern(deptOptionId, patternOptionId);
+        let isContainInspection = checkContainInspection(deptOptionId, patternOptionId);
+
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
         $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text() + ' - ' + now.toISOString()
         : $('#patternName').val();
@@ -598,7 +600,7 @@ $(function () {
             $('#patternName').addClass('is-invalid');
             return;
         }
-        if (isWarning && !$('#hidPatternId').val()) {
+        if (isWarning && !$('#hidPatternId').val() || isContainInspection) {
             $("#modalSaveData").find('#saveMsgId').prepend($('#changeDeptWarningMsgId').val());
         }
         // Check if selected company option is the 5s-free one

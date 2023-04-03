@@ -61,6 +61,7 @@ window.queryParams = function (params) {
     return params;
 };
 
+
 /* ==============================
     Document Ready
 ==============================*/
@@ -139,6 +140,14 @@ $(function () {
    *   Delete dialog show
    --------------------- */
     $("#patternListDeleteDialog").on("show.bs.modal", function (e) {
+        let $button = $(e.relatedTarget);
+        let deptId = $button.data("dept-id");
+        let patternId = $button.data("id");
+        let isContainInspection = checkContainInspection(deptId, patternId);
+        if (isContainInspection && deptId) {
+            showDialogDelete('#patternListTable', '#deletePatternListId', '#patternListDeleteDialog', e, $('#deletePatternWarningMsg').val());
+            return;
+        }
         showDialogDelete('#patternListTable', '#deletePatternListId', '#patternListDeleteDialog', e);
     });
 

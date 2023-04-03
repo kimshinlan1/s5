@@ -729,3 +729,26 @@ function configBarChart(labels, datasets = null, mapObj = null) {
     };
     return config
 }
+
+// Check if pattern has any inspection
+window.checkContainInspection = function(deptId, patternId) {
+    let res = null;
+    let url = '/pattern_list/check_inspection_binding';
+
+    let method = "POST";
+
+    let data = {
+            deptId: deptId,
+            patternId: patternId,
+    };
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+            res = data['success'];
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+    return res;
+}

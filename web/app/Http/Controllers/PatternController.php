@@ -151,4 +151,17 @@ class PatternController extends Controller
             "data" => $data,
         ]);
     }
+
+    /**
+      * Check if record has inspectionor not
+      *
+      * @param \App\Http\Requests $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkContainInspection(Request $request)
+    {
+        $isBinding = $this->service->checkContainInspection($request);
+        return response()->json(['success' => $isBinding]);
+    }
 }
