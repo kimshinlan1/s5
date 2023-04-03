@@ -536,34 +536,6 @@ window.checkBindDeptPattern = function(deptId, patternId) {
     return res;
 }
 
-window.getNow = function() {
-    let now = new Date();
-    let year = now.getFullYear();
-    let month = now.getMonth() + 1;
-    let day = now.getDate();
-    let hour = now.getHours();
-    let minute = now.getMinutes();
-    let second = now.getSeconds();
-
-    if (month.toString().length === 1) {
-    month = '0' + month;
-    }
-    if (day.toString().length === 1) {
-    day = '0' + day;
-    }
-    if (hour.toString().length === 1) {
-    hour = '0' + hour;
-    }
-    if (minute.toString().length === 1) {
-    minute = '0' + minute;
-    }
-    if (second.toString().length === 1) {
-    second = '0' + second;
-    }
-
-    return year.toString().substr(-2) + month + day + hour + minute + second;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -633,9 +605,7 @@ $(function () {
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            let patId = $('#selectPatternIds').val();
-            let ispattern = $('#selectPatternIds').find(':selected').data('ispattern');
-            saveAjax(null, patId, ispattern, true);
+            $("#modalSaveData").modal('show');
         } else {
             validateAndGetDataTable(isSelectedFree);
         }

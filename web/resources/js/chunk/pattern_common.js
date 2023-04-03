@@ -486,9 +486,16 @@ function openCalendar(name) {
  * Accept save
  */
 function saveDataPattern() {
-    $("#modalSaveData").modal('hide');
-    showLoading();
-    saveAjax(params);
+    if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+        $("#modalSaveData").modal('hide');
+        let patId = $('#selectPatternIds').val();
+        let ispattern = $('#selectPatternIds').find(':selected').data('ispattern');
+        saveAjax(null, patId, ispattern, true);
+    } else {
+        $("#modalSaveData").modal('hide');
+        showLoading();
+        saveAjax(params);
+    }
 }
 
 /**
