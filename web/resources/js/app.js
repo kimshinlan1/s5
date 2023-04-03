@@ -391,14 +391,20 @@ window.dialogModalHide = function (dialog, form) {
 /** ------------------
 *   Delete dialog show
 --------------------- */
-window.showDialogDelete = function (table, deleteId, dialog, e) {
+window.showDialogDelete = function (table, deleteId, dialog, e, msg = null) {
     let $button = $(e.relatedTarget);
     let id = $button.data("id");
     if (id) {
         let data = $(table).bootstrapTable("getRowByUniqueId", id);
             $(deleteId).val(data.id);
-            $(dialog + ' .modal-body .message').html(
-            escapeHtml(data.name) + " " + CONFIG.get("DELETE_MESSAGE"));
+            if (msg) {
+                $(dialog + ' .modal-body .message').html(
+                    escapeHtml(data.name) + " " + msg);
+            } else {
+                $(dialog + ' .modal-body .message').html(
+                    escapeHtml(data.name) + " " + CONFIG.get("DELETE_MESSAGE"));
+            }
+
     }
 }
 
