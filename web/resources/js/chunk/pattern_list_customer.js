@@ -157,22 +157,8 @@ $(function () {
     $("#deletePatternListBtn").on("click", function () {
         showLoading();
         let id = $("#deletePatternListId").val();
-        $.ajax({
-            url: "/pattern_list/delete_pattern/" + id + "?pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER"),
-            type: "DELETE",
-        })
-            .done(function (_department, _textStatus, _jqXHR) {
-                $("#patternListTable").bootstrapTable("refresh");
-                showToast($("#toast2"), 3000, true);
-            })
-            .fail(function (jqXHR, _textStatus, _errorThrown) {
-                // show errors
-                failAjax(jqXHR, _textStatus, _errorThrown);
-            })
-            .always(function () {
-                hideLoading();
-                $("#patternListDeleteDialog").modal("hide");
-            });
+        let urlConfig = "/pattern_list/delete_pattern/" + id + "?pageDest=" + CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER");
+        deleteAjax(urlConfig);
     });
 
     // Handle click on row event

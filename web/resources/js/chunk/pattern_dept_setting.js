@@ -637,56 +637,6 @@ $(function () {
         }
     });
 
-    // Back page
-    // $("#backPage").click(function () {
-    //     $("#modalBackPage").modal('show');
-    // })
-    $('#selectPatternIds').on('focus', function () {
-        if (!isFirstSelectPattern) {
-            initPatternId = $('#selectPatternIds').find(":selected").val();
-            isFirstSelectPattern = true;
-        }
-    }).change(function() {
-        let patternid = $('#selectPatternIds').find(':selected').val();
-        let isPattern = $('#selectPatternIds').find(':selected').attr("data-isPattern");
-        let note = $('#selectPatternIds').find(':selected').attr("data-note");
-        let currentDeptId = $('#departmentId').find(":selected").val();
-        $('#patternNote').val(note);
-        isPattern = isPattern == "true" ? true : false;
-        let pageDest = isPattern ? null : 1;
-        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
-                $("#save").prop("disabled", true);
-            } else {
-                $("#save").prop("disabled", false);
-            }
-            loadDataPreview(pageDest, patternid);
-        } else {
-            addAreaToTable('edit', patternid, isPattern);
-        }
-    });
-
-    // Department options change event //todo
-    $('#departmentId').on('focus', function () {
-        if (!isFirstSelectDept && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            initDeptId = $('#departmentId').find(":selected").val();
-            isFirstSelectDept = true;
-        }
-        // Store the current value on focus and on change
-        previousDeptId = this.value;
-    }).change(function() {
-        let patternid = $('#selectPatternIds').find(':selected').val();
-        let currentDeptId = $('#departmentId').find(":selected").val();
-
-        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
-                $("#save").prop("disabled", true);
-            } else {
-                $("#save").prop("disabled", false);
-            }
-        }
-    });
-
     // Company options change event
     $('#companyOptionId').change(function() {
         let compID = $("#companyOptionId").find(":selected").val();

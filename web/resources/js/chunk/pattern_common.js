@@ -759,3 +759,23 @@ window.checkContainInspection = function(deptId, patternId) {
     runAjax(url, method, data, doneCallback, failCallback, null, false);
     return res;
 }
+
+// Delete patternId or delete pattern_customerId
+window.deleteAjax = function(urlConfig) {
+    $.ajax({
+        url: urlConfig,
+        type: "DELETE",
+    })
+    .done(function (_department, _textStatus, _jqXHR) {
+        $("#patternListTable").bootstrapTable("refresh");
+        showToast($("#toast2"), 3000, true);
+    })
+    .fail(function (jqXHR, _textStatus, _errorThrown) {
+        // show errors
+        failAjax(jqXHR, _textStatus, _errorThrown);
+    })
+    .always(function () {
+        hideLoading();
+        $("#patternListDeleteDialog").modal("hide");
+    });
+}
