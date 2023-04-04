@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            @if (!strpos(Request::root(), "solutions.com"))
+            @if (!Constant::isProduction(Request::root()))
             <br>
             Total Rows:<strong id="countRows"></strong>
             <br>
