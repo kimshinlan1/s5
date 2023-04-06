@@ -79,4 +79,15 @@ class Constant
     public const IMAGE_LIMIT_SIZE = 10;
     public const VALID_IMAGE_EXTENSION = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'png', 'bmp'];
     public const THE_FIRST_TIME = '回目';
+
+    /**
+     * Check production ENV
+     *
+     * @param string $url
+     * @return boolean
+     */
+    public static function isProduction($url)
+    {
+        return strpos($url, "solutions.com") || strpos($url, "www.kaizen-dx.jp");
+    }
 }

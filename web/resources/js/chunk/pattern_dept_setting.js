@@ -172,6 +172,7 @@ window.loadDeptList = function(id, patternId = null, isPattern = null) {
  */
 var pattern_list_data = null;
 window.loadPatternList = function(id, patternId = null, isPattern = null) {
+    let isSelectFirstOption = true;
     let url = '/pattern_list/getlist_by_department/' + id;
     let method = "GET";
     isPattern = isPattern ? true : false;
@@ -185,13 +186,25 @@ window.loadPatternList = function(id, patternId = null, isPattern = null) {
                 $('#patternNote').val(e.note);
             }
             let checkNoteNull = e.note?? '';
-            if(e.id == patternId && e.isPattern == isPattern) {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
-                $('#patternNote').val(e.note);
+            if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+                if (e.isPattern == true) {
+                    if (isSelectFirstOption) {
+                        html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+                        isSelectFirstOption = false
+                    } else {
+                        html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
+                    }
+                }
+            } else {
+                if(e.id == patternId && e.isPattern == isPattern) {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '" selected>' + e.name + '</option>';
+                    $('#patternNote').val(e.note);
+                }
+                else {
+                    html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
+                }
             }
-            else {
-                html += '<option value="' + e.id + '" data-isPattern="' + e.isPattern + '" data-note="' + checkNoteNull + '">' + e.name + '</option>';
-            }
+
         });
         $('#selectPatternIds').html(html);
         $('#selectPatternIds').change();
@@ -444,7 +457,7 @@ window.initLoadPage = function() {
         }
     }
 
-    if (isFirstInit) {
+    if (isFirstInit && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
         if ($('#selectPatternIds').find(':selected').attr("data-isPattern") == 'true') {
             $("#save").prop("disabled", false);
         }
@@ -584,14 +597,13 @@ $(function () {
     // Save click
     $("#save").click(function () {
         let deptOptionId = $("#departmentId").find(":selected").val();
-        let now = new Date();
         let patternOptionId = $("#selectPatternIds").find(":selected").val();
         let isPattern = $("#selectPatternIds").find(":selected").attr('data-ispattern');
         let isWarning = isPattern == "true" ? checkBindDeptPattern(deptOptionId, null) : checkBindDeptPattern(deptOptionId, patternOptionId);
         let isContainInspection = checkContainInspection(deptOptionId, patternOptionId);
 
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
-        $("#departmentId").find(":selected").text() + ' - ' + $("#selectPatternIds").find(":selected").text() + ' - ' + now.toISOString()
+        "チェックリスト【無償】- " + getNow()
         : $('#patternName').val();
         $('#patternName').val(patternName);
         if (!patternName || patternName === '') {
@@ -606,9 +618,7 @@ $(function () {
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            let patId = $('#selectPatternIds').val();
-            let ispattern = $('#selectPatternIds').find(':selected').data('ispattern');
-            saveAjax(null, patId, ispattern, true);
+            $("#modalSaveData").modal('show');
         } else {
             validateAndGetDataTable(isSelectedFree);
         }
@@ -667,11 +677,7 @@ $(function () {
     }).change(function() {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let currentDeptId = $('#departmentId').find(":selected").val();
-        let deptPatternId = $("#departmentId").find(":selected").attr('data-deptpatternid');
-        if (deptPatternId && deptPatternId != '-1') {
-            $("#confirmDialog3").modal("show");
-            $(".confirmMessage3").html($('#changeDeptWarningMsgId').val());
-        }
+
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
                 $("#save").prop("disabled", true);
@@ -685,10 +691,5 @@ $(function () {
     $('#companyOptionId').change(function() {
         let compID = $("#companyOptionId").find(":selected").val();
         loadDeptList(compID);
-    });
-
-    $("#confirmDialog3").find('#cancelBtn').click(function() {
-        // Replace department
-        $("#departmentId").val(previousDeptId);
     });
 });
