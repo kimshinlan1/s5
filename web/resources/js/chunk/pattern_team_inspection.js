@@ -148,7 +148,7 @@ function acceptRemoveColumn() {
 
     let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#toast2'), 2000, true);
-        loadInspectionData(param, mode = MODE_REMOVE_NEW, presentData);
+        loadInspectionData(param, MODE_REMOVE_NEW, presentData);
     };
 
     let failCallback = function (_jqXHR, _textStatus, _errorThrown) {
