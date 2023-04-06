@@ -19,10 +19,22 @@ function showHideTeam(deptId) {
 }
 
 /**
+ * Scroll to team chart area after click button
+ */
+function scrollToDiv(deptId = null) {
+  if (deptId) {
+    let targetDiv = document.getElementById("dept_title_" + deptId);
+    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+  } else {
+    let targetDiv = document.getElementById("topPageTable");
+    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+/**
  * Go to Inspection Page
  */
 function gotoInspectionPage(teamId, deptId) {
-    // window.location = '/pattern_team_inspection/' + teamId;
     $.ajax({
       type: 'GET',
       url: '/departments/getDeptPattern',
@@ -43,42 +55,41 @@ function gotoInspectionPage(teamId, deptId) {
  * Load radar chart
  */
 function loadRadarChart(id, avgPointArr, isDept) { //todo
-  debugger
   const data = {
     labels: labels,
     datasets: [
       {
-        label: '111',
+        label: CONFIG.get('FIRST_CHART_LABEL'),
         data: avgPointArr[0],
         fill: true,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgb(255, 99, 132)',
-        pointBackgroundColor: 'rgb(255, 99, 132)',
+        backgroundColor: isDept ? 'rgba(252, 185, 115, 0.3)' : 'rgba(170, 191, 180, 0.3)',
+        borderColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)',
+        pointBackgroundColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(54, 162, 235)'
+        pointHoverBorderColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)'
       },
       {
-        label: '222',
+        label: CONFIG.get('SECOND_CHART_LABEL'),
         data: avgPointArr[1],
         fill: true,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgb(54, 162, 235)',
-        pointBackgroundColor: 'rgb(54, 162, 235)',
+        backgroundColor: isDept ? 'rgba(252, 217, 147, 0.3)' : 'rgba(188, 217, 192, 0.3)',
+        borderColor: isDept ? 'rgba(252, 217, 147)' : 'rgb(188, 217, 192)',
+        pointBackgroundColor: isDept ? 'rgba(252, 217, 147)' : 'rgb(188, 217, 192)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(54, 162, 235)'
+        pointHoverBorderColor: isDept ? 'rgba(252, 217, 147)' : 'rgb(188, 217, 192)',
       },
       {
-        label: '333',
+        label: CONFIG.get('THIRD_CHART_LABEL'),
         data: avgPointArr[2],
         fill: true,
-        backgroundColor: 'rgba(54, 202, 145, 0.2)',
-        borderColor: 'rgb(54, 44, 215)',
-        pointBackgroundColor: 'rgb(54, 02, 235)',
+        backgroundColor: isDept ? 'rgba(255, 236, 178, 0.3)' : 'rgba(212, 232, 198, 0.3)',
+        borderColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)',
+        pointBackgroundColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(54, 162, 235)'
+        pointHoverBorderColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)'
       },
 
   ]
@@ -96,7 +107,10 @@ const config = {
         },
         plugins: {
             legend: {
-                display: false,
+                display: true,
+                labels: {
+                  boxWidth: 20
+                },
             },
         },
         scales: {
@@ -159,12 +173,10 @@ function renderTeamChart(deptId, teamId) { //todo
                 mapObj.get(key).push(parseFloat(value));
             });
         }
-        let id = 'radarchart_team_' + teamId + '-' + i;
         myArray.push(avgPointArr);
     });
-    debugger
-    let id = 'radarchart_team_' + teamId + '-' + 1;
-    loadRadarChart(id, myArray, 0);
+    let id = 'radarchart_team_' + teamId;
+    loadRadarChart(id, myArray, 0); //todo
 
     // let barChartId = 'barchart_team_' + teamId;
     // loadBarChart(barChartId, mapObj, count);
@@ -195,12 +207,10 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
       }
 
       /** Loop Dept Radar Chart **/
-      let radarchartId = 'radarchart_dept_' + deptId + '-' + index;
       myArray.push(avgPointArr);
     }
-    debugger
-    let radarchartId = 'radarchart_dept_' + deptId + '-' + 1;
-      loadRadarChart(radarchartId, myArray, 1);
+    let radarchartId = 'radarchart_dept_' + deptId;
+    loadRadarChart(radarchartId, myArray, 1); //todo
 
     /** Loop Dept Bar Chart **/
     // let barChartId = 'barchart_dept_' + deptId;
@@ -300,4 +310,11 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
+    // var h1 = $("#topPageTable").position();
+    // $('#homeButton').click(function() {
+    //   console.log($("#companyOptionId").offset().top);
+    //   $('html, body').animate({
+    //     scrollTop: $("#companyOptionId").offset().top
+    //   }, 1000, 'easeOutQuart');
+    // });
 });
