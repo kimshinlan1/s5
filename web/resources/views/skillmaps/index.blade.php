@@ -362,7 +362,7 @@
                                     id="category" required="required" />
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" maxlength="3" placeholder="作業名の行数"
+                                <input type="text" class="form-control" maxlength="3" placeholder="業務名の数"
                                     id="rowTable" required="required" />
                             </div>
                         </div>
