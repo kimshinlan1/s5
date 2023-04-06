@@ -130,7 +130,7 @@ body {
     position: absolute;
     bottom: 0px;
     right: 20px;
-    background-color: white;
+    background-color: transparent;
     padding: 10px;
     cursor: pointer;
     font-size: 40px;
