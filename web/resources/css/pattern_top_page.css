@@ -28,7 +28,6 @@
     overflow-y: scroll;
     overflow-x: scroll;
     height:80vh;
-    /* width: 100vw; */
 }
 #homeButton {
     position: absolute;
@@ -79,9 +78,6 @@
     table {
         width: 90% !important;
     }
-    /* .table > :not(caption) > * > * {
-        padding: 0px !important;
-    } */
     #homeButton {
         bottom: 45px !important;
         right: 0px !important;
@@ -91,65 +87,30 @@
     }
 }
 
-/* #deptRadarChart td:first-child {
-    padding-left: 3rem !important;
-    width: 268px !important;
-    max-width: 268px !important;
-}
-
-.teamRadarChart td:first-child {
-    padding-left: 3rem !important;
-    width: 268px !important;
-    max-width: 268px !important;
-} */
-
 table tr {
     border-color: transparent;
 }
-
 tr.radarChartRow > td:not(:last-child) {
     border-right-color: transparent;
 }
-
 .border-expand {
     border: 3px solid red !important;
 }
-
 .border-collapse {
     border: 0px solid transparent !important;
 }
-
-#fiestSetId {
-    margin-bottom: 50px;
-    min-width: fit-content !important;
-    width: max-content;
-}
-
 table {
     width: 100%;
 }
-
 legend {
     margin-left: 1rem;
 }
-
 tr.team-name-row td {
     padding: 2rem 0rem 1rem;
 }
-
 body {
     overflow-y: hidden;
     overflow-x: hidden
-}
-
-/* .barChart {
-    height: 220px !important;
-    max-height: 220px !important;
-} */
-
-.btn-evidence {
-    background-color: deepskyblue;
-    color: aliceblue;
 }
 .toppage-button {
     border-color: transparent !important;
@@ -160,11 +121,9 @@ body {
     text-overflow: ellipsis;
     border-radius: 8px;
 }
-
 .team-chart-area {
     background-color: #ddebf7;
 }
-
 .team-area-title {
     padding: 10px;
 }
