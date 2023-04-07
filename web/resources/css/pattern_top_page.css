@@ -1,8 +1,13 @@
+:root {
+    --chart-width-pc: 350px !important;
+    --chart-width-ipad: 220px !important;
+}
+
 .radarChart {
-    width: 350px !important;
-    height: 350px !important;
-    max-width: 350px !important;
-    max-height: 350px !important;
+    width: var(--chart-width-pc);
+    height: var(--chart-width-pc);
+    max-width: var(--chart-width-pc);
+    max-height: var(--chart-width-pc);
     margin: 0 auto;
     background-color: white;
     margin-bottom: 15px;
@@ -10,7 +15,7 @@
     margin-top: 10px;
 }
 .width-data {
-    width: 350px !important;
+    width: var(--chart-width-pc);
     text-align: center;
 }
 .container {
@@ -43,17 +48,17 @@
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */
     .radarChart {
-        width: 220px !important;
-        height: 220px !important;
-        max-width: 220px !important;
-        max-height: 220px !important;
+        width: var(--chart-width-ipad);
+        height: var(--chart-width-ipad);
+        max-width: var(--chart-width-ipad);
+        max-height: var(--chart-width-ipad);
         margin: 0 auto;
         background-color: white;
         margin-bottom: 15px;
         border: 1px solid #e2e2e2;
     }
     .width-data {
-        width: 220px !important;
+        width: var(--chart-width-ipad);
         text-align: center;
     }
     .container {
