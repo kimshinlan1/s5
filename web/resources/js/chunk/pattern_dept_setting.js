@@ -49,7 +49,7 @@ window.loadData = function() {
 /**
  * Save Data
  */
-window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { //todo
+window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
     let url = isFree ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
     let method = "POST";
     let name = $('#patternName').val();

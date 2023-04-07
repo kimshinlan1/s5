@@ -56,7 +56,7 @@ function gotoInspectionPage(teamId, deptId) {
 /**
  * Load radar chart
  */
-function loadRadarChart(id, avgPointArr, isDept) { //todo
+function loadRadarChart(id, avgPointArr, isDept) {
   const data = {
     labels: labels,
     datasets: [
@@ -158,8 +158,7 @@ function loadBarChart(id, mapObj, count) {
 /**
  * Render chart for each teams in a dept
  */
-function renderTeamChart(deptId, teamId) { //todo
-    // let count = $('#hidCountInspection').val();
+function renderTeamChart(deptId, teamId) {
     let myArray = [];
     let mapObj = new Map();
     mapObj.set("s1", []);
@@ -180,7 +179,7 @@ function renderTeamChart(deptId, teamId) { //todo
         myArray.push(avgPointArr);
     });
     let id = 'radarchart_team_' + teamId;
-    loadRadarChart(id, myArray, 0); //todo
+    loadRadarChart(id, myArray, 0);
 
     // let barChartId = 'barchart_team_' + teamId;
     // loadBarChart(barChartId, mapObj, count);
@@ -189,7 +188,7 @@ function renderTeamChart(deptId, teamId) { //todo
 /**
  * Render overall dept chart representing average value of each inspection
  */
-function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData, deptId, countMaxInspection) { //todo
+function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData, deptId, countMaxInspection) {
     /** Load Dept Radar Chart and calculate data structure for rendering dept bar chart **/
     let myArray = [];
     for (let index = 0; index < countMaxInspection; index++) {
@@ -214,7 +213,7 @@ function renderAvgDeptChart(deptMapRadarData, countPerInspection, deptMapBarData
       myArray.push(avgPointArr);
     }
     let radarchartId = 'radarchart_dept_' + deptId;
-    loadRadarChart(radarchartId, myArray, 1); //todo
+    loadRadarChart(radarchartId, myArray, 1);
 
     /** Loop Dept Bar Chart **/
     // let barChartId = 'barchart_dept_' + deptId;
@@ -314,11 +313,4 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
-    // var h1 = $("#topPageTable").position();
-    // $('#homeButton').click(function() {
-    //   console.log($("#companyOptionId").offset().top);
-    //   $('html, body').animate({
-    //     scrollTop: $("#companyOptionId").offset().top
-    //   }, 1000, 'easeOutQuart');
-    // });
 });
