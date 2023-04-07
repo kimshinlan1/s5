@@ -39,6 +39,7 @@
     "Common_Last_Update_Date": "最終更新日",
     "Common_Are_You_Sure_Delete": "本当に削除しますか?",
     "Common_Unsaved_Data_Warning": "保存されていない変更があります。退会してもよろしいですか？?",
+    "Common_Department_Select_Required": "部門を選択してください。",
     "Main_Menu_Top": "メインメニュー",
     "===== BLOCK_COMMON_END =====": "",
 
@@ -101,7 +102,6 @@
     "Department_ID": "部門ID",
     "Please enter your department information": "部門情報を入力してください。",
     "Deparment_Name": "部門名",
-    "Common_Department_Select_Required": "部門を選択してください。",
     "Deparment_5S_Checklist": "５S管理用のチェックリスト",
     "Department_Button_Add": "部門を追加する",
     "Deparment_Count_Employee": "※最大35名まで登録できます。",

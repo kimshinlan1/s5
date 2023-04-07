@@ -56,7 +56,7 @@ window.CONFIG = (function () {
         'FIRST_CHART_LABEL': '前々回',
         'SECOND_CHART_LABEL': '前回',
         'THIRD_CHART_LABEL': '最新',
-
+        'ERROR_DEPARTMENT_REQUIRED': $('#mesageLabelNoDepartment').val()
     };
     return {
         get: function (name) { return private_const[name]; }
@@ -597,12 +597,12 @@ window.removeExistId = function(arr, id) {
     $('#teamForm').removeClass('was-validated');
     $('#teamForm .form-control').removeClass('is-invalid');
     $('#teamForm .invalid-feedback').html('');
-    $('#errorLabelNoDepartment').hide();
     let id = $("#teamId").val();
     let name = $("#teamName").val();
     let department_id = $("#teamDepartment").val();
     if(!department_id){
         $('#teamDepartment').addClass('is-invalid');
+        $('#errorLabelNoDepartment').html(CONFIG.get('ERROR_DEPARTMENT_REQUIRED'));
         $('#errorLabelNoDepartment').show();
     }
     let data = null;
@@ -760,7 +760,7 @@ window.hideCollapse = function(){
 window.handleToggle = function(status, order) {
     if (status == 'show') {
         // Hide other menus
-              $('.menu').each((i, ele) => {
+            $('.menu').each((i, ele) => {
             if ((i+1) != order) {
                 $('#subMenu' + (i+1)).collapse('hide');
                 if ((i+1) == 1) {
