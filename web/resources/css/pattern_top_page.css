@@ -125,6 +125,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     border-radius: 8px;
+    white-space: break-spaces;
 }
 .team-chart-area {
     background-color: #ddebf7;
