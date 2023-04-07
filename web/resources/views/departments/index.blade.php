@@ -55,7 +55,7 @@
 
 {{-- Button Add/Edit Dialog --}}
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#departmentEditDialog">
-    {{ __('Common_button_add_department') }}
+    {{ __('Department_Button_Add') }}
 </button>
 
 {{-- Add/Edit Dialog Employee--}}
@@ -63,7 +63,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title add">{{ __('Common_button_add_department') }}</h5>
+                <h5 class="modal-title add">{{ __('Department_Button_Add') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

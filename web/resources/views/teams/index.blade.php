@@ -44,7 +44,7 @@
         <tr style="text-align: center;">
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="no" data-visible="false">{{ __('Team_No') }}</th>
-            <th data-field="name" class="word-wrap">{{ __('Common_Teams_Name') }}</th>
+            <th data-field="name" class="word-wrap">{{ __('Team_Name') }}</th>
             <th data-field="department.name" class="word-wrap">{{ __('Department') }}</th>
             <th data-width="240" data-formatter="teamTableActions"></th>
         </tr>

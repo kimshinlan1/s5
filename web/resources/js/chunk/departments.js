@@ -384,25 +384,6 @@ window.saveDataDepartment = function () {
     });
 }
 
-/** ------------------
-*  Load department list
---------------------- */
-window.loadDeptListByComp = function(id, deptId) {
-    $.ajax({
-        type: 'GET',
-        url: '/departments/list/' + id,
-        success: function (res) {
-            let html = '';
-            for (let e of res) {
-                html += (deptId == e.id) ? '<option value="' + e.id + '" selected>' + e.name + '</option>' : '<option value="' + e.id + '">' + e.name + '</option>';
-            }
-            $('#teamDepartment').html(html);
-        },
-        error: function(textStatus, errorThrown) {
-        },
-    });
-}
-
 /* ==============================
     jQuery
 ==============================*/
