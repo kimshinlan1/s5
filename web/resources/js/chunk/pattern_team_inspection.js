@@ -166,6 +166,14 @@ function cancelRemoveColumn() {
     $("#modalRemoveColumn").modal('hide');
 }
 
+/**
+ * Scroll to team chart area after click button
+ */
+function scrollToDiv() {
+    let targetDiv = document.getElementById("selectDeptList");
+    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
 /***********
  * Save data
  ***********/

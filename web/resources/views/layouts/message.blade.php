@@ -42,3 +42,4 @@
 <input type="hidden" id="unsavedDataWarning" name="unsavedDataWarning" value="{{ __('Common_Unsaved_Data_Warning') }}"/>
 <input type="hidden" id="savePatternMsgId" name="savePatternMsgId" value="{{ __('Pattern_Label_Modal_Save_Pattern') }}"/>
 <input type="hidden" id="deletePatternWarningMsg" name="deletePatternWarningMsg" value="{{ __('Pattern_Delete_Warning') }}"/>
+<input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department') }}"/>

@@ -225,6 +225,7 @@
     </table>
   </form>
 </div>
+<button id="homeButton" onclick="scrollToDiv()"> <i class="fa fa-arrow-circle-up" aria-hidden="true"> </i> </button>
 
 {{-- Hidden --}}
 <input type="hidden" id="hidCountInspection" value="{{ $countInspection }}"/>

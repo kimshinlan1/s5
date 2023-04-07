@@ -30,6 +30,9 @@ function scrollToDiv(deptId = null) {
   }
   if (targetDiv) {
     targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+  } else {
+    $('#errorDialog').modal('show');
+    $('#errorDialog').find('.error-messages').html($('#noTeamInDeptWarning').val());
   }
 }
 
