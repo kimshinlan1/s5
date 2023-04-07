@@ -25,9 +25,12 @@
     width: 250px;
     height: 80px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
     background-color: white;
     border-radius: 8px;
+}
+.has-overflow:after {
+    content: "。。。";
 }
 #scrolling {
     overflow-y: scroll;
@@ -68,7 +71,7 @@
         width: 220px;
         height: 70px;
         overflow: hidden;
-        text-overflow: ellipsis;
+        /* text-overflow: ellipsis; */
         background-color: white;
         border-radius: 8px;
         margin-bottom: 10px;
@@ -125,6 +128,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     border-radius: 8px;
+    white-space: break-spaces;
 }
 .team-chart-area {
     background-color: #ddebf7;

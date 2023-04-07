@@ -67,34 +67,34 @@ function loadRadarChart(id, avgPointArr, isDept) {
         label: CONFIG.get('FIRST_CHART_LABEL'),
         data: avgPointArr[0],
         fill: true,
-        backgroundColor: isDept ? 'rgba(252, 185, 115, 0.3)' : 'rgba(170, 191, 180, 0.3)',
-        borderColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)',
-        pointBackgroundColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)',
+        backgroundColor: isDept ? 'rgba(252, 185, 115, 0.4)' : 'rgba(170, 191, 180, 0.4)',
+        borderColor: 'transparent',
+        pointBackgroundColor: isDept ? 'rgba(252, 185, 115, 0.4)' : 'rgba(170, 191, 180, 0.4)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)'
+        pointHoverBorderColor: 'transparent',
       },
       {
         label: CONFIG.get('SECOND_CHART_LABEL'),
         data: avgPointArr[1],
         fill: true,
-        backgroundColor: isDept ? 'rgba(252, 217, 147, 0.3)' : 'rgba(188, 217, 192, 0.3)',
-        borderColor: isDept ? 'rgba(252, 217, 147)' : 'rgb(188, 217, 192)',
-        pointBackgroundColor: isDept ? 'rgba(252, 217, 147)' : 'rgb(188, 217, 192)',
+        backgroundColor: isDept ? 'rgba(252, 217, 147, 0.4)' : 'rgba(188, 217, 192, 0.4)',
+        borderColor: 'transparent',
+        pointBackgroundColor: isDept ? 'rgba(252, 217, 147, 0.4)' : 'rgba(188, 217, 192, 0.4)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: isDept ? 'rgba(252, 217, 147)' : 'rgb(188, 217, 192)',
+        pointHoverBorderColor: 'transparent',
       },
       {
         label: CONFIG.get('THIRD_CHART_LABEL'),
         data: avgPointArr[2],
         fill: true,
-        backgroundColor: isDept ? 'rgba(255, 236, 178, 0.3)' : 'rgba(212, 232, 198, 0.3)',
-        borderColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)',
-        pointBackgroundColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)',
+        backgroundColor: isDept ? 'rgba(255, 236, 178, 0.4)' : 'rgba(212, 232, 198, 0.4)',
+        borderColor: 'transparent',
+        pointBackgroundColor: isDept ? 'rgba(255, 236, 178, 0.4)' : 'rgba(212, 232, 198, 0.4)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)'
+        pointHoverBorderColor: 'transparent',
       },
 
   ]
@@ -316,4 +316,24 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
+
+
+  let deptBtn = document.querySelector(".dept-btn");
+  // let teamBtn = document.querySelector("#btnInput");
+
+  // Add overflow class if needed
+  if (deptBtn.scrollWidth > deptBtn.offsetWidth) deptBtn.classList.add("has-overflow");
+
+  while (deptBtn.scrollWidth > deptBtn.offsetWidth) {
+    // Remove characters from paragraph until the text and the overflow indicator fit
+    deptBtn.innerHTML = deptBtn.innerHTML.slice(0, -1);
+  }
+
+  // // Add overflow class if needed
+  // if (teamBtn.scrollWidth > teamBtn.offsetWidth) teamBtn.classList.add("has-overflow");
+
+  // while (teamBtn.scrollWidth > teamBtn.offsetWidth) {
+  //   // Remove characters from paragraph until the text and the overflow indicator fit
+  //   teamBtn.innerHTML = teamBtn.innerHTML.slice(0, -1);
+  // }
 });
