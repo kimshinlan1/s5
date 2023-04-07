@@ -4,13 +4,17 @@
     max-width: 350px !important;
     max-height: 350px !important;
     margin: 0 auto;
+    background-color: white;
+    margin-bottom: 15px;
+    border: 1px solid #e2e2e2;
+    margin-top: 10px;
 }
 .width-data {
     width: 350px !important;
     text-align: center;
 }
 .container {
-    max-width: 1290px !important;
+    max-width: 1714px !important;
 }
 .dept-btn {
     width: 250px;
@@ -20,41 +24,71 @@
     background-color: white;
     border-radius: 8px;
 }
+#scrolling {
+    overflow-y: scroll;
+    overflow-x: scroll;
+    height:80vh;
+    /* width: 100vw; */
+}
+#homeButton {
+    position: absolute;
+    bottom: 0px;
+    right: 20px;
+    background-color: transparent;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 40px;
+    border-color: transparent;
+}
 /* Portrait mode */
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */
     .radarChart {
-        width: 250px !important;
-        height: 250px !important;
-        max-width: 250px !important;
-        max-height: 250px !important;
+        width: 220px !important;
+        height: 220px !important;
+        max-width: 220px !important;
+        max-height: 220px !important;
         margin: 0 auto;
+        background-color: white;
+        margin-bottom: 15px;
+        border: 1px solid #e2e2e2;
     }
     .width-data {
-        width: 250px !important;
+        width: 220px !important;
         text-align: center;
     }
     .container {
         width: 82% !important;
     }
     .dept-btn {
-        width: 200px;
+        width: 220px;
         height: 70px;
         overflow: hidden;
         text-overflow: ellipsis;
         background-color: white;
         border-radius: 8px;
+        margin-bottom: 10px;
     }
-}
-
-#emptyRow {
-    height: 3rem;
-    border-color: transparent;
-}
-
-#scrolling {
-    overflow-y: scroll;
-    height:80vh;
+    .toppage-button {
+        width: 220px !important;
+        height: 70px !important;
+    }
+    #mainDiv {
+        width: 100vw !important;
+    }
+    table {
+        width: 90% !important;
+    }
+    /* .table > :not(caption) > * > * {
+        padding: 0px !important;
+    } */
+    #homeButton {
+        bottom: 45px !important;
+        right: 0px !important;
+    }
+    #scrolling {
+        height:70vh;
+    }
 }
 
 /* #deptRadarChart td:first-child {
@@ -91,10 +125,6 @@ tr.radarChartRow > td:not(:last-child) {
     width: max-content;
 }
 
-/* table#topPageTable {
-    width: max-content;
-} */
-
 table {
     width: 100%;
 }
@@ -123,18 +153,12 @@ body {
 }
 .toppage-button {
     border-color: transparent !important;
-    margin-bottom: 10px
-}
-
-#homeButton {
-    position: absolute;
-    bottom: 0px;
-    right: 20px;
-    background-color: transparent;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 40px;
-    border-color: transparent;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 8px;
 }
 
 .team-chart-area {

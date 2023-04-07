@@ -22,11 +22,13 @@ function showHideTeam(deptId) {
  * Scroll to team chart area after click button
  */
 function scrollToDiv(deptId = null) {
+  let targetDiv = null;
   if (deptId) {
-    let targetDiv = document.getElementById("dept_title_" + deptId);
-    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+    targetDiv = document.getElementById("dept_title_" + deptId);
   } else {
-    let targetDiv = document.getElementById("topPageTable");
+    targetDiv = document.getElementById("topPageTable");
+  }
+  if (targetDiv) {
     targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
   }
 }
@@ -109,7 +111,9 @@ const config = {
             legend: {
                 display: true,
                 labels: {
-                  boxWidth: 20
+                  boxWidth: 5,
+                  boxHeight: 5,
+                  color: 'black',
                 },
             },
         },
