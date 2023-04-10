@@ -1,5 +1,5 @@
 <div class="header">
-    <nav class="navbar navbar-expand-md navbar-light px-4">
+    <nav class="navbar navbar-expand-md navbar-light px-4" id="navbar">
         <a class="navbar-brand" style="margin-right: 1rem;" id="side-bar-menu">
             <svg style="fill: white; margin-right: 0.25rem!important;" version="1.1" id="icon-menu" xmlns="http://www.w3.org/1999/xlink" x="0" y="0"
                 width="37" height="37" viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" space="preserve">
