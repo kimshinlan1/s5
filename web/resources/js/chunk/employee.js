@@ -10,6 +10,8 @@
 
  let listDepartment = [];
  let countEmployee = 0;
+ const queryString = window.location.search;
+ const urlParams = new URLSearchParams(queryString);
  /** ------------------
   *    Actions
   --------------------- */
@@ -127,12 +129,10 @@ window.saveData = function () {
  --------------------- */
 
 window.loadDeptListByComp = function(id, deptID = null) {
+    let teamId = urlParams.get('teamId');
     let url = '/departments/list/' + id;
-
     let method = "GET";
-
     let params = {};
-
     let doneCallback = function (res, _textStatus, _jqXHR) {
         let html = '<option value=""> </option>';
             listDepartment = res;
@@ -146,7 +146,7 @@ window.loadDeptListByComp = function(id, deptID = null) {
             if (deptID) {
                 $("#departmentSearchTable").val(deptID);
             }
-            loadTeamListByDept(deptId);
+            loadTeamListByDept(deptId, teamId);
     };
 
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
@@ -172,19 +172,16 @@ window.loadDeptListByComp = function(id, deptID = null) {
             for (let e of res) {
                 html += '<option value="' + e.id + '">' + e.name + '</option>';
             }
-
             if (ele != null) {
-                $('#' + ele).html(html);
-                if(ele == 'teamSearchTable') {
-                    $('#teamSearchTable').change();
-                }
+                $('#teamSearchTable').html(html);
+                $("#teamSearchTable").val(ele).change();
+                $('#employeeTeamId').html(html);
             }
             else {
                 $('#teamSearchTable').html(html);
                 $('#employeeTeamId').html(html);
                 $('#teamSearchTable').change();
             }
-
         },
         error: function(_jqXHR, textStatus, errorThrown) {
         },
@@ -196,8 +193,6 @@ window.loadDeptListByComp = function(id, deptID = null) {
  ==============================*/
  $(function () {
     let compID = $("#userCompanyId").val();
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
     let deptId = urlParams.get('deptId');
     let companyId = urlParams.get('companyId');
     if(companyId) {

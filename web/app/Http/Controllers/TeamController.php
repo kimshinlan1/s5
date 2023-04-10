@@ -150,4 +150,16 @@ class TeamController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Returns teams list.
+     *
+     * @param  id
+     * @return array
+     */
+    public function getByDepartment($id)
+    {
+        return $this->service->getDataByDepartment($id);
+    }
+
 }

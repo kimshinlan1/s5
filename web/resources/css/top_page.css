@@ -7,3 +7,62 @@
     display: table-cell;
     vertical-align: middle;
 }
+
+.main-menu-1 {
+    width: 250px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container-fluid {
+    text-align-last: center;
+}
+
+.icon-menu {
+    margin-top: 150px;
+    text-align: -webkit-center;
+    display: inline-flex;
+}
+
+.icon-menu-1 {
+    margin: 25px;
+}
+
+/* Portrait mode */
+@media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
+    /* CSS rules for portrait mode and landscape mode on iPad */
+    .icon-menu {
+        margin-top: 100px;
+        width: 590px;
+        text-align: -webkit-center;
+        display: inline-flex;
+    }
+
+    .main-menu {
+        text-align: center;
+        height: 130px;
+        width: 130px;
+        font-size: 10px;
+        background: #e9ecef;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .main-menu-1 {
+        width: 0px;
+        text-align: center;
+        margin-top: 0px;
+    }
+
+    .icon-menu-1 {
+        margin: 0px;
+    }
+
+    .container-fluid {
+        text-align-last: center;
+    }
+
+    .container {
+        text-align-last: center;
+    }
+}
