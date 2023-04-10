@@ -22,12 +22,17 @@ function showHideTeam(deptId) {
  * Scroll to team chart area after click button
  */
 function scrollToDiv(deptId = null) {
+  let targetDiv = null;
   if (deptId) {
-    let targetDiv = document.getElementById("dept_title_" + deptId);
+    targetDiv = document.getElementById("dept_title_" + deptId);
+  } else {
+    targetDiv = document.getElementById("topPageTable");
+  }
+  if (targetDiv) {
     targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
   } else {
-    let targetDiv = document.getElementById("topPageTable");
-    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+    $('#errorDialog').modal('show');
+    $('#errorDialog').find('.error-messages').html($('#noTeamInDeptWarning').val());
   }
 }
 
