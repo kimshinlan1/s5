@@ -749,10 +749,15 @@ window.handleToggle = function(status, order) {
 // Function to hide other submenus when clicking on main menu
 window.hideCollapse = function(){
     $('.menu').each((i, ele) => {
+        // Hide submenus
         $('#subMenu' + (i+1)).collapse('hide');
         $('#icon' + (i+1)).addClass("fa-caret-right");
         $('#icon' + (i+1)).removeClass("fa-caret-down");
     });
+    // Hide extra submenus
+    $('#extraSubDeptMenuId').collapse('hide');
+    // Set currently hide submenu and extra submenu in session storage to process when refresh page
+    sessionStorage.setItem("deptMenu", "hide");
     sessionStorage.setItem("mainMenu", "");
 }
 

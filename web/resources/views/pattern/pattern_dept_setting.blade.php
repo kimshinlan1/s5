@@ -226,10 +226,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="cancelAddAreaToTable()"
-                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
                         class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
+                    <button type="button" onclick="cancelAddAreaToTable()"
+                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
