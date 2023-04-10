@@ -112,7 +112,7 @@ class PatternTeamInspectionService extends BaseService
         ->leftJoin('inspection', 'inspection.id', '=', "$table.inspection_id")
         ->leftJoin('locations', 'locations.id', '=', "$table.location_id")
         ->leftJoin('areas', 'areas.id', '=', 'locations.area_id')
-        ->orderBy('inspection.id');
+        ->orderBy('inspection.id', 'desc');
 
         if ($teamId) {
             $sql->where('inspection.team_id', $teamId);

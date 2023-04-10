@@ -47,7 +47,7 @@ class PatternTopPageService extends BaseService
         ])
         ->orderBy("$table.id", 'desc');
         if ($teamId) {
-            $sql->where('inspection.team_id', $teamId)->whereNotNull('avg_point');
+            $sql->where('inspection.team_id', $teamId)->whereNotNull('avg_point')->whereNotNull('inspection_date');
         }
 
         return $sql->take(3)->get()->toArray();

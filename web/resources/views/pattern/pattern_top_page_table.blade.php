@@ -29,7 +29,7 @@
         @foreach ($inspectionData as $inspection)
             @if (count($inspection['teams']))
             <div class="team-chart-area" id="dept_title_{{ $inspection['dept_id'] }}">
-                <div class="team-area-title">
+                <div class="team-area-title" style="word-wrap: break-word;">
                     <h5><strong>{{ $inspection['dept_name'] }}</strong></h5>
                 </div>
                 <table>

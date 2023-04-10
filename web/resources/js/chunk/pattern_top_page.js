@@ -22,12 +22,17 @@ function showHideTeam(deptId) {
  * Scroll to team chart area after click button
  */
 function scrollToDiv(deptId = null) {
+  let targetDiv = null;
   if (deptId) {
-    let targetDiv = document.getElementById("dept_title_" + deptId);
+    targetDiv = document.getElementById("dept_title_" + deptId);
+  } else {
+    targetDiv = document.getElementById("topPageTable");
+  }
+  if (targetDiv) {
     targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
   } else {
-    let targetDiv = document.getElementById("topPageTable");
-    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+    $('#errorDialog').modal('show');
+    $('#errorDialog').find('.error-messages').html($('#noTeamInDeptWarning').val());
   }
 }
 
@@ -63,33 +68,33 @@ function loadRadarChart(id, avgPointArr, isDept) { //todo
         data: avgPointArr[0],
         fill: true,
         backgroundColor: isDept ? 'rgba(252, 185, 115, 0.4)' : 'rgba(170, 191, 180, 0.4)',
-        borderColor: 'transparent',
+        borderColor: isDept ? 'rgb(252, 185, 115)' : 'rgb(170, 191, 180)',
         pointBackgroundColor: isDept ? 'rgba(252, 185, 115, 0.4)' : 'rgba(170, 191, 180, 0.4)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'transparent',
+        pointHoverBorderColor: isDept ? 'rgb(252, 185, 115)' : 'rgba(170, 191, 180)',
       },
       {
         label: CONFIG.get('SECOND_CHART_LABEL'),
         data: avgPointArr[1],
         fill: true,
         backgroundColor: isDept ? 'rgba(252, 217, 147, 0.4)' : 'rgba(188, 217, 192, 0.4)',
-        borderColor: 'transparent',
+        borderColor: isDept ? 'rgb(252, 217, 147)' : 'rgb(188, 217, 192)',
         pointBackgroundColor: isDept ? 'rgba(252, 217, 147, 0.4)' : 'rgba(188, 217, 192, 0.4)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'transparent',
+        pointHoverBorderColor: isDept ? 'rgb(252, 217, 147)' : 'rgb(188, 217, 192)',
       },
       {
         label: CONFIG.get('THIRD_CHART_LABEL'),
         data: avgPointArr[2],
         fill: true,
         backgroundColor: isDept ? 'rgba(255, 236, 178, 0.4)' : 'rgba(212, 232, 198, 0.4)',
-        borderColor: 'transparent',
+        borderColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)',
         pointBackgroundColor: isDept ? 'rgba(255, 236, 178, 0.4)' : 'rgba(212, 232, 198, 0.4)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'transparent',
+        pointHoverBorderColor: isDept ? 'rgb(255, 236, 178)' : 'rgb(212, 232, 198)',
       },
 
   ]
@@ -109,7 +114,8 @@ const config = {
             legend: {
                 display: true,
                 labels: {
-                  boxWidth: 20
+                  boxWidth: 5,
+                  boxHeight: 5
                 },
             },
         },
