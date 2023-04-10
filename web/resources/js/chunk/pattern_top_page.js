@@ -317,23 +317,31 @@ $(function () {
       $('#companyOptionId').change();
     }
 
+    /**
+     * Loop all dept buttons, check if the text exceeds the button size, append ellipsis
+     */
+    $('button[id*="deptBtn_"]').each(function() {
+      let ele = $(this);
+      if (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
+        ele.addClass("has-overflow");
+      }
+      while (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
+        // Remove characters from paragraph until the text and the overflow indicator fit
+        ele.html(ele.html().slice(0, -1));
+      }
+    });
 
-  let deptBtn = document.querySelector(".dept-btn");
-  // let teamBtn = document.querySelector("#btnInput");
-
-  // Add overflow class if needed
-  if (deptBtn.scrollWidth > deptBtn.offsetWidth) deptBtn.classList.add("has-overflow");
-
-  while (deptBtn.scrollWidth > deptBtn.offsetWidth) {
-    // Remove characters from paragraph until the text and the overflow indicator fit
-    deptBtn.innerHTML = deptBtn.innerHTML.slice(0, -1);
-  }
-
-  // // Add overflow class if needed
-  // if (teamBtn.scrollWidth > teamBtn.offsetWidth) teamBtn.classList.add("has-overflow");
-
-  // while (teamBtn.scrollWidth > teamBtn.offsetWidth) {
-  //   // Remove characters from paragraph until the text and the overflow indicator fit
-  //   teamBtn.innerHTML = teamBtn.innerHTML.slice(0, -1);
-  // }
+    /**
+     * Loop all team buttons, check if the text exceeds the button size, append ellipsis
+     */
+    $('button[id^="btnInput_"]').each(function() {
+      let ele = $(this);
+      if (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
+        ele.addClass("has-overflow");
+      }
+      while (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
+        // Remove characters from paragraph until the text and the overflow indicator fit
+        ele.html(ele.html().slice(0, -1));
+      }
+    });
 });

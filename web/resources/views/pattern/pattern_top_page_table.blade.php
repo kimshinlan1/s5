@@ -6,7 +6,7 @@
                     <tr id="deptRadarChart">
                 @endif
                 <td class="width-data pb-2">
-                    <button type="button" class="dept-btn" onclick="scrollToDiv({{ $inspection['dept_id'] }})" class="btn" style="border-color: black;">{{ $inspection['dept_name'] }}</button>
+                    <button type="button" class="dept-btn" id="deptBtn_{{ $inspection['dept_id'] }}" onclick="scrollToDiv({{ $inspection['dept_id'] }})" class="btn" style="border-color: black;">{{ $inspection['dept_name'] }}</button>
                     <canvas class="radarChart" id="radarchart_dept_{{ $inspection['dept_id'] }}"></canvas>
                 </td>
                 {{-- Hidden --}}
@@ -46,9 +46,8 @@
                                 <canvas class="radarChart"
                                     id="radarchart_team_{{ $team['team_id'] }}">
                                 </canvas>
-                                <input type="button" class="btn-info rounded-3 toppage-button" id="btnInput"
-                                value="{{ $team['team_name'] }}"
-                                onclick="gotoInspectionPage('{{ $team['team_id'] }}', {{ $inspection['dept_id'] }})" />
+                                <button class="btn-info rounded-3 toppage-button" id="btnInput_{{ $team['team_id'] }}"
+                                onclick="gotoInspectionPage('{{ $team['team_id'] }}', {{ $inspection['dept_id'] }})"> {{ $team['team_name'] }} </button>
                             </td>
                         @if (($teamKey + 1) % 3 == 0 || $loop->last)
                             </tr>

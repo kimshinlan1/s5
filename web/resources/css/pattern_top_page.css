@@ -2,7 +2,15 @@
     --chart-width-pc: 350px !important;
     --chart-width-ipad: 220px !important;
 }
-
+.toppage-button {
+    border-color: transparent !important;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 8px;
+    white-space: break-spaces;
+}
 .radarChart {
     width: var(--chart-width-pc);
     height: var(--chart-width-pc);
@@ -25,7 +33,6 @@
     width: 250px;
     height: 80px;
     overflow: hidden;
-    /* text-overflow: ellipsis; */
     background-color: white;
     border-radius: 8px;
 }
@@ -71,7 +78,6 @@
         width: 220px;
         height: 70px;
         overflow: hidden;
-        /* text-overflow: ellipsis; */
         background-color: white;
         border-radius: 8px;
         margin-bottom: 10px;
@@ -119,16 +125,6 @@ tr.team-name-row td {
 body {
     overflow-y: hidden;
     overflow-x: hidden
-}
-.toppage-button {
-    border-color: transparent !important;
-    margin-bottom: 20px;
-    width: 250px;
-    height: 80px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border-radius: 8px;
-    white-space: break-spaces;
 }
 .team-chart-area {
     background-color: #ddebf7;
