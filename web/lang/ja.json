@@ -1,7 +1,7 @@
 {
 
     "===== BLOCK_MANAGE_START =====": "",
-    "Manage": "管理",
+    "Manage": "組織管理",
     "5s_Manage": "５S管理",
     "===== BLOCK_MANAGE_END =====": "",
 
@@ -39,6 +39,8 @@
     "Common_Last_Update_Date": "最終更新日",
     "Common_Are_You_Sure_Delete": "本当に削除しますか?",
     "Common_Unsaved_Data_Warning": "保存されていない変更があります。退会してもよろしいですか？?",
+    "Common_Department_Select_Required": "部門を選択してください。",
+    "Main_Menu_Top": "メインメニュー",
     "===== BLOCK_COMMON_END =====": "",
 
     "===== BLOCK_ERROR_MESSAGE_START =====": "",
@@ -59,6 +61,7 @@
     "Confirm_Delete": "のデータを削除してよろしいですか。",
     "Confirm_Copy": "コピーしますか？",
     "Confirm_Message_Save_Data": "データを保存しますか。",
+    "Message_Please_Select_Department": "部門を選択してください。",
     "Message_Add_Column": "追加された列",
     "===== BLOCK_ERROR_MESSAGE_END =====": "",
 
@@ -100,6 +103,7 @@
     "Please enter your department information": "部門情報を入力してください。",
     "Deparment_Name": "部門名",
     "Deparment_5S_Checklist": "５S管理用のチェックリスト",
+    "Department_Button_Add": "部門を追加する",
     "Deparment_Count_Employee": "※最大35名まで登録できます。",
     "Department_Save_Successfully_Employee": "登録しました。",
     "=====  BLOCK_DEPARTMENT_END =====": "",

@@ -1,25 +1,16 @@
-:root {
-    --chart-width-pc: 350px !important;
-    --chart-width-ipad: 220px !important;
-}
-
 .radarChart {
-    width: var(--chart-width-pc);
-    height: var(--chart-width-pc);
-    max-width: var(--chart-width-pc);
-    max-height: var(--chart-width-pc);
+    width: 350px !important;
+    height: 350px !important;
+    max-width: 350px !important;
+    max-height: 350px !important;
     margin: 0 auto;
-    background-color: white;
-    margin-bottom: 15px;
-    border: 1px solid #e2e2e2;
-    margin-top: 10px;
 }
 .width-data {
-    width: var(--chart-width-pc);
+    width: 350px !important;
     text-align: center;
 }
 .container {
-    max-width: 1714px !important;
+    max-width: 1290px !important;
 }
 .dept-btn {
     width: 250px;
@@ -51,74 +42,102 @@
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */
     .radarChart {
-        width: var(--chart-width-ipad);
-        height: var(--chart-width-ipad);
-        max-width: var(--chart-width-ipad);
-        max-height: var(--chart-width-ipad);
+        width: 250px !important;
+        height: 250px !important;
+        max-width: 250px !important;
+        max-height: 250px !important;
         margin: 0 auto;
-        background-color: white;
-        margin-bottom: 15px;
-        border: 1px solid #e2e2e2;
     }
     .width-data {
-        width: var(--chart-width-ipad);
+        width: 250px !important;
         text-align: center;
     }
     .container {
         width: 82% !important;
     }
     .dept-btn {
-        width: 220px;
+        width: 200px;
         height: 70px;
         overflow: hidden;
         /* text-overflow: ellipsis; */
         background-color: white;
         border-radius: 8px;
-        margin-bottom: 10px;
-    }
-    .toppage-button {
-        width: 220px !important;
-        height: 70px !important;
-    }
-    #mainDiv {
-        width: 100vw !important;
-    }
-    table {
-        width: 90% !important;
-    }
-    #homeButton {
-        bottom: 45px !important;
-        right: 0px !important;
-    }
-    #scrolling {
-        height:70vh;
     }
 }
+
+#emptyRow {
+    height: 3rem;
+    border-color: transparent;
+}
+
+#scrolling {
+    overflow-y: scroll;
+    height:80vh;
+}
+
+/* #deptRadarChart td:first-child {
+    padding-left: 3rem !important;
+    width: 268px !important;
+    max-width: 268px !important;
+}
+
+.teamRadarChart td:first-child {
+    padding-left: 3rem !important;
+    width: 268px !important;
+    max-width: 268px !important;
+} */
 
 table tr {
     border-color: transparent;
 }
+
 tr.radarChartRow > td:not(:last-child) {
     border-right-color: transparent;
 }
+
 .border-expand {
     border: 3px solid red !important;
 }
+
 .border-collapse {
     border: 0px solid transparent !important;
 }
+
+#fiestSetId {
+    margin-bottom: 50px;
+    min-width: fit-content !important;
+    width: max-content;
+}
+
+/* table#topPageTable {
+    width: max-content;
+} */
+
 table {
     width: 100%;
 }
+
 legend {
     margin-left: 1rem;
 }
+
 tr.team-name-row td {
     padding: 2rem 0rem 1rem;
 }
+
 body {
     overflow-y: hidden;
     overflow-x: hidden
+}
+
+/* .barChart {
+    height: 220px !important;
+    max-height: 220px !important;
+} */
+
+.btn-evidence {
+    background-color: deepskyblue;
+    color: aliceblue;
 }
 .toppage-button {
     border-color: transparent !important;
@@ -130,9 +149,11 @@ body {
     border-radius: 8px;
     white-space: break-spaces;
 }
+
 .team-chart-area {
     background-color: #ddebf7;
 }
+
 .team-area-title {
     padding: 10px;
 }

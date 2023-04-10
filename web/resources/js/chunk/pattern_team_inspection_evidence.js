@@ -390,12 +390,12 @@ function handleConfirmOkBtn(isSaveMode) {
                 let keyArrayBefore = [];
                 let keyArrayAfter = [];
 
-                $("[class*=file_before_block" + blockId + ']').each((i, ele) => {
+                $("[class*=file_before_block" + blockId + ']').each((i, ele) => { //todo
                     keyArrayBefore.push(ele.dataset.id);
                     $(ele).addClass('item-count');
                 });
 
-                $("[class*=file_after_block" + blockId + ']').each((i, ele) => {
+                $("[class*=file_after_block" + blockId + ']').each((i, ele) => { //todo
                     keyArrayAfter.push(ele.dataset.id);
                     $(ele).addClass('item-count');
                 });

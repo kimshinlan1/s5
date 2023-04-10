@@ -25,9 +25,11 @@
                         <div class="mb-3">
                             <label for="teamDepartment" class="form-label">{{ __('Department') }}</label>
                             <div class="input-group has-validation">
-                                <select class="form-select form-select-arrow" aria-label="Department select" id="teamDepartment" style="text-align-last: center;">
+                                <select class="form-select form-select-arrow form-control" aria-label="Department select" id="teamDepartment" style="text-align-last: center;" required>
                                 </select>
                             </div>
+                            <label id="errorLabelNoDepartment" style="font-size: 0.875em; color: red; display: none;">{{ __('Common_Department_Select_Required') }}</label>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </form>

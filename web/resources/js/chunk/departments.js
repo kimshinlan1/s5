@@ -18,8 +18,6 @@ var isFreeWarning = false;
  --------------------- */
 window.departmentTableActions = function (_value, row, _index) {
    return (
-       '<button  style="margin: 4px; width: 55px; height 30px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
-       row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog">係追加</button> ' +
         '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> ' +
         '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -386,25 +384,6 @@ window.saveDataDepartment = function () {
     });
 }
 
-/** ------------------
-*  Load department list
---------------------- */
-window.loadDeptListByComp = function(id, deptId) {
-    $.ajax({
-        type: 'GET',
-        url: '/departments/list/' + id,
-        success: function (res) {
-            let html = '';
-            for (let e of res) {
-                html += (deptId == e.id) ? '<option value="' + e.id + '" selected>' + e.name + '</option>' : '<option value="' + e.id + '">' + e.name + '</option>';
-            }
-            $('#teamDepartment').html(html);
-        },
-        error: function(textStatus, errorThrown) {
-        },
-    });
-}
-
 /* ==============================
     jQuery
 ==============================*/
@@ -483,28 +462,7 @@ $(function () {
        $("#employeeName").val('');
        $("#employeeEmail").val('');
    });
-
-   /*---------------------
-    * Show Registration Team Dialog
-    ---------------------- */
-    $("#teamEditDialog").on("show.bs.modal", function (e) {
-       clearDialog();
-       let id = $('#companyListID').val();
-       let $button = $(e.relatedTarget);
-       let deptId = $button.attr('data-id');
-       $("#teamEditDialog .modal-title.edit").hide();
-       $("#teamEditDialog .modal-title.add").show();
-       loadDeptListByComp(id, deptId)
-       setTimeout(function (){
-           $('#teamName').focus();
-       }, 100);
-   });
-
-   /*---------------------
-    * Hide Registration Team Dialog
-    ---------------------- */
-    dialogModalHide("#teamEditDialog", "#teamForm");
-
+   
    /*----------------------------------------------
     * Save team data
     -----------------------------------------------*/
