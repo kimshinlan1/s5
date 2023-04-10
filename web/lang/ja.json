@@ -141,7 +141,7 @@
     "SkillMap_Cancel_Save_Button": "保存しません。",
     "SkillMap_Question_Delete_1": "削除してもよろしいですか。",
     "Message_Note_SkillMap": "※分類ごとの業務数は最大16件以下を推奨します。",
-    "SkillMap_label_1": "制作部門",
+    "SkillMap_label_1": "部門選択",
     "SkillMap_label_3": "グループ名・ライン名",
     "SkillMap_label_5": "：指導できるレベルにある",
     "SkillMap_label_6": "：業務で十分なアウトプットを出した実績がある",
