@@ -7,7 +7,7 @@
     $areas = [];
     $locations = [];
     $pointValues = Constant::POINT_VALUE_5S;
-    $countFirstTime = 0;
+    $countFirstTime = $countInspection + 1;
     $theFirstTime = Constant::THE_FIRST_TIME;
 ?>
 
@@ -15,13 +15,36 @@
   <form id="formFormsInput">
     {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
     <table id="tableDetailInspection" class="table table-bordered">
+        {{-- 点検実施日 --}}
+        <tr style="border-color: transparent;">
+            <td colspan="3" rowspan="2" class="title-chart" style="vertical-align: middle;">
+            </td>
+            @for ($i = 0; $i < $countInspection; $i++)
+            <td style="text-align: center; vertical-align: middle;">
+                <strong>点検実施日</strong>
+            </td>
+            @endfor
+        </tr>
+        <tr id="hidInspectionRow" style="border-color: transparent;">
+            @foreach ($inspectionIds as $key => $inspectionId)
+            <td style="text-align: center; vertical-align: middle;" data-time="{{ $key }}" class="date_{{ $key + 1}}">
+                <?php
+                    $date = isset($inspectionData[$inspectionId]['inspection_date'])
+                    ? $inspectionData[$inspectionId]['inspection_date'] : "";
+                ?>
+                <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
+                <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
+                <input type="hidden" class="hidInspectionClass" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
+            </td>
+            @endforeach
+        </tr>
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
             <td colspan="3" style="text-align: center">
                 <input id="addColumnId" class="btn btn-primary btn-add-inspection" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
             @foreach ($inspectionIds as $inspectionId)
-            <?php $countFirstTime++ ?>
+            <?php $countFirstTime-- ?>
             <td style="text-align: center">
                 <label><strong>{{ $countFirstTime }}{{ $theFirstTime }}</strong></label>
                 <br>
@@ -118,31 +141,6 @@
             @foreach ($inspectionIds as $inspectionId)
             <td>
                 <label id="point_avg_5s_{{ $inspectionId }}">0</label>
-            </td>
-            @endforeach
-        </tr>
-
-        {{-- 点検実施日 --}}
-        <tr style="background: #F2F2F2;">
-            <td rowspan="2" style="text-align: center;">点検エリア</td>
-            <td rowspan="2" style="text-align: center;">点検箇所</td>
-            <td rowspan="2" style="text-align: center;">改善ポイント</td>
-            @for ($i = 0; $i < $countInspection; $i++)
-            <td style="text-align: center; vertical-align: middle;">
-                <strong>点検実施日</strong>
-            </td>
-            @endfor
-        </tr>
-        <tr id="hidInspectionRow">
-            @foreach ($inspectionIds as $key => $inspectionId)
-            <td style="text-align: center; vertical-align: middle;" data-time="{{ $key }}" class="date_{{ $key + 1}}">
-                <?php
-                    $date = isset($inspectionData[$inspectionId]['inspection_date'])
-                    ? $inspectionData[$inspectionId]['inspection_date'] : "";
-                ?>
-                <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
-                <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
-                <input type="hidden" class="hidInspectionClass" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
             </td>
             @endforeach
         </tr>

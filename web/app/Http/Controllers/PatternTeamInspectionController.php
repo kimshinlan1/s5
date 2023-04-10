@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Common\Constant;
 use App\Common\StringUtil;
+use App\Models\Inspection;
 use App\Services\PatternTeamInspectionEvidenceService;
 use Illuminate\Http\Request;
 use App\Services\PatternTeamInspectionService;
@@ -65,7 +66,11 @@ class PatternTeamInspectionController extends Controller
     {
         $deptId = $request->get('dept_id');
         $teamId = $request->get('team_id');
-        $totalColumn = $request->get('new_total_column') ?: Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
+        $totalColumn = $request->get('new_total_column');
+        if (!$totalColumn) {
+            $totalColumn = Inspection::where('team_id', $teamId)->count();
+        }
+        $totalColumn = $totalColumn != 0 ? $totalColumn : Constant::INSPECTION_DEFAULT_COLUMN_NUMBER;
 
         if ($request->get('present_data')['presentData']) {
             $inspectionDetails = $request->get('present_data')['presentData'];
@@ -115,12 +120,18 @@ class PatternTeamInspectionController extends Controller
         // ];
 
         // Get ids to render columns
-        $inspectionIds = array_keys($inspectionData);
+        $existingInspectionIds = array_keys($inspectionData);
+        $inspectionIds = [];
         $i = 0;
-        while (count($inspectionIds) < $totalColumn) {
+        $countIds = count($existingInspectionIds);
+        while ($countIds < $totalColumn) {
             $inspectionIds[] = "new_" . time() . $i;
+            $countIds++;
             $i++;
         }
+
+
+        $inspectionIds = array_merge($inspectionIds, $existingInspectionIds);
 
         $params = [
             'new' => empty($inspectionData),

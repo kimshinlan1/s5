@@ -3,6 +3,7 @@
  **********/
 const MODE_NEW = 1;
 const MODE_REMOVE_NEW = -1;
+const MODE_SAVE = 2;
 var isUnsavedData = false;
 var RenderRadarChart = [];
 var RenderBarChart = [];
@@ -46,6 +47,8 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
         params['new_total_column'] = parseInt(count) + 1;
     } else if (mode == MODE_REMOVE_NEW) {
         params['new_total_column'] = parseInt(count) - 1;
+    } else if (mode == MODE_SAVE) {
+        params['new_total_column'] = parseInt(count);
     }
 
     let url = "/pattern_team_inspection/data";
@@ -60,7 +63,7 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
         if (isAddColumn) {
             $('#addColumnId').prop('disabled', true);
             showToast($('#toast3'), 2000, true);
-            autoScrollTable();
+            // autoScrollTable();
             setTimeout(() => {
                 $('#addColumnId').prop('disabled', false);
             }, 1000);
@@ -121,6 +124,11 @@ window.autoScrollTable = function() {
  * Remove column
  ***************/
 function removeColumn(inspection_id) {
+    if ($('.btn-remove-column').length == 1) {
+        $('#errorDialog').modal('show');
+        $('#errorDialog').find('.error-messages').html($('#deleteLastInspectionWarningMsg').val());
+        return;
+    }
     $("#modalRemoveColumn").modal('show');
     $("#modalRemoveColumn").addClass("show");
     inspectionIdBtnRemove = inspection_id;
@@ -192,7 +200,7 @@ function saveInspectionData() {
         if ($("#hidTeamId").val()){
             window.location = "/pattern_top_page";
         } else {
-            loadInspectionData(param);
+            loadInspectionData(param, MODE_SAVE);
         }
     };
     let failCallback = function (_jqXHR, _textStatus, _errorThrown) {
