@@ -53,10 +53,12 @@ window.CONFIG = (function () {
         'PAGE_PATTERN_LIST_CUSTOMER': 1,
         'RADAR_CHART_LABEL': $('#radarLabel').val(),
         'MESSAGE_CHOOSE_PATTERN_FOR_THIS_DEPARTMENT': $('#messageChoosePatternForThisDepartment').val(),
-        'FIRST_CHART_LABEL': '前々回',
+        'THIRD_CHART_LABEL': '前々回',
         'SECOND_CHART_LABEL': '前回',
         'THIRD_CHART_LABEL': '最新',
-        'ERROR_DEPARTMENT_REQUIRED': $('#mesageLabelNoDepartment').val()
+        'ERROR_DEPARTMENT_REQUIRED': $('#mesageLabelNoDepartment').val(),
+        'FIRST_CHART_LABEL': '最新',
+
     };
     return {
         get: function (name) { return private_const[name]; }

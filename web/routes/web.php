@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/teams/dept_list', [TeamController::class, 'getTeamByDepartmentId']);
         Route::get('/teams/dept_id', [TeamController::class, 'getTeamsByDepartmentId']);
         Route::get('teams/list', [TeamController::class, 'list']);
+        Route::get('teams/list/{id}', [TeamController::class, 'getByDepartment']);
 
         // Pattern_List_Customer
         Route::get('/pattern_list_customer', [PatternController::class, 'indexCustomer']);

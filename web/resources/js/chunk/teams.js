@@ -14,7 +14,8 @@ let listDepartment = [];
 window.teamTableActions = function (_value, row, _index) {
     return (
         '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
-        row.department_id + '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
+        row.department_id + '" data-team_id="' + row.id +
+        '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog" >編集</button> ' +
         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
@@ -136,13 +137,35 @@ $(function () {
      * SHOW DIALOG ADD EMPLOYEE
      -------------------------------*/
     $("#employeeAddDialog").on("show.bs.modal", function (e) {
-        let $button = $(e.relatedTarget);
-        let id = $button.data("id");
-        reloadDataTeam(id);
-        $("#deptd").val(id);
-        $("#employeeName").val('');
-        $("#employeeEmail").val('');
+       clearDialog();
+       let $button = $(e.relatedTarget);
+       let id = $button.attr('data-id');
+       let teamId = $button.attr('data-team_id');
+       $("#deptd").val(id);
+       loadTeamListByDept(id, teamId)
+       setTimeout(function (){
+           $('#teamName').focus();
+       }, 100);
     });
+
+    /** ------------------
+    *  Load team list
+    --------------------- */
+    window.loadTeamListByDept = function(id, teamId) {
+        $.ajax({
+            type: 'GET',
+            url: '/teams/list/' + id,
+            success: function (res) {
+                let html = '';
+                for (let e of res) {
+                    html += (teamId == e.id) ? '<option value="' + e.id + '" selected>' + e.name + '</option>' : '<option value="' + e.id + '">' + e.name + '</option>';
+                }
+                $('#employeeTeamId').html(html);
+            },
+            error: function(textStatus, errorThrown) {
+            },
+        });
+    }
 
     /*----------------------------------------------
      * SAVE HANDLE EVENT WHEN CLICKING OK BUTTON
@@ -155,6 +178,7 @@ $(function () {
      * EDIT DIALOG SHOW
      ---------------------- */
     $("#teamEditDialog").on("show.bs.modal", function (e) {
+        $('#errorLabelNoDepartment').hide();
         let $button = $(e.relatedTarget);
         let id = $button.data("id");
         let departmentId = $('#departmentListID').val();
@@ -262,4 +286,14 @@ $(function () {
             window.saveDataEmployee();
         }
     });
+
+    /*-------------------------------------------
+     * HANDLE CLICK ON ROW EVENT
+     --------------------------------------------*/
+    $('#teamTable').on('click-cell.bs.table', function (_field, _value, row, $el) {
+        // Redirect to 5S pattern preview page
+        if (row !== undefined) {
+            window.location = window.location = '/employee/?companyId=' + $el.company_id + '&deptId=' + $el.department_id + '&teamId=' + $el.id;
+        }
+    })
 });

@@ -98,10 +98,18 @@ class TeamService extends BaseService
             //get from company id
             $arrDeptIds = $request->input('department_ids');
             return $this->model::whereIn('department_id', $arrDeptIds)
-            ->with('department:id,name')->orderBy('id')->paginate($limit);
+                ->join('departments', 'teams.department_id', '=', 'departments.id')
+                ->select('teams.*', 'departments.company_id', 'departments.name as department_name')
+                ->with('department:id,name')
+                ->orderBy('teams.id')
+                ->paginate($limit);
         } else {
-            return $this->model::where('department_id', $departmentId)->with('department:id,name')
-            ->orderBy('id')->paginate($limit);
+            return $this->model::where('department_id', $departmentId)
+            ->join('departments', 'teams.department_id', '=', 'departments.id')
+            ->select('teams.*', 'departments.company_id', 'departments.name as department_name')
+            ->with('department:id,name')
+            ->orderBy('id')
+            ->paginate($limit);
         }
     }
 
@@ -133,5 +141,16 @@ class TeamService extends BaseService
         $data = $this->model::find($id);
         $data->delete();
         return $data;
+    }
+
+    /**
+     * Returns department list.
+     *
+     * @param  id
+     * @return array
+     */
+    public function getDataByDepartment($id)
+    {
+        return $this->model->where('department_id', $id)->orderBy('id')->get()->toArray();
     }
 }
