@@ -13,7 +13,7 @@ let listDepartment = [];
  =============================*/
 window.teamTableActions = function (_value, row, _index) {
     return (
-        '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm btn-copy" data-id="' +
+        '<button  style="margin-right: 10px;"  type="button" class="btn btn-primary btn-sm btn-copy" data-id="' +
         row.department_id + '" data-team_id="' + row.id +
         '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
@@ -142,6 +142,8 @@ $(function () {
        let id = $button.attr('data-id');
        let teamId = $button.attr('data-team_id');
        $("#deptd").val(id);
+       $("#employeeName").val('');
+       $("#employeeEmail").val('');
        loadTeamListByDept(id, teamId)
        setTimeout(function (){
            $('#teamName').focus();
