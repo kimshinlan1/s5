@@ -68,17 +68,6 @@
     margin-top: 1rem;
 }
 
-#homeButton {
-    position: fixed;
-    bottom: 0px;
-    right: 20px;
-    background-color: transparent;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 40px;
-    border-color: transparent;
-}
-
 /* Portrait mode */
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */

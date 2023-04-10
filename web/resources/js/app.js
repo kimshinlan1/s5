@@ -55,6 +55,8 @@ window.CONFIG = (function () {
         'MESSAGE_CHOOSE_PATTERN_FOR_THIS_DEPARTMENT': $('#messageChoosePatternForThisDepartment').val(),
         'THIRD_CHART_LABEL': '前々回',
         'SECOND_CHART_LABEL': '前回',
+        'THIRD_CHART_LABEL': '最新',
+        'ERROR_DEPARTMENT_REQUIRED': $('#mesageLabelNoDepartment').val(),
         'FIRST_CHART_LABEL': '最新',
 
     };
@@ -600,6 +602,11 @@ window.removeExistId = function(arr, id) {
     let id = $("#teamId").val();
     let name = $("#teamName").val();
     let department_id = $("#teamDepartment").val();
+    if(!department_id){
+        $('#teamDepartment').addClass('is-invalid');
+        $('#errorLabelNoDepartment').html(CONFIG.get('ERROR_DEPARTMENT_REQUIRED'));
+        $('#errorLabelNoDepartment').show();
+    }
     let data = null;
     let dialog = '#successAddDialog';
     if (id) {
@@ -714,13 +721,48 @@ window.toggleDeptMenu = function() {
     $('#extraSubDeptMenuId').collapse('toggle');
 }
 
+// Function to handle submenu toggle
+window.handleToggle = function(status, order) {
+    if (status == 'show') {
+        // Hide other menus
+        $('.menu').each((i, ele) => {
+            if ((i+1) != order) {
+                $('#subMenu' + (i+1)).collapse('hide');
+                $('#icon' + (i+1)).addClass("fa-caret-right");
+                $('#icon' + (i+1)).removeClass("fa-caret-down");
+            }
+        });
+        // Set currently open submenu in session storage
+        sessionStorage.setItem("mainMenu", "mainMenu" + order);
+        $('body').find('#subMenu' + order).addClass('show').removeClass('in');
+        $('#icon' + order).addClass("fa-caret-down");
+        $('#icon' + order).removeClass("fa-caret-right");
+    }
+    else {
+        sessionStorage.setItem("mainMenu", "");
+        $('body').find('#subMenu' + order).removeClass('show').removeClass('in');
+        $('#icon' + order).addClass("fa-caret-right");
+        $('#icon' + order).removeClass("fa-caret-down");
+    }
+}
+
+// Function to hide other submenus when clicking on main menu
+window.hideCollapse = function(){
+    $('.menu').each((i, ele) => {
+        $('#subMenu' + (i+1)).collapse('hide');
+        $('#icon' + (i+1)).addClass("fa-caret-right");
+        $('#icon' + (i+1)).removeClass("fa-caret-down");
+    });
+    sessionStorage.setItem("mainMenu", "");
+}
+
 /** ------------------
  *    Handle toggle/collapse event
  --------------------- */
 window.handleToggle = function(status, order) {
     if (status == 'show') {
         // Hide other menus
-        $('.menu').each((i, ele) => {
+            $('.menu').each((i, ele) => {
             if ((i+1) != order) {
                 $('#subMenu' + (i+1)).collapse('hide');
                 if ((i+1) == 1) {

@@ -44,7 +44,7 @@
         <tr style="text-align: center;">
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="company_id" data-visible="false">Company ID</th>
-            <th data-align="center" data-field="no" data-cell-style="idStyle">{{ __('Department_ID') }}</th>
+            <th data-align="center" data-visible="false" data-field="no" data-cell-style="idStyle">{{ __('Department_ID') }}</th>
             <th data-width="120" data-field="name" class="word-wrap" data-cell-style="departmentStyle">{{ __('Deparment_Name') }}</th>
             <th data-width="140" data-formatter="department5SChecklistActions" data-cell-style="checkListStyle">{{ __('Deparment_5S_Checklist') }}</th>
             <th data-width="80" data-formatter="departmentTableActions" data-cell-style="buttonStyle"></th>
@@ -55,7 +55,7 @@
 
 {{-- Button Add/Edit Dialog --}}
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#departmentEditDialog">
-    {{ __('Common_button_add') }}
+    {{ __('Department_Button_Add') }}
 </button>
 
 {{-- Add/Edit Dialog Employee--}}
@@ -63,7 +63,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title add">{{ __('Common_button_add') }}</h5>
+                <h5 class="modal-title add">{{ __('Department_Button_Add') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

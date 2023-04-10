@@ -1,5 +1,5 @@
 <div id="scrolling">
-    <div style="width: 100%; height: auto;" id="mainDiv">
+    <div style="width: 100%; height: auto;">
         <table id="topPageTable" class="table table-bordered">
             @foreach ($inspectionData as $deptKey => $inspection)
                 @if ($deptKey % 3 == 0)

@@ -56,7 +56,7 @@
 <input type="hidden" id="hidTeamId" value="{{ $teamId }}"/>
 <div id="content"></div>
 
-<button type="button" class="btn btn-success" id="btnSave">{{ __('Common_button_save') }}</button>
+<button type="button" class="btn btn-success my-3" id="btnSave">{{ __('Common_button_save') }}</button>
 
 <div><br/></div>
 <!-- Modal confirm save data -->

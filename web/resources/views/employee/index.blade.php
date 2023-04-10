@@ -56,7 +56,7 @@
     <thead class="table-light">
         <tr style="text-align: center;">
             <th data-field="id" data-visible="false" data-sortable="true">ID</th>
-            <th data-field="no" data-sortable="true">{{ __('Employee_No') }}</th>
+            <th data-field="no" data-visible = "false" data-sortable="true">{{ __('Employee_No') }}</th>
             <th data-field="name" class="word-wrap" data-sortable="true">{{ __('Common_Name') }}</th>
             <th data-field="email" data-sortable="true" class="word-wrap">{{ __('Common_Email') }}</th>
             <th data-field="department.name" data-sortable="true" class="word-wrap">{{ __('Department') }}</th>

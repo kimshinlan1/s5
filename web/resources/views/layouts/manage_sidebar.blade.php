@@ -1,5 +1,7 @@
 <div class="sidebar" style="display: none;">
     <div class="list-group list-group-flush">
+        <!-- Home -->
+        <a href="/" id="mainMenuTop" onclick = hideCollapse() aria-expanded="false" style="background-color: cornflowerblue" class=" d-flex justify- list-group-item list-group-item-action">{{__('Main_Menu_Top')}}</a>
         <!-- Management -->
         <a id="mainMenu1" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(1)">
             <div class="d-flex w-100 justify-content-between align-items-center">
