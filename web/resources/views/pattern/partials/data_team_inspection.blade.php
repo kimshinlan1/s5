@@ -15,23 +15,28 @@
   <form id="formFormsInput">
     {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
     <table id="tableDetailInspection" class="table table-bordered">
-        {{-- 点検実施日 --}}
         <tr style="border-color: transparent;">
-            <td colspan="3" rowspan="2" class="title-chart" style="vertical-align: middle;">
+            <td colspan="3" style="text-align: center; padding: 0rem;">
+                <input id="addColumnId" class="btn btn-primary btn-add-inspection" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
-            @for ($i = 0; $i < $countInspection; $i++)
-            <td style="text-align: center; vertical-align: middle;">
-                <strong>点検実施日</strong>
+            @foreach ($inspectionIds as $inspectionId)
+            <?php $countFirstTime-- ?>
+            <td style="text-align: center; vertical-align: bottom; padding: 0rem;">
+                <label><strong>{{ $countFirstTime }}{{ $theFirstTime }}</strong></label>
             </td>
-            @endfor
+            @endforeach
         </tr>
+        {{-- 点検実施日 --}}
         <tr id="hidInspectionRow" style="border-color: transparent;">
+            <td colspan="3" class="title-chart" style="vertical-align: middle;">
             @foreach ($inspectionIds as $key => $inspectionId)
             <td style="text-align: center; vertical-align: middle;" data-time="{{ $key }}" class="date_{{ $key + 1}}">
                 <?php
                     $date = isset($inspectionData[$inspectionId]['inspection_date'])
                     ? $inspectionData[$inspectionId]['inspection_date'] : "";
                 ?>
+                <label><strong>点検実施日</strong></label>
+                <br>
                 <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
                 <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
                 <input type="hidden" class="hidInspectionClass" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
@@ -40,15 +45,11 @@
         </tr>
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
-            <td colspan="3" style="text-align: center">
-                <input id="addColumnId" class="btn btn-primary btn-add-inspection" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
-            </td>
+            <td colspan="3" class="title-chart" style="vertical-align: middle;">
             @foreach ($inspectionIds as $inspectionId)
             <?php $countFirstTime-- ?>
             <td style="text-align: center">
-                <label><strong>{{ $countFirstTime }}{{ $theFirstTime }}</strong></label>
-                <br>
-                <input class="btn-remove-column" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"/>
+                <input class="btn-remove-column" style="width: 3rem" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"/>
             </td>
             @endforeach
         </tr>
@@ -85,9 +86,9 @@
             @endphp
             <td>
                 @if ($countImgs < 1)
-                <input id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-secondary btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""  data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" disabled/>
+                <input style="width: 12rem;" id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-secondary btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""  data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" disabled/>
                 @else
-                <input id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-evidence btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick="" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog"/>
+                <input style="width: 12rem;" id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-evidence btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick="" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog"/>
                 @endif
                 <br>
                 <a style="color: black; text-decoration: none;" class="openEvidenceBtn" id="countEvidence_{{ $inspectionId }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-countEvidenceId="countEvidence_{{ $inspectionId }}" data-count="{{ $countImgs }}" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog">{{ $countImgs }}{{ __('TeamInspection_Registered') }}</a>
@@ -143,6 +144,14 @@
                 <label id="point_avg_5s_{{ $inspectionId }}">0</label>
             </td>
             @endforeach
+        </tr>
+
+        <tr style="background: #F2F2F2;">
+            <td style="text-align: center; vertical-align: middle;">点検エリア</td>
+            <td style="text-align: center; vertical-align: middle;">点検箇所</td>
+            <td style="text-align: center; vertical-align: middle;"><i class="fa fa-line-chart"></i></td>
+            <td style="text-align: center; vertical-align: middle;" colspan="{{ $countInspection }}">
+            </td>
         </tr>
 
         {{-- Pattern List --}}

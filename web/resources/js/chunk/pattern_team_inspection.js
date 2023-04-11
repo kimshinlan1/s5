@@ -57,7 +57,7 @@ function loadInspectionData(data, mode = '', presentData = '', isAddColumn = fal
     let doneCallback = function (datas, _textStatus, _jqXHR) {
         $("#content").html("");
         $("#content").append(datas);
-        if (mode != '') {
+        if (mode == MODE_NEW || mode == MODE_REMOVE_NEW) {
             isUnsavedData = true;
         }
         if (isAddColumn) {
