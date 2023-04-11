@@ -73,9 +73,11 @@
     }
     .container {
         width: 82% !important;
+        height: 100%;
     }
     #topPageChart {
         width: 80vw;
+        height: 100%;
     }
     .dept-btn {
         width: var(--chart-width-ipad);
