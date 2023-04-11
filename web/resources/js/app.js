@@ -600,12 +600,7 @@ window.removeExistId = function(arr, id) {
     $('#teamForm .invalid-feedback').html('');
     let id = $("#teamId").val();
     let name = $("#teamName").val();
-    let department_id = $("#teamDepartment").val();
-    if(!department_id){
-        $('#teamDepartment').addClass('is-invalid');
-        $('#errorLabelNoDepartment').html(CONFIG.get('ERROR_DEPARTMENT_REQUIRED'));
-        $('#errorLabelNoDepartment').show();
-    }
+    let department_id = $("#teamDepartmentId").val();
     let data = null;
     let dialog = '#successAddDialog';
     if (id) {
