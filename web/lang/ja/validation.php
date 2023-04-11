@@ -165,6 +165,7 @@ return [
         ],
         'teams' => [
             'name' => '係追加',
+            'department_id' => '部門',
         ],
         'common' => [
             'name' => '名前',

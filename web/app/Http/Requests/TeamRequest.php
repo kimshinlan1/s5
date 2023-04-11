@@ -27,6 +27,7 @@ class TeamRequest extends FormRequest
     {
         $rules = [
             'name' => ['required','string','max:255'],
+            'department_id' => ['required'],
         ];
 
         return $rules;
@@ -42,6 +43,7 @@ class TeamRequest extends FormRequest
     {
         return [
             'name' => trans('validation.attributes.teams.name'),
+            'department_id' => trans('validation.attributes.teams.department_id'),
         ];
     }
 }
