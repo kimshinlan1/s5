@@ -149,7 +149,7 @@
         <tr style="background: #F2F2F2;">
             <td style="text-align: center; vertical-align: middle;">点検エリア</td>
             <td style="text-align: center; vertical-align: middle;">点検箇所</td>
-            <td style="text-align: center; vertical-align: middle;"><i class="fa fa-line-chart"></i></td>
+            <td style="text-align: center; vertical-align: middle;">改善ポイント</td>
             <td style="text-align: center; vertical-align: middle;" colspan="{{ $countInspection }}">
             </td>
         </tr>

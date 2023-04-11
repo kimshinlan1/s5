@@ -55,9 +55,8 @@ window.CONFIG = (function () {
         'MESSAGE_CHOOSE_PATTERN_FOR_THIS_DEPARTMENT': $('#messageChoosePatternForThisDepartment').val(),
         'THIRD_CHART_LABEL': '前々回',
         'SECOND_CHART_LABEL': '前回',
-        'THIRD_CHART_LABEL': '最新',
-        'ERROR_DEPARTMENT_REQUIRED': $('#mesageLabelNoDepartment').val(),
         'FIRST_CHART_LABEL': '最新',
+        'ERROR_DEPARTMENT_REQUIRED': $('#mesageLabelNoDepartment').val(),
 
     };
     return {
