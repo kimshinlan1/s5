@@ -18,6 +18,10 @@
     text-align-last: center;
 }
 
+.container {
+    text-align-last: center;
+}
+
 .icon-menu {
     margin-top: 150px;
     text-align: -webkit-center;
@@ -52,6 +56,37 @@
         width: 0px;
         text-align: center;
         margin-top: 0px;
+    }
+
+    .icon-menu-1 {
+        margin: 0px;
+    }
+
+    .container-fluid {
+        text-align-last: center;
+    }
+
+    .container {
+        text-align-last: center;
+    }
+}
+
+@media only screen and (min-device-width: 1200px) and (max-device-width: 1540px) {
+    /* CSS rules for portrait mode and landscape mode on iPad */
+    .icon-menu {
+        margin-top: 200px;
+        text-align: -webkit-center;
+        display: inline-flex;
+    }
+
+    .main-menu {
+        text-align: center;
+        height: 200px;
+        width: 200px;
+        font-size: 20px;
+        background: #e9ecef;
+        display: table-cell;
+        vertical-align: middle;
     }
 
     .icon-menu-1 {
