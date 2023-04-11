@@ -294,7 +294,28 @@ function renderView(compId) {
     };
 
     runAjax(url, method, data, doneCallback, failCallback, null, false);
+}
 
+// Check if dept or pattern has a connection
+window.checkDeptExist = function(compId) {
+  let res = null;
+  let url = '/pattern_top_page/check_dept_exist';
+
+  let method = "POST";
+
+  let data = {
+      compId: compId,
+  };
+
+  let doneCallback = function (data, _textStatus, _jqXHR) {
+          res = data['success'];
+  };
+  let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+      failAjax(jqXHR, _textStatus, _errorThrown);
+
+  };
+  runAjax(url, method, data, doneCallback, failCallback, null, false);
+  return res;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -307,7 +328,12 @@ $(function () {
     // Company Onchange Event
     $('#companyOptionId').change(function() {
       let compId = $('#companyOptionId').find(':selected').val();
-      renderView(compId);
+      let isDeptExist = checkDeptExist(compId);
+      if (isDeptExist) {
+        renderView(compId);
+      } else {
+        alert('132');
+      }
     })
     let compId = $('#companyOptionId').val();
     if (!compId) {
@@ -343,5 +369,6 @@ $(function () {
         // Remove characters from paragraph until the text and the overflow indicator fit
         ele.html(ele.html().slice(0, -1));
       }
+      console.log("TCL: ele.prop('scrollWidth')", ele.prop('scrollWidth'))
     });
 });
