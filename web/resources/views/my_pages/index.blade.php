@@ -23,7 +23,7 @@
             <td></td>
         </tr>
         <tr id="trUserName" data-value="{{$user->name}}">
-            <th class="col-5 col-md-6">{{__('My_Page_Name')}}</th>
+            <th class="col-5 col-md-6">{{__('Common_User_Name')}}</th>
             <td class="col-7 col-md-6">{{$user->name}}</td>
         </tr>
         <tr id="trUserIdentifier" data-value="{{$user->identifier}}">
@@ -82,7 +82,7 @@
                     <input type="hidden" name="userId" class="form-control" id="userId" value="{{$user->id}}">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="userName" class="form-label">{{ __('My_Page_Name') }}</label>
+                            <label for="userName" class="form-label">{{ __('Common_User_Name') }}</label>
                             <div class="input-group has-validation">
                                 <input type="text" name="userName" class="form-control" id="userName" value="" maxlength="32" required>
                                 <div class="invalid-feedback"></div>

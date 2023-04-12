@@ -11,7 +11,7 @@
         aria-atomic="true" id="successUpdateDialog">
     <div class="d-flex">
         <div class="toast-body">
-            {{ __('Update_Success') }}
+            {{ __('Message_Save_Success') }}
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
     aria-atomic="true" id="toast2">
     <div class="d-flex">
         <div class="toast-body">
-            {{ __('Common_Delete_Successful') }}
+            {{ __('Message_Delete_Successful') }}
         </div>
     </div>
 </div>

@@ -304,10 +304,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="runRemoveLocation()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
