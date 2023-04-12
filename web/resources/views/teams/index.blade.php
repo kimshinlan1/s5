@@ -78,7 +78,7 @@
                     <input type="hidden" name="deptd" class="form-control" id="deptd" value="">
                     <div class="row">
                         <div class="mb-3">
-                            <label for="employeeName" class="form-label">{{ __('Employee_Name') }}</label>
+                            <label for="employeeName" class="form-label">{{ __('Common_User_Name') }}</label>
                             <div class="input-group has-validation">
                                 <input type="text" name="employeeName" class="form-control" id="employeeName" value="" required>
                                 <div class="invalid-feedback"></div>

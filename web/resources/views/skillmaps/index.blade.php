@@ -172,7 +172,7 @@
                         <div class="col-3 action-btn" style="width: 528px">
                             <button type="button" id="save" class="btn btn-success btn-ripple" disabled>
                                 <div class="inside-btn">
-                                    {{ __('Skillmap_Button_Save') }}
+                                    {{ __('Common_button_save') }}
                                 </div>
                             </button>
                             <button type="button" id="pdf" class="btn btn-primary btn-ripple btn-pdf" disabled>
@@ -391,10 +391,10 @@
                     <h4><span class="badge bg-danger">{{ __('SkillMap_Question_Delete_1') }}</span></h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="deleteDataSkillMap()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>

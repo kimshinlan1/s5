@@ -17,7 +17,7 @@
         aria-atomic="true" id="toast2">
         <div class="d-flex">
             <div class="toast-body">
-                {{ __('Common_Delete_Successful') }}
+                {{ __('Message_Delete_Successful') }}
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
             <th data-align="center" data-visible="false" data-field="no" data-cell-style="idStyle">{{ __('Department_ID') }}</th>
             <th data-width="120" data-field="name" class="word-wrap" data-cell-style="departmentStyle">{{ __('Deparment_Name') }}</th>
             <th data-width="140" data-formatter="department5SChecklistActions" data-cell-style="checkListStyle">{{ __('Deparment_5S_Checklist') }}</th>
-            <th data-width="80" data-formatter="departmentTableActions" data-cell-style="buttonStyle"></th>
+            <th data-width="80" class="text-align-webkit-center" data-formatter="departmentTableActions" data-cell-style="buttonStyle"></th>
         </tr>
     </thead>
 </table>
@@ -73,7 +73,7 @@
                     <input type="hidden" name="employeeId" class="form-control" id="employeeId" value="">
                     <div class="row">
                         <div class="mb-3">
-                            <label for="employeeName" class="form-label">{{ __('Employee_Name') }}</label>
+                            <label for="employeeName" class="form-label">{{ __('Common_User_Name') }}</label>
                             <div class="input-group has-validation">
                                 <input type="text" name="employeeName" class="form-control" id="employeeName" value="" required>
                                 <div class="invalid-feedback"></div>

@@ -30,7 +30,7 @@
             <th data-field="role_id" data-visible="false">RoleID</th>
             <th data-field="company_id" data-visible="false">CompanyId</th>
             <th data-field="identifier" data-width="220" data-width="310" class="word-wrap">{{ __('User_Login_ID') }}</th>
-            <th data-field="name" data-width="270" class="word-wrap">{{ __('User_Name') }}</th>
+            <th data-field="name" data-width="270" class="word-wrap">{{ __('Common_User_Name') }}</th>
             <th data-width="180" data-field="company.name" class="word-wrap" data-formatter="customCell">{{ __('Company') }}</th>
             <th data-width="180" data-field="updated_at" data-formatter="dateFormatter">{{ __('User_Update_Date') }}</th>
             <th data-width="130" data-formatter="userTableActions"></th>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="userName" class="form-label">{{ __('User_Name') }}</label>
+                            <label for="userName" class="form-label">{{ __('Common_User_Name') }}</label>
                             <div class="input-group has-validation">
                                 <input type="text" name="userName" class="form-control" id="userName" value="" required>
                                 <div class="invalid-feedback"></div>
