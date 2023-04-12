@@ -288,13 +288,66 @@ function renderView(compId) {
         $('#topPageChart').empty();
         $('#topPageChart').html(resData);
         loadCharts();
+        setTimeout(() => {
+          formatButtonText();
+        }, 100);
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         failAjax(jqXHR, _textStatus, _errorThrown);
     };
 
     runAjax(url, method, data, doneCallback, failCallback, null, false);
+}
 
+// Check if dept or pattern has a connection
+window.checkDeptExist = function(compId) {
+  let res = null;
+  let url = '/pattern_top_page/check_dept_exist';
+
+  let method = "POST";
+
+  let data = {
+      compId: compId,
+  };
+
+  let doneCallback = function (data, _textStatus, _jqXHR) {
+          res = data['success'];
+  };
+  let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+      failAjax(jqXHR, _textStatus, _errorThrown);
+
+  };
+  runAjax(url, method, data, doneCallback, failCallback, null, false);
+  return res;
+}
+
+window.formatOverflowedButtonText = function(ele) {
+  let borderSize = ele.outerWidth() - ele.innerWidth();
+  if (ele.prop('scrollWidth') > ele.prop('offsetWidth') || ele.prop('scrollHeight') > ele.prop('offsetHeight')) {
+    ele.addClass("has-overflow");
+  }
+  while ( (ele.prop('scrollWidth') > ele.prop('offsetWidth')) || (ele.prop('scrollHeight') > (ele.prop('offsetHeight') + borderSize)) ) {
+    // Remove characters from paragraph until the text and the overflow indicator fit
+    ele.html(ele.html().substring(0, ele.text().length-1));
+  }
+}
+
+window.formatButtonText = function() {
+  /**
+   * Loop all dept buttons, check if the text exceeds the button size, append ellipsis
+   */
+  $('button[id*="deptBtn_"]').each(function() {
+    let ele = $(this);
+    formatOverflowedButtonText(ele);
+  });
+
+  /**
+   * Loop all team buttons, check if the text exceeds the button size, append ellipsis
+   */
+  $('button[id^="btnInput_"]').each(function() {
+    let ele = $(this);
+    formatOverflowedButtonText(ele);
+  });
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -307,7 +360,15 @@ $(function () {
     // Company Onchange Event
     $('#companyOptionId').change(function() {
       let compId = $('#companyOptionId').find(':selected').val();
+      let isDeptExist = checkDeptExist(compId);
       renderView(compId);
+      if (isDeptExist) {
+        $('#topPageDivId').find('#checkValidCompanyOption').attr('hidden', true);
+        $('#scrolling').show();
+      } else {
+        $('#topPageDivId').find('#checkValidCompanyOption').attr('hidden', false);
+        $('#scrolling').hide();
+      }
     })
     let compId = $('#companyOptionId').val();
     if (!compId) {
@@ -316,32 +377,5 @@ $(function () {
     } else {
       $('#companyOptionId').change();
     }
-
-    /**
-     * Loop all dept buttons, check if the text exceeds the button size, append ellipsis
-     */
-    $('button[id*="deptBtn_"]').each(function() {
-      let ele = $(this);
-      if (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
-        ele.addClass("has-overflow");
-      }
-      while (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
-        // Remove characters from paragraph until the text and the overflow indicator fit
-        ele.html(ele.html().slice(0, -1));
-      }
-    });
-
-    /**
-     * Loop all team buttons, check if the text exceeds the button size, append ellipsis
-     */
-    $('button[id^="btnInput_"]').each(function() {
-      let ele = $(this);
-      if (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
-        ele.addClass("has-overflow");
-      }
-      while (ele.prop('scrollWidth') > ele.prop('offsetWidth')) {
-        // Remove characters from paragraph until the text and the overflow indicator fit
-        ele.html(ele.html().slice(0, -1));
-      }
-    });
+    formatButtonText();
 });

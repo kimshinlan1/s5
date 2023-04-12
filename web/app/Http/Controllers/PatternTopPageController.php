@@ -100,4 +100,17 @@ class PatternTopPageController extends Controller
 
         return view('pattern.pattern_top_page_table', $params)->render();
     }
+
+    /**
+      * Check if the selected company has any team
+      *
+      * @param \App\Http\Requests $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkDeptExist(Request $request)
+    {
+        $isExist = $this->service->checkDeptExist($request);
+        return response()->json(['success' => $isExist]);
+    }
 }
