@@ -20,6 +20,7 @@ class Constant
         "DUPLICATED_PATTERN" => "このパターンはすでに使用されています",
         "INVALID_EXTENSION_ERROR" => "無効な画像拡張子です。有効な画像を選択してください ",
         "EXCEED_SIZE_ERROR" => "画像サイズが %sMB を超えています。有効な画像を選択してください ",
+        "WRONG_DATE_ORDER" => "次回の点検実施日付は前回より大きくなければなりません",
     ];
 
     public const ROLE = [

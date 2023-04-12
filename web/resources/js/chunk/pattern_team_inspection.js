@@ -203,9 +203,9 @@ function saveInspectionData() {
             loadInspectionData(param, MODE_SAVE);
         }
     };
-    let failCallback = function (_jqXHR, _textStatus, _errorThrown) {
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
         $('#errorDialog').modal('show');
-        $('#errorDialog .error-messages').text($('#messageSystemError').val());
+        $('#errorDialog .error-messages').text(jqXHR['responseJSON'].message);
     };
     runAjax(url, method, params, doneCallback, failCallback);
 }
