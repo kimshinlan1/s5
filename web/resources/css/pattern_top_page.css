@@ -7,9 +7,12 @@
     margin-bottom: 20px;
     width: 250px;
     height: 80px;
-    overflow: hidden;
+    line-height: 25px;
     border-radius: 8px;
-    white-space: break-spaces;
+    overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
+    padding: 10px;
 }
 .radarChart {
     width: var(--chart-width-pc);
@@ -32,9 +35,13 @@
 .dept-btn {
     width: 250px;
     height: 80px;
+    line-height: 25px;
     overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
     background-color: white;
     border-radius: 8px;
+    padding: 10px;
 }
 .has-overflow:after {
     content: "。。。";
@@ -81,15 +88,19 @@
     }
     .dept-btn {
         width: var(--chart-width-ipad);
-        height: 70px;
-        overflow: hidden;
+        height: 70px !important;
+        line-height: 25px !important;
         background-color: white;
         border-radius: 8px;
         margin-bottom: 10px;
+        overflow: hidden;
+        white-space: normal;
+        word-wrap: break-word;
     }
     .toppage-button {
         width: var(--chart-width-ipad);
         height: 70px !important;
+        line-height: 25px !important;
     }
     #mainDiv {
         width: 100vw !important;

@@ -160,6 +160,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pattern_top_page', [PatternTopPageController::class, 'index']);
 
         Route::get('/pattern_top_page/load', [PatternTopPageController::class, 'generateDataHtml']);
+        Route::post('/pattern_top_page/check_dept_exist', [PatternTopPageController::class, 'checkDeptExist']);
 
         // Top page
         Route::get('/top_page', [TopPageController::class, 'index']);

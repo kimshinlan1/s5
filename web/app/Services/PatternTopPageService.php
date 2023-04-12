@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Area;
 use App\Models\Pattern;
 use App\Common\Constant;
+use App\Models\Department;
 use App\Models\Location;
 use App\Models\Inspection;
 use Illuminate\Http\Request;
@@ -51,5 +52,18 @@ class PatternTopPageService extends BaseService
         }
 
         return $sql->take(3)->get()->toArray();
+    }
+
+    /**
+      * Check if the selected company has any team
+      *
+      * @param \App\Http\Requests $request
+      *
+      * @return \Illuminate\Http\Response
+    */
+    public function checkDeptExist(Request $request)
+    {
+        $compId = $request->get('compId');
+        return Department::where('company_id', $compId)->exists();
     }
 }
