@@ -123,7 +123,7 @@ $(function () {
         for (let e of listDepartment) {
             html += '<option value="' + e.id + '">' + e.name + '</option>';
         }
-        $('#teamDepartment').html(html);
+        $('#teamDepartmentId').html(html);
         //RELOAD AND UPDATE TEAM TABLE
         $('#teamTable').bootstrapTable('refresh', {url:'/teams/dept_list'});
         $('#teamTable').on('load-success.bs.table.bs.table', function (_e, result, _status, _jqXHR) {
@@ -185,20 +185,21 @@ $(function () {
         let id = $button.data("id");
         let departmentId = $('#departmentListID').val();
         $('#errorLabelNoDepartment').html('');
+        
         if (id) {
             let rowData = $("#teamTable").bootstrapTable(
                 "getRowByUniqueId", id
             );
             $('#teamId').val(id);
             $("#teamName").val(rowData.name);
-            $("#teamDepartment").val(rowData.department_id);
+            $("#teamDepartmentId").val(rowData.department_id);
             $("#teamEditDialog .modal-title.add").hide();
             $("#teamEditDialog .modal-title.edit").show();
         } else {
             clearDialog();
             $("#teamEditDialog .modal-title.edit").hide();
             $("#teamEditDialog .modal-title.add").show();
-            $("#teamDepartment").val(departmentId);
+            $("#teamDepartmentId").val(departmentId);
         }
         setTimeout(function (){
             $('#teamName').focus();
