@@ -36,7 +36,7 @@
     </div>
 
 @if(auth()->user()->isAdmin())
-<div class="" style="margin-bottom: 0.5%;">
+<div class="" style="margin-bottom: 0.5%;" id="topPageDivId">
     <div class="d-flex justify-content-start mb-4">
         <div class="mt-1 fs-5">{{ __('Company_List') }}</div>
         <select style="text-align-last: center;" class="form-select form-select-arrow w-25 mx-3"
@@ -45,6 +45,13 @@
                 <option value="{{ $company['id'] }}">{{ $company['name'] }}</option>
             @endforeach
         </select>
+
+    </div>
+    <div style="width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;" id="checkValidCompanyOption" hidden>
+        {{ __('Message_No_Data') }}
     </div>
 </div>
 @endif

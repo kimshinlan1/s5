@@ -55,7 +55,7 @@ class PatternTopPageService extends BaseService
     }
 
     /**
-      * Check if data is linked or not
+      * Check if the selected company has any team
       *
       * @param \App\Http\Requests $request
       *
@@ -64,8 +64,6 @@ class PatternTopPageService extends BaseService
     public function checkDeptExist(Request $request)
     {
         $compId = $request->get('compId');
-        $isDeptExist = Department::where('company_id', $compId)->exists();
-
-        return $isDeptExist;
+        return Department::where('company_id', $compId)->exists();
     }
 }
