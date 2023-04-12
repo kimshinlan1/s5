@@ -265,7 +265,7 @@ class PatternTeamInspectionService extends BaseService
         $timestamp2 = strtotime($date2);
 
         // Compare timestamps
-        if ($timestamp1 > $timestamp2) {
+        if ($timestamp1 >= $timestamp2) {
             return true;
         } else {
             return false;
