@@ -2,6 +2,10 @@
     --chart-width-pc: 350px !important;
     --chart-width-ipad: 180px !important;
 }
+.main {
+    width: 100%;
+    height: 100%;
+}
 .toppage-button {
     border-color: transparent !important;
     margin-bottom: 20px;
@@ -30,7 +34,7 @@
     text-align: center;
 }
 .container {
-    max-width: 1714px !important;
+    max-width: 1250px !important;
 }
 .dept-btn {
     width: 250px;
@@ -48,20 +52,20 @@
 }
 #scrolling {
     overflow-y: scroll;
-    overflow-x: scroll;
-    height:80vh;
+    overflow-x: hidden;
+    height:75vh;
 }
 #homeButton {
     position: absolute;
     bottom: 0px;
-    right: 20px;
+    right: 5px;
     background-color: transparent;
     padding: 10px;
     cursor: pointer;
     font-size: 40px;
     border-color: transparent;
 }
-/* Portrait mode */
+/* Ipad mode */
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */
     .radarChart {
@@ -78,12 +82,21 @@
         width: var(--chart-width-ipad);
         text-align: center;
     }
+    .sidebar {
+        min-height: calc(100vh - 150px);
+    }
     .container {
-        width: 82% !important;
+        width: calc(100vw - 205px)!important;
         height: 100%;
     }
+    .container-fluid {
+        height: 100%;
+    }
+    .container-fluid > #topPageChart {
+        margin: 0 auto;
+    }
     #topPageChart {
-        width: 80vw;
+        width: 95%;
         height: 100%;
     }
     .dept-btn {
@@ -107,9 +120,10 @@
     }
     table {
         width: 90% !important;
+        margin: 0 auto;
     }
     #homeButton {
-        bottom: 45px !important;
+        bottom: 0px !important;
         right: 0px !important;
     }
     #scrolling {
@@ -117,6 +131,12 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         width: 100%;
+    }
+}
+
+/* Ipad landscape mode */
+@media only screen and (min-device-width: 810px) and (max-device-width: 1200px) and (orientation: landscape) {
+    #scrolling {
         height:70vh;
     }
 }
@@ -133,10 +153,10 @@ tr.radarChartRow > td:not(:last-child) {
 table {
     width: 100%;
 }
-/* body {
+body {
     overflow-y: hidden;
-    overflow-x: hidden
-} */
+    overflow-x: hidden;
+}
 .team-chart-area {
     background-color: #ddebf7;
 }
