@@ -371,7 +371,16 @@ window.loadDeptListByComp = function(id, deptID = null) {
     /** ------------------
      *    Event input enter of field name employee
      --------------------- */
-     $("#employeeName").on('keyup', function (e) {
+    $("#employeeName").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            window.saveData();
+        }
+    });
+
+    /** ------------------
+     *    Event input enter of field email employee
+    --------------------- */
+    $("#employeeEmail").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             window.saveData();
         }
