@@ -370,10 +370,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyFormSkillMap()" id="btnModalCategoryAdd"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
