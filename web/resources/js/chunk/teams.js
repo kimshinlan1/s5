@@ -275,7 +275,7 @@ $(function () {
     /*-------------------------------------------
      * EVENT INPUT ENTER OF FIELD NAME EMPLOYEE
      --------------------------------------------*/
-     $("#employeeName").on('keyup', function (e) {
+    $("#employeeName").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             window.saveDataEmployee();
         }

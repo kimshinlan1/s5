@@ -182,7 +182,6 @@ window.loadDeptListByComp = function(id, deptID = null) {
                 $('#employeeTeamId').html(html);
                 $('#teamSearchTable').change();
             }
-            console.log(html);return;
         },
         error: function(_jqXHR, textStatus, errorThrown) {
         },
@@ -285,8 +284,7 @@ window.loadDeptListByComp = function(id, deptID = null) {
              $('#employeeId').val(id);
              $("#employeeName").val(rowData.name);
              $("#employeeEmail").val(rowData.email);
-            //  $("#employeeDepartmentId").val(rowData.department_id);
-             return;
+             $("#employeeDepartmentId").val(rowData.department_id);
              loadTeamListByDept(rowData.department_id, 'employeeTeamId');
              setTimeout(function (){
                 $("#employeeTeamId").val(rowData.team_id);
