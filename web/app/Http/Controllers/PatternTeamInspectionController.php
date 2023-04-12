@@ -169,6 +169,9 @@ class PatternTeamInspectionController extends Controller
             return $this->responseException();
         }
         $data = $this->service->saveInspection($request);
+        if (is_array($data) && isset($data['invalid'])) {
+            return $this->responseException(Constant::MESSAGES['WRONG_DATE_ORDER'], 500);
+        }
         return response()->json($data);
     }
 

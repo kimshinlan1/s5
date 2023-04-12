@@ -157,7 +157,7 @@ class PatternTeamInspectionService extends BaseService
     public function saveInspection(Request $request)
     {
         // Get the inspection data from the request
-        $dataList = $request->get('data');
+        $dataList = array_reverse($request->get('data'));
 
         // Sample
         // $data = [
@@ -195,7 +195,15 @@ class PatternTeamInspectionService extends BaseService
          */
 
         // Loop through each set of inspection data and save it
+        $date = '';
         foreach ($dataList as $data) {
+            if (!$this->isAfter($data['info']['inspection_date'], $date) && $data['info']['inspection_date']) {
+                return [
+                    'invalid' => true,
+                ];
+            } else {
+                $date = $data['info']['inspection_date'] ? $data['info']['inspection_date'] : $date;
+            }
             // Check if this is an update to an existing inspection
             $id = is_numeric($data['info']['inspection_id']) ? $data['info']['inspection_id'] : null;
 
@@ -242,5 +250,25 @@ class PatternTeamInspectionService extends BaseService
 
         // Return a success status
         return true;
+    }
+
+    /**
+     * Compare date
+     *
+     * @param string date1, date2
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function isAfter($date1, $date2)
+    {
+        $timestamp1 = strtotime($date1);
+        $timestamp2 = strtotime($date2);
+
+        // Compare timestamps
+        if ($timestamp1 > $timestamp2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
