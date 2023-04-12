@@ -185,7 +185,6 @@ $(function () {
         let id = $button.data("id");
         let departmentId = $('#departmentListID').val();
         $('#errorLabelNoDepartment').html('');
-        
         if (id) {
             let rowData = $("#teamTable").bootstrapTable(
                 "getRowByUniqueId", id
