@@ -55,7 +55,7 @@ class PatternTopPageService extends BaseService
     }
 
     /**
-      * Check if the selected company has any team
+      * Check if the selected company has any dept
       *
       * @param \App\Http\Requests $request
       *

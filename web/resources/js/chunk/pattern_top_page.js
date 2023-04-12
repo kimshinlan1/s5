@@ -299,7 +299,9 @@ function renderView(compId) {
     runAjax(url, method, data, doneCallback, failCallback, null, false);
 }
 
-// Check if dept or pattern has a connection
+/**
+ * Check if company option has any dept
+ */
 window.checkDeptExist = function(compId) {
   let res = null;
   let url = '/pattern_top_page/check_dept_exist';
@@ -321,29 +323,17 @@ window.checkDeptExist = function(compId) {
   return res;
 }
 
-window.formatOverflowedButtonText = function(ele) {
-  let borderSize = ele.outerWidth() - ele.innerWidth();
-  if (ele.prop('scrollWidth') > ele.prop('offsetWidth') || ele.prop('scrollHeight') > ele.prop('offsetHeight')) {
-    ele.addClass("has-overflow");
-  }
-  while ( (ele.prop('scrollWidth') > ele.prop('offsetWidth')) || (ele.prop('scrollHeight') > (ele.prop('offsetHeight') + borderSize)) ) {
-    // Remove characters from paragraph until the text and the overflow indicator fit
-    ele.html(ele.html().substring(0, ele.text().length-1));
-  }
-}
-
+/**
+ * Loop all buttons, check if the text exceeds the button size, append ellipsis
+ */
 window.formatButtonText = function() {
-  /**
-   * Loop all dept buttons, check if the text exceeds the button size, append ellipsis
-   */
+  // Dept Buttons
   $('button[id*="deptBtn_"]').each(function() {
     let ele = $(this);
     formatOverflowedButtonText(ele);
   });
 
-  /**
-   * Loop all team buttons, check if the text exceeds the button size, append ellipsis
-   */
+  // Team Buttons
   $('button[id^="btnInput_"]').each(function() {
     let ele = $(this);
     formatOverflowedButtonText(ele);
