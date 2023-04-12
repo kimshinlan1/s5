@@ -586,6 +586,23 @@ window.loadDataPreview = function(pageDest, id=null) {
 }
 
 /**
+ * Add ellipsis to the end of the visible text.
+ *
+ * @param {object} ele - button element
+ * @returns {void}
+ */
+window.formatOverflowedButtonText = function(ele) {
+    let borderSize = ele.outerWidth() - ele.innerWidth();
+    if (ele.prop('scrollWidth') > ele.prop('offsetWidth') || ele.prop('scrollHeight') > ele.prop('offsetHeight')) {
+      ele.addClass("has-overflow");
+    }
+    while ( (ele.prop('scrollWidth') > ele.prop('offsetWidth')) || (ele.prop('scrollHeight') > (ele.prop('offsetHeight') + borderSize)) ) {
+      // Remove characters from paragraph until the text and the overflow indicator fit
+      ele.html(ele.html().substring(0, ele.text().length-1));
+    }
+}
+
+/**
  * Document Ready
  */
 $(function () {

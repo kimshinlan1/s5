@@ -102,7 +102,7 @@ class PatternTopPageController extends Controller
     }
 
     /**
-      * Check if the selected company has any team
+      * Check if the selected company has any dept
       *
       * @param \App\Http\Requests $request
       *
