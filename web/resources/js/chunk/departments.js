@@ -462,7 +462,7 @@ $(function () {
        $("#employeeName").val('');
        $("#employeeEmail").val('');
    });
-   
+
    /*----------------------------------------------
     * Save team data
     -----------------------------------------------*/
@@ -574,6 +574,6 @@ $(function () {
    *    Event click row on table department.
    --------------------- */
    $("#departmentTable").on("click", "tr", function (row, $el, _field) {
-       patternOldSelectedValue = $(this).find('td:nth-child(3) option:selected').val();
+       patternOldSelectedValue = $(this).find('td:nth-child(2) option:selected').val();
    });
 });

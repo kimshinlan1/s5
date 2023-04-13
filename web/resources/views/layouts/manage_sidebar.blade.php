@@ -39,12 +39,8 @@
             </div>
         </a>
         <div id='subMenu2' class="collapse sidebar-submenu">
-            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black style-list middle-click">
-                <span class="menu-collapsed">設定なし 1</span>
-            </a>
-            <a href="javascript:void(0);" class="list-group-item list-group-item-action text-black style-list middle-click">
-                <span class="menu-collapsed">設定なし 2</span>
-            </a>
+            <a class="list-group-item list-group-item-action style-list middle-click" href="javascript:void(0);">設定なし 1</a>
+            <a class="list-group-item list-group-item-action style-list middle-click" href="javascript:void(0);">設定なし 2</a>
         </div>
 
         <!-- Skill Map -->
