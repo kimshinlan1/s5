@@ -178,8 +178,7 @@ function cancelRemoveColumn() {
  * Scroll to team chart area after click button
  */
 function scrollToDiv() {
-    let targetDiv = document.getElementById("selectDeptList");
-    targetDiv.scrollIntoView({behavior:'smooth', block:'start'});
+    $("html, body").scrollTop(0);
 }
 
 /***********
@@ -700,10 +699,10 @@ $(function () {
 let prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
     let currentScrollPos = window.pageYOffset;
-    if (prevScrollpos > currentScrollPos) {
-        document.getElementById("navbar").style.top = "0";
-    } else {
+    if (prevScrollpos < currentScrollPos && currentScrollPos > 47) {
         document.getElementById("navbar").style.top = "-47px";
+    } else {
+        document.getElementById("navbar").style.top = "0";
     }
     prevScrollpos = currentScrollPos;
 }

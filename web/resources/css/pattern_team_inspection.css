@@ -11,7 +11,7 @@
     text-align: center;
     font-size: 1.1rem;
     background-color: #DAEEF3;
-    min-width: 150px;
+    min-width: 285px;
 }
 
 .tr-row-evidence {
@@ -79,6 +79,11 @@
     border-color: transparent;
 }
 
+.main {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 /* Portrait mode */
 @media only screen and (min-device-width: 810px) and (max-device-width: 1200px) {
     /* CSS rules for portrait mode and landscape mode on iPad */
@@ -95,6 +100,13 @@
         padding: 0;
         max-width: calc(88% - 13.5%);
         padding-bottom: 1.5rem;
+    }
+
+    .title-chart {
+        text-align: center;
+        font-size: 1.1rem;
+        background-color: #DAEEF3;
+        min-width: 187px;
     }
 }
 
