@@ -85,7 +85,7 @@
                         </div>
                         <div class="date">
                             <input type="text" class="form-control responsive-text" id="dateCreate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateCreate')" data-toggle="tooltip"
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateCreate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
                             <input type="hidden" id="hidDateCreate" value="{{ isset($info['created_at']) ? $info['created_at'] : '' }}"/>
                         </div>
@@ -96,7 +96,7 @@
                         </div>
                         <div class="date">
                             <input type="text" class="form-control responsive-text" id="dateUpdate" placeholder="yyyy年MM月dd日"
-                                data-date-format="YYYY-MM-DD" onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
+                                data-date-format="YYYY-MM-DD" readonly onclick="openCalendar('dateUpdate')" data-toggle="tooltip"
                                 title="{{ __('Common_Click_To_Select_Date') }}">
                             <input type="hidden" id="hidDateUpdate" value="{{ isset($info['updated_at']) ? $info['updated_at'] : '' }}"/>
                         </div>
