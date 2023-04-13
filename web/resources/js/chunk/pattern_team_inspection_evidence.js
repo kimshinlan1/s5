@@ -113,6 +113,7 @@ function addBlock() {
             $(openEvidenceBtn).attr('data-id', inspectionId);
             $(openEvidenceBtn).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
             let time = $(openEvidenceBtn).attr('data-time');
+            $('#openEvidenceBtn' + time).attr('data-id', inspectionId);
 
             $('input[id^=hidInspectionId_]').each(function(i, l) {
                 if (i == time) {
