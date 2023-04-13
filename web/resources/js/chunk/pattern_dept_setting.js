@@ -49,7 +49,7 @@ window.loadData = function() {
 /**
  * Save Data
  */
-window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) { //todo
+window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
     let url = isFree ? "/pattern_dept_setting/freeUserSave" : "/pattern_dept_setting/save";
     let method = "POST";
     let name = $('#patternName').val();
@@ -603,8 +603,8 @@ $(function () {
         let isContainInspection = checkContainInspection(deptOptionId, patternOptionId);
 
         let patternName = ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) ?
-        "チェックリスト【無償】- " + getNow()
-        : $('#patternName').val();
+        "チェックリスト【無償】- " + getNow().trim()
+        : $('#patternName').val().trim();
         $('#patternName').val(patternName);
         if (!patternName || patternName === '') {
             showToast($('#patternNameErr'), 2000, true);
@@ -613,7 +613,7 @@ $(function () {
             return;
         }
         if (isWarning && !$('#hidPatternId').val() || isContainInspection) {
-            $("#modalSaveData").find('#saveMsgId').prepend($('#changeDeptWarningMsgId').val());
+            $("#modalSaveData").find('#saveMsgId').html($('#changeDeptWarningMsgId').val());
         }
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
