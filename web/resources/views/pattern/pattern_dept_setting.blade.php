@@ -264,10 +264,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Change_Data_Used') }}</span></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="confirmNotAddNewData()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="confirmAddNewData()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="confirmNotAddNewData()">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
@@ -284,10 +284,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Remove_Data_Used') }}</span></div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" onclick="confirmRemoveData()"
+                    class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         onclick="confirmNotRemoveData()">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" onclick="confirmRemoveData()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
@@ -323,10 +323,10 @@
                     <div><span style="font-size: 0.9rem;">{{ __('Pattern_Question_BackPage') }}</span></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="cancelBackPage(false)">
-                        {{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="backPage(true)"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                    <button type="button" class="btn btn-secondary" onclick="cancelBackPage(false)">
+                        {{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
