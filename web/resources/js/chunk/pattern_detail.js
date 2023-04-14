@@ -170,6 +170,7 @@ $(function () {
         if (!patternName || patternName === '') {
             $('#patternName').focus();
             $('#patternName').addClass('is-invalid');
+            $('.invalid-feedback').text($('#requiredPatterNameErrMsg').val());
             return;
         }
         validateAndGetDataTable();
