@@ -44,3 +44,4 @@
 <input type="hidden" id="deletePatternWarningMsg" name="deletePatternWarningMsg" value="{{ __('Pattern_Delete_Warning') }}"/>
 <input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department') }}"/>
 <input type="hidden" id="deleteLastInspectionWarningMsg" name="deleteLastInspectionWarningMsg" value="{{ __('TeamInspection_Delete_Last_Inspection_Warning') }}"/>
+<input type="hidden" id="requiredPatterNameErrMsg" name="requiredPatterNameErrMsg" value="{{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}"/>

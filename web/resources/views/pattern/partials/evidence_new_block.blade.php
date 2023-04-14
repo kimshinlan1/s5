@@ -47,7 +47,7 @@
         <br>
         <div class="row" style="padding-left: 1rem;">
             <div class="col-4">
-                <input type="text" class="form-control" id="dateCreateBefore{{ $evidence['id'] }}" placeholder="日付"
+                <input type="text" class="form-control" id="dateCreateBefore{{ $evidence['id'] }}" placeholder="日付" style="background: #fff"
                 data-date-format="YYYY-MM-DD" readonly onclick="triggerCalendar('dateCreateBefore{{ $evidence['id'] }}')" data-toggle="tooltip"
                 title="{{ __('Common_Click_To_Select_Date') }}">
             </div>
@@ -99,7 +99,7 @@
         <br>
         <div class="row" style="padding-left: 1rem;">
             <div class="col-4">
-                <input type="text" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="日付"
+                <input type="text" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="日付" style="background: #fff"
                 data-date-format="YYYY-MM-DD" readonly onclick="triggerCalendar('dateCreateAfter{{ $evidence['id'] }}')" data-toggle="tooltip"
                 title="{{ __('Common_Click_To_Select_Date') }}">
             </div>

@@ -97,11 +97,12 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
         }
     };
     let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
         let msgJson = JSON.parse(jqXHR.responseText);
         if (jqXHR.status == 422) {
             $('#patternName').addClass("is-invalid");
             $('.invalid-feedback').text(msgJson.message);
+        } else {
+            failAjax(jqXHR, _textStatus, _errorThrown);
         }
     };
     runAjax(url, method, paramDatas, doneCallback, failCallback, null, true);
@@ -607,9 +608,8 @@ $(function () {
         : $('#patternName').val().trim();
         $('#patternName').val(patternName);
         if (!patternName || patternName === '') {
-            showToast($('#patternNameErr'), 2000, true);
-            $('#patternName').focus();
-            $('#patternName').addClass('is-invalid');
+            $('#patternName').addClass("is-invalid");
+            $('.invalid-feedback').text($('#requiredPatterNameErrMsg').val());
             return;
         }
         if (isWarning && !$('#hidPatternId').val() || isContainInspection) {
