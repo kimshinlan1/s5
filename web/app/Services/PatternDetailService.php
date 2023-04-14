@@ -102,7 +102,7 @@ class PatternDetailService extends BaseService
          */
 
         // Check if name is unique
-        $isExisted = Pattern::where('name', $data['info']['pattern_name'])->exists();
+        $isExisted = Pattern::where('name', $data['info']['pattern_name'])->whereNot('id', $data['info']['pattern_id'])->exists();
         if ($isExisted) {
             return [
                 'invalid' => true,
