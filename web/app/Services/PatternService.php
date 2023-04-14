@@ -200,5 +200,4 @@ class PatternService extends BaseService
 
         return ($isDeptContainInspection || $isPatternContainInspection);
     }
-
 }

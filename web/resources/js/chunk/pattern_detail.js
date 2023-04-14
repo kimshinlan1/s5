@@ -46,7 +46,12 @@ window.saveAjax = function(data) {
         // show errors
         let err = jqXHR.errors ? jqXHR.errors : JSON.parse(jqXHR.responseText).errors;
         if (err) {
-            handleSystemError(null, err);
+            if (jqXHR.status == 422) {
+                $('#patternName').addClass("is-invalid");
+                $('.invalid-feedback').text(err);
+            } else {
+                handleSystemError(null, err);
+            }
         }
     };
 
@@ -165,6 +170,7 @@ $(function () {
         if (!patternName || patternName === '') {
             $('#patternName').focus();
             $('#patternName').addClass('is-invalid');
+            $('.invalid-feedback').text($('#requiredPatterNameErrMsg').val());
             return;
         }
         validateAndGetDataTable();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Constant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PatternService;
@@ -137,6 +138,9 @@ class PatternDetailController extends Controller
             return $this->responseException();
         }
         $data = $this->service->save($request);
+        if (is_array($data) && isset($data['invalid'])) {
+            return $this->responseException(Constant::MESSAGES['UNIQUE_PATTERN_NAME'], 422);
+        }
         return response()->json($data);
     }
 }
