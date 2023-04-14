@@ -30,7 +30,9 @@
                             <span class="input-group-text">{{ __('Pattern_Dept_Name') }}</span>
                         </div>
                         <div class="label_header_dept_setting_1">
-                            <input style="height: 100%;" type="text" class="form-control responsive-text" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <input style="" type="text" class="form-control responsive-text" id="patternName" value="{{ isset($info['name']) ? $info['name'] : '' }}">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="input-group" style="margin-bottom: 0.5%;">
