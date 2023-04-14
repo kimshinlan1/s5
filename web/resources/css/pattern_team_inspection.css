@@ -126,11 +126,6 @@
     text-decoration: none;
 }
 
-.navbar-brand:hover {
-    background-color: #ddd;
-    color: black;
-}
-
 .main {
     margin-top: 47px;
 }
