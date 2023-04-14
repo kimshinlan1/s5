@@ -108,7 +108,7 @@ class PatternDeptSettingService extends BaseService
             $this->deleteOldDeptPattern($companyId);
         }
         // Check dept pattern name is unique within its department
-        $isUnique = $this->checkUniqueName($data['department'], $patternName, $patternId);
+        $isUnique = $this->checkUniqueName($data['company'], $patternName, $patternId);
         if (!$isUnique) {
             return [
                 'invalid' => true,
@@ -195,12 +195,11 @@ class PatternDeptSettingService extends BaseService
      * @param $patternName
      * @return boolean
      */
-    public function checkUniqueName($deptId, $deptPatternName, $currentPatternId = null)
+    public function checkUniqueName($compId, $deptPatternName, $currentPatternId = null)
     {
-        if (!$deptId) {
-            return true;
+        if (!$compId) {
+            $compId = auth()->user()->company()->first()->id;
         }
-        $compId = Department::find($deptId)->company_id;
 
         $deptPattern = DeptPattern::where('company_id', $compId)
         ->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
