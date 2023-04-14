@@ -201,13 +201,10 @@ class PatternDeptSettingService extends BaseService
             return true;
         }
         $compId = Department::find($deptId)->company_id;
-        $deptPattern = null;
-        $deptPatternIds = Department::where('company_id', $compId)
-        ->whereNotNull('dept_pattern_id')->pluck('dept_pattern_id')->toArray();
-        if (!empty($deptPatternIds)) {
-            $deptPattern = DeptPattern::whereIn('id', $deptPatternIds)
-            ->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
-        }
+
+        $deptPattern = DeptPattern::where('company_id', $compId)
+        ->where('name', $deptPatternName)->where('id', '!=', $currentPatternId)->exists();
+
         return $deptPattern ? false: true;
     }
 
