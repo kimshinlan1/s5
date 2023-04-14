@@ -144,6 +144,7 @@ function addBlock() {
             $("#patternEvidenceDialog").find('.evidences-body').animate({
                 scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
             }, 1500);
+
             $("#btnEvidenceAddBlock").prop('disabled', false);
         };
 
