@@ -118,21 +118,21 @@
                                 <div class="col note">
                                     <span class="note-1">
                                         <div class="bg-note"></div>
-                                        <span>{{ __('SkillMap_Up_Note_1') }}</span>
+                                        <span class ="format-labet">{{ __('SkillMap_Up_Note_1') }}</span>
                                     </span>
                                     <span class="note-2">
                                         <div class="bg-note"></div>
-                                        <span>{{ __('SkillMap_Up_Note_2') }}</span>
+                                        <span class ="format-labet">{{ __('SkillMap_Up_Note_2') }}</span>
                                     </span>
                                     <span class="note-2">
-                                        <span>{{ __('SkillMap_Up_Note_3') }}</span>
+                                        <span class ="format-labet">{{ __('SkillMap_Up_Note_3') }}</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div style="position:absolute; margin-top:35px;font-size: 19px;">
                             <span >
-                                <span>{{ __('Message_Note_SkillMap') }}</span>
+                                <span class ="format-labet">{{ __('Message_Note_SkillMap') }}</span>
                             </span>
                         </div>
                     </div>
