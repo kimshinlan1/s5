@@ -11,8 +11,8 @@
         </a>
         <div id='subMenu1' class="collapse sidebar-submenu">
             @if(auth()->user()->isAdmin())
-            <a class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='users')active @endif" href="/users">{{ __('User_Management') }}</a>
             <a class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='company')active @endif" href="/company">{{ __('Company_Management') }}</a>
+            <a class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='users')active @endif" href="/users">{{ __('User_Management') }}</a>
             <a id="subDeptMenu" href="javascript:void(0);" onclick="event.stopPropagation(); toggleDeptMenu()" style="pointer-events: auto;" data-toggle="collapse" aria-expanded="false" class="d-flex justify-content-between align-items-center list-group-item list-group-item-action style-list">{{ __('Department_Management') }}
                 <i class="fa fa-caret-right" aria-hidden="true" id="subIcon1"></i>
             </a>

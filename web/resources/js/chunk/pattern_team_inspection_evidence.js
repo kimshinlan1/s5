@@ -144,6 +144,8 @@ function addBlock() {
             $("#patternEvidenceDialog").find('.evidences-body').animate({
                 scrollTop: $("#patternEvidenceDialog").find('.evidences-body').get(0).scrollHeight
             }, 1500);
+
+            $("#btnEvidenceAddBlock").prop('disabled', false);
         };
 
         runAjax(url, method, params, doneCallback);
@@ -559,6 +561,7 @@ function handleConfirmOkBtn(isSaveMode) {
      * Click add block
      ---------------------- */
     $("#btnEvidenceAddBlock").on("click", function (_e) {
+        $("#btnEvidenceAddBlock").prop('disabled', true);
         addBlock();
     });
 
