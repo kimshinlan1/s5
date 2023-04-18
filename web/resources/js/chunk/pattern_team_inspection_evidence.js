@@ -114,6 +114,9 @@ function addBlock() {
             $(openEvidenceBtn).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
             let time = $(openEvidenceBtn).attr('data-time');
             $('#openEvidenceBtn' + time).attr('data-id', inspectionId);
+            $($(".radarChart")[time]).attr('id', "myChart_" + inspectionId);
+            $($("[id*='hidInspectionDate']")[time]).attr('id', inspectionId);
+            $($(".btn-remove-column")[time]).attr('onclick', "removeColumn('" + inspectionId + "')");
 
             $('input[id^=hidInspectionId_]').each(function(i, l) {
                 if (i == time) {
