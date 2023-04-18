@@ -226,5 +226,4 @@ class DepartmentController extends Controller
         $data = $this->service->checkDataDeptPattern($request);
         return response()->json($data);
     }
-
 }

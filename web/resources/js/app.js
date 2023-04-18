@@ -325,6 +325,71 @@ function reponseSive(className) {
     $('#dateTo').tooltip({ placement: 'right' });
 }
 
+/** ------------------
+ *   Unbind dept pattern
+ * @param patternId
+ * @param deptId
+ *
+--------------------- */
+window.unbindDeptPattern = function(patternId, deptId) {
+    let url = 'departments/unbind_deptpattern';
+
+    let method = "POST";
+
+    let data = {
+        id: deptId,
+        pattern_id: patternId
+    };
+
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
+        showToast($("#successUpdateDialog"), 2000, true);
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+ }
+
+ /** ------------------
+  *   Bind dept pattern
+  * @param patternId
+  * @param deptId
+  *
+ --------------------- */
+ window.bindDeptPattern = function(patternId, deptId, oldId) {
+    let url = 'departments/bind_deptpattern';
+
+    let method = "POST";
+
+    let data = {
+        id: deptId,
+        oldDeptId: oldId,
+        pattern_id: patternId,
+        company_id: $('#companyListID').find(':selected').val(),
+    };
+
+    let doneCallback = function (_data, _textStatus, _jqXHR) {
+        showToast($("#successUpdateDialog"), 1000, true);
+        setTimeout(() => {
+            location.reload();
+        }, 500);
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+        $("#checklist5sID" + deptId).val(oldId);
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+ }
+
 $(function () {
     hideMenuInit();
     $("#side-bar-menu").click(function () {
