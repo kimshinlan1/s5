@@ -209,17 +209,17 @@
                                         ? 'selected' : '';
                         ?>
                         <option value="{{ $value }}" {{ $selected }} >
-                            <? if ($value == 1): ?>
+                            <?php if ($value == 1): ?>
                                 {{ $value }}: {{ $row['level_1'] ? $row['level_1'] : __('TeamInspection_None_Config') }}
-                            <? elseif ($value == 2): ?>
+                            <?php elseif ($value == 2): ?>
                                 {{ $value }}: {{ $row['level_2'] ? $row['level_2'] : __('TeamInspection_None_Config') }}
-                            <? elseif ($value == 3): ?>
+                            <?php elseif ($value == 3): ?>
                                 {{ $value }}: {{ $row['level_3'] ? $row['level_3'] : __('TeamInspection_None_Config') }}
-                            <? elseif ($value == 4): ?>
+                            <?php elseif ($value == 4): ?>
                                 {{ $value }}: {{ $row['level_4'] ? $row['level_4'] : __('TeamInspection_None_Config') }}
-                            <? else: ?>
+                            <?php else: ?>
                                 {{ $value }}: {{ $row['level_5'] ? $row['level_5'] : __('TeamInspection_None_Config') }}
-                            <? endif; ?>
+                            <?php endif; ?>
                         </option>
                         @endforeach
                     </select>
