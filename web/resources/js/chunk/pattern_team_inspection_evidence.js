@@ -151,7 +151,11 @@ function addBlock() {
             $("#btnEvidenceAddBlock").prop('disabled', false);
         };
 
-        runAjax(url, method, params, doneCallback);
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+
+        runAjax(url, method, params, doneCallback, failCallback);
     }
 }
 
