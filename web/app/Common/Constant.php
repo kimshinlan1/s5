@@ -89,6 +89,6 @@ class Constant
      */
     public static function isProduction($url)
     {
-        return strpos($url, "solutions.com") || strpos($url, "www.kaizen-dx.jp");
+        return strpos($url, "solutions.com") || strpos($url, "kaizen-dx.jp");
     }
 }
