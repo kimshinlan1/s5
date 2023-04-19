@@ -132,7 +132,7 @@
         <br>
         <div class="row" style="padding-left: 1rem;">
             <div class="col-4">
-                <input type="text" style="" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="日付" style="background: #fff"
+                <input type="text" class="form-control" id="dateCreateAfter{{ $evidence['id'] }}" placeholder="日付" style="background: #fff"
                 data-date-format="YYYY-MM-DD" readonly onclick="triggerCalendar('dateCreateAfter{{ $evidence['id'] }}')" data-toggle="tooltip"
                 title="{{ __('Common_Click_To_Select_Date') }}" value="{{  isset($evidence['date_after']) ? date('Y年m月d日', strtotime($evidence['date_after'])) : ''}}">
             </div>
