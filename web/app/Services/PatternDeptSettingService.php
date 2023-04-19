@@ -422,6 +422,11 @@ class PatternDeptSettingService extends BaseService
             $locationIds = DB::table('locations')
             ->where('area_id', intval($deleledAreaId))
             ->pluck('id')->toArray();
+            if (count(array_diff($initAreaIds, $deleledAreaIds)) == 0) {
+                $inspectionIdArr = InspectionDetail::whereIn('location_id', $locationIds)->distinct()
+                ->pluck('inspection_id')->toArray();
+                Inspection::whereIn('id', $inspectionIdArr)->delete();
+            }
             // Remove redundant data in inspection detail
             InspectionDetail::whereIn('location_id', $locationIds)->delete();
             // Remove data in locations

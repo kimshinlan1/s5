@@ -114,6 +114,9 @@ function addBlock() {
             $(openEvidenceBtn).attr('data-countevidenceid', 'countEvidence_' + inspectionId);
             let time = $(openEvidenceBtn).attr('data-time');
             $('#openEvidenceBtn' + time).attr('data-id', inspectionId);
+            $($(".radarChart")[time]).attr('id', "myChart_" + inspectionId);
+            $($("[id*='hidInspectionDate']")[time]).attr('id', inspectionId);
+            $($(".btn-remove-column")[time]).attr('onclick', "removeColumn('" + inspectionId + "')");
 
             $('input[id^=hidInspectionId_]').each(function(i, l) {
                 if (i == time) {
@@ -148,7 +151,11 @@ function addBlock() {
             $("#btnEvidenceAddBlock").prop('disabled', false);
         };
 
-        runAjax(url, method, params, doneCallback);
+        let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+            failAjax(jqXHR, _textStatus, _errorThrown);
+        };
+
+        runAjax(url, method, params, doneCallback, failCallback);
     }
 }
 
@@ -215,7 +222,9 @@ function loadEvidence(inspection_id) {
             $('.evidences-body').append('<div class="h4" id="noDataTextId" style="text-align: center;">' + noDataMsg + '</div>');
         }
         if (isAddNewEvidenceOpen) {
-            addBlock();
+            if ($('.evidences-body').find('.count-block').length == 0) {
+                addBlock();
+            }
             isAddNewEvidenceOpen = false;
         }
     };

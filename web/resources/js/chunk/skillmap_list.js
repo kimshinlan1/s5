@@ -12,7 +12,6 @@
  *    get List
  --------------------- */
 window.getSkillmapsTableList = function (params) {
-
     let url = "/skillmaps_list/list";
     params.data.page =
         params.data.offset > 0
