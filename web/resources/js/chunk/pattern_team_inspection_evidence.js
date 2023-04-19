@@ -218,7 +218,9 @@ function loadEvidence(inspection_id) {
             $('.evidences-body').append('<div class="h4" id="noDataTextId" style="text-align: center;">' + noDataMsg + '</div>');
         }
         if (isAddNewEvidenceOpen) {
-            addBlock();
+            if ($('.evidences-body').find('.count-block').length == 0) {
+                addBlock();
+            }
             isAddNewEvidenceOpen = false;
         }
     };
