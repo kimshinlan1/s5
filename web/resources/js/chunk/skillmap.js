@@ -1591,8 +1591,10 @@ $(function () {
         onChangeDataDepartment();
     });
 
-
     $('#exampleModalCenter').on("hide.bs.modal", function () {
         $("#exampleModalCenter").find('#btnModalCategoryAdd').attr('data-dismiss', '');
     });
+
+    // Add free user label
+    addFreeModeSkillMapText();
 });

@@ -35,9 +35,6 @@
             <i class="fa fa-line-chart mx-1" aria-hidden="true"></i>
             {{ __('TopPage_Skill_Map') }}
         </a>
-        <div class="main-menu-1">
-            @include('layouts.mode_badge')
-        </div>
     </div>
     <div class="col-sm icon-menu-1">
         <a onclick="setSession('mainMenu4')" id="topPageLinkId" class="main-menu list-group-item list-group-item-action style-list @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">
@@ -45,7 +42,6 @@
             {{ __('TopPage_5S_System') }}
         </a>
         <div class="main-menu-1">
-            @include('layouts.mode_badge_5s')
         </div>
     </div>
   </div>

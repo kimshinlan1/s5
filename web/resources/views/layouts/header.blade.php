@@ -10,8 +10,15 @@
         <a class="navbar-brand navbar-brand d-sm-flex align-items-center align-self-stretch" href="{{ url('/') }}">
             <span class="site-logo h-100"></span>
         </a>
-        <a class="navbar-brand" href="{{ url('/') }}" style="padding-left: 0.4rem;">
+        <a class="navbar-brand" href="{{ url('/') }}" style="padding-left: 0.2rem;">
             {{ __('Techmap_System') }}
+        </a>
+        <a id="freeLabelId" class="navbar-brand" href="{{ url('/') }}" style="margin-left: 1rem;background: #f4b183; font-size: 0.7rem; padding: 0.2rem; text-align: left;" hidden>
+            <div>
+                <span id="freeLabel1" style="color: red;"></span>
+                <span id="freeLabel2" style="color: black;"></span>
+            </div>
+            <span id="freeLabel3" style="color: black;">{{ __('Common_Free_Badge_1') }}</span>
         </a>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
