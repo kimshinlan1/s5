@@ -172,4 +172,6 @@ $(function () {
         window.location = '/pattern_dept_setting';
     });
 
+    // Add free user label
+    addFreeModeText();
 });

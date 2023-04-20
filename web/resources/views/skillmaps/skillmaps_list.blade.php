@@ -12,16 +12,6 @@
 <div class="d-flex justify-content-between">
     <div class="h-title">
         <span style="margin-right: 0.5rem"> {{ __('SkillMap_List') }} </span>
-        @if(auth()->user()->isModeFree())
-        <button class="btn btn-warning" style="opacity: 1; margin-top: -0.4rem;" disabled>
-            {{ __('Common_Free_Badge') }}
-        </button>
-        @endif
-        @if(!auth()->user()->isModeFree() && !auth()->user()->isAdmin())
-            <button class="btn btn-success" style="opacity: 1; margin-top: -0.4rem;" disabled>
-                {{ __('Common_Paid_Badge') }}
-            </button>
-        @endif
     </div>
     <!-- My Toast -->
     <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive"

@@ -86,9 +86,9 @@
             @endphp
             <td>
                 @if ($countImgs < 1)
-                <input style="width: 12rem;" id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-secondary btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""  data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" disabled/>
+                <input style="width: 12rem;" data-countEvidenceId="countEvidence_{{ $inspectionId }}" id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-secondary btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick=""  data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog" disabled/>
                 @else
-                <input style="width: 12rem;" id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-evidence btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick="" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog"/>
+                <input style="width: 12rem;" data-countEvidenceId="countEvidence_{{ $inspectionId }}" id="openEvidenceBtn{{ $key }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" type="button" class="btn-evidence btn-evidence1 rounded-3 openEvidenceBtn" value="{{ __('TeamInspection_Redirect_Inspection_Button') }}" onclick="" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog"/>
                 @endif
                 <br>
                 <a style="color: black; text-decoration: none;" class="openEvidenceBtn" id="countEvidence_{{ $inspectionId }}" data-time="{{ $key }}" data-id="{{ is_int($inspectionId) ? $inspectionId : null }}" data-countEvidenceId="countEvidence_{{ $inspectionId }}" data-count="{{ $countImgs }}" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#patternEvidenceDialog">{{ $countImgs }}{{ __('TeamInspection_Registered') }}</a>
