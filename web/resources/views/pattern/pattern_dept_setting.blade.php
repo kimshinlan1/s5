@@ -18,6 +18,7 @@
 @section('content')
     <div class="d-flex">
         <div class="h-title">{{ __('Pattern_Dept_Setting') }}</div>
+        <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
     </div>
     <div class="row">
         <div class="col-12">
