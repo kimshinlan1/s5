@@ -38,6 +38,18 @@
     <div class="d-flex justify-content-between">
         <div class="h-title">
             <span style="margin-right: 0.5rem">{{ __('SkillMap') }}</span>
+            @if(auth()->user()->isModeFree())
+                <button class="btn btn-warning free-badge"
+                style="opacity: 1; min-width: unset; border-radius: 0.25rem!important;" disabled>
+                    {{ __('Common_Free_Badge_Title') }}
+                </button>
+            @endif
+            @if(!auth()->user()->isModeFree())
+                <button class="btn btn-success paid-badge"
+                style="opacity: 1; min-width: unset; border-radius: 0.25rem!important;" disabled>
+                    {{ __('Common_Paid_Badge_Title') }}
+                </button>
+            @endif
         </div>
     </div>
     <div class="row" onclick="hideSkillUpLevel()">

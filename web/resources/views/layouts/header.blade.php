@@ -13,7 +13,7 @@
         <a class="navbar-brand" href="{{ url('/') }}" style="padding-left: 0.2rem;">
             {{ __('Techmap_System') }}
         </a>
-        <a id="freeLabelId" class="navbar-brand" href="{{ url('/') }}" style="margin-left: 1rem;background: #f4b183; font-size: 0.7rem; padding: 0.2rem; text-align: left;" hidden>
+        <a id="freeLabelId" class="navbar-brand freeLabelId" href="{{ url('/') }}" style="display: flex; margin-left: 1rem;background: #f4b183; font-size: 0.7rem; padding: 0.2rem; text-align: left;" hidden>
             <div>
                 <span id="freeLabel1" style="color: red;"></span>
                 <span id="freeLabel2" style="color: black;"></span>
