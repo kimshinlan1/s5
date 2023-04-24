@@ -95,8 +95,10 @@ window.selectPattern = function(deptId, patternId) {
         if (isSelectBindedDept) {
             msg = $('#changeBindedDeptWarningMsgId').val();
         }
-        if (isContainInspection && !isSelectBindedDept) {
+        else if (isContainInspection && !isSelectBindedDept) {
             msg = $('#changeDeptWarningMsgId').val();
+        } else {
+            msg = $('#savePatternMsgId').val();
         }
         $('#confirmDialog3').find('.confirmMessage3').html(msg);
     }
