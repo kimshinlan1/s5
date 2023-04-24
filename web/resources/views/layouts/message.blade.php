@@ -38,6 +38,7 @@
 <input type="hidden" id="deleteMsgTooltipId" name="deleteMsgTooltipId" value="{{ __('Evidence_Delete_Image_Tooltip') }}"/>
 <input type="hidden" id="messageChoosePatternForThisDepartment" name="messageChoosePatternForThisDepartment" value="{{ __('TeamInspection_Please_Choose_Pattern_For_This_Department') }}"/>
 <input type="hidden" id="changeDeptWarningMsgId" name="changeDeptWarningMsgId" value="{{ __('Pattern_Change_Department_Warning') }}"/>
+<input type="hidden" id="changeBindedDeptWarningMsgId" name="changeBindedDeptWarningMsgId" value="{{ __('Pattern_Change_Binded_Department_Warning') }}"/>
 <input type="hidden" id="noSelectedBlock" name="noSelectedBlock" value="{{ __('Evidence_No_Selected_Block') }}"/>
 <input type="hidden" id="unsavedDataWarning" name="unsavedDataWarning" value="{{ __('Common_Unsaved_Data_Warning') }}"/>
 <input type="hidden" id="savePatternMsgId" name="savePatternMsgId" value="{{ __('Pattern_Label_Modal_Save_Pattern') }}"/>

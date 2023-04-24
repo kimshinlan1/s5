@@ -602,6 +602,29 @@ window.formatOverflowedButtonText = function(ele) {
     }
 }
 
+// Check if dept or pattern has a connection
+window.checkBindDeptPattern = function(deptId, patternId) {
+    let res = null;
+    let url = '/pattern_dept_setting/check_binding';
+
+    let method = "POST";
+
+    let data = {
+            deptId: deptId,
+            patternId: patternId ? patternId : -1
+    };
+
+    let doneCallback = function (data, _textStatus, _jqXHR) {
+            res = data['success'];
+    };
+    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
+        failAjax(jqXHR, _textStatus, _errorThrown);
+
+    };
+    runAjax(url, method, data, doneCallback, failCallback, null, false);
+    return res;
+}
+
 /**
  * Document Ready
  */

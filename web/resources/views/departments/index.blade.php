@@ -46,7 +46,7 @@
             <th data-field="company_id" data-visible="false">Company ID</th>
             <th data-align="center" data-visible="false" data-field="no" data-cell-style="idStyle">{{ __('Department_ID') }}</th>
             <th data-width="120" data-field="name" class="word-wrap" data-cell-style="departmentStyle">{{ __('Deparment_Name') }}</th>
-            <th data-width="140" data-formatter="department5SChecklistActions" data-cell-style="checkListStyle">{{ __('Deparment_5S_Checklist') }}</th>
+            {{-- <th data-width="140" data-formatter="department5SChecklistActions" data-cell-style="checkListStyle">{{ __('Deparment_5S_Checklist') }}</th> --}}
             <th data-width="80" class="text-align-webkit-center" data-formatter="departmentTableActions" data-cell-style="buttonStyle"></th>
         </tr>
     </thead>
