@@ -67,6 +67,7 @@
             <a class="list-group-item list-group-item-action style-list middle-click @if(str_contains(request()->path(),'pattern_team_inspection'))active @endif" href="/pattern_team_inspection">{{ __('Pattern_Team_Inspection') }}</a>
             <a class="list-group-item list-group-item-action style-list middle-click @if(str_contains(request()->path(), 'pattern_dept_setting'))active @endif" href="/pattern_dept_setting">{{ __('Pattern_Dept_Setting') }}</a>
             <a class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='pattern_list_customer')active @endif" href="/pattern_list_customer">{{ __('Pattern_List_Customer_Menu') }}</a>
+            <a class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='pattern_departments')active @endif" href="/pattern_departments">{{ __('Pattern_Department_Management') }}</a>
             @if(auth()->user()->isAdmin())
             <a class="list-group-item list-group-item-action style-list middle-click @if(request()->path()==='pattern_list')active @endif" href="/pattern_list">{{ __('Pattern_List') }}</a>
             <a class="list-group-item list-group-item-action style-list middle-click @if(str_contains(request()->path(), 'pattern_detail'))active @endif" href="/pattern_detail">{{ __('Pattern_Detail_5S_Checklist_Pattern_Input') }}</a>

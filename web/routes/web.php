@@ -12,6 +12,7 @@ use App\Http\Controllers\PatternController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SkillMapController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PatternDepartmentController;
 use App\Http\Controllers\PatternListController;
 use App\Http\Controllers\PatternDetailController;
 use App\Http\Controllers\PatternTopPageController;
@@ -91,9 +92,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/departments/getDepartment/{id}', [DepartmentController::class, 'getDept']);
         Route::get('departments/emp_list', [DepartmentController::class, 'employeeList']);
         Route::get('/departments/comp_list', [DepartmentController::class, 'getDepartmentListByID']);
+        Route::get('/departments/getDeptPattern', [DepartmentController::class, 'getDeptPattern']);
         Route::post('/departments/unbind_deptpattern', [DepartmentController::class, 'unbindDeptPattern']);
         Route::post('/departments/bind_deptpattern', [DepartmentController::class, 'bindDeptPattern']);
-        Route::get('/departments/getDeptPattern', [DepartmentController::class, 'getDeptPattern']);
+
+        //Pattern departments
+        Route::resource('pattern_departments', PatternDepartmentController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('pattern_departments/list', [PatternDepartmentController::class, 'list']);
+        Route::get('/pattern_departments/comp_list', [PatternDepartmentController::class, 'getDepartmentListByID']);
 
         // print pdf
         Route::post('/skillmap_pdf/html/', [PdfController::class, 'getHtmlPDF'])->name('skillmap_html');

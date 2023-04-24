@@ -31,84 +31,6 @@ window.patternListTableActions = function (_value, row, _index) {
 };
 
 /** ------------------
- *    5S Checklist Actions
- --------------------- */
- window.departmentChecklistActions = function (_value, row, _index) {
-    let rowDeptId =  row['deptId'];
-    // Unify each by concatenating 'departmentCheckList' with id of the row (pattern id)
-    let options = '<select class=" form-select px-4" id="departmentCheckList' + row.id + '"  onchange="selectPattern(' + row.deptId + ', ' + row.id +')"  style="width: 80%; padding: 0; background-position: right 0.2rem center; display: inline-block;">';
-    options += '<option> </option>';
-    let url = 'departments/list/' + row['company_id'];
-
-    let method = "GET";
-
-    let data = {
-
-    };
-
-    let doneCallback = function (data, _textStatus, _jqXHR) {
-        data.forEach(ele => {
-            if (ele.id == rowDeptId) {
-                options += "<option value=" + ele.id +" selected>" + ele.name + "</option>";
-            } else {
-                options += "<option value=" + ele.id +">" + ele.name + "</option>";
-            }
-        });
-        options += " </select>";
-    };
-    let failCallback = function (jqXHR, _textStatus, _errorThrown) {
-        failAjax(jqXHR, _textStatus, _errorThrown);
-    };
-    runAjax(url, method, data, doneCallback, failCallback, null, false);
-
-    options += " </select>";
-
-    return options;
- };
-
- /** ------------------
- *    Handle onchange pattern selection
- *    @param {int} deptId - dept id of row
- *    @param {int} patternId - pattern id of row
- *
---------------------- */
-window.selectPattern = function(deptId, patternId) {
-    let selectDeptId = $('#departmentCheckList' + patternId).find(':selected').val();
-    let isSelectBindedDept = false;
-
-    // Check if the current dept and pattern has inspection. If true => warning
-    let isContainInspection = checkContainInspection(deptId, patternId);
-
-    $("[id*='departmentCheckList']").each(function() {
-        // Loop all checkboxes except of the current one, check if the selected dept is the binded dept of other row => warning
-        if ( $(this).find(':selected').val() == selectDeptId && $(this).attr('id') != 'departmentCheckList' + patternId) {
-            isSelectBindedDept = true;
-        }
-    });
-    $('#confirmDialog3').modal('show');
-    if (selectDeptId == "") {
-        // Select null option => Unbind confirmation
-        $('#confirmDialog3').find('.confirmMessage3').html($('#unBindDeptPatternMsg').val());
-    } else {
-        // Select not null option => Change confirmation
-        let msg = '';
-        if (isSelectBindedDept) {
-            msg = $('#changeBindedDeptWarningMsgId').val();
-        }
-        else if (isContainInspection && !isSelectBindedDept) {
-            msg = $('#changeDeptWarningMsgId').val();
-        } else {
-            msg = $('#savePatternMsgId').val();
-        }
-        $('#confirmDialog3').find('.confirmMessage3').html(msg);
-    }
-    // Assign values to confirmation dialog
-    $('#confirmDialog3').find('#cancelBtn').attr('data-beforeChangdDeptId', oldSelectedDept);
-    $('#confirmDialog3').find('#okBtn').attr('data-deptid', deptId);
-    $('#confirmDialog3').find('#okBtn').attr('data-patternid', patternId);
-}
-
-/** ------------------
  *    Add styles/classes to button cells
  --------------------- */
 window.cellStyle = function () {
@@ -296,9 +218,6 @@ $(function () {
     /** ------------------
      *    Event click row on table department.
      --------------------- */
-    $("#patternListTable").on("click", "tr", function (row, $el, _field) {
-        oldSelectedDept = $(this).find('td:nth-child(4) option:selected').val();
-    });
     // Add free user label
     addFreeModeText();
 });
