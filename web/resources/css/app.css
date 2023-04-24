@@ -1,6 +1,12 @@
 @import 'signin.css';
 @import 'users.css';
 
+/* COMMON VARIBLES */
+:root {
+    --free-badge-color: #0B97C1 !important;
+    --paid-badge-color: #EE7E00 !important;
+}
+
 /* * {
     font-family: 'Roboto, Helvetica, Arial, sans-serif';
 } */
@@ -210,3 +216,30 @@ a.button-upload:hover {
 .text-align-webkit-center {
     text-align: -webkit-center;
 }
+
+/* Ipad portrait mode */
+@media only screen and (min-device-width: 810px) and (max-device-width: 1200px) and (orientation: portrait) {
+    .freeLabelId {
+        display: block !important;
+    }
+}
+
+/* .paid-badge {
+    background-color: var(--paid-badge-color);
+    border-color: var(--paid-badge-color);
+}
+
+.free-badge {
+    background-color: var(--free-badge-color);
+    border-color: var(--free-badge-color);
+}
+
+.paid-badge:disabled {
+    background-color: var(--paid-badge-color);
+    border-color: var(--paid-badge-color);
+}
+
+.free-badge:disabled {
+    background-color: var(--free-badge-color);
+    border-color: var(--free-badge-color);
+} */

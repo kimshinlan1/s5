@@ -122,15 +122,7 @@
                     </div>
                 </div>
             </div>
-            @if (!Constant::isProduction(Request::root()))
-            <br>
-            Total Rows:<strong id="countRows"></strong>
-            <br>
-            <button onclick="setValueTest()">Set value test</button>
             <br><br>
-            @else
-            <br><br><br>
-            @endif
             <div class="action-btn" style="justify-content: flex-start">
                 <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">

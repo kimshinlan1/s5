@@ -665,4 +665,7 @@ $(function () {
         let compID = $("#companyOptionId").find(":selected").val();
         loadDeptList(compID);
     });
+
+    // Add free user label
+    addFreeModeText();
 });

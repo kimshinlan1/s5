@@ -104,4 +104,6 @@ $(function () {
         window.location = '/pattern_detail';
     });
 
+    // Add free user label
+    addFreeModeText();
 });

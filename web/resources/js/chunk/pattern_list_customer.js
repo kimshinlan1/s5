@@ -297,4 +297,6 @@ $(function () {
     $("#patternListTable").on("click", "tr", function (row, $el, _field) {
         oldSelectedDept = $(this).find('td:nth-child(4) option:selected').val();
     });
+    // Add free user label
+    addFreeModeText();
 });

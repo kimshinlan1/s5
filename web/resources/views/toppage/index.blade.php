@@ -36,7 +36,16 @@
             {{ __('TopPage_Skill_Map') }}
         </a>
         <div class="main-menu-1">
-            @include('layouts.mode_badge')
+            @if(auth()->user()->isModeFree())
+                <button class="btn btn-warning" style="opacity: 1" disabled>
+                    {{ __('Common_Free_Badge_Title') }}
+                </button>
+            @endif
+            @if(!auth()->user()->isModeFree() && !auth()->user()->isAdmin())
+                <button class="btn btn-success" style="opacity: 1" disabled>
+                    {{ __('Common_Paid_Badge_Title') }}
+                </button>
+            @endif
         </div>
     </div>
     <div class="col-sm icon-menu-1">
@@ -45,7 +54,16 @@
             {{ __('TopPage_5S_System') }}
         </a>
         <div class="main-menu-1">
-            @include('layouts.mode_badge_5s')
+            @if(auth()->user()->is5SModeFree())
+            <button class="btn btn-warning" style="opacity: 1" disabled>
+                {{ __('Common_Free_Badge_Title') }}
+            </button>
+            @endif
+            @if(!auth()->user()->is5SModeFree() && !auth()->user()->isAdmin())
+                <button class="btn btn-success" style="opacity: 1" disabled>
+                    {{ __('Common_Paid_Badge_Title') }}
+                </button>
+            @endif
         </div>
     </div>
   </div>
