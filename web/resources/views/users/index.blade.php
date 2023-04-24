@@ -15,7 +15,6 @@
 @section('content')
 <div class="d-flex justify-content-between">
     <div class="h-title">{{ __('User_Management') }}</div>
-    {{-- <div style="margin-top: -0.2rem;">@include('layouts.mode_badge')</div> --}}
     <!-- My Toast -->
     @include('layouts.success')
 </div>

@@ -130,7 +130,7 @@ class PatternDeptSettingController extends Controller
         // Check not exist data
         $requestData = $request->get('data');
         if (!isset($requestData['info']) || !isset($requestData['data'])) {
-            return $this->responseException();
+            return $this->responseException(Constant::MESSAGES['AT_LEAST_ONE_AREA'], 500);
         }
         $data = $this->service->save($request);
         if ($data['invalid']) {

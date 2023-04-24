@@ -46,3 +46,7 @@
 <input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department') }}"/>
 <input type="hidden" id="deleteLastInspectionWarningMsg" name="deleteLastInspectionWarningMsg" value="{{ __('TeamInspection_Delete_Last_Inspection_Warning') }}"/>
 <input type="hidden" id="requiredPatterNameErrMsg" name="requiredPatterNameErrMsg" value="{{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}"/>
+<input type="hidden" id="common5sFreeBadgeId" name="common5sFreeBadgeId" value="{{ __('Common_5S_Free_Badge') }}"/>
+<input type="hidden" id="commonSkillMapFreeBadgeId" name="commonSkillMapFreeBadgeId" value="{{ __('Common_SkillMap_Free_Badge') }}"/>
+<input type="hidden" id="commonFreeBadgeId" name="commonFreeBadgeId" value="{{ __('Common_Free_Badge') }}"/>
+<input type="hidden" id="commonFreeBadge1Id" name="commonFreeBadge1Id" value="{{ __('Common_Free_Badge_1') }}"/>
