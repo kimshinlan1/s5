@@ -854,7 +854,6 @@ window.handleToggle = function(status, order) {
  *    Add free text for 5s and skillmaps pages
  --------------------- */
 window.addFreeModeText = function() {
-    debugger
     let urlString = window.location.href.replace(/(https?:\/\/)?localhost/gi, "");
     // Check if url is 5s pages
     if (urlString.indexOf('pattern') == 1) {
@@ -891,6 +890,7 @@ window.addFreeModeText = function() {
 jQuery
 ============================== */
 $(function(){
+    // Add header text for free user in 5s pages and skillmaps pages
     addFreeModeText();
     // Check and display show/hide status of each main menu when refresh page
     $('.menu').each((i, ele) => {
