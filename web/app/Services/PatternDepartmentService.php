@@ -17,38 +17,6 @@ class PatternDepartmentService extends BaseService
     }
 
     /**
-     * Get department list by company id
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return object
-     */
-    public function getDepartmentListByID(Request $request)
-    {
-        $limit = $request->input('limit');
-        $companyId = $request->input('company_id');
-        if ($companyId == null) {
-            return $this->model::with('company:id,name')->orderBy('company_id')->paginate($limit);
-        } else {
-            return $this->model::where('company_id', $companyId)->with('company:id,name')->paginate($limit);
-        }
-    }
-
-    /**
-     * Get department list by company id
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return object
-     */
-    public function getDepartmentByID(Request $request)
-    {
-        $companyId = auth()->user()->company()->first()->id;
-        $limit = $request->input('limit');
-        return Department::where('company_id', $companyId)->orderBy('id')->paginate($limit);
-    }
-
-    /**
      * Returns department list.
      *
      * @param  id

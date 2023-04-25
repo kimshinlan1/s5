@@ -214,10 +214,4 @@ $(function () {
     $('#patternListAdd').on('click', function() {
         window.location = '/pattern_dept_setting';
     });
-
-    /** ------------------
-     *    Event click row on table department.
-     --------------------- */
-    // Add free user label
-    addFreeModeText();
 });

@@ -22,19 +22,14 @@
         </div>
     </div>
 </div>
-@if (Auth::user()->isAdmin())
-    <div class="d-flex justify-content-start mb-4">
-        <div class="mt-1 fs-5">{{ __('Company_List') }}</div>
-        <select class="form-select form-select-arrow w-25 mx-3" aria-label="Company select" id="companyListID" style="text-align-last: center;">
-        </select>
-    </div>
-@else
-    <div class="d-flex justify-content-start mb-4">
-        <div class="mt-1 fs-5" hidden>{{ __('Company_List') }}</div>
-        <select class="form-select form-select-arrow w-25 mx-2" aria-label="Company select" id="companyListID" style="text-align-last: center;" hidden>
-        </select>
-    </div>
-@endif
+
+<div class="d-flex justify-content-start mb-4">
+    <div class="mt-1 fs-5" hidden>{{ __('Company_List') }}</div>
+    <select class="form-select form-select-arrow w-25 mx-2" aria-label="Company select" id="companyListID" style="text-align-last: center;"
+        @if (! Auth::user()->isAdmin()) hidden @endif>
+    </select>
+</div>
+
 @include('layouts.confirm')
 <table
     id="patternDepartmentTable"

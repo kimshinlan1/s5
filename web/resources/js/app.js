@@ -851,45 +851,47 @@ window.handleToggle = function(status, order) {
 }
 
 /** ------------------
- *    Add free text for skill map pages
- --------------------- */
-window.addFreeModeSkillMapText = function() {
-    // Add free user label
-    if($('#techmapMode').val() == CONFIG.get('TECHMAP_MODE')['FREE'] && $('#userMode').val() != CONFIG.get('5S_MODE')['FREE']) {
-        $("#freeLabelId").attr('hidden', false);
-        $('#freeLabel1').html($('#commonSkillMapFreeBadgeId').val());
-        $('#freeLabel2').html($('#commonFreeBadgeId').val());
-        $('#freeLabel3').html($('#commonFreeBadge1Id').val());
-    }
-    if($('#techmapMode').val() == CONFIG.get('TECHMAP_MODE')['FREE'] && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-        $("#freeLabelId").attr('hidden', false);
-        $('#freeLabel2').html($('#commonFreeBadgeId').val());
-        $('#freeLabel3').html($('#commonFreeBadge1Id').val());
-    }
-}
-
-/** ------------------
- *    Add free text for 5s pages
+ *    Add free text for 5s and skillmaps pages
  --------------------- */
 window.addFreeModeText = function() {
-    // Add free user label
-    if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && $('#techmapMode').val() != CONFIG.get('TECHMAP_MODE')['FREE']) {
-        $("#freeLabelId").attr('hidden', false);
-        $('#freeLabel1').html($('#common5sFreeBadgeId').val());
-        $('#freeLabel2').html($('#commonFreeBadgeId').val());
-        $('#freeLabel3').html($('#commonFreeBadge1Id').val());
+    debugger
+    let urlString = window.location.href.replace(/(https?:\/\/)?localhost/gi, "");
+    // Check if url is 5s pages
+    if (urlString.indexOf('pattern') == 1) {
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE'] && $('#techmapMode').val() != CONFIG.get('TECHMAP_MODE')['FREE']) {
+            $("#freeLabelId").attr('hidden', false);
+            $('#freeLabel1').html($('#common5sFreeBadgeId').val());
+            $('#freeLabel2').html($('#commonFreeBadgeId').val());
+            $('#freeLabel3').html($('#commonFreeBadge1Id').val());
+        }
+        if($('#techmapMode').val() == CONFIG.get('TECHMAP_MODE')['FREE'] && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            $("#freeLabelId").attr('hidden', false);
+            $('#freeLabel2').html($('#commonFreeBadgeId').val());
+            $('#freeLabel3').html($('#commonFreeBadge1Id').val());
+        }
     }
-    if($('#techmapMode').val() == CONFIG.get('TECHMAP_MODE')['FREE'] && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-        $("#freeLabelId").attr('hidden', false);
-        $('#freeLabel2').html($('#commonFreeBadgeId').val());
-        $('#freeLabel3').html($('#commonFreeBadge1Id').val());
+    // Check if url is skillmaps pages
+    if (urlString.indexOf('skillmaps') == 1) {
+        if($('#techmapMode').val() == CONFIG.get('TECHMAP_MODE')['FREE'] && $('#userMode').val() != CONFIG.get('5S_MODE')['FREE']) {
+            $("#freeLabelId").attr('hidden', false);
+            $('#freeLabel1').html($('#commonSkillMapFreeBadgeId').val());
+            $('#freeLabel2').html($('#commonFreeBadgeId').val());
+            $('#freeLabel3').html($('#commonFreeBadge1Id').val());
+        }
+        if($('#techmapMode').val() == CONFIG.get('TECHMAP_MODE')['FREE'] && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            $("#freeLabelId").attr('hidden', false);
+            $('#freeLabel2').html($('#commonFreeBadgeId').val());
+            $('#freeLabel3').html($('#commonFreeBadge1Id').val());
+        }
     }
+
 }
 
 /* ==============================
 jQuery
 ============================== */
 $(function(){
+    addFreeModeText();
     // Check and display show/hide status of each main menu when refresh page
     $('.menu').each((i, ele) => {
         // Check if sub menu is showing, add status to storage and change icon

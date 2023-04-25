@@ -103,7 +103,4 @@ $(function () {
     $('#patternListAdd').on('click', function() {
         window.location = '/pattern_detail';
     });
-
-    // Add free user label
-    addFreeModeText();
 });

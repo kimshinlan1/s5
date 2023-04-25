@@ -98,8 +98,6 @@ Route::group(['middleware' => ['auth']], function () {
 
         //Pattern departments
         Route::resource('pattern_departments', PatternDepartmentController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::get('pattern_departments/list', [PatternDepartmentController::class, 'list']);
-        Route::get('/pattern_departments/comp_list', [PatternDepartmentController::class, 'getDepartmentListByID']);
 
         // print pdf
         Route::post('/skillmap_pdf/html/', [PdfController::class, 'getHtmlPDF'])->name('skillmap_html');

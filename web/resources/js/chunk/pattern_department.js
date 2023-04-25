@@ -45,6 +45,10 @@ window.department5SChecklistActions = function (_value, row, _index) {
        });
    }
 
+    //    dataID wil be assigned to data-id attr that is used to checking if the selected row has dept pattern option or not.
+    //    IF -1, the dept pattern list option is null
+    //    If 1, the dept pattern list has a selected option
+
    let dataId = -1;
    let btn = '';
    pattern_list_data.forEach(ele => {
@@ -217,7 +221,7 @@ window.indexNo = function (_value, _row, index) {
 window.reloadDataDepartment = function () {
    $.ajax({
        type: 'GET',
-       url: '/pattern_departments/list',
+       url: '/departments/list',
        success: function (res) {
            let html = '';
 
@@ -253,7 +257,7 @@ $(function () {
     $('#companyListID').on('change',function () {
         checkDeptPattern = '';
         checkPatternOnly = false;
-        $('#patternDepartmentTable').bootstrapTable('refresh', {url:'/pattern_departments/comp_list'});
+        $('#patternDepartmentTable').bootstrapTable('refresh', {url:'/departments/comp_list'});
         $('#patternDepartmentTable').on('load-success.bs.table.bs.table', function (_e, _result, _status, _jqXHR) {
             // hide loading modal
             $('.md-loading').modal('hide');
@@ -281,7 +285,8 @@ $(function () {
         else if (isExistedOption) {
             bindDeptPattern(patternId, deptId, id);
         } else {
-            window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId + '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
+            window.location = '/pattern_dept_setting/' + id + '?departmentId=' + deptId +
+            '&patternId=' + patternId + '&isPattern=' + isPattern + '&compId=' + compId;
         }
     })
 
