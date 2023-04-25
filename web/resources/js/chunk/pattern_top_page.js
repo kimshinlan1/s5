@@ -368,7 +368,4 @@ $(function () {
       $('#companyOptionId').change();
     }
     formatButtonText();
-
-    // Add free user label
-    addFreeModeText();
 });

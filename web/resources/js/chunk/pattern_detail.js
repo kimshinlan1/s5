@@ -186,7 +186,4 @@ $(function () {
             $("#modalDelectLocation").modal('show');
         }
     });
-
-    // Add free user label
-    addFreeModeText();
 });

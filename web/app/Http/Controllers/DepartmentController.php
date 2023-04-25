@@ -48,10 +48,12 @@ class DepartmentController extends Controller
         } else {
             $data = $this->service->getDepartmentByID($request);
         }
-        $arrDepartment = $this->getFinalList($data->getCollection());
+        if (!empty($data)) {
+            $arrDepartment = $this->getFinalList($data->getCollection());
+        }
         return response()->json([
-            'total' => $data->total(),
-            'rows' => $arrDepartment,
+            'total' => !empty($data) ? $data->total() : 0,
+            'rows' => !empty($data) ? $arrDepartment : null,
             'currentCompany' => auth()->user()->company()->first()
         ]);
     }
@@ -66,10 +68,12 @@ class DepartmentController extends Controller
     public function getDepartmentListByID(Request $request)
     {
         $data = $this->service->getDepartmentListByID($request);
-        $arrDepartment = $this->getFinalList($data->getCollection());
+        if (!empty($data)) {
+            $arrDepartment = $this->getFinalList($data->getCollection());
+        }
         return response()->json([
-            'total' => $data->total(),
-            'rows' => $arrDepartment
+            'total' => !empty($data) ? $data->total() : 0,
+            'rows' => !empty($data) ? $arrDepartment : null
         ]);
     }
 

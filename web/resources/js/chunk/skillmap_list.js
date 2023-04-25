@@ -173,6 +173,4 @@ $(function () {
             });
         }
     });
-    // Add free user label
-    addFreeModeSkillMapText();
 });

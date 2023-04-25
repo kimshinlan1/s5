@@ -693,9 +693,6 @@ $(function () {
             return "You have unsaved changes. Please save them before leaving.";
         }
     });
-
-    // Add free user label
-    addFreeModeText();
 });
 
 // Navbar hide scroll

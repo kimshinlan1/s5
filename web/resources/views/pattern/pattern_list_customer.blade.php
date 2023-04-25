@@ -49,7 +49,7 @@
                 <th data-width="50" data-field="no" >{{ __('Pattern_ID') }}</th>
                 <th data-width="120" data-field="name">{{ __('Pattern_Name') }}</th>
                 <th data-field="note">{{ __('Pattern_Note') }}</th>
-                <th data-field="deptName" data-formatter="departmentChecklistActions"  data-cell-style="deptCheckListStyle">{{ __('Deparment_Name') }}</th>
+                <th data-field="deptName" data-cell-style="deptCheckListStyle">{{ __('Deparment_Name') }}</th>
                 @if (Auth::user()->isAdmin() || (Auth::user()->isUser() && !Auth::user()->is5SModeFree()))
                     <th data-width="120" class="th-action" data-formatter="patternListTableActions" data-cell-style="cellStyle"></th>
                 @endif

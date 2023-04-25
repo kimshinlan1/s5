@@ -94,6 +94,10 @@
     "Department_Save_Successfully_Employee": "登録しました。",
     "=====  BLOCK_DEPARTMENT_END =====": "",
 
+    "=====  BLOCK_PATTERN_DEPARTMENT_START =====": "",
+    "Pattern_Department_Management": "部門とチェックリストの紐づけ",
+    "=====  BLOCK_PATTERN_DEPARTMENT_END =====": "",
+
     "=====  BLOCK_SKILLMAP_START =====": "",
     "SkillMap": "マルチスキルマップ",
     "SkillMap_Detail": "スキルマップ追加",
