@@ -224,7 +224,7 @@ a.button-upload:hover {
     }
 }
 
-/* .paid-badge {
+.paid-badge {
     background-color: var(--paid-badge-color);
     border-color: var(--paid-badge-color);
 }
@@ -242,4 +242,4 @@ a.button-upload:hover {
 .free-badge:disabled {
     background-color: var(--free-badge-color);
     border-color: var(--free-badge-color);
-} */
+}

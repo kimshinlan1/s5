@@ -28,16 +28,19 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_before{{ $evidence['id'] }}">
                 @if (!$evidence['hasBefore'])
-                    <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
+                    <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="clickOnImage('img_before{{ $evidence['id'] }}')" id="noImg">
+                    <input type="file" id="file-input_img_before{{ $evidence['id'] }}" class="file file-before file-input" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/>
                 @else
                     @php $isActive = false; @endphp
                     @foreach ($evidence['images'] as $key => $image)
                         @if (!empty($image['is_before']))
                             <div class="item {{ $isActive == false ? 'active' : ''}} item-count" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
-                                <button type="submit" title="{{ __('Evidence_Delete_Image_Tooltip') }}" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }}, 'img_before{{ $evidence['id'] }}')">
+                                <button type="submit" title="{{ __('Evidence_Delete_Image_Tooltip') }}" class="close-image" id='removeImage{{ $image['id'] }}'
+                                onclick="removeImage({{ $image['id'] }}, 'img_before{{ $evidence['id'] }}')">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
-                                <img class="img-size" src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; position: relative; object-fit: contain;" onclick="fullScreen('{{ $image['img_path'] }}')">
+                                <img class="img-size" src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; position: relative; object-fit: contain;" onclick="clickOnImage('img_before{{ $evidence['id'] }}')">
+                                <input id="file-input_img_before{{ $evidence['id'] }}" type="file" class="file file-before file-input" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/>
                             </div>
                             @php $isActive = true; @endphp
                         @endif
@@ -58,7 +61,9 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}
+                    <input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/>
+                </div>
                 <button type="button" title="{{ __('Evidence_Delete_Album_Tooltip') }}" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button>
             </div>
         </div>
@@ -74,7 +79,7 @@
             </div>
         </div>
         <br>
-        <span class="fw-bold" style="font-size: 1.7rem; color:#aa403b">
+        <span class="fw-bold" style="font-size: 1.7rem; color:#EE7E00">
             {{ __('Evidence_Before_Problem') }}
         </span>
         <textarea id="problemBefore{{ $evidence['id'] }}" class="problem-area">{{ $evidence['problem_before'] }}</textarea>
@@ -95,16 +100,21 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_after{{ $evidence['id'] }}">
                 @if (!$evidence['hasAfter'])
-                    <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
+                    <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;"
+                    onclick="clickOnImage('img_after{{ $evidence['id'] }}')" id="noImg">
+                    <input type="file" id="file-input_img_after{{ $evidence['id'] }}" class="file file-after file-input" name="file"
+                    onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/>
                 @else
                     @php $isActive = false; @endphp
                     @foreach ($evidence['images'] as $key => $image)
                         @if (empty($image['is_before']))
                             <div class="item {{ $isActive == false ? 'active' : ''}} item-count" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
-                                <button type="submit" title="{{ __('Evidence_Delete_Image_Tooltip') }}" class="close-image" id='removeImage{{ $image['id'] }}' onclick="removeImage({{ $image['id'] }}, 'img_after{{ $evidence['id'] }}')">
+                                <button type="submit" title="{{ __('Evidence_Delete_Image_Tooltip') }}" class="close-image" id='removeImage{{ $image['id'] }}'
+                                onclick="removeImage({{ $image['id'] }}, 'img_after{{ $evidence['id'] }}')">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
-                                <img class="img-size" src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; position: relative; object-fit: contain;" onclick="fullScreen('{{ $image['img_path'] }}')">
+                                <img class="img-size" src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; position: relative; object-fit: contain;" onclick="clickOnImage('img_after{{ $evidence['id'] }}')">
+                                <input type="file" id="file-input_img_after{{ $evidence['id'] }}" class="file file-after file-input" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/>
                             </div>
                             @php $isActive = true; @endphp
                         @endif
@@ -141,7 +151,7 @@
             </div>
         </div>
         <br>
-        <span class="fw-bold" style="font-size: 1.7rem; color:rgb(231, 168, 51)">
+        <span class="fw-bold" style="font-size: 1.7rem; color:#0B97C1">
             {{ __('Evidence_After_Problem') }}
         </span>
         <textarea id="problemAfter{{ $evidence['id'] }}" class="problem-area">{{ $evidence['problem_after'] }}</textarea>

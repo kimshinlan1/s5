@@ -43,7 +43,7 @@
 <input type="hidden" id="unsavedDataWarning" name="unsavedDataWarning" value="{{ __('Common_Unsaved_Data_Warning') }}"/>
 <input type="hidden" id="savePatternMsgId" name="savePatternMsgId" value="{{ __('Pattern_Label_Modal_Save_Pattern') }}"/>
 <input type="hidden" id="deletePatternWarningMsg" name="deletePatternWarningMsg" value="{{ __('Pattern_Delete_Warning') }}"/>
-<input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department') }}"/>
+<input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department1') }}"/>
 <input type="hidden" id="deleteLastInspectionWarningMsg" name="deleteLastInspectionWarningMsg" value="{{ __('TeamInspection_Delete_Last_Inspection_Warning') }}"/>
 <input type="hidden" id="requiredPatterNameErrMsg" name="requiredPatterNameErrMsg" value="{{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}"/>
 <input type="hidden" id="common5sFreeBadgeId" name="common5sFreeBadgeId" value="{{ __('Common_5S_Free_Badge') }}"/>

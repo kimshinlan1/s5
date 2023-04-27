@@ -18,6 +18,12 @@
     word-wrap: break-word;
     padding: 10px;
 }
+.aLinkId {
+    color: #0B97C1;
+}
+.aLinkId:hover {
+    opacity: 0.5;
+}
 .radarChart {
     width: var(--chart-width-pc);
     height: var(--chart-width-pc);
@@ -39,17 +45,19 @@
 }
 .dept-btn {
     width: 250px;
-    height: 80px;
-    line-height: 25px;
-    overflow: hidden;
+    height: 40px;
+    line-height: 15px;
+    /* overflow: hidden; */
     white-space: normal;
     word-wrap: break-word;
-    background-color: white;
+    background-color: transparent;
+    border-color: transparent;
     border-radius: 8px;
-    padding: 10px;
+    text-align: left;
+    /* padding: 10px; */
 }
 .has-overflow:after {
-    content: "。。。";
+    /* content: "。。。"; */
 }
 #scrolling {
     overflow-y: scroll;
@@ -109,8 +117,11 @@
         width: var(--chart-width-ipad);
         height: 70px !important;
         line-height: 25px !important;
-        background-color: white;
+        background-color: transparent;
+        text-align: left;
+        border-color: transparent;
         border-radius: 8px;
+        text-align: left;
         margin-bottom: 10px;
         overflow: hidden;
         white-space: normal;
