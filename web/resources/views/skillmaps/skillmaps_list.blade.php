@@ -13,12 +13,12 @@
     <div class="h-title">
         <span style="margin-right: 0.5rem"> {{ __('SkillMap_List') }} </span>
         @if(auth()->user()->isModeFree())
-        <button class="btn btn-warning free-badge" style="opacity: 1; margin-top: -0.4rem;" disabled>
+        <button class="btn btn-warning free-badge" style="opacity: 1; margin-top: -0.4rem; background-color:#EE7E00" disabled>
             {{ __('Common_Free_Badge_Title') }}
         </button>
         @endif
         @if(!auth()->user()->isModeFree() && !auth()->user()->isAdmin())
-            <button class="btn btn-success paid-badge" style="opacity: 1; margin-top: -0.4rem;" disabled>
+            <button class="btn btn-success paid-badge" style="opacity: 1; margin-top: -0.4rem; background-color:#0B97C1" disabled>
                 {{ __('Common_Paid_Badge_Title') }}
             </button>
         @endif
