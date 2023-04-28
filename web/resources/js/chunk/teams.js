@@ -13,12 +13,12 @@ let listDepartment = [];
  =============================*/
 window.teamTableActions = function (_value, row, _index) {
     return (
-        '<button  style="margin-right: 10px;"  type="button" class="btn btn-primary btn-sm btn-copy" data-id="' +
+        '<button  style="margin-right: 10px;"  type="button" class="btn btn-sm navy-color-button" data-id="' +
         row.department_id + '" data-team_id="' + row.id +
         '" data-bs-toggle="modal" data-bs-target="#employeeAddDialog">メンバー追加</button> ' +
-        '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button style="margin-right: 20px;" type="button" class="btn navy-color-button btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#teamEditDialog" >編集</button> ' +
-        '<button type="button" class="btn btn-danger btn-sm" data-id="' +
+        '<button type="button" class="btn btn-delete btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#deleteDialog" >削除</button>'
     );
 };
@@ -298,4 +298,10 @@ $(function () {
             window.location = window.location = '/employee/?companyId=' + $el.company_id + '&deptId=' + $el.department_id + '&teamId=' + $el.id;
         }
     })
+
+    /**
+     * Concatenate dialog title and page name
+     */
+    $("#teamEditDialog h5.modal-title").prepend($("#titleTeamDialog").val());
+    $("#deleteDialog h5.modal-title").prepend($("#titleTeamDialog").val());
 });

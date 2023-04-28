@@ -17,9 +17,9 @@
   --------------------- */
  window.employeeTableActions = function (_value, row, _index) {
      return (
-         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+         '<button style="margin-right: 20px;" type="button" class="btn navy-color-button btn-sm" data-id="' +
          row.id + '" data-bs-toggle="modal" data-bs-target="#employeeEditDialog" >編集</button> ' +
-         '<button type="button" class="btn btn-danger btn-sm" data-id="' +
+         '<button type="button" class="btn btn-delete btn-sm" data-id="' +
          row.id + '" data-bs-toggle="modal" data-bs-target="#employeeDeleteDialog" >削除</button>'
      );
  };
@@ -385,4 +385,10 @@ window.loadDeptListByComp = function(id, deptID = null) {
             window.saveData();
         }
     });
+
+    /**
+     * Concatenate dialog title and page name
+     */
+    $("#employeeEditDialog h5.modal-title").prepend($("#titleEmployeeDialog").val());
+    $("#employeeDeleteDialog h5.modal-title").prepend($("#titleEmployeeDialog").val());
  });

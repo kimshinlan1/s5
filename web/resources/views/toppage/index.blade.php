@@ -36,12 +36,12 @@
             {{ __('TopPage_Skill_Map') }}
             <div class="main-menu-1">
                 @if(auth()->user()->isModeFree())
-                    <button class="btn btn-success rounded-0 border-0" style="opacity: 1; background-color:#EE7E00" disabled>
+                    <button class="btn btn-success rounded-0 border-0 free-badge" style="opacity: 1;" disabled>
                         {{ __('Common_Free_Badge_Title') }}
                     </button>
                 @endif
                 @if(!auth()->user()->isModeFree() && !auth()->user()->isAdmin())
-                    <button class="btn btn-success rounded-0 border-0" style="opacity: 1; background-color:#0B97C1" disabled>
+                    <button class="btn btn-success rounded-0 border-0 paid-badge" style="opacity: 1;" disabled>
                         {{ __('Common_Paid_Badge_Title') }}
                     </button>
                 @endif
@@ -55,12 +55,12 @@
             {{ __('TopPage_5S_System') }}
             <div class="main-menu-1">
                 @if(auth()->user()->is5SModeFree())
-                <button class="btn btn-success rounded-0 border-0" style="opacity: 1; background-color: #EE7E00" disabled>
+                <button class="btn btn-success rounded-0 border-0 free-badge" style="opacity: 1;" disabled>
                     {{ __('Common_Free_Badge_Title') }}
                 </button>
                 @endif
                 @if(!auth()->user()->is5SModeFree() && !auth()->user()->isAdmin())
-                    <button class="btn btn-success rounded-0 border-0" style="opacity: 1; background-color:#0B97C1" disabled>
+                    <button class="btn btn-success rounded-0 border-0 paid-badge" style="opacity: 1;" disabled>
                         {{ __('Common_Paid_Badge_Title') }}
                     </button>
                 @endif

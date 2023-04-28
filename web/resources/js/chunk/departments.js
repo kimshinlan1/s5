@@ -17,9 +17,9 @@ var isFreeWarning = false;
  --------------------- */
 window.departmentTableActions = function (_value, row, _index) {
    return (
-        '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button style="margin: 4px; width: 55px;" type="button" class="btn navy-color-button btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> ' +
-        '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-danger btn-sm" data-id="' +
+        '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-delete btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentDeleteDialog" >削除</button>'
     );
 };
@@ -360,4 +360,8 @@ $(function () {
            window.saveDataEmployee();
        }
    });
+
+   $("#departmentDeleteDialog h5.modal-title").prepend($("#titleDepartmentDialog").val());
+   $("#departmentEditDialog h5.modal-title.add").prepend($("#titleDepartmentDialog").val());
+   $("#departmentEditDialog h5.modal-title.edit").prepend($("#titleDepartmentDialog").val());
 });

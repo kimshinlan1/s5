@@ -50,3 +50,9 @@
 <input type="hidden" id="commonSkillMapFreeBadgeId" name="commonSkillMapFreeBadgeId" value="{{ __('Common_SkillMap_Free_Badge') }}"/>
 <input type="hidden" id="commonFreeBadgeId" name="commonFreeBadgeId" value="{{ __('Common_Free_Badge') }}"/>
 <input type="hidden" id="commonFreeBadge1Id" name="commonFreeBadge1Id" value="{{ __('Common_Free_Badge_1') }}"/>
+<input type="hidden" id="titleUserDialog" name="titleUserDialog" value="{{ __('User') }}"/>
+<input type="hidden" id="titleDepartmentDialog" name="titleDepartmentDialog" value="{{ __('Department') }}"/>
+<input type="hidden" id="titleTeamDialog" name="titleTeamDialog" value="{{ __('Team') }}"/>
+<input type="hidden" id="titleEmployeeDialog" name="titleEmployeeDialog" value="{{ __('Employee') }}"/>
+<input type="hidden" id="titleSkillmapDialog" name="titleSkillmapDialog" value="{{ __('SkillMap_Label') }}"/>
+

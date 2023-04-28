@@ -68,11 +68,11 @@ window.getUserTableList = function (params) {
  --------------------- */
  window.userTableActions = function (_value, row, _index) {
     if(row.role_id == CONFIG.get('ROLE_ADMIN_ID') || row.id == $('#hidAuthUserId').val()) {
-        return '<button id = "btn-edit" style="margin: 4px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
-            '<button id="btn-delete" type="button" class="btn btn-danger btn-sm cancelBtn" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog" disabled>削除</button>';
+        return '<button id = "btn-edit" style="margin: 4px;" type="button" class="btn btn-sm navy-color-button" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
+            '<button type="button" class="btn btn-delete btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog" disabled>削除</button>';
     } else {
-        return '<button id = "btn-edit" style="margin: 4px;" type="button" class="btn btn-primary btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
-            '<button id="btn-delete" type="button" class="btn btn-danger btn-sm cancelBtn" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog">削除</button>';
+        return '<button id = "btn-edit" style="margin: 4px;" type="button" class="btn btn-sm navy-color-button" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
+            '<button type="button" class="btn btn-delete btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog">削除</button>';
     }
 }
 
@@ -294,7 +294,7 @@ $(function(){
         if (userId) {
             let data = $('#userTable').bootstrapTable('getRowByUniqueId', userId);
             $('#deleteUserId').val(data.id);
-            $('#userDeleteDialog .modal-body .message').html(escapeHtml(data.name) + CONFIG.get('DELETE_USER_MESSAGE'));
+            $('#userDeleteDialog .modal-body .message').html(escapeHtml(data.name) + " " + CONFIG.get('DELETE_USER_MESSAGE'));
         }
     });
 
@@ -355,5 +355,11 @@ $(function(){
             window.saveData();
         }
     });
+
+    /**
+     * Concatenate dialog title and page name
+     */
+    $("#userDeleteDialog h5.modal-title").prepend($("#titleUserDialog").val());
+    $("#userEditDialog h5.modal-title").prepend($("#titleUserDialog").val());
 });
 
