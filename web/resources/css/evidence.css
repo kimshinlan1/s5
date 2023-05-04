@@ -11,11 +11,14 @@
     top: 0;
 }
 
+img {
+    cursor: pointer;
+}
+
 .close-image {
     position: absolute;
     right: 0;
-    left: 0;
-    bottom: 0;
+    top: 0;
     width: 25px;
     height: 25px;
     line-height: 25px;
@@ -31,8 +34,12 @@
 
 .right-arrow {
     font-size: 10rem !important;
-    color: green !important;
+    color: #7F7F7F !important;
     line-height: 300px !important;
+}
+
+.right-control {
+    margin-top: 25px !important;
 }
 
 .carousel-inner {
@@ -116,13 +123,13 @@ and (orientation : landscape)
 }
 
 .before-label {
-    background-color: #aa403b;
-    width: 30%;
+    background-color: #EE7E00;
+    width: 40%;
     font-size: 2rem;
 }
 
 .after-label {
-    background-color: rgb(0 135 87);
+    background-color: #0B97C1;
     width: 30%;
     font-size: 2rem;
 }

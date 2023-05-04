@@ -43,10 +43,18 @@
 <input type="hidden" id="unsavedDataWarning" name="unsavedDataWarning" value="{{ __('Common_Unsaved_Data_Warning') }}"/>
 <input type="hidden" id="savePatternMsgId" name="savePatternMsgId" value="{{ __('Pattern_Label_Modal_Save_Pattern') }}"/>
 <input type="hidden" id="deletePatternWarningMsg" name="deletePatternWarningMsg" value="{{ __('Pattern_Delete_Warning') }}"/>
-<input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department') }}"/>
+<input type="hidden" id="noTeamInDeptWarning" name="noTeamInDeptWarning" value="{{ __('TeamInspection_Please_Create_Team_This_Department1') }}"/>
 <input type="hidden" id="deleteLastInspectionWarningMsg" name="deleteLastInspectionWarningMsg" value="{{ __('TeamInspection_Delete_Last_Inspection_Warning') }}"/>
 <input type="hidden" id="requiredPatterNameErrMsg" name="requiredPatterNameErrMsg" value="{{ __('Pattern_Adding_A_Pattern_Name_Is_Mandatory') }}"/>
 <input type="hidden" id="common5sFreeBadgeId" name="common5sFreeBadgeId" value="{{ __('Common_5S_Free_Badge') }}"/>
 <input type="hidden" id="commonSkillMapFreeBadgeId" name="commonSkillMapFreeBadgeId" value="{{ __('Common_SkillMap_Free_Badge') }}"/>
 <input type="hidden" id="commonFreeBadgeId" name="commonFreeBadgeId" value="{{ __('Common_Free_Badge') }}"/>
 <input type="hidden" id="commonFreeBadge1Id" name="commonFreeBadge1Id" value="{{ __('Common_Free_Badge_1') }}"/>
+<input type="hidden" id="titleAccountDialog" name="titleAccountDialog" value="{{ __('Account') }}"/>
+<input type="hidden" id="titleDepartmentDialog" name="titleDepartmentDialog" value="{{ __('Department') }}"/>
+<input type="hidden" id="titleTeamDialog" name="titleTeamDialog" value="{{ __('Team') }}"/>
+<input type="hidden" id="titleEmployeeDialog" name="titleEmployeeDialog" value="{{ __('Employee') }}"/>
+<input type="hidden" id="titleSkillmapDialog" name="titleSkillmapDialog" value="{{ __('SkillMap_Label') }}"/>
+<input type="hidden" id="deleteLabel" name="deleteLabel" value="{{ __('Common_Delete_Label') }}"/>
+<input type="hidden" id="skillMapCopyDialogLabel" name="skillMapCopyDialogLabel" value="{{ __('SkillMap_Copy_Dialog_Label') }}"/>
+

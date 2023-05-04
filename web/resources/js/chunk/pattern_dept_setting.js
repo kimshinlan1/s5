@@ -84,11 +84,13 @@ window.saveAjax = function(data, patId=null, ispattern=null, isFree = false) {
     }
     let paramDatas = isFree ? freeData : {data: data} ;
     let pageDept = urlParams.get('pageDept');
+    let isNewPattern = urlParams.get('isPattern');
+    isNewPattern = isNewPattern == 'true' ? true : false;
     let doneCallback = function (_data, _textStatus, _jqXHR) {
         showToast($('#patternSaveSuccess'), 2000, true);
-        if (pageDept) {
+        if (pageDept || isNewPattern) {
             setTimeout(() => {
-                location.href = '/departments';
+                location.href = '/pattern_departments';
             }, 200);
         } else {
             setTimeout(() => {

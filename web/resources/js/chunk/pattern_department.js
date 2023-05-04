@@ -55,13 +55,13 @@ window.department5SChecklistActions = function (_value, row, _index) {
        if (!ele.isPattern && ele.id == selectedDeptPatternId) {
            options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + " selected>" + ele.name + "</option>";
            dataId = 1;
-           btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-success btn-sm" style="width: 80px; font-size: 0.65rem;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
+           btn = '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-success btn-sm" style="font-size: 0.65rem;" data-id="'+dataId+'" data-isPattern="'+ ele.isPattern
            +'" data-companyId="'+ row.company_id +'" data-deptId="'+ row.id +'" data-patternId="'+ selectedDeptPatternId +'" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">チェックリスト編集</button> ';
        } else {
            options += "<option value=" + ele.id + " data-deptId=" + row.id + " data-isPattern=" + ele.isPattern + " data-companyId=" + row.company_id + ">" + ele.name + "</option>";
        }
    });
-   btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-success btn-sm" style="width: 80px; font-size: 0.65rem;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">チェックリスト編集</button> ';
+   btn = btn ? btn : '<button type="button" id="editPatternBtn' + row.id + '" class="btn btn-success btn-sm" style="font-size: 0.65rem;" data-id="'+dataId+'" data-isPattern="" data-companyId="" data-deptId="" data-patternId="" data-selectedPatternId="'+ selectedDeptPatternId +'" onClick="openEditDeptPattern(' + row.id + ')">チェックリスト編集</button> ';
    options += " </select>";
    options += btn;
 
@@ -136,7 +136,7 @@ window.selectPattern = function(id) {
        $('.confirmMessage3').text($('#unBindDeptPatternMsg').val());
        $('#okBtn').attr('data-deptid', id);
        $('#okBtn').attr('data-patternid', dataId);
-       $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
+       $('#btn-cancel').attr('data-deptid-old', patternOldSelectedValue);
        isEmptyOption = true;
        return;
    }
@@ -149,7 +149,7 @@ window.selectPattern = function(id) {
        $('#okBtn').attr('data-deptid', id);
        $('#okBtn').attr('data-patternid', dataId);
        $('#okBtn').val(targetPatId);
-       $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
+       $('#btn-cancel').attr('data-deptid-old', patternOldSelectedValue);
        isExistedOption = true;
        return;
    }
@@ -171,7 +171,7 @@ window.selectPattern = function(id) {
            $('#okBtn').attr('data-patternid', dataId);
            $('#okBtn').attr('data-isPattern', isPattern);
            $('#okBtn').val(targetPatId);
-           $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
+           $('#btn-cancel').attr('data-deptid-old', patternOldSelectedValue);
        }
        if (dataId && checkDeptPattern == '') {
            checkPatternOnly = true;
@@ -290,7 +290,7 @@ $(function () {
         }
     })
 
-    $('#cancelBtn').on('click', function() {
+    $('#btn-cancel').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
         let oldPatternSelected = $(this).attr('data-deptid-old');
         $('#checklist5sID' + deptId).siblings().attr('data-selectedPatternId', oldPatternSelected);

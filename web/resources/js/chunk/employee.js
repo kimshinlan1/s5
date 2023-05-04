@@ -385,4 +385,10 @@ window.loadDeptListByComp = function(id, deptID = null) {
             window.saveData();
         }
     });
+
+    /**
+     * Concatenate dialog title and page name
+     */
+    $("#employeeEditDialog h5.modal-title").prepend($("#titleEmployeeDialog").val());
+    $("#employeeDeleteDialog h5.modal-title").prepend($("#titleEmployeeDialog").val());
  });

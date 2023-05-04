@@ -205,11 +205,6 @@ $(function () {
             $('.md-loading').modal('hide');
         });
         $('#departmentTable').on('load-error.bs.table.bs.table', function (_e, _status, _jqXHR) {});
-
-        // Reset for next loop
-        if (pattern_list_data) {
-            pattern_list_data = null;
-        }
     });
 
     reloadDataDepartment();
@@ -231,7 +226,7 @@ $(function () {
         }
     })
 
-    $('#cancelBtn').on('click', function() {
+    $('#btn-cancel').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
         let oldPatternSelected = $(this).attr('data-deptid-old');
         $('#checklist5sID' + deptId).siblings().attr('data-selectedPatternId', oldPatternSelected);
@@ -252,6 +247,9 @@ $(function () {
        $("#employeeDepartmentId").val(rowData.id);
        $("#employeeName").val('');
        $("#employeeEmail").val('');
+       setTimeout(function (){
+        $('#departmentName').focus();
+    }, 100);
    });
 
    /*----------------------------------------------
@@ -288,6 +286,9 @@ $(function () {
            $("#departmentEditDialog .modal-title.edit").hide();
            $("#departmentEditDialog .modal-title.add").show();
        }
+       setTimeout(function (){
+        $('#departmentName').focus();
+    }, 100);
    });
 
    /** ------------------
@@ -359,4 +360,8 @@ $(function () {
            window.saveDataEmployee();
        }
    });
+
+   $("#departmentDeleteDialog h5.modal-title").prepend($("#titleDepartmentDialog").val());
+   $("#departmentEditDialog h5.modal-title.add").prepend($("#titleDepartmentDialog").val());
+   $("#departmentEditDialog h5.modal-title.edit").prepend($("#titleDepartmentDialog").val());
 });

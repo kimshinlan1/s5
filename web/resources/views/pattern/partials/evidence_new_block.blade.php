@@ -24,7 +24,8 @@
         <div id="myCarousel_before_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_before{{ $evidence['id'] }}">
-                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
+                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="clickOnImage('img_before{{ $evidence['id'] }}')" id="noImg">
+                <input type="file" id="file-input_img_before{{ $evidence['id'] }}" class="file file-before file-input" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/>
             </div>
 
             <!-- Left and right controls -->
@@ -41,7 +42,7 @@
         <div class="row">
             <div class="d-flex justify-content-center">
                 <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
-                <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button>
+                {{-- <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button> --}}
             </div>
         </div>
         <br>
@@ -56,7 +57,7 @@
             </div>
         </div>
         <br>
-        <span class="fw-bold" style="font-size: 1.7rem; color:#aa403b">
+        <span class="fw-bold" style="font-size: 1.7rem; color:#EE7E00">
             {{ __('Evidence_Before_Problem') }}
         </span>
         <textarea id="problemBefore{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>
@@ -76,7 +77,8 @@
         <div id="myCarousel_after_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" id="img_after{{ $evidence['id'] }}">
-                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="" id="noImg">
+                <img class="img-size" src="{{ Constant::NO_IMAGE_PATH }}" alt="no-image" style="width:100%;" onclick="clickOnImage('img_after{{ $evidence['id'] }}')" id="noImg">
+                <input type="file" id="file-input_img_after{{ $evidence['id'] }}" class="file file-after file-input" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/>
             </div>
 
             <!-- Left and right controls -->
@@ -93,7 +95,7 @@
         <div class="row">
             <div class="d-flex justify-content-center">
                 <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file file-after" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
-                <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button>
+                {{-- <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button> --}}
             </div>
         </div>
         <br>
@@ -108,7 +110,7 @@
             </div>
         </div>
         <br>
-        <span class="fw-bold" style="font-size: 1.7rem; color:rgb(231, 168, 51)">
+        <span class="fw-bold" style="font-size: 1.7rem; color:#0B97C1">
             {{ __('Evidence_After_Problem') }}
         </span>
         <textarea id="problemAfter{{ $evidence['id'] }}" id="txt" style="width: 100%" class="problem-area"></textarea>

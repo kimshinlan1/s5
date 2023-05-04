@@ -1,10 +1,11 @@
 .btn-remove-column {
     border-color: transparent;
     width: 30%;
-    background-color: red;
-    color: aliceblue;
+    background-color: transparent;
     border: 0rem;
     border-radius: 6px;
+    position: absolute;
+    transform: translateX(110%);
 }
 
 .title-chart {

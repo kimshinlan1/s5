@@ -1,9 +1,9 @@
 <div class="sidebar" style="display: none;">
     <div class="list-group list-group-flush">
         <!-- Home -->
-        <a href="/" id="mainMenuTop" onclick = hideCollapse() aria-expanded="false" style="background-color: cornflowerblue" class=" d-flex justify- list-group-item list-group-item-action">{{__('Main_Menu_Top')}}</a>
+        <a href="/" id="mainMenuTop" onclick = hideCollapse() aria-expanded="false" class=" d-flex justify- list-group-item list-group-item-action bg-menu">{{__('Main_Menu_Top')}}</a>
         <!-- Management -->
-        <a id="mainMenu1" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(1)">
+        <a id="mainMenu1" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action menu bg-menu" onclick="toggleMenu(1)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('Manage') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon1"></i>
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Study Plan -->
-        <a id="mainMenu2" href="#" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(2)">
+        <a id="mainMenu2" href="#" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action menu bg-menu" onclick="toggleMenu(2)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('TopPage_Study_Plan_Management') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon2"></i>
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Skill Map -->
-        <a id="mainMenu3" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(3)">
+        <a id="mainMenu3" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action menu bg-menu" onclick="toggleMenu(3)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('SkillMapMenu') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon3"></i>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- 5S Management -->
-        <a id="mainMenu4" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" style="background-color: cornflowerblue" class="list-group-item list-group-item-action menu" onclick="toggleMenu(4)">
+        <a id="mainMenu4" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action menu bg-menu" onclick="toggleMenu(4)">
             <div class="d-flex w-100 justify-content-between align-items-center">
                 <span class="menu-collapsed">{{ __('5s_Manage') }}</span>
                 <i class="fa fa-caret-right" aria-hidden="true" id="icon4"></i>
