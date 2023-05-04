@@ -170,19 +170,19 @@
                             @endif
                         </div>
                         <div class="col-3 action-btn" style="width: 528px">
-                            <button type="button" id="save" class="btn btn-success btn-ripple" disabled>
+                            <button type="button" id="pdf" class="btn btn-primary btn-primary btn-pdf" disabled>
+                                {{ __('Skillmap_Button_PDF') }}
+                            </button>
+                            @if (!(auth()->user()->isModeFree()))
+                            <button type="button" id="pdfChart" class="btn btn-primary btn-chart" disabled>
+                                {{ __('Skillmap_Button_PDF_Chart') }}
+                            </button>
+                            @endif
+                            <button type="button" id="save" class="btn btn-primary btn-ripple" disabled>
                                 <div class="inside-btn">
                                     {{ __('Common_button_save') }}
                                 </div>
                             </button>
-                            <button type="button" id="pdf" class="btn btn-primary btn-ripple btn-pdf" disabled>
-                                {{ __('Skillmap_Button_PDF') }}
-                            </button>
-                            @if (!(auth()->user()->isModeFree()))
-                            <button type="button" id="pdfChart" class="btn btn-copy btn-chart" disabled>
-                                {{ __('Skillmap_Button_PDF_Chart') }}
-                            </button>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -251,11 +251,11 @@
                 <button type="button" id="openModal" disabled onclick="btnOpenModal()"
                     class="btn btn-primary btn-ripple" data-toggle="modal"
                     data-target="#exampleModalCenter">{{ __('Skillmap_Add_Category') }}</button>
-                <button type="button" id="delete" class="btn btn-danger btn-ripple" disabled data-toggle="modal"
+                <button type="button" id="delete" class="btn btn-red-color btn-ripple" disabled data-toggle="modal"
                     data-target="#exampleModalConfirm">
                     {{ __('Common_button_delete') }}
                 </button>
-                <button type="button" id="cancel" class="btn btn-secondary" data-toggle="modal"
+                <button type="button" id="cancel" class="btn btn-danger" data-toggle="modal"
                         onclick="btnOpenModalBackPage()">
                     {{ __('Common_Back') }}
                 </button>
@@ -352,7 +352,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">作業名の行数を含む新しい分類を追加する。</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">分類を追加</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
@@ -370,10 +370,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
+                    id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyFormSkillMap()" id="btnModalCategoryAdd"
                         class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnModalCategoryCancel">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
@@ -385,16 +385,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">確認</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">選択行を削除</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span class="badge bg-danger">{{ __('SkillMap_Question_Delete_1') }}</span></h4>
+                    <span>{{ __('SkillMap_Question_Delete_1') }}</span>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
+                    id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="deleteDataSkillMap()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
+                        class="btn btn-red-color">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>
@@ -408,10 +408,10 @@
                     <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('SkillMap_Question_BackPage') }}</span></h4>
+                    <span>{{ __('SkillMap_Question_BackPage') }}</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="backPageSaveData(false)">
+                    <button type="button" class="btn btn-danger" onclick="backPageSaveData(false)">
                         {{ __('SkillMap_Cancel_Save_Button') }}</button>
                     <button type="button" onclick="backPageSaveData(true)"
                         class="btn btn-primary">{{ __('Common_button_save') }}</button>
@@ -425,16 +425,17 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title" hidden id="pdf-export1">{{ __('Skillmap_Button_PDF') }}</h5>
+                    <h5 class="modal-title" hidden id="pdf-export2">{{ __('Skillmap_Radar_Chart_PDF_Output') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_PDF_Confirm') }}</span></h4>
+                    <span>{{ __('Skillmap_PDF_Confirm') }}</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveAndExport()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelExport()">
+                    <button type="button" class="btn btn-cancel" onclick="cancelExport()">
                         {{ __('Common_button_cancel') }}</button>
+                        <button type="button" onclick="saveAndExport()"
+                            class="btn btn-primary">{{ __('Common_button_ok') }}</button>
 
                 </div>
             </div>
@@ -449,14 +450,13 @@
                     <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <h4><span>{{ __('Skillmap_Button_Save_Confirm') }}</span></h4>
+                    <span>{{ __('Skillmap_Button_Save_Confirm') }}</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="saveDataChange()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelSaveDataChange()">
+                    <button type="button" class="btn btn-cancel" onclick="cancelSaveDataChange()">
                         {{ __('Common_button_cancel') }}</button>
-
+                        <button type="button" onclick="saveDataChange()"
+                            class="btn btn-primary">{{ __('Common_button_ok') }}</button>
                 </div>
             </div>
         </div>

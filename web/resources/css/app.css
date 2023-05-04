@@ -3,8 +3,11 @@
 
 /* COMMON VARIBLES */
 :root {
-    --free-badge-color: #0B97C1 !important;
-    --paid-badge-color: #EE7E00 !important;
+    --free-badge-color: #EE7E00 !important;
+    --paid-badge-color: #0B97C1!important;
+    --button-red-color: #FF0000 !important;
+    --delete-button-bg-color: #FFF !important;
+    --text-primary: #7F7F7F !important;
 }
 
 /* * {
@@ -65,9 +68,15 @@
  }
 
 .btn-primary {
-    background: #0852C0;
-    color: rgb(255, 255, 255);
-    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 12%) !important;
+    background-color: var(--paid-badge-color) !important;
+    color: #fff !important;
+    border: 0 !important;
+ }
+
+.btn-danger {
+    background-color: var(--delete-button-bg-color) !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--text-primary) !important;
  }
 
 .btn-copy {
@@ -224,7 +233,7 @@ a.button-upload:hover {
     }
 }
 
-/* .paid-badge {
+.paid-badge {
     background-color: var(--paid-badge-color);
     border-color: var(--paid-badge-color);
 }
@@ -242,4 +251,28 @@ a.button-upload:hover {
 .free-badge:disabled {
     background-color: var(--free-badge-color);
     border-color: var(--free-badge-color);
-} */
+} 
+
+.btn-red-color {
+    background-color: var(--button-red-color) !important;
+    color: #fff !important;
+}
+
+.btn-cancel {
+    color: var(--text-primary) !important;
+    background-color: var(--delete-button-bg--color) !important;
+    border: none !important;
+}
+
+.btn-danger:hover, 
+.btn-cancel:hover {
+    background-color: #dbdbdb91 !important;
+} 
+
+.btn-danger:disabled{
+    background-color: #dbdbdb91 !important;
+}
+
+.bg-menu {
+    background-color: #BFBFBF !important;
+}
