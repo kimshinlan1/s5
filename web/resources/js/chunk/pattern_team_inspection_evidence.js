@@ -654,7 +654,7 @@ function handleConfirmOkBtn(isSaveMode) {
     });
 
     // Click Cancel
-    $("#confirmDialog3").find('#cancelBtn').click(function () {
+    $("#confirmDialog3").find('#btn-cancel').click(function () {
         $("#confirmDialog3").modal('hide');
     });
 

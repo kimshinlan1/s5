@@ -53,7 +53,7 @@
 <br />
 
 {{-- Add/Edit Dialog Team --}}
-<button type="button" class="btn navy-color-button" id="btnAdd">
+<button type="button" class="btn btn-primary" id="btnAdd">
     {{ __('Common_button_add') }}
 </button>
 
@@ -102,8 +102,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn navy-color-button" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn cancelBtn" id="saveEmployeeBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-cancel" id="saveEmployeeBtn">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>

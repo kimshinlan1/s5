@@ -10,8 +10,8 @@
                 <div class="message"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancelBtn" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn red-color-button" id="deleteBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-red-color" id="deleteBtn">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>

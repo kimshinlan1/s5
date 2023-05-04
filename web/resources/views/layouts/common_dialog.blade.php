@@ -34,8 +34,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancelBtn" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn navy-color-button" id="saveTeamBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-primary" id="saveTeamBtn">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>

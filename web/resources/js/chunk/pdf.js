@@ -728,6 +728,8 @@ $(function () {
      *    Event click button pdf skill map.
      --------------------- */
     $(".btn-pdf").click(function () {
+        $("#pdf-export1").attr("hidden", false)
+        $("#pdf-export2").attr("hidden", true)
         isExportChart = false;
         // get data to output
         let data = getData();
@@ -760,6 +762,8 @@ $(function () {
      *    Event click button pdf chart.
      --------------------- */
     $(".btn-chart").click(function () {
+        $("#pdf-export2").attr("hidden", false);
+        $("#pdf-export1").attr("hidden", true)
         isExportChart = true;
         cntColor = 1;
         // get tmp data to compare

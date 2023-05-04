@@ -54,7 +54,7 @@
 <br />
 
 {{-- Button Add/Edit Dialog --}}
-<button type="button" class="btn navy-color-button" data-bs-toggle="modal" data-bs-target="#departmentEditDialog">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#departmentEditDialog">
     {{ __('Department_Button_Add') }}
 </button>
 
@@ -137,8 +137,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancelBtn" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn navy-color-button" id="saveDepartmentBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-primary" id="saveDepartmentBtn">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>
@@ -157,8 +157,8 @@
                 <div class="message"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancelBtn" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn red-color-button" id="deleteDepartmentBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-red-color" id="deleteDepartmentBtn">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>

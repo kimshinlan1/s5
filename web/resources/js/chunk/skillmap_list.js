@@ -48,11 +48,11 @@ window.skillmapsTableActions = function (_value, row, index) {
         confirmDialog = '#skillmapsConfirmDialog';
     }
     return (
-        '<button  style="margin-right: 12px;"  type="button" class="btn btn-info btn-sm btn-copy" data-type="copy" data-id="' +
+        '<button  style="margin-right: 12px;"  type="button" class="btn btn-sm btn-copy btn-primary" data-type="copy" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target='+ confirmDialog +' >複製</button> ' +
-        '<button style="margin-right: 12px;" type="button" class="btn btn-primary btn-sm btn-edit" data-id="' +
+        '<button style="margin-right: 12px;" type="button" class="btn btn-sm btn-edit btn-primary" data-id="' +
         row.id + '" onclick="openEdit(' +row.id+ ' ,' + no + ')" >編集</button> ' +
-        '<button type="button" class="btn btn-danger btn-sm skillMapDeleteBtn" data-type="del" data-id="' +
+        '<button type="button" class="btn btn-sm skillMapDeleteBtn btn-danger" data-type="del" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target='+ confirmDialog +'>削除</button>'
     );
 };
@@ -114,13 +114,27 @@ $(function () {
             $("#skillmapsConfirmDialog .modal-body .message").html(
                 escapeHtml(lineName) + " " + CONFIG.get("DELETE_MESSAGE")
             );
+            $("#skillmapsConfirmDialog h5.modal-title").html(
+                $("#titleSkillmapDialog").val() + $("#deleteLabel").val()
+            );
+            $("#skillmapsConfirmDialog").find('#btnOK').addClass('btn-red-color');
+            $("#skillmapsConfirmDialog").find('#btnCancel').addClass('btn-cancel');
         } else if (dialog_type == "copy") {
             $("#skillmapsConfirmDialog .modal-body .message").html(
                 CONFIG.get("COPY_MESSAGE")
             );
+            $("#skillmapsConfirmDialog h5.modal-title").html(
+                $("#skillMapCopyDialogLabel").val()
+            );
+            $("#skillmapsConfirmDialog").find('#btnOK').addClass('btn-primary');
+            $("#skillmapsConfirmDialog").find('#btnCancel').addClass('btn-cancel');
         }
     });
 
+    $("#skillmapsConfirmDialog").on("hide.bs.modal", function (e) {
+        $("#skillmapsConfirmDialog").find('#btnOK').removeClass('btn-red-color btn-primary');
+        $("#skillmapsConfirmDialog h5.modal-title").html("");
+    });
     /** ------------------
      *    Delete / Copy
      --------------------- */
@@ -173,4 +187,6 @@ $(function () {
             });
         }
     });
+    
+    $("#skillmapsConfirmDialog h5.modal-title").prepend($("#titleSkillmapDialog").val());
 });

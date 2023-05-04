@@ -258,7 +258,7 @@ button {
 .note-1 > .bg-note {
     width: 50px;
     height: 17px;
-    background: pink;
+    background: #F0AE66;
     border: 1px solid;
     margin-right: 0.25rem;
 }
@@ -266,7 +266,7 @@ button {
 .note-2 > .bg-note {
     width: 50px;
     height: 17px;
-    background: yellow;
+    background: #F6DDC2;
     border: 1px solid;
     margin-right: 0.25rem;
 }
