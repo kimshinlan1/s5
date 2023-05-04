@@ -23,7 +23,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-danger fw-bold fs-1" style="margin: 0 auto;">{{ __('Evidence_Title') }}</h4>
+                <h4 class="modal-title fw-bold fs-1" style="margin: 0 auto;">{{ __('Evidence_Title') }}</h4>
                 <button type="button" id="closeEvidenceBtnId" class="btn btn-secondary">&times;</button>
             </div>
 
@@ -32,12 +32,12 @@
 
             <div class="modal-footer" style="display: flex;">
                 <div style="margin-right: auto;">
-                    <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
                     <button type="button" class="btn btn-danger" onclick="deleteBlock()" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Remove_Block_Btn') }}</button>
+                    <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-success" id="btnEvidenceSave" style="width: 125px;">{{ __('Common_button_save') }}</button>
                     <button type="button" id="cancelEvidenceBtnId" class="btn btn-secondary" style="width: 125px;">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" class="btn btn-success" id="btnEvidenceSave" style="width: 125px;">{{ __('Common_button_save') }}</button>
                 </div>
                 {{-- Hidden --}}
                 <input type="hidden" id="hidInspectionId" value=""/>

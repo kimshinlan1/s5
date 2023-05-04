@@ -22,7 +22,7 @@
             </td>
             @foreach ($inspectionIds as $inspectionId)
             <td style="text-align: center; vertical-align: middle; posotion: relative;">
-                <button class="btn-remove-column" style="width: 3rem" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="btn-remove-column" style="width: 3rem" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"><i style="color:gray" class="fa fa-times" aria-hidden="true"></i></button>
             </td>
             @endforeach
         </tr>
