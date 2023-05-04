@@ -226,7 +226,7 @@ $(function () {
         }
     })
 
-    $('#cancelBtn').on('click', function() {
+    $('#btn-cancel').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
         let oldPatternSelected = $(this).attr('data-deptid-old');
         $('#checklist5sID' + deptId).siblings().attr('data-selectedPatternId', oldPatternSelected);
@@ -360,4 +360,8 @@ $(function () {
            window.saveDataEmployee();
        }
    });
+
+   $("#departmentDeleteDialog h5.modal-title").prepend($("#titleDepartmentDialog").val());
+   $("#departmentEditDialog h5.modal-title.add").prepend($("#titleDepartmentDialog").val());
+   $("#departmentEditDialog h5.modal-title.edit").prepend($("#titleDepartmentDialog").val());
 });

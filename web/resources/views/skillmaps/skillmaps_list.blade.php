@@ -13,12 +13,12 @@
     <div class="h-title">
         <span style="margin-right: 0.5rem"> {{ __('SkillMap_List') }} </span>
         @if(auth()->user()->isModeFree())
-        <button class="btn btn-warning free-badge" style="opacity: 1; margin-top: -0.4rem;" disabled>
+        <button class="btn btn-warning free-badge" style="opacity: 1; margin-top: -0.4rem; background-color:#EE7E00" disabled>
             {{ __('Common_Free_Badge_Title') }}
         </button>
         @endif
         @if(!auth()->user()->isModeFree() && !auth()->user()->isAdmin())
-            <button class="btn btn-success paid-badge" style="opacity: 1; margin-top: -0.4rem;" disabled>
+            <button class="btn btn-success paid-badge" style="opacity: 1; margin-top: -0.4rem; background-color:#0B97C1" disabled>
                 {{ __('Common_Paid_Badge_Title') }}
             </button>
         @endif
@@ -73,7 +73,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                <h5 class="modal-title"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -81,8 +81,8 @@
                 <div class="message"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnOK">{{ __('Common_button_ok') }}</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-cancel" id="btnCancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn" id="btnOK">{{ __('Common_button_ok') }}</button>
             </div>
         </div>
     </div>

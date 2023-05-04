@@ -136,7 +136,7 @@ window.selectPattern = function(id) {
        $('.confirmMessage3').text($('#unBindDeptPatternMsg').val());
        $('#okBtn').attr('data-deptid', id);
        $('#okBtn').attr('data-patternid', dataId);
-       $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
+       $('#btn-cancel').attr('data-deptid-old', patternOldSelectedValue);
        isEmptyOption = true;
        return;
    }
@@ -149,7 +149,7 @@ window.selectPattern = function(id) {
        $('#okBtn').attr('data-deptid', id);
        $('#okBtn').attr('data-patternid', dataId);
        $('#okBtn').val(targetPatId);
-       $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
+       $('#btn-cancel').attr('data-deptid-old', patternOldSelectedValue);
        isExistedOption = true;
        return;
    }
@@ -171,7 +171,7 @@ window.selectPattern = function(id) {
            $('#okBtn').attr('data-patternid', dataId);
            $('#okBtn').attr('data-isPattern', isPattern);
            $('#okBtn').val(targetPatId);
-           $('#cancelBtn').attr('data-deptid-old', patternOldSelectedValue);
+           $('#btn-cancel').attr('data-deptid-old', patternOldSelectedValue);
        }
        if (dataId && checkDeptPattern == '') {
            checkPatternOnly = true;
@@ -290,7 +290,7 @@ $(function () {
         }
     })
 
-    $('#cancelBtn').on('click', function() {
+    $('#btn-cancel').on('click', function() {
         let deptId = $('#okBtn').attr('data-deptid');
         let oldPatternSelected = $(this).attr('data-deptid-old');
         $('#checklist5sID' + deptId).siblings().attr('data-selectedPatternId', oldPatternSelected);

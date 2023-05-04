@@ -162,15 +162,15 @@ $(function () {
    });
 
    // Click cancel button on confirmation dialog
-    $('#confirmDialog3').find('#cancelBtn').on('click', function() {
-        let beforeChangdDeptId = $('#confirmDialog3').find('#cancelBtn').attr('data-beforeChangdDeptId');
+    $('#confirmDialog3').find('#btn-cancel').on('click', function() {
+        let beforeChangdDeptId = $('#confirmDialog3').find('#btn-cancel').attr('data-beforeChangdDeptId');
         let rowPatternId = $('#confirmDialog3').find('#okBtn').attr('data-patternid');
         $('#departmentCheckList' + rowPatternId).val(beforeChangdDeptId);
     })
 
    // Click ok button on confirmation dialog
     $('#confirmDialog3').find('#okBtn').on('click', function() {
-        let beforeChangdDeptId = $('#confirmDialog3').find('#cancelBtn').attr('data-beforeChangdDeptId');
+        let beforeChangdDeptId = $('#confirmDialog3').find('#btn-cancel').attr('data-beforeChangdDeptId');
         let patternId = $('#confirmDialog3').find('#okBtn').attr('data-patternid');
         let selectedDept = $('#departmentCheckList' + patternId).find(':selected').val();
         if (!selectedDept) {
