@@ -257,10 +257,10 @@ class PatternTeamInspectionController extends Controller
      *
      * @return object
      */
-    public function removeAlbum(Request $request)
-    {
-        return $this->evidenceService->removeExistingAlbum($request);
-    }
+    // public function removeAlbum(Request $request)
+    // {
+    //     return $this->evidenceService->removeExistingAlbum($request);
+    // }
 
      /**
      * Save data from the evidence dialog

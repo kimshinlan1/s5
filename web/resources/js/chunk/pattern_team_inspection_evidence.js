@@ -36,21 +36,15 @@ function triggerCalendar(id) {
 function uploadFile(input, block, is_before, albumId) {
     let countBefore = parseInt($('#beforeUploadedIndex').val());
     let countAfter = parseInt($('#afterUploadedIndex').val());
-    let inputString = '';
-    let onclick = '';
     // Check if file is exists
     if (input.files && input.files[0]) {
         // Inactive current image, check if No Image in order remove it and set class for temporary image
         if (is_before) {
             $('#img_before' + block).find('.active').removeClass('active');
             $('#img_before' + block).children('img').remove();
-            inputString = '<input id="file-input_img_before' + block + '" type="file" class="file file-before file-input" name="file" onchange="uploadFile(this, ' + block + ', 1, `img_before' + block + '`)" accept="image/*" multiple/>'
-            onclick = 'onclick="clickOnImage(`img_before' + block + '`)"';
         } else {
             $('#img_after' + block).find('.active').removeClass('active');
             $('#img_after' + block).children('img').remove();
-            inputString = '<input id="file-input_img_after' + block + '" type="file" class="file file-after file-input" name="file" onchange="uploadFile(this, ' + block + ', 0, `img_after' + block + '`)" accept="image/*" multiple/>'
-            onclick = 'onclick="clickOnImage(`img_after' + block + '`)"';
         }
         // Loop each file
         input.files.forEach((element, index) => {
@@ -63,10 +57,8 @@ function uploadFile(input, block, is_before, albumId) {
                 let deleteImageTooltipMsg = $('#deleteMsgTooltipId').val();
                 let divClass = (index == input.files.length - 1) ? 'item active ' + fileId : 'item ' + fileId;
                 let img = '<div class="' + divClass + '" id="item' + fileId + '" data-id="' + fileId + '">' + '<button type="submit" title="' + deleteImageTooltipMsg + '" class="close-image" id="removeImage' +
-                fileId + '" onclick="removeImage(`' + fileId + '`,`'+albumId+'`,' +true+',`' + block + '`)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' +
-                '<img class="img-size" src="' + image.src + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" ' + onclick + '/> '
-                + inputString
-                + '</div>';
+                fileId + '" onclick="removeImage(`' + fileId + '`,`'+albumId+'`,' +true+',`' + fileId + '`)"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                '<img class="img-size" src="' + image.src + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + image.src + '`)"/></div>';
 
                 if (is_before) {
                     $('#img_before' + block).append(img);
@@ -250,6 +242,17 @@ function loadEvidence(inspection_id) {
 ---------------------- */
 function clickOnImage(id) {
     $('#file-input_' + id).click();
+}
+
+/*---------------------
+* Display full screen image
+---------------------- */
+function fullScreen(img_src) {
+    $('#imgFullscreen').css({
+        'background-image': 'url("' + img_src + '")',
+        'background-size': 'contain',
+        'background-position': 'center',
+    }).show();
 }
 
 /*---------------------
