@@ -8,7 +8,7 @@
                 <td class="width-data pb-2">
                     <button type="button" class="dept-btn" id="deptBtn_{{ $inspection['dept_id'] }}"
                     onclick="scrollToDiv({{ $inspection['dept_id'] }})" class="btn">
-                        <a href="javascript:void(0)" class="aLinkId">{{ $inspection['dept_name'] }}</a>
+                        <a href="javascript:void(0)" class="anchor-link">{{ $inspection['dept_name'] }}</a>
                     </button>
                     <canvas class="radarChart" id="radarchart_dept_{{ $inspection['dept_id'] }}"></canvas>
                 </td>

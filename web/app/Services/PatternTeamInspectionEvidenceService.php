@@ -148,29 +148,6 @@ class PatternTeamInspectionEvidenceService extends BaseService
     }
 
      /**
-     * Remove before/after album
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return object
-     */
-    // public function removeExistingAlbum(Request $request)
-    // {
-    //     $inspectionId = $request->get('inspectionId');
-    //     $blockID = $request->get('blockID');
-    //     $isBefore = $request->get('isBefore');
-    //     $ids = $request->get('ids');
-    //     if ($ids) {
-    //         $sourcePath = $this->inspectionImagePath($isBefore, $inspectionId, $blockID);
-    //         if (File::exists($sourcePath)) {
-    //             File::deleteDirectory($sourcePath);
-    //         }
-    //         return $this->imageModel::whereIn('id', $ids)->delete();
-    //     }
-    //     return false;
-    // }
-
-     /**
      * Save data from the evidence dialog
      *
      * @param  \Illuminate\Http\Request  $request

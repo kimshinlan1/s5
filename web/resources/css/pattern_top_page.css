@@ -18,10 +18,10 @@
     word-wrap: break-word;
     padding: 10px;
 }
-.aLinkId {
+.anchor-link {
     color: #0B97C1;
 }
-.aLinkId:hover {
+.anchor-link:hover {
     opacity: 0.5;
 }
 .radarChart {
