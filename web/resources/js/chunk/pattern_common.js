@@ -598,7 +598,14 @@ window.formatOverflowedButtonText = function(ele) {
     }
     while ( (ele.prop('scrollWidth') > ele.prop('offsetWidth')) || (ele.prop('scrollHeight') > (ele.prop('offsetHeight') + borderSize)) ) {
       // Remove characters from paragraph until the text and the overflow indicator fit
-      ele.html(ele.html().substring(0, ele.text().length-1));
+      ele.find('a').html(ele.find('a').html().substring(0, ele.find('a').text().length-1));
+    }
+    if (ele.hasClass('has-overflow')) {
+        if (ele.find('a').text().endsWith("!!")) {
+            ele.find('a').html(ele.find('a').html().slice(0, -9) + "。。。");
+        } else {
+            ele.find('a').html(ele.find('a').html().slice(0, -4) + "。。。");
+        }
     }
 }
 
