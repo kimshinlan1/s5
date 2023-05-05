@@ -454,7 +454,6 @@ window.dialogModalHide = function (dialog, form) {
             $(form + ' .invalid-feedback').html('');
         });
     }
-
 }
 
 /** ------------------

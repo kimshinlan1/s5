@@ -251,18 +251,6 @@ class PatternTeamInspectionController extends Controller
     }
 
      /**
-     * Remove before/after album
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return object
-     */
-    public function removeAlbum(Request $request)
-    {
-        return $this->evidenceService->removeExistingAlbum($request);
-    }
-
-     /**
      * Save data from the evidence dialog
      *
      * @param  \Illuminate\Http\Request  $request

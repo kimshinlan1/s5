@@ -15,12 +15,23 @@
   <form id="formFormsInput">
     {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
     <table id="tableDetailInspection" class="table table-bordered">
+        {{-- Remove Button --}}
         <tr style="border-color: transparent;">
             <td colspan="3" style="text-align: center; padding: 0rem;">
                 <input id="addColumnId" class="btn btn-primary btn-add-inspection" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
             @foreach ($inspectionIds as $inspectionId)
+            <td style="text-align: center; vertical-align: middle; posotion: relative;">
+                <button class="btn-remove-column" style="width: 3rem" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"><i style="color:gray" class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+            @endforeach
+        </tr>
+        <tr style="border-color: transparent;">
+            <td colspan="3" style="text-align: center; padding: 0rem;">
+            </td>
+            @foreach ($inspectionIds as $inspectionId)
             <?php $countFirstTime-- ?>
+
             <td style="text-align: center; vertical-align: bottom; padding: 0rem;">
                 <label><strong>{{ $countFirstTime }}{{ $theFirstTime }}</strong></label>
             </td>
@@ -40,16 +51,6 @@
                 <input type="text" placeholder="年月日" style="width: 170px; text-align: center; border-radius: 6px;" id="txtInspectionDate_{{ $inspectionId }}" value="{{ $date }}" />
                 <input type="hidden" id="hidInspectionDate_{{ $inspectionId }}" value="{{ $date }}"/>
                 <input type="hidden" class="hidInspectionClass" id="hidInspectionId_{{ $inspectionId }}" value="{{ $inspectionId }}"/>
-            </td>
-            @endforeach
-        </tr>
-        {{-- Remove Button --}}
-        <tr style="border-color: transparent;">
-            <td colspan="3" class="title-chart" style="vertical-align: middle;">
-            @foreach ($inspectionIds as $inspectionId)
-            <?php $countFirstTime-- ?>
-            <td style="text-align: center">
-                <input class="btn-remove-column" style="width: 3rem" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"/>
             </td>
             @endforeach
         </tr>

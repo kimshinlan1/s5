@@ -57,6 +57,7 @@
 <div id="content"></div>
 
 <button type="button" class="btn btn-success my-3" id="btnSave">{{ __('Common_button_save') }}</button>
+<button type="button" class="btn my-3 free-badge" style="color: white" id="btnInspectionPDF">{{ __('Common_button_PDF') }}</button>
 
 <div><br/></div>
 <!-- Modal confirm save data -->
