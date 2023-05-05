@@ -340,10 +340,10 @@
     <div class="shadow list-group right-click-menu" id="right-click-menu">
         <button type="button" class="list-group-item list-group-item-action btn-ripple active-while border-button"
             onclick="paintBgSkillMap(this, 'while')">{{ __('SkillUp_Button_0') }}</button>
-        <button type="button" class="list-group-item list-group-item-action btn-ripple active-pink border-button"
-            onclick="paintBgSkillMap(this, 'pink')">{{ __('SkillUp_Button_1') }}</button>
+        <button type="button" class="list-group-item list-group-item-action btn-ripple active-orange border-button"
+            onclick="paintBgSkillMap(this, '#F0AE66')">{{ __('SkillUp_Button_1') }}</button>
         <button type="button" class="list-group-item list-group-item-action btn-ripple active-yellow border-button"
-            onclick="paintBgSkillMap(this, 'yellow')">{{ __('SkillUp_Button_2') }}</button>
+            onclick="paintBgSkillMap(this, '#F6DDC2')">{{ __('SkillUp_Button_2') }}</button>
     </div>
 
     <!-- Modal -->
@@ -394,7 +394,7 @@
                     <button type="button" class="btn btn-cancel" data-dismiss="modal"
                     id="btnCancelConfirm">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="deleteDataSkillMap()"
-                        class="btn btn-red-color">{{ __('Common_button_ok') }}</button>
+                        class="btn btn-red-color">{{ __('Common_Delete') }}</button>
                 </div>
             </div>
         </div>
@@ -411,7 +411,7 @@
                     <span>{{ __('SkillMap_Question_BackPage') }}</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="backPageSaveData(false)">
+                    <button type="button" class="btn btn-delete" onclick="backPageSaveData(false)">
                         {{ __('SkillMap_Cancel_Save_Button') }}</button>
                     <button type="button" onclick="backPageSaveData(true)"
                         class="btn btn-primary">{{ __('Common_button_save') }}</button>

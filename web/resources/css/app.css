@@ -79,6 +79,10 @@
     border: 2px solid var(--text-primary) !important;
  }
 
+ .btn-danger:focus, .btn-danger.active:focus {
+    box-shadow: 0 0 0 0.1rem var(--text-primary) !important;
+ }
+
 .btn-copy {
     color:#fff;
     background-color:#31d2f2;
