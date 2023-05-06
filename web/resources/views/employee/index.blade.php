@@ -143,7 +143,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-red-color" id="deleteEmployeeBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-red-color" id="deleteEmployeeBtn">{{ __('Common_Delete') }}</button>
             </div>
         </div>
     </div>

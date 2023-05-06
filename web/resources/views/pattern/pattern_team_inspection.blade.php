@@ -91,10 +91,10 @@
                 <div><span style="font-size: 0.9rem;">{{ __('TeamInspection_Confirm_Delete') }}</span></div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="acceptRemoveColumn()"
-                    class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                <button type="button" class="btn btn-secondary" onclick="cancelRemoveColumn()">
+                <button type="button" class="btn btn-cancel" onclick="cancelRemoveColumn()">
                     {{ __('Common_button_cancel') }}</button>
+                <button type="button" onclick="acceptRemoveColumn()"
+                    class="btn btn-red-color">{{ __('Common_Delete') }}</button>
             </div>
         </div>
     </div>

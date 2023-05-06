@@ -289,23 +289,23 @@ button {
 .active-yellow {
     z-index: 2;
     color: rgb(0, 0, 0);
-    background-color: yellow;
+    background-color: #F6DDC2;
     border-color: rgb(233, 236, 239);
 }
 
 .active-yellow:hover {
-    background-color: yellow;
+    background-color: #F6DDC2;
 }
 
-.active-pink {
+.active-orange {
     z-index: 2;
     color: rgb(0, 0, 0);
-    background-color: pink;
+    background-color: #F0AE66;
     border-color: rgb(233, 236, 239);
 }
 
-.active-pink:hover {
-    background-color: pink;
+.active-orange:hover {
+    background-color: #F0AE66;
 }
 
 .toast {
