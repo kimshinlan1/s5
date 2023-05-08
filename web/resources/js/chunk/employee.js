@@ -17,7 +17,7 @@
   --------------------- */
  window.employeeTableActions = function (_value, row, _index) {
      return (
-         '<button style="margin-right: 20px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+         '<button style="margin-right: 8px;" type="button" class="btn btn-primary btn-sm" data-id="' +
          row.id + '" data-bs-toggle="modal" data-bs-target="#employeeEditDialog" >編集</button> ' +
          '<button type="button" class="btn btn-danger btn-sm" data-id="' +
          row.id + '" data-bs-toggle="modal" data-bs-target="#employeeDeleteDialog" >削除</button>'
@@ -292,10 +292,12 @@ window.loadDeptListByComp = function(id, deptID = null) {
 
              $("#employeeEditDialog .modal-title.add").hide();
              $("#employeeEditDialog .modal-title.edit").show();
+             $("#saveEmployeeBtn").text($("#editDialogButtonOK").val());
          } else {
             clearDialog();
             $("#employeeEditDialog .modal-title.edit").hide();
             $("#employeeEditDialog .modal-title.add").show();
+            $("#saveEmployeeBtn").text($("#addDialogButtonOK").val());
          }
         setTimeout(function (){
             $('#employeeName').focus();

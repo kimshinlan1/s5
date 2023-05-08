@@ -46,7 +46,7 @@
             <th data-field="no" data-visible="false">{{ __('Team_No') }}</th>
             <th data-field="name" class="word-wrap">{{ __('Team_Name') }}</th>
             <th data-field="department.name" class="word-wrap">{{ __('Department') }}</th>
-            <th data-width="240" data-formatter="teamTableActions"></th>
+            <th class="text-align-webkit-center" data-width="240" data-formatter="teamTableActions"></th>
         </tr>
     </thead>
 </table>
@@ -102,8 +102,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-cancel" id="saveEmployeeBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                <button type="button" class="btn btn-primary" id="saveEmployeeBtn">{{ __('Common_button_ok_add_dialog') }}</button>
             </div>
         </div>
     </div>

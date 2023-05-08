@@ -110,6 +110,7 @@ window.clearDialog = function () {
     $('#companyNo').val('');
     $('#companyMode').val('');
     $('#5sMode').val('');
+    $("saveCompanyBtn").val('');
 }
 
 /** ------------------
@@ -308,6 +309,7 @@ $(function () {
 
             $("#companyEditDialog .modal-title.add").hide();
             $("#companyEditDialog .modal-title.edit").show();
+            $("#saveCompanyBtn").text($("#editDialogButtonOK").val());
         } else {
             clearDialog();
             $("#companyEditDialog .modal-title.edit").hide();
@@ -320,6 +322,7 @@ $(function () {
             $(".form-check").attr("hidden", false);
             $("#companyModeLabel").attr("hidden", false);
             $("#5sModeLabel").attr("hidden", false);
+            $("#saveCompanyBtn").text($("#addDialogButtonOK").val());
         }
         setTimeout(function (){
             $('#companyNo').focus();

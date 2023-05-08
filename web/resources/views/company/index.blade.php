@@ -21,7 +21,7 @@
                 <th data-field="no" class="word-wrap align-middle" rowspan="2" data-cell-style="noStyle">{{ __('Company_No') }}</th>
                 <th data-field="name" data-formatter="customCell" class="word-wrap align-middle" rowspan="2" data-cell-style="nameStyle">{{ __('Company_Name') }}</th>
                 <th data-field="mode" data-formatter="formatterDataMode" colspan="2" data-cell-style="modeStyle">{{ __('Company_Mode') }}</th>
-                <th data-width="130" data-formatter="companyTableActions" rowspan="2" data-cell-style="btnStyle"></th>
+                <th class="text-align-webkit-center" data-width="130" data-formatter="companyTableActions" rowspan="2" data-cell-style="btnStyle"></th>
             </tr>
             <tr style="text-align: center;">
                 <th data-field="mode" data-width="240" data-formatter="formatterDataMode">{{ __('Company_TechMap_Mode') }}</th>
@@ -33,7 +33,7 @@
 
     {{-- Add/Edit Dialog --}}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#companyEditDialog">
-        {{ __('Common_button_add') }}
+        {{ __('Company_Button_Add') }}
     </button>
 
     <div id="companyEditDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
@@ -110,10 +110,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel"
+                    data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
                     <button type="button" class="btn btn-primary"
-                        id="saveCompanyBtn">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-primary"
-                        data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                        id="saveCompanyBtn"></button>
                 </div>
             </div>
         </div>
@@ -132,10 +132,10 @@
                     <div class="message"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"
-                        id="deleteCompanyBtn">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-cancel"
                         data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" class="btn btn-red-color"
+                        id="deleteCompanyBtn">{{ __('Common_Delete') }}</button>
                 </div>
             </div>
         </div>
