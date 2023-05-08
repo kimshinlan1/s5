@@ -158,7 +158,7 @@
             <table style="width: 100%; padding: 0px">
                 <tr>
                     <td style="width: 20%;">
-                        <div style="background-color: pink; height: 15px; border: black solid 1px"></div>
+                        <div style="background-color: #F6DDC2; height: 15px; border: black solid 1px"></div>
                     </td>&nbsp;&nbsp;
                     <td style="width: 85%; text-align: left; font-size: 0.8em;">
                         {{ __("SkillMap_Up_Note_1") }}
@@ -170,7 +170,7 @@
             <table style="width: 100%; padding: 0px">
                 <tr>
                     <td style="width: 20%;">
-                        <div style="background-color: yellow; height: 15px; border: black solid 1px"></div>
+                        <div style="background-color: #F0AE66; height: 15px; border: black solid 1px"></div>
                     </td>&nbsp;&nbsp;
                     <td style="width: 85%; text-align: left; font-size: 0.8em;">
                         {{ __("SkillMap_Up_Note_2") }}
@@ -241,7 +241,7 @@
                     </td>
 
                     @foreach($row['employee_skills']['skill_level_id'] as $i => $skill)
-                        <td align="center" @if($skill['skill_up'] == "1") bgcolor="yellow" @elseif ($skill['skill_up'] == "2") bgcolor="pink" @endif >
+                        <td align="center" @if($skill['skill_up'] == "1") bgcolor="#F0AE66" @elseif ($skill['skill_up'] == "2") bgcolor="#F6DDC2" @endif >
                             {!! $skill['skill_level'] !!}
                         </td>
                     @endforeach
