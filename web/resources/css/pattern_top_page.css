@@ -16,7 +16,7 @@
     background-color: transparent;
     border-color: transparent;
     border-radius: 8px;
-    text-align: left;
+    text-align: center;
 }
 .anchor-link {
     color: #0b97c1;
@@ -54,8 +54,7 @@
     background-color: transparent;
     border-color: transparent;
     border-radius: 8px;
-    text-align: left;
-    /* padding: 10px; */
+    text-align: center;
 }
 .has-overflow:after {
     /* content: "。。。"; */
