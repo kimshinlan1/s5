@@ -19,8 +19,8 @@ let objMapSkillLevel = {
 
 let objMapSkillUp = {
     0: 'while',
-    1: 'yellow',
-    2: 'pink'
+    1: '#F0AE66',
+    2: '#F6DDC2'
 };
 let countMinusCategory = 0;
 let indexCategory = 0;
@@ -691,6 +691,7 @@ function btnOpenModalBackPage() {
     let param = getData(null) ? getData(null)['data'] : getData(null);
     if (!param || param['result'].length == 0) {
         window.location = '/skillmaps_list';
+        return;
     }
     if (!paramCompare(sParam, param)) {
         $("#backPageModalConfirm").modal('show');
@@ -876,7 +877,7 @@ function paintBgSkillMap(_event, type) {
             $(elementSkillMap).find('select').css({ 'background': '' });
             $(elementSkillMap).find('select').css({ 'background-image': 'none' });
             break;
-        case 'yellow':
+        case '#F0AE66':
             $(elementSkillMap).find('select').css({ 'background': type });
             break;
         default:
@@ -1121,10 +1122,10 @@ function getData(chart) {
                 let skillUpName = $('#' + numberCategory + '-skillLevel-' + row + '-' + col).attr('data-skillup');
                 let skillUp = 0;
                 switch (skillUpName) {
-                    case 'yellow':
+                    case '#F0AE66':
                         skillUp = 1;
                         break;
-                    case 'pink':
+                    case '#F6DDC2':
                         skillUp = 2
                         break;
                     default:
