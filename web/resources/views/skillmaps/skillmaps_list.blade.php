@@ -52,7 +52,7 @@
             <th data-align="center" data-formatter="indexNo">No.</th>
             <th data-field="department.name" class="word-wrap">{{ __('Department') }}</th>
             <th data-field="name" class="word-wrap">{{ __('SkillMap_Line_Name') }}</th>
-            <th data-width="188" data-formatter="skillmapsTableActions"></th>
+            <th class="text-align-webkit-center" data-width="188" data-formatter="skillmapsTableActions"></th>
         </tr>
     </thead>
 </table>

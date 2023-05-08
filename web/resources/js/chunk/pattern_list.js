@@ -45,7 +45,7 @@ window.patternListTableActions = function (_value, row, _index) {
  --------------------- */
 window.cellStyle = function () {
     return {
-        classes: 'justify-content-around',
+        classes: 'justify-content-around text-align-webkit-center',
     }
 }
 

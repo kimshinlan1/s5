@@ -68,10 +68,10 @@ window.getUserTableList = function (params) {
  --------------------- */
  window.userTableActions = function (_value, row, _index) {
     if(row.role_id == CONFIG.get('ROLE_ADMIN_ID') || row.id == $('#hidAuthUserId').val()) {
-        return '<button id = "btn-edit" style="margin: 4px;" type="button" class="btn btn-sm btn-primary" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
+        return '<button id = "btn-edit" style="margin-right: 12px;" type="button" class="btn btn-sm btn-primary" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
             '<button type="button" class="btn btn-danger btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog" disabled>削除</button>';
     } else {
-        return '<button id = "btn-edit" style="margin: 4px;" type="button" class="btn btn-sm btn-primary" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
+        return '<button id = "btn-edit" style="margin-right: 12px;" type="button" class="btn btn-sm btn-primary" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userEditDialog">編集</button> '+
             '<button type="button" class="btn btn-danger btn-sm" data-id="'+row.id+'" data-bs-toggle="modal" data-bs-target="#userDeleteDialog">削除</button>';
     }
 }
@@ -243,6 +243,7 @@ $(function(){
 
             $('#userEditDialog .modal-title.add').hide();
             $('#userEditDialog .modal-title.edit').show();
+            $("#saveUserBtn").text($("#editDialogButtonOK").val());
         }
     });
 
@@ -266,6 +267,7 @@ $(function(){
         $('#userPassword').prop('required', true);
         $('#userRoleId').prop('disabled', false);
         $('#userPassword').val(createRandomPassword());
+        $("#saveUserBtn").text($("#addDialogButtonOK").val());
         reloadCompanyOptions();
         $('#userPassword').val();
 
