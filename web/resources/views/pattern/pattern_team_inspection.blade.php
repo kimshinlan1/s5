@@ -8,6 +8,7 @@
     <script src="{!! url('assets/jquery/jquery.ui.datepicker-ja.min.js') !!}" type="text/javascript"></script>
     <script src="{{ mix('js/pattern_common.js') }}" defer></script>
     <script src="{{ mix('/js/pattern_team_inspection.js') }}"></script>
+    <script src="{{ mix('/js/pattern_team_inspection_pdf.js') }}"></script>
     <script src="{{ mix('/js/pattern_team_inspection_evidence.js') }}"></script>
 @endpush
 

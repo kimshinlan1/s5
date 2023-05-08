@@ -18,6 +18,7 @@ use App\Http\Controllers\PatternDetailController;
 use App\Http\Controllers\PatternTopPageController;
 use App\Http\Controllers\PatternDeptSettingController;
 use App\Http\Controllers\PatternTeamInspectionController;
+use App\Http\Controllers\PatternTeamInspectionPDFController;
 use App\Http\Controllers\TopPageController;
 
 /*
@@ -159,6 +160,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/pattern_team_inspection/evidence/image/{id}', [PatternTeamInspectionController::class, 'removeImage']);
         Route::post('/pattern_team_inspection/evidence/removeAlbum', [PatternTeamInspectionController::class, 'removeAlbum']);
         Route::post('/pattern_team_inspection/evidence/save', [PatternTeamInspectionController::class, 'save']);
+
+        // Team inspection pdf
+        Route::post('/pattern_team_inspection/loadPDFView', [PatternTeamInspectionPDFController::class, 'loadPDFContent']);
+        Route::get('/pattern_team_inspection_exportPdf', [PatternTeamInspectionPDFController::class, 'exportPDFContent']);
+
 
         // Pattern top page
         Route::get('/pattern_top_page', [PatternTopPageController::class, 'index']);

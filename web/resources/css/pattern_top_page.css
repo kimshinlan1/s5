@@ -7,19 +7,20 @@
     height: 100%;
 }
 .toppage-button {
-    border-color: transparent !important;
-    margin-bottom: 20px;
     width: 250px;
-    height: 80px;
-    line-height: 25px;
-    border-radius: 8px;
+    height: 40px;
+    line-height: 15px;
     overflow: hidden;
     white-space: normal;
     word-wrap: break-word;
-    padding: 10px;
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 8px;
+    text-align: left;
 }
 .anchor-link {
-    color: #0B97C1;
+    color: #0b97c1;
+    font-weight: bold;
 }
 .anchor-link:hover {
     opacity: 0.5;
@@ -47,7 +48,7 @@
     width: 250px;
     height: 40px;
     line-height: 15px;
-    /* overflow: hidden; */
+    overflow: hidden;
     white-space: normal;
     word-wrap: break-word;
     background-color: transparent;

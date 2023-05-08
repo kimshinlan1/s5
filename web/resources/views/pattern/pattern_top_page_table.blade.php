@@ -49,8 +49,8 @@
                                 <canvas class="radarChart"
                                     id="radarchart_team_{{ $team['team_id'] }}">
                                 </canvas>
-                                <button class="btn-info rounded-3 toppage-button" id="btnInput_{{ $team['team_id'] }}"
-                                onclick="gotoInspectionPage('{{ $team['team_id'] }}', {{ $inspection['dept_id'] }})"> {{ $team['team_name'] }} </button>
+                                <button class="toppage-button" id="btnInput_{{ $team['team_id'] }}"
+                                onclick="gotoInspectionPage('{{ $team['team_id'] }}', {{ $inspection['dept_id'] }})"> <a href="javascript:void(0)" class="anchor-link">{{ $team['team_name'] }}</a> </button>
                             </td>
                         @if (($teamKey + 1) % 3 == 0 || $loop->last)
                             </tr>
