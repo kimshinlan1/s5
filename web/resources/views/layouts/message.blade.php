@@ -57,5 +57,9 @@
 <input type="hidden" id="titleSkillmapDialog" name="titleSkillmapDialog" value="{{ __('SkillMap_Label') }}"/>
 <input type="hidden" id="deleteLabel" name="deleteLabel" value="{{ __('Common_Delete_Label') }}"/>
 <input type="hidden" id="skillMapCopyDialogLabel" name="skillMapCopyDialogLabel" value="{{ __('SkillMap_Copy_Dialog_Label') }}"/>
+<<<<<<< HEAD
 <input type="hidden" id="editDialogButtonOK" name="editDialogButtonOK" value="{{ __('Common_button_ok_save') }}"/>
+=======
+<input type="hidden" id="editDialogButtonOK" name="editDialogButtonOK" value="{{ __('Common_button_ok_edit_dialog') }}"/>
+>>>>>>> 3c6c18ba9805ad77f9a613c2c3267a6fb1d1ad59
 <input type="hidden" id="addDialogButtonOK" name="addDialogButtonOK" value="{{ __('Common_button_ok_add_dialog') }}"/>
