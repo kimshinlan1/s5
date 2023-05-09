@@ -47,11 +47,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" id="btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-<<<<<<< HEAD
                 <button type="button" class="btn btn-primary" id="okBtn" data-isSaveMode="" value="" data-deptid="" data-patternid="" data-isPattern="" data-compId="" data-bs-dismiss="modal">{{ __('Common_button_ok_save') }}</button>
-=======
-                <button type="button" class="btn btn-primary" id="okBtn" data-isSaveMode="" value="" data-deptid="" data-patternid="" data-isPattern="" data-compId="" data-bs-dismiss="modal">{{ __('Common_button_ok_edit_dialog') }}</button>
->>>>>>> 3c6c18ba9805ad77f9a613c2c3267a6fb1d1ad59
             </div>
         </div>
     </div>
