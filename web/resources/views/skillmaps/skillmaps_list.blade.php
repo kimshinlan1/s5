@@ -52,7 +52,7 @@
             <th data-align="center" data-formatter="indexNo">No.</th>
             <th data-field="department.name" class="word-wrap">{{ __('Department') }}</th>
             <th data-field="name" class="word-wrap">{{ __('SkillMap_Line_Name') }}</th>
-            <th data-width="188" data-formatter="skillmapsTableActions"></th>
+            <th class="text-align-webkit-center" data-width="188" data-formatter="skillmapsTableActions"></th>
         </tr>
     </thead>
 </table>
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" id="btnCancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn" id="btnOK">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn" id="btnOK">{{ __('Common_Delete') }}</button>
             </div>
         </div>
     </div>

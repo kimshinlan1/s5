@@ -61,7 +61,7 @@
             <th data-field="email" data-sortable="true" class="word-wrap">{{ __('Common_Email') }}</th>
             <th data-field="department.name" data-sortable="true" class="word-wrap">{{ __('Department') }}</th>
             <th data-field="team.name" data-sortable="true" class="word-wrap">{{ __('Team') }}</th>
-            <th data-width="130" data-sortable="true" data-formatter="employeeTableActions">　</th>
+            <th class="text-align-webkit-center" data-width="130" data-sortable="true" data-formatter="employeeTableActions">　</th>
         </tr>
     </thead>
 </table>
@@ -71,7 +71,7 @@
 <label style="color: orange; font-size: 12px;" for="" class="form-label">{{ __('Deparment_Count_Employee') }}</label>
 <br />
 <button type="button" class="btn btn-primary" id="btnAdd">
-    {{ __('Common_button_add') }}
+    {{ __('Employee_Button_Add') }}
 </button>
 
 <div id="employeeEditDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
@@ -123,7 +123,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-primary" id="saveEmployeeBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-primary" id="saveEmployeeBtn"></button>
             </div>
         </div>
     </div>

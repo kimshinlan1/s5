@@ -138,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-primary" id="saveDepartmentBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-primary" id="saveDepartmentBtn"></button>
             </div>
         </div>
     </div>

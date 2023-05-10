@@ -32,7 +32,7 @@
             <th data-field="name" data-width="270" class="word-wrap">{{ __('Common_User_Name') }}</th>
             <th data-width="180" data-field="company.name" class="word-wrap" data-formatter="customCell">{{ __('Company') }}</th>
             <th data-width="180" data-field="updated_at" data-formatter="dateFormatter">{{ __('User_Update_Date') }}</th>
-            <th data-width="130" data-formatter="userTableActions"></th>
+            <th class="text-align-webkit-center" data-width="130" data-formatter="userTableActions"></th>
         </tr>
     </thead>
 </table>
@@ -40,7 +40,7 @@
 
 {{-- Add/Edit Dialog --}}
 <button type="button" class="btn btn-primary" id="btnAdd">
-    {{ __('Common_button_add') }}
+    {{ __('Account_Button_Add') }}
 </button>
 <div id="userEditDialog" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -111,7 +111,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-primary" id="saveUserBtn">{{ __('Common_button_ok') }}</button>
+                <button type="button" class="btn btn-primary" id="saveUserBtn"></button>
             </div>
         </div>
     </div>

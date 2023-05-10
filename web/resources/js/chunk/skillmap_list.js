@@ -48,9 +48,9 @@ window.skillmapsTableActions = function (_value, row, index) {
         confirmDialog = '#skillmapsConfirmDialog';
     }
     return (
-        '<button  style="margin-right: 12px;"  type="button" class="btn btn-sm btn-copy btn-primary" data-type="copy" data-id="' +
+        '<button  style="margin: 4px;"  type="button" class="btn btn-sm btn-copy btn-primary" data-type="copy" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target='+ confirmDialog +' >複製</button> ' +
-        '<button style="margin-right: 12px;" type="button" class="btn btn-sm btn-edit btn-primary" data-id="' +
+        '<button style="margin: 4px;" type="button" class="btn btn-sm btn-edit btn-primary" data-id="' +
         row.id + '" onclick="openEdit(' +row.id+ ' ,' + no + ')" >編集</button> ' +
         '<button type="button" class="btn btn-sm skillMapDeleteBtn btn-danger" data-type="del" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target='+ confirmDialog +'>削除</button>'

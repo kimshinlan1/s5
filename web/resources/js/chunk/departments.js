@@ -17,7 +17,7 @@ var isFreeWarning = false;
  --------------------- */
 window.departmentTableActions = function (_value, row, _index) {
    return (
-        '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-primary btn-sm" data-id="' +
+        '<button style="margin-right: 18px; width: 55px;" type="button" class="btn btn-primary btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentEditDialog" >編集</button> ' +
         '<button style="margin: 4px; width: 55px;" type="button" class="btn btn-danger btn-sm" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target="#departmentDeleteDialog" >削除</button>'
@@ -92,6 +92,7 @@ window.indexNo = function (_value, _row, index) {
 window.clearDialog = function () {
    $('#departmentName').val('');
    $('#teamName').val('');
+   $("#saveDepartmentBtn").val('');
 }
 
 /** ------------------
@@ -281,10 +282,12 @@ $(function () {
            $("#noID").val(rowData.no)
            $("#departmentEditDialog .modal-title.add").hide();
            $("#departmentEditDialog .modal-title.edit").show();
+           $("#saveDepartmentBtn").text($("#editDialogButtonOK").val());
        } else {
            clearDialog();
            $("#departmentEditDialog .modal-title.edit").hide();
            $("#departmentEditDialog .modal-title.add").show();
+           $("#saveDepartmentBtn").text($("#addDialogButtonOK").val());
        }
        setTimeout(function (){
         $('#departmentName').focus();
