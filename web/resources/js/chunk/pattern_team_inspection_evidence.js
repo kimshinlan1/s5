@@ -626,6 +626,7 @@ function handleConfirmOkBtn(isSaveMode) {
     $("body #patternEvidenceDialog").find('#cancelEvidenceBtnId').click(function () {
         if ($("[class*='file_']").length > 0) {
             $("#confirmDialog3").modal('show');
+            $("#confirmDialog3").find('.modal-title').html($('#confirmMsgId').val());
             $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);
             $("#confirmDialog3").find('.confirmMessage3').text($('#closeDialogMsgId').val());
         } else {
