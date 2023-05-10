@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
 use App\Services\PatternTeamInspectionPDFService;
 use Barryvdh\Snappy\Facades\SnappyPdf;
-use Illuminate\Support\Facades\File;
 
 use Illuminate\Http\Request;
 
@@ -63,18 +62,14 @@ class PatternTeamInspectionPDFController extends Controller
     {
         try {
             $html = Session::get("pdfHtml");
-
             $snappy = SnappyPdf::loadHTML($html)
                         ->setPaper('A4')
                         ->setOptions([
-                            'margin-bottom' => 0,
+                            // 'margin-bottom' => 5,
+                            // 'margin-top' => 35,
+                            'encoding' => 'UTF-8',
                         ])
                         ->setOrientation('landscape');
-                        // display file pdf on browser
-            header('Content-Type: application/pdf');
-            header('Content-Disposition: inline; filename="' . 'table.pdf' . '"');
-            header('Content-Transfer-Encoding: binary');
-            header('Accept-Ranges: bytes');
             return  $snappy->inline('table.pdf');
         } catch (\Throwable $th) {
             return response()->json(
@@ -82,20 +77,4 @@ class PatternTeamInspectionPDFController extends Controller
             );
         }
     }
-
-    /**
-     * Render and save PDF
-     */
-    public function renderAndSavePdf($pdf, $path, $html)
-    {
-        $pdf->render();
-        // save file pdf to folder
-        file_put_contents($path, $pdf->output());
-        // free memory
-        unset($html);
-        unset($pdf);
-        // read file pdf in folder above to browser
-        return public_path($path);
-    }
-
 }
