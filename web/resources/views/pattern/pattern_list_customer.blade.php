@@ -79,10 +79,10 @@
                     <div class="message"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"
-                        id="deletePatternListBtn">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-primary"
-                        data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" class="btn btn-cancel"
+                    data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" class="btn btn-red-color"
+                        id="deletePatternListBtn">{{ __('Common_Delete') }}</button>
                 </div>
             </div>
         </div>

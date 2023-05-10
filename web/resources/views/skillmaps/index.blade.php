@@ -456,7 +456,7 @@
                     <button type="button" class="btn btn-cancel" onclick="cancelSaveDataChange()">
                         {{ __('Common_button_cancel') }}</button>
                         <button type="button" onclick="saveDataChange()"
-                            class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                            class="btn btn-primary">{{ __('Common_button_ok_save') }}</button>
                 </div>
             </div>
         </div>
