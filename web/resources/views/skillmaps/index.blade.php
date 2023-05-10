@@ -447,7 +447,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('SkillMap_Remove_Title') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('SkillMap_Save_Title') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <span>{{ __('Skillmap_Button_Save_Confirm') }}</span>
