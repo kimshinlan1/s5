@@ -447,7 +447,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ __('SkillMap_Remove_Title') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <span>{{ __('Skillmap_Button_Save_Confirm') }}</span>
@@ -456,7 +456,7 @@
                     <button type="button" class="btn btn-cancel" onclick="cancelSaveDataChange()">
                         {{ __('Common_button_cancel') }}</button>
                         <button type="button" onclick="saveDataChange()"
-                            class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                            class="btn btn-primary">{{ __('Common_button_ok_save') }}</button>
                 </div>
             </div>
         </div>
