@@ -36,7 +36,7 @@
                     <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
                 </div>
                 <div>
-                    <button type="button" id="cancelEvidenceBtnId" class="btn btn-danger" style="width: 125px;">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" id="cancelEvidenceBtnId" class="btn btn-cancel" style="width: 125px;">{{ __('Common_button_cancel') }}</button>
                     <button type="button" class="btn btn-primary" id="btnEvidenceSave" style="width: 125px;">{{ __('Common_button_save') }}</button>
                 </div>
                 {{-- Hidden --}}

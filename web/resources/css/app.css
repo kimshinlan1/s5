@@ -71,18 +71,24 @@
     background-color: var(--paid-badge-color) !important;
     color: #fff !important;
     border: 0 !important;
- }
+}
+
+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:hover {
+    box-shadow: 0 0 0 0.1rem var(--paid-badge-color) !important;
+    background-color: var(--paid-badge-color) !important;
+}
 
 .btn-danger {
     background-color: var(--delete-button-bg-color) !important;
     color: var(--text-primary) !important;
-    border: 2px solid var(--text-primary) !important;
+    border: 1px solid var(--text-primary) !important;
     padding-top: 2px !important;
     padding-bottom: 2px !important;
  }
 
  .btn-danger:focus, .btn-danger.active:focus {
     box-shadow: 0 0 0 0.1rem var(--text-primary) !important;
+    background-color: var(--delete-button-bg-color) !important;
  }
 
 .btn-copy {
@@ -271,7 +277,8 @@ a.button-upload:hover {
 
 .btn-danger:hover,
 .btn-cancel:hover {
-    background-color: #dbdbdb91 !important;
+    box-shadow: 0 0 0 0.1rem var(--text-primary) !important;
+    background-color: var(--delete-button-bg-color) !important;
 }
 
 .btn-danger:disabled{
@@ -285,7 +292,7 @@ a.button-upload:hover {
 .btn-white-color {
     background-color: var(--delete-button-bg-color) !important;
     color: var(--text-primary) !important;
-    border: 2px solid var(--text-primary) !important;
+    border: 1px solid var(--text-primary) !important;
 }
 
 .btn-navy-color {
@@ -299,3 +306,9 @@ a.button-upload:hover {
     background-color: var(--button-red-color) !important;
     color: #fff !important;
 }
+
+.btn-red-color:focus, .btn-red-color.active:focus, .btn-red-color:hover {
+    box-shadow: 0 0 0 0.1rem var(--button-red-color) !important;
+    background-color: var(--button-red-color) !important;
+    color: #fff !important;
+ }

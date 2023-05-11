@@ -701,7 +701,7 @@ function renderChart(isRender) {
             // add header
             htmlChart += window.generateHeaderHtml(dataFinal['title'], item.employee, dataFinal['dateFrom'], dataFinal['dateTo']);
             // add chart for employee
-            htmlChart += window.generateBodyHtml(item, canvas, img, divC, divF, labelTitle);   
+            htmlChart += window.generateBodyHtml(item, canvas, img, divC, divF, labelTitle);
         }
         // clear previous tmp canvas
         canvas.remove();
@@ -727,7 +727,7 @@ $(function () {
     /** ------------------
      *    Event click button pdf skill map.
      --------------------- */
-    $(".btn-pdf").click(function () {
+    $('#domPdfDialogId').find('#domPdfBtnId').on('click', function() {
         $("#pdf-export1").attr("hidden", false)
         $("#pdf-export2").attr("hidden", true)
         isExportChart = false;
@@ -756,12 +756,12 @@ $(function () {
                 $("#saveExportPdf").modal('show');
             }
         }
-    });
-
+        $("#domPdfDialogId").modal('hide');
+    })
     /** ------------------
      *    Event click button pdf chart.
      --------------------- */
-    $(".btn-chart").click(function () {
+    $('#chartPdfDialogId').find('#chartPdfBtnId').on('click', function() {
         $("#pdf-export2").attr("hidden", false);
         $("#pdf-export1").attr("hidden", true)
         isExportChart = true;
@@ -783,5 +783,6 @@ $(function () {
                 renderChart();
             }
         }
-    });
+        $("#chartPdfDialogId").modal('hide');
+    })
 });

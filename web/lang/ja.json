@@ -172,6 +172,10 @@
     "SkillMap_MaxLength": "分類名は30文字以下で設定してください。",
     "SkillMap_List_Copy": "複製されました。",
     "SkillMap_Copy_Dialog_Label": "スキルマップを複製",
+    "SkillMap_Pdf_Export_Confirm": "PDFを出力する",
+    "SkillMap_DomPdf_Export_Title": "スキルマップPDF出力",
+    "SkillMap_Chart_Pdf_Export_Title": "個人レーダーチャートPDF出力",
+    "SkillMap_Pdf_Export_Message": "スキルマップを保存して、PDFを出力します。",
     "Add_Success" : "登録しました。",
     "=====  BLOCK_SKILLMAP_END =====": "",
 
