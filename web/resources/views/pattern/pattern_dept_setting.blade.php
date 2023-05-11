@@ -218,10 +218,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" onclick="cancelAddAreaToTable()"
+                    class="btn btn-cancel">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
                         class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
-                    <button type="button" onclick="cancelAddAreaToTable()"
-                    class="btn btn-secondary">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
@@ -256,10 +256,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Change_Data_Used') }}</span></div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
+                    onclick="confirmNotAddNewData()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="confirmAddNewData()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="confirmNotAddNewData()">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
@@ -276,10 +276,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Remove_Data_Used') }}</span></div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
+                        onclick="confirmNotRemoveData()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="confirmRemoveData()"
                     class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="confirmNotRemoveData()">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
@@ -296,10 +296,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
+                        onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="runRemoveLocation()"
                         class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
                 </div>
             </div>
         </div>
