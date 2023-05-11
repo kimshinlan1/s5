@@ -688,7 +688,7 @@ function btnOpenModal() {
  * Event open modal back page
  */
 function btnOpenModalBackPage() {
-    let param = getData(null) ? getData(null)['data'] : getData(null);
+    let param = getData(null, true) ? getData(null, true)['data'] : getData(null, true);
     if (!param || param['result'].length == 0) {
         window.location = '/skillmaps_list';
         return;
@@ -992,7 +992,7 @@ function showErrorValidate(row, numberCategory) {
  * Get data from grid table
  * @Return object
  */
-function getData(chart) {
+function getData(chart, isBack = false) {
     let result = [];
     let objResult = {};
     let categoryData = [];
@@ -1106,8 +1106,8 @@ function getData(chart) {
                 showErrorValidate(row, numberCategory);
                 hideLoading();
                 isError = true;
-            } else if ((!objSkill['workName'] && objSkill['workName'] != undefined && !isError) && !isDeleted
-                || objSkill['workName']?.trim() === '') {
+            } else if ((!objSkill['workName'] && objSkill['workName'] != undefined && !isError && !isBack) && !isDeleted && !isBack
+                || (objSkill['workName']?.trim() === '' && !isBack) ) {
                 showToast($('#toast5'), 2000, true);
                 showErrorValidate(row, numberCategory);
                 hideLoading();
@@ -1213,6 +1213,9 @@ function getData(chart) {
 function saveDataSkillMap(isDeletePdf, isBackPage, isSave, isExportSkill, isExportChart) {
     showLoading();
     let data = getData(null) ? getData(null)['data'] : getData(null);
+    if (getData(null)['valid']) {
+        return;
+    }
 
     if (data == undefined) {
         sParam = null;
@@ -1264,7 +1267,7 @@ function saveDataSkillMap(isDeletePdf, isBackPage, isSave, isExportSkill, isExpo
                         hideLoading();
                         $('#save').prop('disabled', false);
                         if (isBackPage) {
-                            showToast($('#toast1'), 2000, true, isBackPage);
+                            // showToast($('#toast1'), 2000, true, isBackPage);
                         } else {
                             showToast($('#toast1'), 2000, true);
                             setTimeout(() => {

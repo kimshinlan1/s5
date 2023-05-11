@@ -30,7 +30,7 @@ class PatternTeamInspectionPDFController extends Controller
     {
         // Get request data
         $teamId = $request->get('teamId');
-        $deptId = $request->get('deptId');
+        $deptId = Team::find($teamId)->department_id;
 
         // Get data for rendering
         $patternDeptId = Department::find($deptId)->dept_pattern_id;

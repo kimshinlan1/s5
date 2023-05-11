@@ -158,7 +158,7 @@
             </div>
             <br><br>
             <div class="action-btn" style="justify-content: flex-start">
-                <button type="button" id="save" class="btn btn-success btn-ripple" style="margin-right: 1%;">
+                <button type="button" id="save" class="btn btn-primary btn-ripple" style="margin-right: 1%;">
                     <div class="inside-btn">
                         {{ __('Common_button_save') }}
                     </div>
@@ -168,11 +168,11 @@
                     style="margin-right: 1%;">{{ __('Pattern_Add_Inspection_Point') }}
                 </button>
 
-                <button type="button" id="removeLocation" class="btn btn-danger btn-ripple" data-toggle="modal"
+                <button type="button" id="removeLocation" class="btn btn-red-color btn-ripple" data-toggle="modal"
                     style="margin-right: 1%;">{{ __('Common_button_delete') }}
                 </button>
                 @endif
-                <button type="button" id="backPage" onclick="history.back()" class="btn btn-secondary" data-toggle="modal">
+                <button type="button" id="backPage" onclick="history.back()" class="btn btn-danger" data-toggle="modal">
                     {{ __('Common_Back') }}
                 </button>
             </div>
@@ -206,13 +206,19 @@
                 <div class="modal-body" id="modal-body">
                     <form id="myForm">
                         <div class="input-group">
-                            <div class="col" style="margin-right: 2%">
+                            <div class="col-5" style="margin-right: 2%">
                                 <input type="text" class="form-control" placeholder="{{ __('Pattern_Detail_Area_Name') }}" autofocus
                                     id="rowArea" required="required" oninput="RemoveMsgMyForm(this);"/>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <input type="text" class="form-control" maxlength="2" placeholder="{{ __('Pattern_Detail_Num_Point') }}"
                                     id="locationNo" required="required" oninput="RemoveMsgMyForm(this);"/>
+                            </div>
+                            <div class="col-2 mx-1" style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;">
+                                {{ __('Common_Add_Line_Text') }}
                             </div>
                         </div>
                     </form>
@@ -276,10 +282,10 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Remove_Data_Used') }}</span></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
                         onclick="confirmNotRemoveData()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="confirmRemoveData()"
-                    class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                    class="btn btn-red-color">{{ __('Common_button_delete') }}</button>
                 </div>
             </div>
         </div>
@@ -290,7 +296,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Common_button_delete') }}</h5>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Delete_Are_You_Sure_You_Want_To') }}</span></div>
@@ -299,7 +305,7 @@
                     <button type="button" class="btn btn-cancel" data-dismiss="modal"
                         onclick="cancelRemoveLocation()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="runRemoveLocation()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                        class="btn btn-red-color">{{ __('Common_Delete') }}</button>
                 </div>
             </div>
         </div>
@@ -329,17 +335,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Common_Confirm') }}</h5>
+                    <h5 class="modal-title">{{ __('Dept_Pattern_Save_Title') }}</h5>
                 </div>
                 <div class="modal-body">
                     <div><span id="saveMsgId" style="font-size: 0.9rem;">{{ __('Pattern_Label_Modal_Save_Pattern') }}</span></div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" onclick="cancelSaveData()">
+                        {{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="saveDataPattern()"
                         class="btn btn-primary">{{ __('Common_button_save') }}</button>
-                    <button type="button" class="btn btn-white-color" onclick="cancelSaveData()">
-                        {{ __('Common_button_cancel') }}</button>
-
                 </div>
             </div>
         </div>

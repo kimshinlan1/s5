@@ -60,5 +60,7 @@
 <input type="hidden" id="editDialogButtonOK" name="editDialogButtonOK" value="{{ __('Common_button_ok_save') }}"/>
 <input type="hidden" id="addDialogButtonOK" name="addDialogButtonOK" value="{{ __('Common_button_ok_add_dialog') }}"/>
 <input type="hidden" id="confirmMsgId" name="confirmMsgId" value="{{ __('Common_Confirm') }}"/>
+<input type="hidden" id="evidenceSaveMsgId" name="evidenceSaveMsgId" value="{{ __('Evidence_Save_Message') }}"/>
+<input type="hidden" id="addlineTextId" name="addlineTextId" value="{{ __('Common_Add_Line_Text') }}"/>
 <input type="hidden" id="deleteButton" name="deleteButton" value="{{ __('Common_Delete') }}"/>
 <input type="hidden" id="copyDialogButtonOK" name="copyDialogButtonOK" value="{{ __('Common_button_ok_copy') }}"/>

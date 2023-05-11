@@ -331,6 +331,7 @@ function checkEmptyDeptPattern() {
                 $('#errorLabelNoTeam').hide();
                 $('#tableDetailInspection').show();
                 $('#btnSave').show();
+                $('#btnInspectionPDF').show();
                 $('#btnAdd').show();
                 // Load data
                 loadInspectionData(data);
@@ -339,18 +340,21 @@ function checkEmptyDeptPattern() {
                 $('#errorLabelNoTeam').hide();
                 $('#tableDetailInspection').hide();
                 $('#btnSave').hide();
+                $('#btnInspectionPDF').hide();
                 $('#btnAdd').hide();
             } else if (deptPatternId && !team_id) {
                 $('#errorLabelNoDeptPattern').hide();
                 $('#errorLabelNoTeam').show();
                 $('#tableDetailInspection').hide();
                 $('#btnSave').hide();
+                $('#btnInspectionPDF').hide();
                 $('#btnAdd').hide();
             } else {
                 $('#errorLabelNoDeptPattern').show();
                 $('#errorLabelNoTeam').show();
                 $('#tableDetailInspection').hide();
                 $('#btnSave').hide();
+                $('#btnInspectionPDF').hide();
                 $('#btnAdd').hide();
             }
         }

@@ -72,10 +72,10 @@
                 <div><span style="font-size: 0.9rem;">{{ __('Confirm_Message_Save_Data') }}</span></div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="saveInspectionData()"
-                    class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                <button type="button" class="btn btn-secondary" onclick="cancelSaveInspectionData()">
+                <button type="button" class="btn btn-cancel" onclick="cancelSaveInspectionData()">
                     {{ __('Common_button_cancel') }}</button>
+                <button type="button" onclick="saveInspectionData()"
+                    class="btn btn-primary">{{ __('Common_button_save') }}</button>
             </div>
         </div>
     </div>
