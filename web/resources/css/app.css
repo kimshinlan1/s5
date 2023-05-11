@@ -82,6 +82,8 @@
     background-color: var(--delete-button-bg-color) !important;
     color: var(--text-primary) !important;
     border: 1px solid var(--text-primary) !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
  }
 
  .btn-danger:focus, .btn-danger.active:focus {

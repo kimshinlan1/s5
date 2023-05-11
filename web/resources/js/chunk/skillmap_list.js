@@ -44,11 +44,13 @@ window.skillmapsTableActions = function (_value, row, index) {
     let no =  ((tableOptions.pageNumber - 1) * tableOptions.pageSize) + (1 + index);
     let userIsModeFree = $("#userIsModeFree").val();
     let confirmDialog = '';
+    let disabled = '';
     if (!userIsModeFree) {
         confirmDialog = '#skillmapsConfirmDialog';
     }
+    disabled = $("#userMode").val() == CONFIG.get('5S_MODE')['FREE'] ? " disabled" : "";
     return (
-        '<button  style="margin: 4px;"  type="button" class="btn btn-sm btn-copy btn-primary" data-type="copy" data-id="' +
+        '<button  style="margin: 4px;"'+ disabled + ' type="button" class="btn btn-sm btn-copy btn-primary" data-type="copy" data-id="' +
         row.id + '" data-bs-toggle="modal" data-bs-target='+ confirmDialog +' >複製</button> ' +
         '<button style="margin: 4px;" type="button" class="btn btn-sm btn-edit btn-primary" data-id="' +
         row.id + '" onclick="openEdit(' +row.id+ ' ,' + no + ')" >編集</button> ' +
@@ -117,7 +119,7 @@ $(function () {
             $("#skillmapsConfirmDialog h5.modal-title").html(
                 $("#titleSkillmapDialog").val() + $("#deleteLabel").val()
             );
-            $("#skillmapsConfirmDialog").find('#btnOK').addClass('btn-red-color');
+            $("#skillmapsConfirmDialog").find('#btnOK').addClass('btn-red-color').html($("#deleteButton").val());
             $("#skillmapsConfirmDialog").find('#btnCancel').addClass('btn-cancel');
         } else if (dialog_type == "copy") {
             $("#skillmapsConfirmDialog .modal-body .message").html(
@@ -126,7 +128,7 @@ $(function () {
             $("#skillmapsConfirmDialog h5.modal-title").html(
                 $("#skillMapCopyDialogLabel").val()
             );
-            $("#skillmapsConfirmDialog").find('#btnOK').addClass('btn-primary');
+            $("#skillmapsConfirmDialog").find('#btnOK').addClass('btn-primary').html($("#copyDialogButtonOK").val());
             $("#skillmapsConfirmDialog").find('#btnCancel').addClass('btn-cancel');
         }
     });
@@ -189,4 +191,5 @@ $(function () {
     });
 
     $("#skillmapsConfirmDialog h5.modal-title").prepend($("#titleSkillmapDialog").val());
+
 });

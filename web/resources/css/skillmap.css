@@ -424,6 +424,11 @@ button {
     border: 0;
 }
 
+.btn-danger {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
 .btn-chart:hover{
     color:#fff;
     background-color:#EF7A00;
