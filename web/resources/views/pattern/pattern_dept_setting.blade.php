@@ -18,7 +18,7 @@
 @section('content')
     <div class="d-flex">
         <div class="h-title">{{ __('Pattern_Dept_Setting') }}</div>
-        <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
+        <div style="padding-top: 0.25rem;">@include('layouts.mode_badge_5s')</div>
     </div>
     <div class="row">
         <div class="col-12">
@@ -336,8 +336,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="saveDataPattern()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelSaveData()">
+                        class="btn btn-primary">{{ __('Common_button_save') }}</button>
+                    <button type="button" class="btn btn-white-color" onclick="cancelSaveData()">
                         {{ __('Common_button_cancel') }}</button>
 
                 </div>

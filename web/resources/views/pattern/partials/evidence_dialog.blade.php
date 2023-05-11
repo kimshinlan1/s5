@@ -33,11 +33,11 @@
             <div class="modal-footer" style="display: flex;">
                 <div style="margin-right: auto;">
                     <button type="button" class="btn btn-red-color" onclick="deleteBlock()" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Remove_Block_Btn') }}</button>
-                    <button type="button" class="btn btn-navy-color" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
+                    <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
                 </div>
                 <div>
-                    <button type="button" id="cancelEvidenceBtnId" class="btn btn-white-color" style="width: 125px;">{{ __('Common_button_cancel') }}</button>
-                    <button type="button" class="btn btn-navy-color" id="btnEvidenceSave" style="width: 125px;">{{ __('Common_button_save') }}</button>
+                    <button type="button" id="cancelEvidenceBtnId" class="btn btn-danger" style="width: 125px;">{{ __('Common_button_cancel') }}</button>
+                    <button type="button" class="btn btn-primary" id="btnEvidenceSave" style="width: 125px;">{{ __('Common_button_save') }}</button>
                 </div>
                 {{-- Hidden --}}
                 <input type="hidden" id="hidInspectionId" value=""/>

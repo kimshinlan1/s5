@@ -124,61 +124,22 @@ and (orientation : landscape)
 
 .before-label {
     background-color: #EE7E00;
-    width: 40%;
+    width: 100px;
     font-size: 2rem;
+    padding: 2px;
 }
 
 .after-label {
     background-color: #0B97C1;
-    width: 30%;
+    width: 100px;
     font-size: 2rem;
+    padding: 2px;
 }
 
 .problem-area {
     height: 80px;
     width: 100%;
     border: 3px solid gray;
-}
-
-.btn-primary:hover {
-    color: #fff !important;
-    background-color: #0b5ed7 !important;
-}
-
-.btn-primary {
-    background: #0852C0 !important;
-    color: rgb(255, 255, 255) !important;
-    box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 12%) !important;
-}
-
-.btn-secondary {
-    color: #fff !important;
-    background-color: #6c757d !important;
-}
-
-.btn-secondary:hover {
-    color: #fff !important;
-    background-color: #5c636a !important;
-}
-
-.btn-success {
-    color: #fff !important;
-    background-color: #198754 !important;
-}
-
-.btn-success:hover {
-    color: #fff !important;
-    background-color: #157347 !important;
-}
-
-.btn-danger {
-    color: #fff !important;
-    background-color: #dc3545 !important;
-}
-
-.btn-danger:hover {
-    color: #fff !important;
-    background-color: #bb2d3b !important;
 }
 
 .carousel-control {
