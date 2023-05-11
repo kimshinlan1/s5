@@ -32,7 +32,7 @@
 
             <div class="modal-footer" style="display: flex;">
                 <div style="margin-right: auto;">
-                    <button type="button" class="btn btn-red-color" onclick="deleteBlock()" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Remove_Block_Btn') }}</button>
+                    <button type="button" class="btn btn-red-color" onclick="deleteBlock()" id="" style="width: 125px;">{{ __('Evidence_Remove_Block_Btn') }}</button>
                     <button type="button" class="btn btn-primary" id="btnEvidenceAddBlock" style="width: 125px;">{{ __('Evidence_Add_Block_Btn') }}</button>
                 </div>
                 <div>
