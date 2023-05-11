@@ -656,6 +656,7 @@ function handleConfirmOkBtn(isSaveMode) {
         if ($('.evidences-body').find('.count-block').length > 0) {
             $("#confirmDialog3").modal('show');
             $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
+            $("#confirmDialog3").find('.modal-title').html($('#evidenceSaveMsgId').val());
             $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
         } else {
             hideAllModals();

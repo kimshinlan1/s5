@@ -12,6 +12,12 @@ window.exportPDF = function() {
     let method = "POST";
     let deptId = $('#selectDeptList').find(':selected').val();
     let teamId = $('#selectTeamList').find(':selected').val();
+    if (!teamId) {
+        let urlString = window.location.href;
+        let parts = urlString.split("/");
+        teamId = parts[parts.length - 1];
+    }
+
     let data = {
         deptId: deptId,
         teamId: teamId,
