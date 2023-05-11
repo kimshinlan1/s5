@@ -285,6 +285,7 @@
     "TeamInspection_Please_Choose_Pattern_For_This_Department": "※この部門のパターンを選択してください。",
     "TeamInspection_None_Config": "設定なし",
     "TeamInspection_Delete_Last_Inspection_Warning": "既存の検査は 1 つだけです。削除できません",
+    "TeamInspection_PDF_Title": "5Sチェックリスト",
     "=====  BLOCK_PATTERN_TEAM_INSPECTION_END =====": "",
 
     "=====  BLOCK_TOPPAGE_START =====": "",

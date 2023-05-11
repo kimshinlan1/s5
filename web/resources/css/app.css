@@ -255,11 +255,6 @@ a.button-upload:hover {
 .free-badge:disabled {
     background-color: var(--free-badge-color);
     border-color: var(--free-badge-color);
-} 
-
-.btn-red-color {
-    background-color: var(--button-red-color) !important;
-    color: #fff !important;
 }
 
 .btn-cancel {
@@ -268,10 +263,10 @@ a.button-upload:hover {
     border: none !important;
 }
 
-.btn-danger:hover, 
+.btn-danger:hover,
 .btn-cancel:hover {
     background-color: #dbdbdb91 !important;
-} 
+}
 
 .btn-danger:disabled{
     background-color: #dbdbdb91 !important;
@@ -279,4 +274,22 @@ a.button-upload:hover {
 
 .bg-menu {
     background-color: #BFBFBF !important;
+}
+
+.btn-white-color {
+    background-color: var(--delete-button-bg-color) !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--text-primary) !important;
+}
+
+.btn-navy-color {
+    background-color: var(--paid-badge-color);
+    border-color: var(--paid-badge-color);
+    border: 0;
+    color: #fff !important;
+}
+
+.btn-red-color {
+    background-color: var(--button-red-color) !important;
+    color: #fff !important;
 }
