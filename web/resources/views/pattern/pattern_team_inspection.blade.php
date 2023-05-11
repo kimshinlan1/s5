@@ -26,7 +26,7 @@
 @if (!$teamId)
 <div class="d-flex">
     <div class="h-title">{{ __('TeamInspection_Input') }}</div>
-    <div style="margin-top: -0.2rem;">@include('layouts.mode_badge_5s')</div>
+    <div style="padding-top: 0.25rem;">@include('layouts.mode_badge_5s')</div>
     @include('layouts.success')
 </div>
 

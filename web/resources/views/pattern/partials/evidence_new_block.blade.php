@@ -19,7 +19,7 @@
         {{-- Before --}}
         <input type="hidden" id="beforeUploadedIndex" value="0"/>
         <div class="before-title">
-            <label class="before-label py-2">{{ __('Evidence_Before_Title') }}</label>
+            <label class="before-label">{{ __('Evidence_Before_Title') }}</label>
         </div>
         <div id="myCarousel_before_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
@@ -41,7 +41,7 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-navy-color btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }}<input type="file" class="file file-before" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 1, 'img_before{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
                 {{-- <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_before{{ $evidence['id'] }}', {{ $evidence['id'] }}, 1)">{{ __('Evidence_Delete_Btn') }}</button> --}}
             </div>
         </div>
@@ -72,7 +72,7 @@
         {{-- After --}}
         <input type="hidden" id="afterUploadedIndex" value="0"/>
         <div class="after-title">
-            <label class="after-label py-2">{{ __('Evidence_After_Title') }}</label>
+            <label class="after-label">{{ __('Evidence_After_Title') }}</label>
         </div>
         <div id="myCarousel_after_{{ $evidence['id'] }}" class="carousel slide" data-interval="false">
             <!-- Wrapper for slides -->
@@ -94,7 +94,7 @@
         <br>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <div class="file-div btn btn-navy-color btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file file-after" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
+                <div class="file-div btn btn-primary btn-sm mx-1" id="btnUpload">{{ __('Evidence_Upload_Btn') }} <input type="file" class="file file-after" name="file" onchange="uploadFile(this, {{ $evidence['id'] }}, 0, 'img_after{{ $evidence['id'] }}')" accept="image/*" multiple/></div>
                 {{-- <button type="button" class="btn btn-danger btn-sm mx-1" id="btnDelete" onclick="removeAlbum('img_after{{ $evidence['id'] }}', {{ $evidence['id'] }}, 0)">{{ __('Evidence_Delete_Btn') }}</button> --}}
             </div>
         </div>

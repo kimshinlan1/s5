@@ -9,8 +9,9 @@
 @endsection
 
 @section('content')
-<div class="d-flex justify-content-between">
+<div class="d-flex">
     <div class="h-title">{{ __('Pattern_Department_Management') }}</div>
+    <div style="padding-top: 0.25rem;">@include('layouts.mode_badge_5s')</div>
     <!-- My Toast -->
     @include('layouts.success')
     <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive"

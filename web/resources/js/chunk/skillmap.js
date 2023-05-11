@@ -60,11 +60,11 @@ function dropdownOptions(id, placeholder, optionItems, isEventOnchange, value, s
     let onchange = isEventOnchange ? " onchange='calculatorPoint(" + numberCategory + ", " + row + ", " + col + ", this)' " : "";
     let html = '';
     if (isSafari) {
-        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + ";padding-right: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
+        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + "; opacity: 0.5; padding-right: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
         "aria-label='Select sample' " + onchange + ">" +
         "<option selected value='placeholder'>" + placeholder + "</option>";
     } else {
-        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + ";padding-right: 0;padding-left: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
+        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + "; opacity: 0.5; padding-right: 0;padding-left: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
         "aria-label='Select sample' " + onchange + ">" +
         "<option selected value='placeholder'>" + placeholder + "</option>";
     }
@@ -878,10 +878,10 @@ function paintBgSkillMap(_event, type) {
             $(elementSkillMap).find('select').css({ 'background-image': 'none' });
             break;
         case '#F0AE66':
-            $(elementSkillMap).find('select').css({ 'background': type });
+            $(elementSkillMap).find('select').css({ 'background': type, 'opacity': 0.5 });
             break;
         default:
-            $(elementSkillMap).find('select').css({ 'background': type });
+            $(elementSkillMap).find('select').css({ 'background': type, 'opacity': 0.5 });
             break;
     }
     $(elementSkillMap).find('select').attr('data-skillup', type);

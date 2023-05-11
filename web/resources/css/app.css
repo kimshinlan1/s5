@@ -240,21 +240,25 @@ a.button-upload:hover {
 .paid-badge {
     background-color: var(--paid-badge-color);
     border-color: var(--paid-badge-color);
+    padding: 0 10px;
 }
 
 .free-badge {
     background-color: var(--free-badge-color);
     border-color: var(--free-badge-color);
+    padding: 0 10px;
 }
 
 .paid-badge:disabled {
     background-color: var(--paid-badge-color);
     border-color: var(--paid-badge-color);
+    padding: 0 10px;
 }
 
 .free-badge:disabled {
     background-color: var(--free-badge-color);
     border-color: var(--free-badge-color);
+    padding: 0 10px;
 }
 
 .btn-cancel {

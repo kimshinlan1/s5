@@ -187,6 +187,6 @@ $(function () {
             });
         }
     });
-    
+
     $("#skillmapsConfirmDialog h5.modal-title").prepend($("#titleSkillmapDialog").val());
 });

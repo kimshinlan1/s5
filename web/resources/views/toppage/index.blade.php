@@ -47,7 +47,7 @@
                 @endif
             </div>
         </a>
-       
+
     </div>
     <div class="col-sm icon-menu-1">
         <a onclick="setSession('mainMenu4')" id="topPageLinkId" class="main-menu list-group-item list-group-item-action style-list @if(request()->path()==='pattern_top_page')active @endif" href="/pattern_top_page">
@@ -66,7 +66,7 @@
                 @endif
             </div>
         </a>
-        
+
     </div>
   </div>
 @endsection
