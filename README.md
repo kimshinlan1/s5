@@ -56,4 +56,5 @@ php artisan db:seed
 - Rebuild Mix (optional, when create/edit JS/CSS)
 npm run dev
 
-
+- If down docker, then start and run this cli to config snappy: 
+sh initialize_snappy.sh 
