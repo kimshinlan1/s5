@@ -54,7 +54,7 @@
 
 {{-- Add/Edit Dialog Team --}}
 <button type="button" class="btn btn-primary" id="btnAdd">
-    {{ __('Common_button_add') }}
+    {{ __('Team_Button_Add') }}
 </button>
 
 {{-- Registration Dialog --}}

@@ -61,7 +61,7 @@
 {{-- Add Dialog --}}
 <a href="/skillmaps_detail" id="skillMapsDetailLink">
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="addSkillmapsId">
-    {{ __('Common_button_add') }}
+    {{ __('Skillmap_Button_Add') }}
 </button>
 </a>
 
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" id="btnCancel" data-bs-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn" id="btnOK">{{ __('Common_Delete') }}</button>
+                <button type="button" class="btn" id="btnOK"></button>
             </div>
         </div>
     </div>
