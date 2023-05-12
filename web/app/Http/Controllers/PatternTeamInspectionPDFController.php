@@ -66,12 +66,12 @@ class PatternTeamInspectionPDFController extends Controller
 
             // DomPDF
             $pdf = Pdf::loadHTML($html);
-                // setup the paper size and orientation
-                $pdf->setPaper("A4", "landscape");
-                $pdf->setOption(
-                    ['defaultFont' => 'yugothib']
-                );
-                return $pdf->stream();
+            // setup the paper size and orientation
+            $pdf->setPaper("A4", "landscape");
+            $pdf->setOption(
+                ['defaultFont' => 'yugothib']
+            );
+            return $pdf->stream();
         } catch (\Throwable $th) {
             return response()->json(
                 ['errors' => $th->getMessage()], 500

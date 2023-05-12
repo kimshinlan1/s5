@@ -170,11 +170,11 @@
                             @endif
                         </div>
                         <div class="col-3 action-btn" style="width: 528px">
-                            <button type="button" id="pdf" class="btn btn-primary btn-primary btn-pdf" data-toggle="modal" data-target="#domPdfDialogId" disabled>
+                            <button type="button" id="pdf" class="btn btn-primary btn-primary btn-pdf" disabled>
                                 {{ __('Skillmap_Button_PDF') }}
                             </button>
                             @if (!(auth()->user()->isModeFree()))
-                            <button type="button" id="pdfChart" class="btn btn-primary btn-chart" data-toggle="modal" data-target="#chartPdfDialogId" disabled>
+                            <button type="button" id="pdfChart" class="btn btn-primary btn-chart" disabled>
                                 {{ __('Skillmap_Button_PDF_Chart') }}
                             </button>
                             @endif

@@ -94,7 +94,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <button type="button" class="btn btn-cancel" onclick="cancelExport()">
                     {{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="saveAndExport()"
-                        class="btn btn-primary">{{ __('Common_button_ok') }}</button>
+                        class="btn btn-primary">{{ __('SkillMap_Pdf_Export_Confirm') }}</button>
 
             </div>
         </div>
@@ -116,43 +116,6 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     {{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="saveDataChange()"
                         class="btn btn-primary">{{ __('Common_button_ok_save') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Confirm domPdf dialog --}}
-<div class="modal fade" id="domPdfDialogId" tabindex="-1" role="dialog"
-    aria-labelledby="domPdfDialogTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{ __('SkillMap_DomPdf_Export_Title')}}</h5>
-            </div>
-            <div class="modal-body">
-                <div class="domPdfMsg">{{ __('SkillMap_Pdf_Export_Message')}}</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" id="domPdfBtnCancel" data-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-primary" id="domPdfBtnId" value="">{{ __('SkillMap_Pdf_Export_Confirm') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- Confirm snappyPdf dialog --}}
-<div id="chartPdfDialogId" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header" id="modalHeader">
-                <h5 class="modal-title">{{ __('SkillMap_Chart_Pdf_Export_Title')}}</h5>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" class="form-control" value="">
-                <div class="snappyPdfMsg">{{ __('SkillMap_Pdf_Export_Message')}}</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" id="chartPdfBtnIdCancel" data-dismiss="modal">{{ __('Common_button_cancel') }}</button>
-                <button type="button" class="btn btn-primary" id="chartPdfBtnId" value="">{{ __('SkillMap_Pdf_Export_Confirm') }}</button>
             </div>
         </div>
     </div>
