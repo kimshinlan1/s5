@@ -849,6 +849,16 @@ window.handleToggle = function(status, order) {
     }
 }
 
+// Check if Ipad mode
+function isiPad() {
+    return navigator.userAgent.match(/iPad/i) !== null;
+}
+
+// Check if the orientation is portrait
+function isPortrait() {
+    return window.orientation === 0 || window.orientation === 180;
+}
+
 /** ------------------
  *    Add free text for 5s and skillmaps pages
  --------------------- */
@@ -882,7 +892,9 @@ window.addFreeModeText = function() {
             $('#freeLabel3').html($('#commonFreeBadge1Id').val());
         }
     }
-
+    if (isiPad() && isPortrait()) {
+        $("#freeLabelId").css('display', 'block');
+    }
 }
 
 /* ==============================

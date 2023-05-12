@@ -206,8 +206,8 @@ window.loadDeptListByComp = function(id, deptID = null) {
         uniqueId: "id",
         escape: "true",
         queryParams:"queryParams",
-        reorderableRows: "true",
-        useRowAttrFunc: "true",
+        // reorderableRows: "false",
+        // useRowAttrFunc: "true",
         onLoadSuccess: function (data) {
             reloadBoostrapTable(data, $("#employeeTable"));
         },
