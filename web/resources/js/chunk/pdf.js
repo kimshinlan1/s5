@@ -727,7 +727,7 @@ $(function () {
     /** ------------------
      *    Event click button pdf skill map.
      --------------------- */
-    $('#domPdfDialogId').find('#domPdfBtnId').on('click', function() {
+     $(".btn-pdf").click(function () {
         $("#pdf-export1").attr("hidden", false)
         $("#pdf-export2").attr("hidden", true)
         isExportChart = false;
@@ -756,12 +756,11 @@ $(function () {
                 $("#saveExportPdf").modal('show');
             }
         }
-        $("#domPdfDialogId").modal('hide');
     })
     /** ------------------
      *    Event click button pdf chart.
      --------------------- */
-    $('#chartPdfDialogId').find('#chartPdfBtnId').on('click', function() {
+     $(".btn-chart").click(function () {
         $("#pdf-export2").attr("hidden", false);
         $("#pdf-export1").attr("hidden", true)
         isExportChart = true;
@@ -783,6 +782,5 @@ $(function () {
                 renderChart();
             }
         }
-        $("#chartPdfDialogId").modal('hide');
     })
 });
