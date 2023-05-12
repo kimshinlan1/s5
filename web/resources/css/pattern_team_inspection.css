@@ -112,9 +112,6 @@
 }
 
 .navbar {
-    background-color: #01304B;
-    position: fixed;
-    top: 0;
     width: 100%;
     transition: top 0.3s;
 }
@@ -125,12 +122,4 @@
     color: #f2f2f2;
     text-align: center;
     text-decoration: none;
-}
-
-.main {
-    margin-top: 47px;
-}
-
-.header {
-    background-color: #01304B;
 }
