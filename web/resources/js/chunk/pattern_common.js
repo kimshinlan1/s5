@@ -648,6 +648,11 @@ $(function () {
 
     $("#btnBackPagePreview").click(function () {
         let typeBackPage = $('#hidTypeBackPage').val();
+        setTimeout(() => {
+            if ($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+                history.back(1);
+            }
+        }, 100);
         if (typeBackPage == CONFIG.get("PAGE_PATTERN_LIST_CUSTOMER")) {
             location.href = "/pattern_list_customer";
         } else {
