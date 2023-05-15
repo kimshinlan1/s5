@@ -112,7 +112,7 @@
 
                 {{-- Function --}}
                 <div class="row header-table">
-                    <div class="col-9 addition-note">
+                    <div class="col-7 addition-note">
                         <div class="addition-note-1">
                             <div class="row">
                                 <div class="col note">
@@ -136,9 +136,9 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-3 action-content-btn">
-                        <div class="col-3 action-btn">
-                            <div class="form-check" style="padding: 10px;">
+                    <div class="col-5 action-content-btn">
+                        <div class="col action-btn">
+                            <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault"
                                     id="flexRadioDefault1" value="A3" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
@@ -169,7 +169,7 @@
                             </div>
                             @endif
                         </div>
-                        <div class="col-3 action-btn" style="width: 528px">
+                        <div class="col-3 action-btn" style="width: 535px">
                             <button type="button" id="pdf" class="btn btn-primary btn-primary btn-pdf" disabled>
                                 {{ __('Skillmap_Button_PDF') }}
                             </button>

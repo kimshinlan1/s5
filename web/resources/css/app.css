@@ -305,3 +305,7 @@ a.button-upload:hover {
     background-color: var(--button-red-color) !important;
     color: #fff !important;
  }
+
+ .form-check-input:checked {
+    background-color: var(--paid-badge-color) !important;
+ }
