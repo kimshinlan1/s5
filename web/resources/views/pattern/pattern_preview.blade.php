@@ -140,7 +140,7 @@
                     {{ __('Common_Edit') }}
                 </button>
                 @endif
-                <button type="button" id="btnBackPagePreview" class="btn btn-secondary">
+                <button type="button" id="btnBackPagePreview" class="btn btn-danger">
                     {{ __('Common_Back') }}
                 </button>
             </div>
