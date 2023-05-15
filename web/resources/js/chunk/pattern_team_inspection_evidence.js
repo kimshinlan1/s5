@@ -57,7 +57,7 @@ function uploadFile(input, block, is_before, albumId) {
                 let deleteImageTooltipMsg = $('#deleteMsgTooltipId').val();
                 let divClass = (index == input.files.length - 1) ? 'item active ' + fileId : 'item ' + fileId;
                 let img = '<div class="' + divClass + '" id="item' + fileId + '" data-id="' + fileId + '">' + '<button type="submit" title="' + deleteImageTooltipMsg + '" class="close-image" id="removeImage' +
-                fileId + '" onclick="removeImage(`' + fileId + '`,`'+albumId+'`,' +true+',`' + fileId + '`)"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                fileId + '" onclick="removeImage(`' + fileId + '`,`'+albumId+'`,' +true+',`' + block + '`)"><i class="fa fa-times" aria-hidden="true"></i></button>' +
                 '<img class="img-size" src="' + image.src + '" style="width:100%; position: relative; object-fit: contain;" id="slideImageID" onclick="fullScreen(`' + image.src + '`)"/></div>';
 
                 if (is_before) {
@@ -261,7 +261,7 @@ function fullScreen(img_src) {
 function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
     if (confirm(confirmMsg)) {
         let noImgPath = $('#noImage').val();
-        let isBefore = albumID.indexOf('image_before') == 1 ? 1 : 0;
+        let isBefore = albumID.includes('img_before') == 1 ? 1 : 0;
         if ($('#item'+imgID).next().length != 0) {
             $('#item'+imgID).next().addClass('active');
         } else {
@@ -269,11 +269,6 @@ function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
         }
         $('#item'+imgID).remove();
         $('#removeImage'+imgID).remove();
-        if ($(albumID).find('.item').length == 0) { //Note
-            $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="clickOnImage(`'+albumID+'`)" id="noImg">'
-            + '<input type="file" id="file-input_'+albumID+'" class="file file-before file-input" name="file" onchange="uploadFile(this, '+fileId+', '+isBefore+', `' + albumID + '`)" accept="image/*" multiple/>'
-            );
-        }
         // Check if the deleted image is temporarily uploaded or not, if it is  , remove it from formdata so as not to store in DB
         if (formData.has(fileId) && isTempImage) {
             formData.delete(fileId);
@@ -285,8 +280,8 @@ function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
 
             let doneCallback = function (_data, _textStatus, _jqXHR) {
                 // Check if there is any image in the album. If not, append No-Image to empty album
-                if ($(albumID).find('.item').length == 0) {
-                    $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="clickOnImage('+albumID+')" id="noImg">'
+                if ($('#'+albumID).find('.item').length == 0) {
+                    $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="clickOnImage(`'+albumID+'`)" id="noImg">'
                     + '<input id="file-input_'+albumID+'" type="file" class="file file-before file-input" name="file" onchange="uploadFile(this, '+fileId+', '+isBefore+', `' + albumID + '`)" accept="image/*" multiple/>'
                     );
                 }
@@ -298,9 +293,9 @@ function removeImage(imgID, albumID, isTempImage = false, fileId = null) {
 
             runAjax(url, method, null, doneCallback, failCallback);
         } else {
-            if ($(albumID).find('.item').length == 0) {
-                $(albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="clickOnImage('+albumID+')" id="noImg">'
-                + '<input id="file-input_'+albumID+'" type="file" class="file file-before file-input" name="file" onchange="uploadFile(this, '+fileId+', '+isBefore+', ' + albumID + ')" accept="image/*" multiple/>'
+            if ($('#'+albumID).find('.item').length == 0) {
+                $('#'+albumID).append('<img class="img-size" src="'+noImgPath+'" alt="no-image" style="width:100%;" onclick="clickOnImage(`'+albumID+'`)" id="noImg">'
+                + '<input id="file-input_'+albumID+'" type="file" class="file file-before file-input" name="file" onchange="uploadFile(this, '+fileId+', '+isBefore+', `' + albumID + '`)" accept="image/*" multiple/>'
                 );
             }
         }
@@ -420,12 +415,12 @@ function handleConfirmOkBtn(isSaveMode) {
                 let keyArrayBefore = [];
                 let keyArrayAfter = [];
 
-                $("[class*=file_before_block" + blockId + ']').each((i, ele) => { //todo
+                $("[class*=file_before_block" + blockId + ']').each((i, ele) => {
                     keyArrayBefore.push(ele.dataset.id);
                     $(ele).addClass('item-count');
                 });
 
-                $("[class*=file_after_block" + blockId + ']').each((i, ele) => { //todo
+                $("[class*=file_after_block" + blockId + ']').each((i, ele) => {
                     keyArrayAfter.push(ele.dataset.id);
                     $(ele).addClass('item-count');
                 });

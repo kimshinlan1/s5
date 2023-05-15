@@ -13,7 +13,6 @@
 
 <div style="width: 100%; height: auto; overflow: auto; " id="scrollTable">
   <form id="formFormsInput">
-    {{-- <table id="" class="table table-bordered" style="width: fit-content;"> --}}
     <table id="tableDetailInspection" class="table table-bordered">
         {{-- Remove Button --}}
         <tr style="border-color: transparent;">
@@ -21,7 +20,7 @@
                 <input id="addColumnId" class="btn btn-primary btn-add-inspection" type="button" value="{{ __('TeamInspection_Add_Inspection_Point') }}" onclick="addColumn()"/>
             </td>
             @foreach ($inspectionIds as $inspectionId)
-            <td style="text-align: center; vertical-align: middle; posotion: relative;">
+            <td style="text-align: center; vertical-align: middle;">
                 <button class="btn-remove-column" style="width: 3rem" type="button" value="{{ __('Common_Delete') }}" onclick="removeColumn('{{ $inspectionId }}')"><i style="color:gray" class="fa fa-times" aria-hidden="true"></i></button>
             </td>
             @endforeach

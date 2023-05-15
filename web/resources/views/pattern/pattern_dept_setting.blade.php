@@ -227,7 +227,7 @@
                     <button type="button" onclick="cancelAddAreaToTable()"
                     class="btn btn-cancel">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
-                        class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
+                        class="btn btn-primary">{{ __('Common_button_ok_add_dialog') }}</button>
                 </div>
             </div>
         </div>

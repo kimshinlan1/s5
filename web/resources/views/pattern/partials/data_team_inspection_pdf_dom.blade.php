@@ -8,12 +8,10 @@ $areaIndex = 0;
 
 ?>
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    {{-- <link rel="stylesheet" href= "{!! url('assets/bootstrap-3.4.1/css/bootstrap.min.css') !!}"/>
-    <script src="{!! url('assets/bootstrap-3.4.1/js/bootstrap.min.js') !!}" type="text/javascript"></script> --}}
+    <title>{{ $teamName }} PDF</title>
     <style>
         @font-face {
             font-family: 'yugothib';
