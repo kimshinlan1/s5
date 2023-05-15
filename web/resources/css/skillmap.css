@@ -178,14 +178,12 @@ button {
 .action-content-btn {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     padding: 0;
 }
 
 .action-btn {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     padding: 0;
 }
 
@@ -203,7 +201,7 @@ button {
 }
 
 .format-labet {
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-weight: 500;
 }
 
