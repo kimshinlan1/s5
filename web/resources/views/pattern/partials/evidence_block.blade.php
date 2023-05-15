@@ -36,7 +36,7 @@
                         @if (!empty($image['is_before']))
                             <div class="item {{ $isActive == false ? 'active' : ''}} item-count" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
                                 <button type="submit" title="{{ __('Evidence_Delete_Image_Tooltip') }}" class="close-image" id='removeImage{{ $image['id'] }}'
-                                onclick="removeImage({{ $image['id'] }}, 'img_before{{ $evidence['id'] }}')">
+                                onclick="removeImage({{ $image['id'] }}, 'img_before{{ $evidence['id'] }}', false, {{ $evidence['id'] }})">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                                 <img class="img-size" src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; position: relative; object-fit: contain;" onclick="fullScreen('{{ $image['img_path'] }}')">
@@ -109,7 +109,7 @@
                         @if (empty($image['is_before']))
                             <div class="item {{ $isActive == false ? 'active' : ''}} item-count" id="item{{ $image['id'] }}" data-id="{{ $image['id'] }}">
                                 <button type="submit" title="{{ __('Evidence_Delete_Image_Tooltip') }}" class="close-image" id='removeImage{{ $image['id'] }}'
-                                onclick="removeImage({{ $image['id'] }}, 'img_after{{ $evidence['id'] }}')">
+                                onclick="removeImage({{ $image['id'] }}, 'img_after{{ $evidence['id'] }}', false, {{ $evidence['id'] }})">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                                 <img class="img-size" src="{{ $image['img_path'] }}" alt="{{ $image['img_name'] }}" style="width:100%; position: relative; object-fit: contain;" onclick="fullScreen('{{ $image['img_path'] }}')">
