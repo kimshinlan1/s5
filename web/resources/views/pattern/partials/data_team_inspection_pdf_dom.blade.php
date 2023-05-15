@@ -49,7 +49,7 @@ $areaIndex = 0;
             height: 30px !important;
             word-wrap: break-word;
             font-size: 14px;
-            font-weight: bolder;
+            font-weight: 500;
         }
 
         .point-class {
@@ -111,8 +111,9 @@ $areaIndex = 0;
         }
 
         .comp-dept-team {
-            font-size: 18px;
+            font-size: 14px;
             margin-right: 20px;
+            font-weight: 100 !important;
         }
 
     </style>
@@ -123,7 +124,7 @@ $areaIndex = 0;
         <span class="comp-dept-team">{{ $companyName }}</span>
         <span class="comp-dept-team">{{ $departmentName }}</span>
         <span class="comp-dept-team">{{ $teamName }}</span>
-        <div style="text-align: center; font-size: 20px; font-weight: bold;">
+        <div style="text-align: center; font-size: 24px; font-weight: bold;">
             {{ __('TeamInspection_PDF_Title') }}
         </div>
     </div>
