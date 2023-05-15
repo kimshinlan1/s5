@@ -190,7 +190,12 @@ window.openEditDeptPattern = function(id) {
    let compId = $('#editPatternBtn' + id).attr("data-companyId");
    let checklistId = $('#checklist5sID' + id).find(':selected').val();
    if (checklistId.length != 0) {
-       window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&patternId=' + selectedPatId + '&pageDept=1' + '&targetDept=' + id;
+        if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
+            window.location = '/pattern_preview/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&pageDest=1';
+        } else {
+            window.location = '/pattern_dept_setting/' + patId + '?departmentId=' + deparmentId  + '&companyId=' + compId + '&patternId=' + selectedPatId + '&pageDept=1' + '&targetDept=' + id;
+        }
+
    } else {
        $('.error-messages').text($('#messageNoSelectedPattern').val());
        $('#errorDialog').modal('show');

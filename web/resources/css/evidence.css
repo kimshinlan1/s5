@@ -38,10 +38,6 @@ img {
     line-height: 300px !important;
 }
 
-.right-control {
-    margin-top: 25px !important;
-}
-
 .carousel-inner {
     height: inherit;
 }
@@ -144,6 +140,8 @@ and (orientation : landscape)
 
 .carousel-control {
     opacity: 0.1;
+    margin-top: 150px !important;
+    height: 50px;
 }
 
 .carousel-control:hover {

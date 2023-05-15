@@ -259,7 +259,7 @@
     "Pattern_Question_BackPage": "更新が保存せずに終了してもよろしいでしょうか。",
     "Pattern_Detail_Num_Point": "行数",
     "Pattern_Detail_Area_Name": "分類名",
-    "Pattern_Detail_Title_Add_Dialog": "分類の追加に変更",
+    "Pattern_Detail_Title_Add_Dialog": "分類の追加",
     "Pattern_Top_Page": "結果一覧",
     "Pattern_Team_Inspection": "入力画面",
     "Pattern_Dept_Setting": "５Sチェックリスト設定",
@@ -288,7 +288,7 @@
     "TeamInspection_Confirm_Delete": "データを削除してよろしいですか。",
     "TeamInspection_5S_Level_Transition": "係　５Sレベル推移",
     "TeamInspection_Please_Create_Team_This_Department": "※この部門のチームを作成してください。",
-    "TeamInspection_Please_Create_Team_This_Department1": "※係が設定されていません。",
+    "TeamInspection_Please_Create_Team_This_Department1": "係が設定されていません。",
     "TeamInspection_Please_Choose_Pattern_For_This_Department": "※この部門のパターンを選択してください。",
     "TeamInspection_None_Config": "設定なし",
     "TeamInspection_Delete_Last_Inspection_Warning": "既存の検査は 1 つだけです。削除できません",
@@ -327,6 +327,8 @@
     "Evidence_Delete_Image_Tooltip": "この画像を削除",
     "Evidence_No_Selected_Block": "ブロックが選択されていません",
     "Evidence_Save_Message": "改善箇所画像を保存",
+    "Evidence_Cancel_Btn": "破棄して閉じる",
+    "Evidence_Confirm_Btn": "保存して閉じ",
     "=====  BLOCK_EVIDENCE_END =====": ""
 
 }
