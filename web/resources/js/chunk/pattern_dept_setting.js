@@ -657,7 +657,7 @@ $(function () {
         let currentDeptId = $('#departmentId').find(":selected").val();
         isDeptOnchange = true;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
-            if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
+            if (((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) && $("#departmentId").find(":selected").attr('data-deptpatternid') != '-1') {
                 $("#save").prop("disabled", true);
             } else {
                 $("#save").prop("disabled", false);
