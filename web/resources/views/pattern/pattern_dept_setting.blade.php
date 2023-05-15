@@ -227,7 +227,7 @@
                     <button type="button" onclick="cancelAddAreaToTable()"
                     class="btn btn-cancel">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
-                        class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
+                        class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
         </div>
@@ -282,7 +282,7 @@
                     <div><span  style="font-size: 0.9rem;">{{ __('Pattern_Confirm_Message_Remove_Data_Used') }}</span></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal"
                         onclick="confirmNotRemoveData()">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="confirmRemoveData()"
                     class="btn btn-red-color">{{ __('Common_button_delete') }}</button>

@@ -60,11 +60,11 @@ function dropdownOptions(id, placeholder, optionItems, isEventOnchange, value, s
     let onchange = isEventOnchange ? " onchange='calculatorPoint(" + numberCategory + ", " + row + ", " + col + ", this)' " : "";
     let html = '';
     if (isSafari) {
-        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + "; opacity: 0.5; padding-right: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
+        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + "; padding-right: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
         "aria-label='Select sample' " + onchange + ">" +
         "<option selected value='placeholder'>" + placeholder + "</option>";
     } else {
-        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + "; opacity: 0.5; padding-right: 0;padding-left: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
+        html = "<select class='form-select' tabindex='" + tabIndexRow + "' data-skillup='" + skillUp + "' id='" + id + "' style='background-image: none;background: " + skillUp + "; padding-right: 0;padding-left: 0;text-align: center;text-align-last: center; font-size: 15px;'" +
         "aria-label='Select sample' " + onchange + ">" +
         "<option selected value='placeholder'>" + placeholder + "</option>";
     }
@@ -1274,7 +1274,7 @@ function saveDataSkillMap(isDeletePdf, isBackPage, isSave, isExportSkill, isExpo
                                 if (isSave || isExportSkill || isExportChart || isDeletePdf) {
                                     // set latest data for  save param
                                     sParam = getData(null) ? getData(null)['data'] : getData(null);
-                                    if (result.no) {
+                                    if (result.no && (!isExportSkill || !isExportChart)) {
                                         window.location = '/skillmaps_list/' + result.id + '?no=' + result.no;
                                     }
                                     if (isSave) {

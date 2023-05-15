@@ -193,7 +193,7 @@
                     <button type="button" onclick="cancelAddAreaToTable()"
                     class="btn btn-cancel">{{ __('Common_button_cancel') }}</button>
                     <button type="button" onclick="validateMyform()"
-                        class="btn btn-primary">{{ __('Pattern_Add_Inspection_Point') }}</button>
+                        class="btn btn-primary">{{ __('SkillMap_Add_Line') }}</button>
                 </div>
             </div>
         </div>

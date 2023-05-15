@@ -4,6 +4,7 @@ var params = {};
 var isWarning = null;
 var isFirstSelectPattern = false;
 var isFirstSelectDept = false;
+var isDeptOnchange = false;
 var isFirstInit = true;
 var previousDeptId = -1;
 var initDeptId = null;
@@ -591,8 +592,10 @@ $(function () {
             $('.invalid-feedback').text($('#requiredPatterNameErrMsg').val());
             return;
         }
-        if (isWarning && !$('#hidPatternId').val() || isContainInspection) {
-            $("#modalSaveData").find('#saveMsgId').html($('#changeDeptWarningMsgId').val());
+        if ((isWarning && !$('#hidPatternId').val() || isContainInspection)) {
+            if (!(!isDeptOnchange && $('#hidPatternId').val())) {
+                $("#modalSaveData").find('#saveMsgId').html($('#changeDeptWarningMsgId').val());
+            }
         }
         // Check if selected company option is the 5s-free one
         let isSelectedFree = $('#companyOptionId').find(':selected').data('mode5s') == CONFIG.get('5S_MODE').FREE ? true : false;
@@ -641,7 +644,7 @@ $(function () {
         }
     });
 
-    // Department options change event //todo
+    // Department options change event
     $('#departmentId').on('focus', function () {
         if (!isFirstSelectDept && $('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             initDeptId = $('#departmentId').find(":selected").val();
@@ -652,7 +655,7 @@ $(function () {
     }).change(function() {
         let patternid = $('#selectPatternIds').find(':selected').val();
         let currentDeptId = $('#departmentId').find(":selected").val();
-
+        isDeptOnchange = true;
         if($('#userMode').val() == CONFIG.get('5S_MODE')['FREE']) {
             if ((patternid == initPatternId || !initPatternId) && (currentDeptId == initDeptId || !initDeptId)) {
                 $("#save").prop("disabled", true);

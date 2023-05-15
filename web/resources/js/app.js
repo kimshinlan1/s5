@@ -35,7 +35,7 @@ window.CONFIG = (function () {
         'MAX_EMPLOYEES' : 35,
         'MAX_JOB' : 100,
         'MAX_LENGTH_CATEGORY' : 30,
-        'NUMBER_OF_LINES_IN_WORK_NAME' : '作業名の行数',
+        'NUMBER_OF_LINES_IN_WORK_NAME' : '行数',
         'MAXIMUM_OF_100_LINES' : '作業名は最大の100行になります。',
         'COPY_MESSAGE': $('#messageCopy').val(),
         'MESSAGE_ADD_EMP_ERROR': $('#messageAddEmployeeError').val(),

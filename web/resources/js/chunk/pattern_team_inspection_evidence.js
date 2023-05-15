@@ -627,8 +627,10 @@ function handleConfirmOkBtn(isSaveMode) {
         if ($("[class*='file_']").length > 0) {
             $("#confirmDialog3").modal('show');
             $("#confirmDialog3").find('.modal-title').html($('#confirmMsgId').val());
+            $("#confirmDialog3").find('#btn-cancel').html($('#evidenceCancelBtnId').val());
             $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , false);
-            $("#confirmDialog3").find('.confirmMessage3').text($('#closeDialogMsgId').val());
+            $("#confirmDialog3").find('.confirmMessage3').html($('#closeDialogMsgId').val());
+            $("#confirmDialog3").find('#okBtn').html($('#evidenceConfirmBtnId').val());
         } else {
             // Close dialog Case
             hideAllModals();
@@ -655,8 +657,9 @@ function handleConfirmOkBtn(isSaveMode) {
     $("body #patternEvidenceDialog").find('#btnEvidenceSave').click(function () {
         if ($('.evidences-body').find('.count-block').length > 0) {
             $("#confirmDialog3").modal('show');
-            $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
             $("#confirmDialog3").find('.modal-title').html($('#evidenceSaveMsgId').val());
+            $("#confirmDialog3").find('#okBtn').attr('data-isSaveMode' , true);
+            $("#confirmDialog3").find('#okBtn').html($('#saveDialogButtonId').val());
             $("#confirmDialog3").find('.confirmMessage3').text($('#confirmSaveMsgId').val());
         } else {
             hideAllModals();
