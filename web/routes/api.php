@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DepartmentController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('departments', [DepartmentController::class, 'index'])->middleware('auth:api');
-Route::get('departments/{id}', [DepartmentController::class, 'show'])->name('departments.show');
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('departments', [DepartmentController::class, 'index']);
+    Route::get('departments/{id}', [DepartmentController::class, 'show'])->name('departments.show');
+    Route::post('departments/add', [DepartmentController::class, 'store'])->name('department.add');
+    Route::patch('departments/update/{id}', [DepartmentController::class, 'update'])->name('department.update');
+});
+
 

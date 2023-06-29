@@ -31,7 +31,22 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $department = new Department();
+        $department->no = $request->input('no');
+        $department->name = $request->input('name');
+        $department->company_id = $request->input('companyID');
+        if($department->save()) {
+            return response() -> json([
+                'success' => true,
+                'data' => $department
+            ], 200);
+        }
+
+        return response() -> json([
+            'success' => false,
+            'message' => 'Department not added'
+        ]);
+
     }
 
     /**
@@ -44,6 +59,14 @@ class DepartmentController extends Controller
     {
         // return new DepartmentResource($department);
         $departmentById = Department::find($id);
+        
+        if(!$departmentById) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Department not found'
+            ], 400);
+        }
+
         return $departmentById;
     }
 
@@ -56,7 +79,11 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        
+        $deptById = Department::find($request->id);
+        return response()->json([
+            'id' => $request->id,
+            'data' => $deptById
+        ]);
     }
 
     /**

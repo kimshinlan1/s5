@@ -16,7 +16,8 @@ class Department extends JsonResource
     {
         return [
             'no' => $this -> no,
-            'name' => $this -> name
+            'name' => $this -> name,
+            'companyID' => $this -> company_id
         ];
     }
 }
